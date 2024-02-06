@@ -24,11 +24,15 @@ class CurrencyView: UIView {
         var text = UITextField()
         text.placeholder = "Ingrese la cantidad de dinero a convertir"
         text.textAlignment = .center
+        text.textColor = .systemRed
+        text.textAlignment = .center
         text.backgroundColor = .white
         text.layer.cornerRadius = 7
         
         text.keyboardType = .decimalPad
         text.font = .systemFont(ofSize: 17)
+        text.addTarget(self, action: #selector(cantidadTextEditingChanged), for: .editingChanged)
+
         text.translatesAutoresizingMaskIntoConstraints = false
         
         return text
@@ -40,7 +44,6 @@ class CurrencyView: UIView {
         control.insertSegment(withTitle: "---", at: 1, animated: false)
         //control.setTitle("---", forSegmentAt: 1)
         control.isMultipleTouchEnabled = false
-        
         control.translatesAutoresizingMaskIntoConstraints = false
         
         return control
@@ -172,7 +175,7 @@ class CurrencyView: UIView {
         return label
     }()
     
-//MARK: METHODS
+//MARK: Dismiss Keyboard METHODS
     
     @objc func hideKeyboardWhenTappedAround() {
         //Agrega un gesto de reconocimiento para detectar cuando se toca la pantalla fuera del teclado
@@ -186,17 +189,56 @@ class CurrencyView: UIView {
         self.endEditing(true)
     }
     
+    func setDisableFields(){
+        if quantitytextfield.text?.isEmpty ?? true{
+            currencytextfield.isEnabled = false
+            segcontrol.isEnabled = false
+        }else{
+            currencytextfield.isEnabled = true
+        }
+        
+    }
+    
+    @objc private func cantidadTextEditingChanged(_ textField: UITextField) {
+        //print("El texto ha cambiado: \(textField.text ?? "")")
+        if quantitytextfield.text?.isEmpty ?? true{
+            currencytextfield.isEnabled = false
+            
+        }else{
+            currencytextfield.isEnabled = true
+        }
+//        currencytextfield.isEnabled = !quantitytextfield.text!.isEmpty
+//        currencypickerview.isHidden = quantitytextfield.text!.isEmpty
+    }
+    
     func setEmptyQuantityTextField(quantity: UITextField){
         if ((quantity.text?.isEmpty) == nil){
             currencytextfield.isEnabled = false
             segcontrol.isEnabled = false
             valuebuylabel.text = "0.00"
             valuesellLabel.text = "0.00"
+
         }
+    }
+
+        }else
+        {
+            currencytextfield.isEnabled = true
+            segcontrol.isEnabled = true
+        }
+    }
+    
+    func setEnableControl(){
+        segcontrol.isEnabled = true
+        segcontrol.selectedSegmentIndex = 0
     }
 
     func getPickerView() -> UIPickerView{
         return currencypickerview
+    }
+    
+    func getSelectedSegControl() -> Int{
+        return segcontrol.selectedSegmentIndex
     }
     
     //solo para chequear errores
