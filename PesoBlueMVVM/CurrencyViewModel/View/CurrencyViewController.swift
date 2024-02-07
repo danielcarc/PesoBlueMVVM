@@ -74,17 +74,7 @@ extension CurrencyViewController{
     //func texted
 }
 
-//MARK: - UITextFieldDelegate
-extension CurrencyViewController: UITextFieldDelegate{
-    
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        let quantityTextField = cview.getQuantityTextField()
-        cview.setEmptyQuantityTextField(quantity: quantityTextField)
-        
-    }
 
-}
 
 //MARK: - UIPickerView Delegate and DataSource
 
@@ -106,16 +96,7 @@ extension CurrencyViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //var row = cvm.currencyArray[row]
-        
-
-        
-        let currencytextfield = cview.getCurrencyTextField()
-        currencytextfield.text = cvm.getTextForPicker(row: row)
-        
-        //currencytextfield.resignFirstResponder()
-        
-        cview.resigncurrencytext()
-
+       
         let currencytextfield = cview.getCurrencyTextField()
         currencytextfield.text = cvm.getTextForPicker(row: row)
         //print(currencytextfield.text as Any)

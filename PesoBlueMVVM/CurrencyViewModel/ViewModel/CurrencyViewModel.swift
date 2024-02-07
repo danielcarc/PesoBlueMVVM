@@ -50,11 +50,6 @@ class CurrencyViewModel{
                 let jsonDecoder = JSONDecoder()
                 
                 self.currency = try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
-
-                print(currency)
-            }
-            catch{
-
                 self.delegate?.didFinish()
                 print(currency)
             }

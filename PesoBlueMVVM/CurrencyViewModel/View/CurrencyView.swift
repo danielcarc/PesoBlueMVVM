@@ -218,15 +218,15 @@ class CurrencyView: UIView {
             valuebuylabel.text = "0.00"
             valuesellLabel.text = "0.00"
 
-        }
-    }
-
         }else
         {
             currencytextfield.isEnabled = true
             segcontrol.isEnabled = true
         }
     }
+    
+
+        
     
     func setEnableControl(){
         segcontrol.isEnabled = true
