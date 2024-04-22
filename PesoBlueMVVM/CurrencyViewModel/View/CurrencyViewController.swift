@@ -26,7 +26,7 @@ class CurrencyViewController: UIViewController {
         let currencytextfield = cview.getCurrencyTextField()
         currencytextfield.delegate = self
         cvm.delegate = self
-        cvm.fetchChange()
+        //cvm.fetchChange()
         //cview.currencypickerview.delegate = self
         let pickerView2 = cview.getPickerView()
         pickerView2.delegate = self
@@ -48,7 +48,7 @@ extension CurrencyViewController: UITextFieldDelegate{
     //MARK: - UITextFieldDelegate
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        var quantityTextField = cview.getQuantityTextField()
+        let quantityTextField = cview.getQuantityTextField()
         cview.setEmptyQuantityTextField(quantity: quantityTextField)
 //        print(quantity.text as Any)
         
@@ -60,21 +60,16 @@ extension CurrencyViewController: CurrencyViewModelDelegate{
         print(error)
     }
     
-    func didFinish() {
-        let quantityTextfield = cview.getQuantityTextField()
-        let currencyTextField = cview.getCurrencyTextField()
+    func didFinish() async {
+        let quantityText = cview.getQuantityText()
+        let currencyText = cview.getTextForCurrency()
         let segControl = cview.getSelectedSegControl()
-        cvm.convertCurrency(quantityTextField: quantityTextfield, currencyTextField: currencyTextField, segcontrol: segControl)
+        let convertCurrency = await cvm.convertCurrencyToX(quantityText: quantityText, currencyText: currencyText, segcontrol: segControl)
+        let convertDolar = await cvm.convertDolar(quantity: quantityText)
+        cview.setTextForConvertValues(currencyValue: convertCurrency, dolarValue: convertDolar)
+        //cview.setTextForConvertLabel(segmentControl: segControl)
     }
 }
-
-extension CurrencyViewController{
-    
-    
-    //func texted
-}
-
-
 
 //MARK: - UIPickerView Delegate and DataSource
 
@@ -99,14 +94,13 @@ extension CurrencyViewController: UIPickerViewDelegate, UIPickerViewDataSource{
        
         let currencytextfield = cview.getCurrencyTextField()
         currencytextfield.text = cvm.getTextForPicker(row: row)
-        //print(currencytextfield.text as Any)
+        print(currencytextfield.text as Any)
+        cview.setTextForSegControl(segmentControl: currencytextfield.text ?? "")
         cview.resigncurrencytext()
         cview.setEnableControl()
         cvm.fetchChange()
 
-        
     }
-    
 }
 //deshabilitar todo hasta no poner cantidad              OK
 //luego de elegir la cantidad habilitar uipicker         OK

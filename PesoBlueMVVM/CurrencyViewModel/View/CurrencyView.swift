@@ -42,6 +42,7 @@ class CurrencyView: UIView {
         var control = UISegmentedControl()
         control.insertSegment(withTitle: "---", at: 0, animated: false)
         control.insertSegment(withTitle: "---", at: 1, animated: false)
+        control.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         //control.setTitle("---", forSegmentAt: 1)
         control.isMultipleTouchEnabled = false
         control.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +149,7 @@ class CurrencyView: UIView {
     
     private lazy var sellLabel: UILabel = {
         var label = UILabel()
-        label.text = "Venta"
+        label.text = "En Dolares"
         label.font = .systemFont(ofSize: 17)
         label.textColor = .systemGray2
         label.textAlignment = .center
@@ -182,6 +183,41 @@ class CurrencyView: UIView {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         self.addGestureRecognizer(tap)
+    }
+    
+    @objc func segmentedControlValueChanged(_sender: UISegmentedControl){
+        let selectedIndex = _sender.selectedSegmentIndex
+        let textOfCurrency = getTextForCurrency()
+        textForBuyLabel(textOfCurrency: textOfCurrency, selectedIndex: selectedIndex)
+    }
+    
+    func textForBuyLabel(textOfCurrency: String, selectedIndex: Int){
+        switch textOfCurrency {
+        case "Real Brasil":
+            if selectedIndex == 0 {
+                buylabel.text = "En Reales"
+            } else if selectedIndex == 1{
+                buylabel.text = "En Pesos"
+            }
+        case "Peso Chile":
+            if selectedIndex == 0 {
+                buylabel.text = "Pesos Chile"
+            } else if selectedIndex == 1{
+                buylabel.text = "En Pesos"
+            }
+        case "Peso Uruguay":
+            if selectedIndex == 0 {
+                buylabel.text = "Pesos Uruguay"
+            } else if selectedIndex == 1{
+                buylabel.text = "En Pesos"
+            }
+        default:
+            if selectedIndex == 0 {
+                buylabel.text = "error"
+            } else if selectedIndex == 1{
+                buylabel.text = "error"
+            }
+        }
     }
     
     @objc func dismissKeyboard() {
@@ -225,8 +261,6 @@ class CurrencyView: UIView {
         }
     }
     
-
-        
     
     func setEnableControl(){
         segcontrol.isEnabled = true
@@ -246,8 +280,55 @@ class CurrencyView: UIView {
         return quantitytextfield
     }
     
+    func getQuantityText() -> String{
+        if let text = quantitytextfield.text {
+            return text
+        } else {
+            return ""
+        }
+    }
+    
     func getCurrencyTextField() -> UITextField{
         return currencytextfield
+    }
+    
+    func getTextForCurrency() -> String{
+        if let text = currencytextfield.text {
+            return text
+        } else {
+            return ""
+        }
+    }
+    
+    func setTextForSegControl(segmentControl: String){
+        switch segmentControl {
+        case "Real Brasil":
+            segcontrol.setTitle("$ -> Reales", forSegmentAt: 0)
+            segcontrol.setTitle("Reales -> $", forSegmentAt: 1)
+            buylabel.text = "En Reales"
+            
+        case "Peso Chile":
+            segcontrol.setTitle("$ -> Peso Chile", forSegmentAt: 0)
+            segcontrol.setTitle("Peso Chile -> $", forSegmentAt: 1)
+            buylabel.text = "Pesos Chile"
+        case "Peso Uruguay":
+            segcontrol.setTitle("$ -> Peso Uruguay", forSegmentAt: 0)
+            segcontrol.setTitle("Peso Uruguay -> $", forSegmentAt: 1)
+            buylabel.text = "Pesos Uruguay"
+        default:
+            segcontrol.setTitle("error", forSegmentAt: 0)
+            segcontrol.setTitle("error", forSegmentAt: 1)
+        }
+        
+    }
+    
+//    func setTextForConvertLabel(segmentControl: Int){
+//        segcontrol.selectedSegmentIndex = 0
+//    }
+    
+    func setTextForConvertValues(currencyValue: String, dolarValue: String){
+        valuebuylabel.text = currencyValue
+        valuesellLabel.text = dolarValue
     }
     
     override init(frame: CGRect) {

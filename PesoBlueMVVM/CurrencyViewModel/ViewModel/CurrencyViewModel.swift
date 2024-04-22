@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CurrencyViewModelDelegate: AnyObject{
-    func didFinish()
+    func didFinish() async
     func didFail(error: Error)
 }
 
@@ -20,11 +20,11 @@ import UIKit
 class CurrencyViewModel{
     
     private var currency : Rates = Rates(BRL: Brl(rate: nil), CLP: Clp(rate: nil), UYU: Uyu(rate: nil))
+    private (set) var dolar : ExchangeRate?
     
     var currencyArray = ["BRL","CLP","UYU"]
 
     
-
     weak var delegate: CurrencyViewModelDelegate?
 
     
@@ -33,7 +33,6 @@ class CurrencyViewModel{
     
 
     @MainActor
-
     func fetchChange(){
         
         Task{
@@ -50,7 +49,7 @@ class CurrencyViewModel{
                 let jsonDecoder = JSONDecoder()
                 
                 self.currency = try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
-                self.delegate?.didFinish()
+                await self.delegate?.didFinish()
                 print(currency)
             }
             catch{
@@ -58,6 +57,28 @@ class CurrencyViewModel{
                 print(error.localizedDescription)
             }
         }
+    }
+    @MainActor
+    func getDolar() async -> ExchangeRate?{
+        
+        Task{
+            do{
+                guard let url = URL(string: "https://dolarapi.com/v1/dolares/blue") else {return}
+                let (data, response) = try await URLSession.shared.data(from: url)
+                
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    print("Error en response")
+                    return
+                }
+                let jsonDecoder = JSONDecoder()
+                self.dolar = try jsonDecoder.decode(ExchangeRate.self, from: data)
+                //print(self.dolar?.venta as Any)
+            }
+            catch{
+                print(error.localizedDescription)
+            }
+        }
+        return dolar
     }
     
     func getTextForPicker(row: Int)-> String{
@@ -74,14 +95,54 @@ class CurrencyViewModel{
     }
 
     
-    func convertCurrency(quantityTextField: UITextField, currencyTextField: UITextField, segcontrol: Int){
-        let quantity = quantityTextField.text
-        let currencyText = Double(valueForCurrency(currencyText: currencyTextField))
-        print(currencyText as Any)
+    func convertCurrencyToX(quantityText: String, currencyText: String, segcontrol: Int) async -> String {
+
+        let quantity = Double(quantityText)
+        let currencyValue = Double(valueForCurrency(currencyText: currencyText))
+        var dolarValue: Double = 0.0
+        while dolarValue == 0.0 {
+            if let exchangeRate = await getDolar() {
+                dolarValue = exchangeRate.venta ?? 0.0
+            } else {
+                do {
+                    // Esperamos un período antes de volver a intentar
+                    try await Task.sleep(nanoseconds: 100000000) // Espera de 100 milisegundos
+                } catch {
+                    // Manejar la excepción aquí, si es necesario
+                    print("Error al esperar: \(error.localizedDescription)")
+                }
+            }
+        }
+        let convertedValue = ((quantity ?? 0.0) / dolarValue) * (currencyValue ?? 0.0)
+        
+        print(convertedValue)
+        return String(format: "%.2f", convertedValue)
     }
     
-    func valueForCurrency(currencyText: UITextField) -> String{
-        switch currencyText.text {
+    func convertDolar(quantity: String) async -> String{
+        
+        let quantity = Double(quantity) ?? 0.0
+        var dolarValue: Double = 0.0
+        while dolarValue == 0.0 {
+            if let exchangeRate = await getDolar() {
+                dolarValue = exchangeRate.venta ?? 0.0
+            } else {
+                do {
+                    // Esperamos un período antes de volver a intentar
+                    try await Task.sleep(nanoseconds: 100000000) // Espera de 100 milisegundos
+                } catch {
+                    // Manejar la excepción aquí, si es necesario
+                    print("Error al esperar: \(error.localizedDescription)")
+                }
+            }
+        }
+        let dolarConvert = quantity / dolarValue
+        print(dolarConvert)
+        return String(format: "%.2f", dolarConvert)
+    }
+    
+    func valueForCurrency(currencyText: String) -> String{
+        switch currencyText {
         case "Real Brasil":
             //guard var currencyValue = Double(currency.BRL.rate ?? "") else { return 0.0 }
             return currency.BRL.rate ?? "0.0"
