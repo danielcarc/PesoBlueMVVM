@@ -15,6 +15,7 @@
 		C513DED12AE839240066AFCA /* BeginTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED02AE839240066AFCA /* BeginTabViewController.swift */; };
 		C513DED32AE83ADF0066AFCA /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED22AE83ADF0066AFCA /* CurrencyViewController.swift */; };
 		C513DED72AE83B480066AFCA /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED62AE83B480066AFCA /* CurrencyView.swift */; };
+		C51C8ABE2BD87FBC008777C8 /* PesoBlueTabBarControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarControllerViewController.swift */; };
 		C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55DA6882ACB136F00871340 /* ChangeView.swift */; };
 		C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740A2AC71FD3000FCD5B /* AppDelegate.swift */; };
 		C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740C2AC71FD3000FCD5B /* SceneDelegate.swift */; };
@@ -32,6 +33,7 @@
 		C513DED02AE839240066AFCA /* BeginTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginTabViewController.swift; sourceTree = "<group>"; };
 		C513DED22AE83ADF0066AFCA /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
 		C513DED62AE83B480066AFCA /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
+		C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PesoBlueTabBarControllerViewController.swift; sourceTree = "<group>"; };
 		C55DA6882ACB136F00871340 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
 		C58674072AC71FD3000FCD5B /* PesoBlueMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PesoBlueMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C586740A2AC71FD3000FCD5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				C58674132AC71FD5000FCD5B /* Assets.xcassets */,
 				C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */,
 				C58674182AC71FD5000FCD5B /* Info.plist */,
+				C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarControllerViewController.swift */,
 			);
 			path = PesoBlueMVVM;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */,
 				C513DEAD2ACE00520066AFCA /* ChangeViewModel.swift in Sources */,
 				C513DED72AE83B480066AFCA /* CurrencyView.swift in Sources */,
+				C51C8ABE2BD87FBC008777C8 /* PesoBlueTabBarControllerViewController.swift in Sources */,
 				C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */,
 				C513DEA12ACDC17D0066AFCA /* CurrencyViewModel.swift in Sources */,
 				C513DED32AE83ADF0066AFCA /* CurrencyViewController.swift in Sources */,

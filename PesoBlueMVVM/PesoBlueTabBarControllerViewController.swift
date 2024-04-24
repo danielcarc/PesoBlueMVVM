@@ -12,7 +12,7 @@ class PesoBlueTabBarControllerViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        configureTabs()
     }
     
 
@@ -34,6 +34,6 @@ class PesoBlueTabBarControllerViewController: UITabBarController {
         
         setViewControllers([nav1, nav2], animated: false)
     }
-    */
+    
 
 }

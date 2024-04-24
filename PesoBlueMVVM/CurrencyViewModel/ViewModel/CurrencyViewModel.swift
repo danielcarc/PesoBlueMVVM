@@ -95,7 +95,7 @@ class CurrencyViewModel{
     }
 
     
-    func convertCurrencyToX(quantityText: String, currencyText: String, segcontrol: Int) async -> String {
+    func convertCurrencyToX(quantityText: String, currencyText: String, segcontrol: Int) async -> (String, String, String) {
 
         let quantity = Double(quantityText)
         let currencyValue = Double(valueForCurrency(currencyText: currencyText))
@@ -113,10 +113,14 @@ class CurrencyViewModel{
                 }
             }
         }
-        let convertedValue = ((quantity ?? 0.0) / dolarValue) * (currencyValue ?? 0.0)
-        
-        print(convertedValue)
-        return String(format: "%.2f", convertedValue)
+        let convertedValue0 = ((quantity ?? 0.0) / dolarValue) * (currencyValue ?? 0.0)
+        let convertedValue1 = ((quantity ?? 0.0) / (currencyValue ?? 0.0)) * dolarValue
+        let convertedValue2 = (quantity ?? 0.0) / (currencyValue ?? 0.0)
+        let convertedValueFromPeso = String(format: "%.2f", convertedValue0)
+        let convertedValueToPeso = String(format: "%.2f", convertedValue1)
+        let currencyValueToDolar = String(format: "%.2f", convertedValue2)
+        //print(convertedValue)
+        return (convertedValueFromPeso, convertedValueToPeso, currencyValueToDolar)
     }
     
     func convertDolar(quantity: String) async -> String{

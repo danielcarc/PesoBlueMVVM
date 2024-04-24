@@ -20,11 +20,12 @@ class CurrencyViewController: UIViewController {
         
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         let currencytextfield = cview.getCurrencyTextField()
         currencytextfield.delegate = self
+        let quantityTextField = cview.getQuantityTextField()
+        quantityTextField.delegate = self
         cvm.delegate = self
         //cvm.fetchChange()
         //cview.currencypickerview.delegate = self
@@ -33,23 +34,47 @@ class CurrencyViewController: UIViewController {
         pickerView2.dataSource = self
         cview.hideKeyboardWhenTappedAround()
         cview.setDisableFields()
-        //cview.setEmptyQuantityTextField(quantity: quantitytextfield)
+        title = "Calcular"
+        navigationController?.navigationBar.prefersLargeTitles = true
 
-        
     }
 }
 
 
 extension CurrencyViewController: UITextFieldDelegate{
-    //MARK: - Keyboard dismiss methods
     
+    //MARK: - Text Field Methods
+    //funcion que me sirve para tomar por parametro tipeado en un textfield y actualiza la variable updatetext
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Concatena el texto existente en el campo de texto con la cadena de reemplazo
+        let quantityTextField = cview.getQuantityTextField()
+        let updatedText = (cview.getQuantityTextField().text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
+        
+        //cview.setQuantityText()
+        
+        if updatedText != cview.getQuantityText(){
+            cview.setCurrencyText()
+        }
+        if quantityTextField.text?.isEmpty ?? true {
+            cview.setDisableFields()
+        }
+//        else {
+//            cview.setEnableFields()
+//        }
+        
+        
+        
+        // Retorna true para permitir que se realice el cambio en el campo de texto
+        return true
+    }
 
     
     //MARK: - UITextFieldDelegate
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let quantityTextField = cview.getQuantityTextField()
-        cview.setEmptyQuantityTextField(quantity: quantityTextField)
+        //let quantityTextField = cview.getQuantityTextField()
+        //cview.setEmptyQuantityTextField(quantity: quantityTextField)
+        //cview.setEnableControl()
 //        print(quantity.text as Any)
         
     }
@@ -64,9 +89,10 @@ extension CurrencyViewController: CurrencyViewModelDelegate{
         let quantityText = cview.getQuantityText()
         let currencyText = cview.getTextForCurrency()
         let segControl = cview.getSelectedSegControl()
-        let convertCurrency = await cvm.convertCurrencyToX(quantityText: quantityText, currencyText: currencyText, segcontrol: segControl)
+        let (convertCurrencyFromPeso, convertCurrencyToPeso, currencyValueToDolar) = await cvm.convertCurrencyToX(quantityText: quantityText, currencyText: currencyText, segcontrol: segControl)
         let convertDolar = await cvm.convertDolar(quantity: quantityText)
-        cview.setTextForConvertValues(currencyValue: convertCurrency, dolarValue: convertDolar)
+        cview.setTextForConvertValues(currencyValueFromPeso: convertCurrencyFromPeso, currencyValueToPeso: convertCurrencyToPeso, dolarValue: convertDolar, currencyToDolar: currencyValueToDolar)
+        //tengo las conversiones, ahora necesito que queden en la UI
         //cview.setTextForConvertLabel(segmentControl: segControl)
     }
 }
@@ -102,12 +128,6 @@ extension CurrencyViewController: UIPickerViewDelegate, UIPickerViewDataSource{
 
     }
 }
-//deshabilitar todo hasta no poner cantidad              OK
-//luego de elegir la cantidad habilitar uipicker         OK
-//luego de elegir uipicker habilitar segcontrol y setear el default en 0  OK
-//luego hacer conversiones con el delegate
-
-
 
 //#Preview("CurrencyViewController", traits: .defaultLayout, body: { CurrencyViewController()})
 

@@ -185,10 +185,11 @@ class CurrencyView: UIView {
         self.addGestureRecognizer(tap)
     }
     
-    @objc func segmentedControlValueChanged(_sender: UISegmentedControl){
-        let selectedIndex = _sender.selectedSegmentIndex
+    @objc func segmentedControlValueChanged(sender: UISegmentedControl){
+        let selectedIndex = sender.selectedSegmentIndex
         let textOfCurrency = getTextForCurrency()
         textForBuyLabel(textOfCurrency: textOfCurrency, selectedIndex: selectedIndex)
+        
     }
     
     func textForBuyLabel(textOfCurrency: String, selectedIndex: Int){
@@ -196,20 +197,32 @@ class CurrencyView: UIView {
         case "Real Brasil":
             if selectedIndex == 0 {
                 buylabel.text = "En Reales"
+                valuebuylabel.text = currencyFromPeso
+                valuesellLabel.text = pesoToDolar
             } else if selectedIndex == 1{
                 buylabel.text = "En Pesos"
+                valuebuylabel.text = currencyToPeso
+                valuesellLabel.text = currencyToDolarValue
             }
         case "Peso Chile":
             if selectedIndex == 0 {
                 buylabel.text = "Pesos Chile"
+                valuebuylabel.text = currencyFromPeso
+                valuesellLabel.text = pesoToDolar
             } else if selectedIndex == 1{
                 buylabel.text = "En Pesos"
+                valuebuylabel.text = currencyToPeso
+                valuesellLabel.text = currencyToDolarValue
             }
         case "Peso Uruguay":
             if selectedIndex == 0 {
                 buylabel.text = "Pesos Uruguay"
+                valuebuylabel.text = currencyFromPeso
+                valuesellLabel.text = pesoToDolar
             } else if selectedIndex == 1{
                 buylabel.text = "En Pesos"
+                valuebuylabel.text = currencyToPeso
+                valuesellLabel.text = currencyToDolarValue
             }
         default:
             if selectedIndex == 0 {
@@ -226,7 +239,7 @@ class CurrencyView: UIView {
     }
     
     func setDisableFields(){
-        if quantitytextfield.text?.isEmpty ?? true{
+        if quantitytextfield.text == nil{
             currencytextfield.isEnabled = false
             segcontrol.isEnabled = false
         }else{
@@ -239,26 +252,38 @@ class CurrencyView: UIView {
         //print("El texto ha cambiado: \(textField.text ?? "")")
         if quantitytextfield.text?.isEmpty ?? true{
             currencytextfield.isEnabled = false
+            segcontrol.isEnabled = false
             
-        }else{
+        }else if quantitytextfield.text?.isEmpty ?? false{
             currencytextfield.isEnabled = true
+            segcontrol.isEnabled = true
         }
-//        currencytextfield.isEnabled = !quantitytextfield.text!.isEmpty
-//        currencypickerview.isHidden = quantitytextfield.text!.isEmpty
+
     }
     
     func setEmptyQuantityTextField(quantity: UITextField){
-        if ((quantity.text?.isEmpty) == nil){
+        if quantity.text?.isEmpty ?? true{
             currencytextfield.isEnabled = false
             segcontrol.isEnabled = false
             valuebuylabel.text = "0.00"
             valuesellLabel.text = "0.00"
-
-        }else
-        {
+            buylabel.text = "Compra"
+            sellLabel.text = "En Dolares"
+            currencytextfield.text = "Seleccione una moneda para convertir"
+            currencytextfield.textColor = .systemRed
+        }
+//        else {
+//            currencytextfield.isEnabled = true
+//            segcontrol.isEnabled = true
+//        }
+    }
+    
+    func setEnableFields(){
+        if quantitytextfield.text?.isEmpty ?? false{
             currencytextfield.isEnabled = true
             segcontrol.isEnabled = true
         }
+        
     }
     
     
@@ -322,13 +347,30 @@ class CurrencyView: UIView {
         
     }
     
-//    func setTextForConvertLabel(segmentControl: Int){
-//        segcontrol.selectedSegmentIndex = 0
-//    }
+    var currencyFromPeso: String = "0.0"
+    var currencyToPeso: String = "0.0"
+    var pesoToDolar: String = "0.0"
+    var currencyToDolarValue: String = "0.0"
     
-    func setTextForConvertValues(currencyValue: String, dolarValue: String){
-        valuebuylabel.text = currencyValue
+    func setTextForConvertValues(currencyValueFromPeso: String, currencyValueToPeso: String,  dolarValue: String, currencyToDolar: String){
+        valuebuylabel.text = currencyValueFromPeso
         valuesellLabel.text = dolarValue
+        currencyFromPeso = currencyValueFromPeso
+        currencyToPeso = currencyValueToPeso
+        pesoToDolar = dolarValue
+        currencyToDolarValue = currencyToDolar
+    }
+    
+    func setCurrencyText(){
+        //currencytextfield.isEnabled = false
+        currencytextfield.text = "Seleccione una moneda para convertir"
+        currencytextfield.textColor = .systemRed
+        buylabel.text = "Compra"
+        valuebuylabel.text = "0.00"
+        sellLabel.text = "En Dolares"
+        valuesellLabel.text = "0.00"
+        segcontrol.isEnabled = false
+        
     }
     
     override init(frame: CGRect) {

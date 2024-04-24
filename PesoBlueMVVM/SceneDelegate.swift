@@ -20,11 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(windowScene: windowScene)
         
-        let vc = CurrencyViewController()
+        //let vc = CurrencyViewController()
         
-        let nav = UINavigationController(rootViewController: vc)
+        //let nav = UINavigationController(rootViewController: vc)
         
-        self.window?.rootViewController = nav
+        self.window?.rootViewController = PesoBlueTabBarControllerViewController()
         
         window?.makeKeyAndVisible()
     }
