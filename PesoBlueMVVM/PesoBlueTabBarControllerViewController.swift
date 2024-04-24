@@ -16,13 +16,23 @@ class PesoBlueTabBarControllerViewController: UITabBarController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func configureTabs(){
+        
+        let vc1 = ChangeViewController()
+        let vc2 = CurrencyViewController()
+        
+        // Set Tab Images
+        vc1.tabBarItem.image = UIImage(systemName: "dollarsign.square.fill")
+        vc2.tabBarItem.image = UIImage(systemName: "arrow.left.arrow.right.square.fill")
+        
+        // Set Titles
+        vc1.title = "Cambio"
+        vc2.tabBarItem.title = "Calcular"
+        
+        let nav1 = UINavigationController(rootViewController: vc1)
+        let nav2 = UINavigationController(rootViewController: vc2)
+        
+        setViewControllers([nav1, nav2], animated: false)
     }
     */
 
