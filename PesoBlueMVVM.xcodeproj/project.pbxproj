@@ -129,6 +129,7 @@
 		C513DEFA2AE8D99F0066AFCA /* TabBarController */ = {
 			isa = PBXGroup;
 			children = (
+				C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarControllerViewController.swift */,
 				C513DED02AE839240066AFCA /* BeginTabViewController.swift */,
 			);
 			path = TabBarController;
@@ -161,7 +162,6 @@
 				C58674132AC71FD5000FCD5B /* Assets.xcassets */,
 				C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */,
 				C58674182AC71FD5000FCD5B /* Info.plist */,
-				C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarControllerViewController.swift */,
 			);
 			path = PesoBlueMVVM;
 			sourceTree = "<group>";

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class CurrencyViewController: UIViewController {
     
@@ -16,7 +17,6 @@ class CurrencyViewController: UIViewController {
     override func loadView() {
         cview = CurrencyView()
         self.view = cview
-        //var currencytextfield = cview.getCurrencyTextField()
         
     }
     
@@ -27,8 +27,6 @@ class CurrencyViewController: UIViewController {
         let quantityTextField = cview.getQuantityTextField()
         quantityTextField.delegate = self
         cvm.delegate = self
-        //cvm.fetchChange()
-        //cview.currencypickerview.delegate = self
         let pickerView2 = cview.getPickerView()
         pickerView2.delegate = self
         pickerView2.dataSource = self
@@ -36,6 +34,7 @@ class CurrencyViewController: UIViewController {
         cview.setDisableFields()
         title = "Calcular"
         navigationController?.navigationBar.prefersLargeTitles = true
+        startTimer()
 
     }
 }
@@ -49,33 +48,21 @@ extension CurrencyViewController: UITextFieldDelegate{
         // Concatena el texto existente en el campo de texto con la cadena de reemplazo
         let quantityTextField = cview.getQuantityTextField()
         let updatedText = (cview.getQuantityTextField().text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
-        
-        //cview.setQuantityText()
-        
+      
         if updatedText != cview.getQuantityText(){
             cview.setCurrencyText()
         }
         if quantityTextField.text?.isEmpty ?? true {
             cview.setDisableFields()
         }
-//        else {
-//            cview.setEnableFields()
-//        }
-        
-        
-        
+
         // Retorna true para permitir que se realice el cambio en el campo de texto
         return true
     }
 
-    
     //MARK: - UITextFieldDelegate
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        //let quantityTextField = cview.getQuantityTextField()
-        //cview.setEmptyQuantityTextField(quantity: quantityTextField)
-        //cview.setEnableControl()
-//        print(quantity.text as Any)
         
     }
 }
@@ -92,8 +79,7 @@ extension CurrencyViewController: CurrencyViewModelDelegate{
         let (convertCurrencyFromPeso, convertCurrencyToPeso, currencyValueToDolar) = await cvm.convertCurrencyToX(quantityText: quantityText, currencyText: currencyText, segcontrol: segControl)
         let convertDolar = await cvm.convertDolar(quantity: quantityText)
         cview.setTextForConvertValues(currencyValueFromPeso: convertCurrencyFromPeso, currencyValueToPeso: convertCurrencyToPeso, dolarValue: convertDolar, currencyToDolar: currencyValueToDolar)
-        //tengo las conversiones, ahora necesito que queden en la UI
-        //cview.setTextForConvertLabel(segmentControl: segControl)
+        
     }
 }
 
@@ -110,22 +96,34 @@ extension CurrencyViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        //var row = cvm.currencyArray[row]
         cvm.getTextForPicker(row: row)
-
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //var row = cvm.currencyArray[row]
-       
+
         let currencytextfield = cview.getCurrencyTextField()
         currencytextfield.text = cvm.getTextForPicker(row: row)
-        print(currencytextfield.text as Any)
         cview.setTextForSegControl(segmentControl: currencytextfield.text ?? "")
         cview.resigncurrencytext()
         cview.setEnableControl()
         cvm.fetchChange()
 
+    }
+}
+
+//MARK: - Local Notifications
+
+extension CurrencyViewController{
+    
+    func startTimer(){
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { timer in
+            Task{
+                if let dolar = await self.cvm.getDolar() {
+                    let dolarNow = String(format: "%.2f", dolar.venta ?? 0.0)
+                    self.cvm.checkPermission(dolar: dolarNow)
+                }
+            }
+        }
     }
 }
 

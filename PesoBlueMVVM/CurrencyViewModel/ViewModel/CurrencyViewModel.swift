@@ -50,7 +50,7 @@ class CurrencyViewModel{
                 
                 self.currency = try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
                 await self.delegate?.didFinish()
-                print(currency)
+                //print(currency)
             }
             catch{
                 self.delegate?.didFail(error: error)
@@ -119,7 +119,6 @@ class CurrencyViewModel{
         let convertedValueFromPeso = String(format: "%.2f", convertedValue0)
         let convertedValueToPeso = String(format: "%.2f", convertedValue1)
         let currencyValueToDolar = String(format: "%.2f", convertedValue2)
-        //print(convertedValue)
         return (convertedValueFromPeso, convertedValueToPeso, currencyValueToDolar)
     }
     
@@ -135,13 +134,13 @@ class CurrencyViewModel{
                     // Esperamos un período antes de volver a intentar
                     try await Task.sleep(nanoseconds: 100000000) // Espera de 100 milisegundos
                 } catch {
-                    // Manejar la excepción aquí, si es necesario
+                    
                     print("Error al esperar: \(error.localizedDescription)")
                 }
             }
         }
         let dolarConvert = quantity / dolarValue
-        print(dolarConvert)
+        //print(dolarConvert)
         return String(format: "%.2f", dolarConvert)
     }
     
@@ -156,6 +155,51 @@ class CurrencyViewModel{
             return currency.UYU.rate ?? "0.0"
         default:
             return "0.00"
+        }
+    }
+    
+    func dispatchNotificaction(dolar: String){
+        let identifier = "dolarValueNotification"
+        let title = "Actualizacion del Dolar"
+        let body = "El valor del Dolar es: $\(dolar)"
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
+        
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        //notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+        notificationCenter.add(request) { error in
+            if let error = error{
+                print(error.localizedDescription)
+            }else{
+                print("se deberia imprimir")
+            }
+        }
+    }
+    
+    func checkPermission(dolar: String){
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .notDetermined:
+                notificationCenter.requestAuthorization(options: [.alert, .sound]){ didAllow, error in
+                    if didAllow{
+                        self.dispatchNotificaction(dolar: dolar)
+                    }
+                }
+            case .denied:
+                return
+            case .authorized:
+                self.dispatchNotificaction(dolar: dolar)
+                print("permitido \(dolar)")
+            default:
+                return
+            }
         }
     }
     

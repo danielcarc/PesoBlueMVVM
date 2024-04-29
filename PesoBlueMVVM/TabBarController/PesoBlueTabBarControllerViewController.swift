@@ -15,7 +15,6 @@ class PesoBlueTabBarControllerViewController: UITabBarController {
         configureTabs()
     }
     
-
     private func configureTabs(){
         
         let vc1 = ChangeViewController()
@@ -34,6 +33,4 @@ class PesoBlueTabBarControllerViewController: UITabBarController {
         
         setViewControllers([nav1, nav2], animated: false)
     }
-    
-
 }
