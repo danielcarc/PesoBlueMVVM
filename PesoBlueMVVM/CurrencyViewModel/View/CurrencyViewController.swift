@@ -116,7 +116,7 @@ extension CurrencyViewController: UIPickerViewDelegate, UIPickerViewDataSource{
 extension CurrencyViewController{
     
     func startTimer(){
-        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 600, repeats: true) { timer in
             Task{
                 if let dolar = await self.cvm.getDolar() {
                     let dolarNow = String(format: "%.2f", dolar.venta ?? 0.0)
