@@ -24,33 +24,76 @@ class ChangeViewController: UIViewController {
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
     }()
+    
+    private lazy var rightButtonBar = UIButton()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
-        viewModel.delegate = self
+        setupBtn()
         viewModel.getChange()
+        setTitle()
+        setDelegate()
         
     }
 }
+
+//MARK: - Setup Button and CollectionView
+extension ChangeViewController{
+    func setupBtn(){
+        rightButtonBar.setTitle("Ir a Calcular", for: .normal)
+        rightButtonBar.addTarget(self, action: #selector(goToCurrencyVC), for: .touchUpInside)
+        rightButtonBar.setTitleColor(UIColor(red: 87/255, green: 147/255, blue: 215/255, alpha: 1), for:.normal)
+        rightButtonBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+    }
+}
+
+
+//MARK: - Setup CollectionView
 
 private extension ChangeViewController{
     func setup(){
         
         view.backgroundColor = .white
         self.view.addSubview(collectionView)
+        let barButtonItem = UIBarButtonItem(customView: rightButtonBar)
+        self.navigationItem.rightBarButtonItem = barButtonItem
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        
         ])
     }
 }
+
+extension ChangeViewController{
+    func setDelegate(){
+        viewModel.delegate = self
+    }
+    func setTitle(){
+        title = "Cotizaciones"
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+}
+
+//MARK: - Button Method
+
+extension ChangeViewController{
+    
+    @objc func goToCurrencyVC(){
+        let nextScreen = CurrencyViewController()
+        self.navigationController?.pushViewController(nextScreen, animated: true)
+    }
+}
+
+
+//MARK: - ChangeViewModelDelegate Methods
 
 extension ChangeViewController: ChangeViewModelDelegate{
     func didFinish() {
@@ -61,6 +104,8 @@ extension ChangeViewController: ChangeViewModelDelegate{
         print(error)
     }
 }
+
+//MARK: - CollectionView DataSource Methods
 
 extension ChangeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -78,4 +123,6 @@ extension ChangeViewController: UICollectionViewDataSource{
         return cell
     }
 }
+
+//#Preview("ChangeViewController", traits: .defaultLayout, body: { ChangeViewController()})
 

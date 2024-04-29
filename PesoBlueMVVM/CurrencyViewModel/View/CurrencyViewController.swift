@@ -120,13 +120,13 @@ extension CurrencyViewController{
             Task{
                 if let dolar = await self.cvm.getDolar() {
                     let dolarNow = String(format: "%.2f", dolar.venta ?? 0.0)
-                    self.cvm.checkPermission(dolar: dolarNow)
+                    await self.cvm.checkPermission(dolar: dolarNow)
                 }
             }
         }
     }
 }
 
-//#Preview("CurrencyViewController", traits: .defaultLayout, body: { CurrencyViewController()})
+#Preview("CurrencyViewController", traits: .defaultLayout, body: { CurrencyViewController()})
 
 

@@ -18,7 +18,7 @@ class ChangeViewModel{
     
     
     
-    private (set) var changes = [ChangesResponse]()
+    private(set)var changes = [ChangesResponse] ()
     
     
     

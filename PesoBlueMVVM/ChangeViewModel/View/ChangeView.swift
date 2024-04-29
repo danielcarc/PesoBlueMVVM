@@ -110,6 +110,8 @@ class ChangeView: UIView {
         return label
     }()
     
+    
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
@@ -118,6 +120,8 @@ class ChangeView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     func set(nameLabel: String, valueSell: Double, valueBuy: Double){
         currencyTipeLabel.text = nameLabel

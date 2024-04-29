@@ -20,9 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(windowScene: windowScene)
         
-        self.window?.rootViewController = PesoBlueTabBarControllerViewController()
-        
+//        self.window?.rootViewController = PesoBlueTabBarControllerViewController()
+        window?.rootViewController = LoginViewController()
         window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

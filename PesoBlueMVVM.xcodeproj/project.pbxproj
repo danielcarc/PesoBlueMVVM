@@ -22,6 +22,7 @@
 		C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740E2AC71FD3000FCD5B /* ChangeViewController.swift */; };
 		C58674142AC71FD5000FCD5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58674132AC71FD5000FCD5B /* Assets.xcassets */; };
 		C58674172AC71FD5000FCD5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */; };
+		C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		C58674132AC71FD5000FCD5B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C58674162AC71FD5000FCD5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C58674182AC71FD5000FCD5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 		C58674092AC71FD3000FCD5B /* PesoBlueMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				C59B3F432CBDD1CF00E0C532 /* LoginViewModel */,
 				C513DEFA2AE8D99F0066AFCA /* TabBarController */,
 				C513DEA32ACDFF110066AFCA /* CurrencyViewModel */,
 				C513DEA22ACDFEFE0066AFCA /* ChangeViewModel */,
@@ -164,6 +167,14 @@
 				C58674182AC71FD5000FCD5B /* Info.plist */,
 			);
 			path = PesoBlueMVVM;
+			sourceTree = "<group>";
+		};
+		C59B3F432CBDD1CF00E0C532 /* LoginViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */,
+			);
+			path = LoginViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */,
 				C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */,
 				C513DE9D2ACDB5340066AFCA /* ChangeCollectionViewCell.swift in Sources */,
 				C513DED12AE839240066AFCA /* BeginTabViewController.swift in Sources */,
