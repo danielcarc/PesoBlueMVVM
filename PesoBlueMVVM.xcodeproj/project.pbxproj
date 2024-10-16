@@ -23,6 +23,7 @@
 		C58674142AC71FD5000FCD5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58674132AC71FD5000FCD5B /* Assets.xcassets */; };
 		C58674172AC71FD5000FCD5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */; };
 		C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */; };
+		C5E4E73F2CC05826000A06C4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E73E2CC05826000A06C4 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		C58674162AC71FD5000FCD5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C58674182AC71FD5000FCD5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C5E4E73E2CC05826000A06C4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,9 +174,18 @@
 		C59B3F432CBDD1CF00E0C532 /* LoginViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */,
+				C5E4E73B2CC052E5000A06C4 /* View */,
 			);
 			path = LoginViewModel;
+			sourceTree = "<group>";
+		};
+		C5E4E73B2CC052E5000A06C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */,
+				C5E4E73E2CC05826000A06C4 /* LoginView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +261,7 @@
 				C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */,
 				C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */,
 				C513DE9D2ACDB5340066AFCA /* ChangeCollectionViewCell.swift in Sources */,
+				C5E4E73F2CC05826000A06C4 /* LoginView.swift in Sources */,
 				C513DED12AE839240066AFCA /* BeginTabViewController.swift in Sources */,
 				C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */,
 				C513DE9F2ACDBB090066AFCA /* Model.swift in Sources */,
