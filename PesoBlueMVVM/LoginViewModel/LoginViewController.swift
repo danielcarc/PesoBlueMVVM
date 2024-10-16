@@ -17,14 +17,22 @@ class LoginViewController: UIViewController {
         
     }()
     
+    private lazy var contentView: UIView = {
+        var contentMode = UIView()
+        
+        contentMode.translatesAutoresizingMaskIntoConstraints = false
+        
+        return contentMode
+    }()
+    
     //Agregar una imagen que represente a Argentina, sea descargada o de las propias
     private lazy var photoImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "Obelisco")
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         NSLayoutConstraint.activate([
-                    imageView.heightAnchor.constraint(equalToConstant: 200)
+                    imageView.heightAnchor.constraint(equalToConstant: 300)
                 ])
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -100,31 +108,53 @@ class LoginViewController: UIViewController {
     
     private lazy var appleButton: UIButton = {
         var button = UIButton()
-        button.setTitle("Continuar con Apple", for: .normal)
-
-        button.setImage(UIImage(systemName: "apple.logo"), for: .normal)
-        button.tintColor = .black
-        
-        button.contentHorizontalAlignment = .left  // Alinear todo el contenido a la izquierda
-        button.imageView?.contentMode = .scaleAspectFit  // Imagen ajustada
         
         // Ajusta el espacio entre imagen y texto
         //button.semanticContentAttribute = .forceRightToLeft
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)  // Desplaza el ícono
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)  // Desplaza el texto
-
-        //button.contentHorizontalAlignment = .center
-        
-        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
         button.backgroundColor = UIColor(red: 0.91, green: 0.94, blue: 0.96, alpha: 1.0)
-        button.setTitleColor(UIColor.black, for: .normal)
+        //button.setTitleColor(UIColor.black, for: .normal)
         button.layer.cornerRadius = 10
+        button.titleLabel?.textAlignment = .center
         NSLayoutConstraint.activate([
                     button.heightAnchor.constraint(equalToConstant: 48)
                 ])
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
+    }()
+    
+    private lazy var appleButtonLabel: UILabel = {
+        var label = UILabel()
+        label.text = "Continuar con Apple"
+        label.font = .boldSystemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private lazy var appleLogoImageView: UIImageView = {
+        var imageView = UIImageView(image: UIImage(systemName: "apple.logo"))
+        imageView.tintColor = .black
+        imageView.contentMode = .scaleAspectFit
+        NSLayoutConstraint.activate([
+            imageView.heightAnchor.constraint(equalToConstant: 24),
+            imageView.widthAnchor.constraint(equalToConstant: 24)
+        ])
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
+    private lazy var appleButtonStackView: UIStackView = {
+        var stackView = UIStackView(arrangedSubviews: [appleLogoImageView, appleButtonLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
     }()
     
     override func viewDidLoad() {
@@ -141,15 +171,19 @@ class LoginViewController: UIViewController {
     }
     private func addSubViews() {
         view.addSubview(scrollView)
-        scrollView.addSubview(headerStack)
+        scrollView.addSubview(contentView)
         
-        headerStack.addArrangedSubview(photoImageView)
+        contentView.addSubview(photoImageView)
+        contentView.addSubview(headerStack)
+        contentView.addSubview(buttonStack)
+        
         headerStack.addArrangedSubview(welcomeLabel)
         headerStack.addArrangedSubview(descriptionLabel)
         
-        scrollView.addSubview(buttonStack)
         buttonStack.addArrangedSubview(googleButton)
         buttonStack.addArrangedSubview(appleButton)
+        
+        appleButton.addSubview(appleButtonStackView)
     }
     
     private func setupConstraints() {
@@ -160,29 +194,34 @@ class LoginViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
                     scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                     
+                    contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+                    contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+                    contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+                    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                     
+                    photoImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                    photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                    photoImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                    //photoImageView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
                     
-                    headerStack.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-                    headerStack.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-                    headerStack.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-                    headerStack.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+                    headerStack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+                    headerStack.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 16),
+                    headerStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                    headerStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -16),
+                    //headerStack.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
                     
                     // Asegurarse de que el ancho del contenido sea igual al ancho del scrollView
-                    headerStack.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+                    headerStack.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
                     
-//                    welcomeLabel.topAnchor.constraint(equalTo: headerStack.topAnchor, constant: 32),
-//                    welcomeLabel.leadingAnchor.constraint(equalTo: headerStack.leadingAnchor),
-//                    welcomeLabel.trailingAnchor.constraint(equalTo: headerStack.trailingAnchor),
-//                    //welcomeLabel.bottomAnchor.constraint(equalTo: headerStack.bottomAnchor),
-//                    
-//                    descriptionLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 32),
-//                    descriptionLabel.leadingAnchor.constraint(equalTo: headerStack.leadingAnchor, constant: 16),
-//                    descriptionLabel.trailingAnchor.constraint(equalTo: headerStack.trailingAnchor, constant: -16),
-                    //descriptionLabel.bottomAnchor.constraint(equalTo: headerStack.bottomAnchor),
+                    buttonStack.topAnchor.constraint(equalTo: headerStack.bottomAnchor, constant: 32),
+                    buttonStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                    buttonStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
                     
-                    buttonStack.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 32),
-                    buttonStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-                    buttonStack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
+                    appleButtonStackView.leadingAnchor.constraint(equalTo: appleButton.leadingAnchor, constant: 10),
+                    appleButtonStackView.trailingAnchor.constraint(equalTo: appleButton.trailingAnchor, constant: -34),
+                    appleButtonStackView.topAnchor.constraint(equalTo: appleButton.topAnchor),
+                    appleButtonStackView.bottomAnchor.constraint(equalTo: appleButton.bottomAnchor)
                     
                 ])
     }
