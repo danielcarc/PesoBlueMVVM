@@ -58,7 +58,9 @@ class LoginViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         var label = UILabel()
-        label.text = "Descubre una nueva forma de explorar la ciudad con nuestra guía turística personalizada y convertidor de monedas."
+
+        label.text = "Descubrí una nueva forma de explorar la Argentina con nuestra guía turística del editor y nuestro conversor de monedas en tiempo real."
+
         label.font = .systemFont(ofSize: 16)
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -99,6 +101,22 @@ class LoginViewController: UIViewController {
     private lazy var appleButton: UIButton = {
         var button = UIButton()
         button.setTitle("Continuar con Apple", for: .normal)
+<<<<<<< HEAD
+=======
+        button.setImage(UIImage(systemName: "apple.logo"), for: .normal)
+        button.tintColor = .black
+        
+        button.contentHorizontalAlignment = .left  // Alinear todo el contenido a la izquierda
+        button.imageView?.contentMode = .scaleAspectFit  // Imagen ajustada
+        
+        // Ajusta el espacio entre imagen y texto
+        //button.semanticContentAttribute = .forceRightToLeft
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)  // Desplaza el ícono
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)  // Desplaza el texto
+
+        //button.contentHorizontalAlignment = .center
+        
+>>>>>>> 3c88361 (Creando un UI de Login)
         button.titleLabel?.font = .boldSystemFont(ofSize: 16)
         button.backgroundColor = UIColor(red: 0.91, green: 0.94, blue: 0.96, alpha: 1.0)
         button.setTitleColor(UIColor.black, for: .normal)
@@ -330,4 +348,5 @@ class LoginViewController: UIViewController {
 //}
 
 
-#Preview("LoginViewController", traits: .defaultLayout, body: { LoginViewController()})
+
+//#Preview("LoginViewController", traits: .defaultLayout, body: { LoginViewController()})

@@ -21,7 +21,6 @@ class ChangeViewModel{
     private(set)var changes = [ChangesResponse] ()
     
     
-    
     var changeArray = ["Oficial", "Blue", "Euro Blue"]
     
     @MainActor
