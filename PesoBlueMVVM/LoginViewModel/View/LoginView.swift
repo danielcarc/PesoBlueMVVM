@@ -83,7 +83,7 @@ class LoginView: UIView {
         var view = UIStackView()
         view.axis = .vertical
         view.alignment = .fill
-        view.distribution = .fillEqually
+        view.distribution = .fill
         view.spacing = 16
         view.translatesAutoresizingMaskIntoConstraints = false
         //view.backgroundColor = .white
@@ -91,10 +91,13 @@ class LoginView: UIView {
         return view
     }()
     
+    var onGoogleSignInTap: (() -> Void)?
+    
     private lazy var googleButton: UIButton = {
         var button = UIButton()
         button.setTitle("Continuar con Google", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        button.addTarget(self, action: #selector (googleButtonTapped), for: .touchUpInside)
         button.backgroundColor = UIColor(red: 0.91, green: 0.94, blue: 0.96, alpha: 1.0)
         button.setTitleColor(UIColor.black, for: .normal)
         button.layer.cornerRadius = 10
@@ -106,6 +109,8 @@ class LoginView: UIView {
         return button
     }()
     
+    var onAppleSignInTap: (() -> Void)?
+    
     private lazy var appleButton: UIButton = {
         var button = UIButton()
         
@@ -113,8 +118,10 @@ class LoginView: UIView {
         //button.semanticContentAttribute = .forceRightToLeft
         button.backgroundColor = UIColor(red: 0.91, green: 0.94, blue: 0.96, alpha: 1.0)
         //button.setTitleColor(UIColor.black, for: .normal)
+        button.addTarget(self, action: #selector (appleButtonTapped), for: .touchUpInside)
         button.layer.cornerRadius = 10
         button.titleLabel?.textAlignment = .center
+        
         NSLayoutConstraint.activate([
                     button.heightAnchor.constraint(equalToConstant: 48)
                 ])
@@ -129,6 +136,7 @@ class LoginView: UIView {
         label.font = .boldSystemFont(ofSize: 16)
         label.textAlignment = .center
         label.textColor = .black
+        label.isUserInteractionEnabled = false
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -143,6 +151,7 @@ class LoginView: UIView {
             imageView.widthAnchor.constraint(equalToConstant: 24)
         ])
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = false
         
         return imageView
     }()
@@ -152,10 +161,12 @@ class LoginView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 10
+        stackView.isUserInteractionEnabled = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupUI()
@@ -164,7 +175,7 @@ class LoginView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
 }
 
 private extension LoginView{
@@ -173,8 +184,27 @@ private extension LoginView{
         
         addSubViews()
         setupConstraints()
-        
+         //print("Gesture Recognizers: \(googleButton.gestureRecognizers ?? [])")  // Imprime los reconocedores
+
+         
     }
+    
+//    internal override func layoutSubviews() {
+//        super.layoutSubviews()
+//        print("Button frame: \(googleButton.frame)")  // Comprueba el frame
+//        print("Button interaction enabled: \(googleButton.isUserInteractionEnabled)")
+//        print("Superview interaction enabled: \(self.isUserInteractionEnabled)")
+//        print("StackView frame: \(buttonStack.frame)")
+//        print("ScrollView frame: \(scrollView.frame)")
+//        if let superview = buttonStack.superview {
+//            print("Subviews of superview: \(superview.subviews)")
+//        }
+//        print("Is stack view hidden: \(buttonStack.isHidden)")
+//
+//
+//
+//    }
+    
     private func addSubViews() {
         self.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -205,6 +235,7 @@ private extension LoginView{
                     contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
                     contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+                    //contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor),
                     
                     photoImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
                     photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -223,6 +254,18 @@ private extension LoginView{
                     buttonStack.topAnchor.constraint(equalTo: headerStack.bottomAnchor, constant: 32),
                     buttonStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
                     buttonStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+                    buttonStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32),
+                    buttonStack.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
+                    
+                    googleButton.topAnchor.constraint(equalTo: buttonStack.topAnchor),
+                    googleButton.heightAnchor.constraint(equalToConstant: 48),
+                    googleButton.widthAnchor.constraint(equalTo: buttonStack.widthAnchor),
+                    //googleButton.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor),
+                    
+                    appleButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 16),
+                    appleButton.heightAnchor.constraint(equalToConstant: 48),
+                    appleButton.leadingAnchor.constraint(equalTo: buttonStack.leadingAnchor),
+                    appleButton.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor),
                     
                     appleButtonStackView.leadingAnchor.constraint(equalTo: appleButton.leadingAnchor, constant: 10),
                     appleButtonStackView.trailingAnchor.constraint(equalTo: appleButton.trailingAnchor, constant: -34),
@@ -231,4 +274,13 @@ private extension LoginView{
                     
                 ])
     }
+    
+    @objc func googleButtonTapped() {
+        onGoogleSignInTap?()
+    }
+    
+    @objc func appleButtonTapped() {
+        onAppleSignInTap?()
+    }
+    
 }

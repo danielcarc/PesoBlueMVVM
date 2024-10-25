@@ -69,7 +69,7 @@ extension CurrencyViewController: UITextFieldDelegate{
 
 extension CurrencyViewController: CurrencyViewModelDelegate{
     func didFail(error: Error) {
-        print(error)
+        print(error.localizedDescription)
     }
     
     func didFinish() async {

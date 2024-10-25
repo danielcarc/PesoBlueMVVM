@@ -21,7 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         
 //        self.window?.rootViewController = PesoBlueTabBarControllerViewController()
-        window?.rootViewController = LoginViewController()
+        let navigationController = UINavigationController(rootViewController: LoginViewController())
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
     }

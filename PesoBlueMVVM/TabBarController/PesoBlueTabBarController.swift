@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PesoBlueTabBarControllerViewController: UITabBarController {
+class PesoBlueTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
