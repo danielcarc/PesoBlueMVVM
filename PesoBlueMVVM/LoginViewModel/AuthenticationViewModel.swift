@@ -13,6 +13,9 @@ import GoogleSignInSwift
 
 
 class AuthenticationViewModel{
+    
+    private let userService = UserService()
+    
     enum AuthenticationState {
       case unauthenticated
       case authenticating
@@ -25,6 +28,8 @@ class AuthenticationViewModel{
 //MARK: - Google Sign In
 
 extension AuthenticationViewModel{
+    
+    
     
     enum AuthenticationError: Error{
         case tokenError(message: String)
@@ -50,11 +55,13 @@ extension AuthenticationViewModel{
         }
     }
     
+    @MainActor //esto por llamar rootviewcontroller y window desde un hilo que no es el pricipal, por ello mainactor
     func singInWithGoogle() async throws -> Bool{
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             fatalError("No Client ID found in Firebase Configuration")
         }
         let config = GIDConfiguration(clientID: clientID)
+        
         GIDSignIn.sharedInstance.configuration = config
         
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -77,7 +84,18 @@ extension AuthenticationViewModel{
             let result = try await Auth.auth().signIn(with: credential)
             //Extraemos el usuario de result
             let firebaseUser = result.user
+            let appUser = AppUser(firebaseUser: firebaseUser)
+            let existingUser = userService.loadUser()
+            if existingUser?.uid != appUser.uid {
+                // Guardar solo si es un usuario nuevo o si hay cambios
+                userService.saveUser(appUser)
+                print("AppUser saved to UserDefaults")
+            } else {
+                print("User already exists in UserDefaults")
+            }
+            
             print("User \(firebaseUser.uid) sign in with email \(firebaseUser.email ?? "unknown")")
+            //print("user \(firebaseUser.displayName ?? "unknown") \(firebaseUser.email ?? "unknown")\(firebaseUser.photoURL?.absoluteString ?? "unknown")\(firebaseUser.phoneNumber ?? "unknown")")
             return true
         }
         catch let error as AuthError {
@@ -88,6 +106,11 @@ extension AuthenticationViewModel{
             throw AuthError.unknown
         }
         
+    }
+    
+    func signOut() throws {
+        try Auth.auth().signOut()
+        userService.deleteUser()
     }
 }
 

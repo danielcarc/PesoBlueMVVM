@@ -67,6 +67,9 @@ class LoginViewController: UIViewController {
     
 }
 
+
+//MARK: - Sign in Methods
+
 extension LoginViewController {
     
     func didTapSignUpGoogle() async {
@@ -93,6 +96,9 @@ extension LoginViewController {
         }
         
     }
+    
+    
+    // el sign in with apple se agrega apenas antes de publicar la app
     func didTapSignUpApple() {
          Analytics.logEvent("user_logged_in", parameters: [
                  "user_email": "user@example.com"

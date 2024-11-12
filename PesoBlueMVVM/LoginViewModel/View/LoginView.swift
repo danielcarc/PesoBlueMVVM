@@ -94,19 +94,61 @@ class LoginView: UIView {
     var onGoogleSignInTap: (() -> Void)?
     
     private lazy var googleButton: UIButton = {
+        
         var button = UIButton()
-        button.setTitle("Continuar con Google", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        button.addTarget(self, action: #selector (googleButtonTapped), for: .touchUpInside)
+        
+        // Ajusta el espacio entre imagen y texto
+        //button.semanticContentAttribute = .forceRightToLeft
         button.backgroundColor = UIColor(red: 0.91, green: 0.94, blue: 0.96, alpha: 1.0)
-        button.setTitleColor(UIColor.black, for: .normal)
+        //button.setTitleColor(UIColor.black, for: .normal)
+        button.addTarget(self, action: #selector (googleButtonTapped), for: .touchUpInside)
         button.layer.cornerRadius = 10
+        button.titleLabel?.textAlignment = .center
+        
         NSLayoutConstraint.activate([
                     button.heightAnchor.constraint(equalToConstant: 48)
                 ])
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
+    }()
+    
+    //agregar el logo de google al boton
+    private lazy var googleButtonLabel: UILabel = {
+        var label = UILabel()
+        label.text = "Continuar con Google"
+        label.font = .boldSystemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.isUserInteractionEnabled = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private lazy var googleLogoImageView: UIImageView = {
+        var imageView = UIImageView(image: UIImage(named: "googlelogo"))
+        imageView.tintColor = .black
+        imageView.contentMode = .scaleAspectFit
+        NSLayoutConstraint.activate([
+            imageView.heightAnchor.constraint(equalToConstant: 24),
+            imageView.widthAnchor.constraint(equalToConstant: 24)
+        ])
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = false
+        
+        return imageView
+    }()
+    
+    private lazy var googleButtonStackView: UIStackView = {
+        var stackView = UIStackView(arrangedSubviews: [googleLogoImageView, googleButtonLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 10
+        stackView.isUserInteractionEnabled = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
     }()
     
     var onAppleSignInTap: (() -> Void)?
@@ -219,6 +261,7 @@ private extension LoginView{
         buttonStack.addArrangedSubview(googleButton)
         buttonStack.addArrangedSubview(appleButton)
         
+        googleButton.addSubview(googleButtonStackView)
         appleButton.addSubview(appleButtonStackView)
     }
     
@@ -260,6 +303,12 @@ private extension LoginView{
                     googleButton.topAnchor.constraint(equalTo: buttonStack.topAnchor),
                     googleButton.heightAnchor.constraint(equalToConstant: 48),
                     googleButton.widthAnchor.constraint(equalTo: buttonStack.widthAnchor),
+                    
+                    googleButtonStackView.leadingAnchor.constraint(equalTo: googleButton.leadingAnchor, constant: 10),
+                    googleButtonStackView.trailingAnchor.constraint(equalTo: googleButton.trailingAnchor, constant: -34),
+                    googleButtonStackView.topAnchor.constraint(equalTo: googleButton.topAnchor),
+                    googleButtonStackView.bottomAnchor.constraint(equalTo: googleButton.bottomAnchor),
+                    
                     //googleButton.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor),
                     
                     appleButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 16),

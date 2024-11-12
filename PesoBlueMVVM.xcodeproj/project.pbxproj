@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		C513DED32AE83ADF0066AFCA /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED22AE83ADF0066AFCA /* CurrencyViewController.swift */; };
 		C513DED72AE83B480066AFCA /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED62AE83B480066AFCA /* CurrencyView.swift */; };
 		C51C8ABE2BD87FBC008777C8 /* PesoBlueTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */; };
+		C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D8A492CE2C1B600A827BD /* AppUser.swift */; };
 		C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55DA6882ACB136F00871340 /* ChangeView.swift */; };
 		C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740A2AC71FD3000FCD5B /* AppDelegate.swift */; };
 		C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740C2AC71FD3000FCD5B /* SceneDelegate.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C5028CB32CD0563A0034AD10 /* PesoBlueMVVM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PesoBlueMVVM.entitlements; sourceTree = "<group>"; };
 		C513DE9C2ACDB5340066AFCA /* ChangeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCollectionViewCell.swift; sourceTree = "<group>"; };
 		C513DE9E2ACDBB090066AFCA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		C513DEA02ACDC17D0066AFCA /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 		C513DED22AE83ADF0066AFCA /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
 		C513DED62AE83B480066AFCA /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
 		C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PesoBlueTabBarController.swift; sourceTree = "<group>"; };
+		C52D8A492CE2C1B600A827BD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		C55DA6882ACB136F00871340 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
 		C58674072AC71FD3000FCD5B /* PesoBlueMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PesoBlueMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C586740A2AC71FD3000FCD5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +64,10 @@
 		C5C47C122CCAF16600238099 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		C5E4E73E2CC05826000A06C4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C555BAB32CE2D6AE00EC6010 /* User Defaults */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "User Defaults"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C58674042AC71FD3000FCD5B /* Frameworks */ = {
@@ -183,6 +190,9 @@
 		C58674092AC71FD3000FCD5B /* PesoBlueMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				C555BAB32CE2D6AE00EC6010 /* User Defaults */,
+				C5028CB32CD0563A0034AD10 /* PesoBlueMVVM.entitlements */,
+				C52D8A492CE2C1B600A827BD /* AppUser.swift */,
 				C59B3F432CBDD1CF00E0C532 /* LoginViewModel */,
 				C513DEFA2AE8D99F0066AFCA /* TabBarController */,
 				C513DEA32ACDFF110066AFCA /* CurrencyViewModel */,
@@ -236,6 +246,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C555BAB32CE2D6AE00EC6010 /* User Defaults */,
 			);
 			name = PesoBlueMVVM;
 			productName = PesoBlueMVVM;
@@ -304,6 +317,7 @@
 				C5C47C132CCAF16600238099 /* AuthenticationViewModel.swift in Sources */,
 				C513DED12AE839240066AFCA /* BeginTabViewController.swift in Sources */,
 				C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */,
+				C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */,
 				C513DE9F2ACDBB090066AFCA /* Model.swift in Sources */,
 				C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */,
 				C513DEAD2ACE00520066AFCA /* ChangeViewModel.swift in Sources */,
@@ -454,6 +468,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PesoBlueMVVM/PesoBlueMVVM.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TKYW6DY62B;
@@ -482,6 +497,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PesoBlueMVVM/PesoBlueMVVM.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TKYW6DY62B;
