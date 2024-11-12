@@ -11,6 +11,7 @@ import FirebaseAnalytics
 class LoginViewController: UIViewController {
     
     let authVM = AuthenticationViewModel()
+    let loggedUser = UserService()
     
     var loginView : LoginView!
     
@@ -76,8 +77,9 @@ extension LoginViewController {
         
         do {
             if try await authVM.singInWithGoogle() {
+                let user = loggedUser.loadUser()
                 Analytics.logEvent("user_logged_in", parameters: [
-                    "user_email": "user@example.com"
+                    "user_email": "\(user?.email ?? "unknown")"
                 ])
                 print("User tapped Google Sign-In")
                 //la vista actual tiene que estar embebida en un navigation controller para que se ejecute
