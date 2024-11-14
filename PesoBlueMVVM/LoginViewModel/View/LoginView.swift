@@ -226,26 +226,8 @@ private extension LoginView{
         
         addSubViews()
         setupConstraints()
-         //print("Gesture Recognizers: \(googleButton.gestureRecognizers ?? [])")  // Imprime los reconocedores
-
          
     }
-    
-//    internal override func layoutSubviews() {
-//        super.layoutSubviews()
-//        print("Button frame: \(googleButton.frame)")  // Comprueba el frame
-//        print("Button interaction enabled: \(googleButton.isUserInteractionEnabled)")
-//        print("Superview interaction enabled: \(self.isUserInteractionEnabled)")
-//        print("StackView frame: \(buttonStack.frame)")
-//        print("ScrollView frame: \(scrollView.frame)")
-//        if let superview = buttonStack.superview {
-//            print("Subviews of superview: \(superview.subviews)")
-//        }
-//        print("Is stack view hidden: \(buttonStack.isHidden)")
-//
-//
-//
-//    }
     
     private func addSubViews() {
         self.addSubview(scrollView)

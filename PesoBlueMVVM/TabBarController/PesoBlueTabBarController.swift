@@ -17,12 +17,14 @@ class PesoBlueTabBarController: UITabBarController {
     
     private func configureTabs(){
         
-        let vc1 = ChangeViewController()
-        let vc2 = CurrencyViewController()
+        let vc1 = HomeViewController()
+        let vc2 = ChangeViewController()
+        let vc3 = CurrencyViewController()
         
         // Set Tab Images
-        vc1.tabBarItem.image = UIImage(systemName: "dollarsign.square.fill")
+        vc1.tabBarItem.image = UIImage(systemName: "house.fill")
         vc2.tabBarItem.image = UIImage(systemName: "arrow.left.arrow.right.square.fill")
+        vc3.tabBarItem.image = UIImage(systemName: "currency.usd.circle.fill")
         
         // Set Titles
         vc1.title = "Cambio"
@@ -30,6 +32,7 @@ class PesoBlueTabBarController: UITabBarController {
         
         let nav1 = UINavigationController(rootViewController: vc1)
         let nav2 = UINavigationController(rootViewController: vc2)
+        let nav3 = UINavigationController(rootViewController: vc3)
         
         setViewControllers([nav1, nav2], animated: false)
     }

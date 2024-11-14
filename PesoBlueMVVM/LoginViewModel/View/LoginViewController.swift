@@ -41,10 +41,6 @@ class LoginViewController: UIViewController {
             AnalyticsParameterScreenClass: String(describing: type(of: self))
         ])
         
-//        Si tu app tiene una pantalla de login, podrías enviar un evento al momento de iniciar sesión:
-//        Analytics.logEvent("user_logged_in", parameters: [
-//            "user_email": "user@example.com"
-//        ])
     }
     
     

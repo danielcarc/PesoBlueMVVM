@@ -14,9 +14,9 @@
             filePath = "PesoBlueMVVM/LoginViewModel/View/LoginViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "didTapSignUpApple()"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "didTapSignUpGoogle()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

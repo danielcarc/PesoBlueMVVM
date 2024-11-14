@@ -94,8 +94,6 @@ extension AuthenticationViewModel{
                 print("User already exists in UserDefaults")
             }
             
-            print("User \(firebaseUser.uid) sign in with email \(firebaseUser.email ?? "unknown")")
-            //print("user \(firebaseUser.displayName ?? "unknown") \(firebaseUser.email ?? "unknown")\(firebaseUser.photoURL?.absoluteString ?? "unknown")\(firebaseUser.phoneNumber ?? "unknown")")
             return true
         }
         catch let error as AuthError {
