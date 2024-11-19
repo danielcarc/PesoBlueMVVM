@@ -7,6 +7,13 @@
 
 import UIKit
 
+
+//hacer el conversion rapida
+//ver de agregar mas ademas de brasil, uruguay y chile
+//debajo el collection view de descubre buenos aires
+//luego el de experiencias tipo tango, cafeteria, gastronomia, cocteleria y mas
+//y luego top ciudades para visitar empezando con Bariloche, mendoza, ushuaia, cordoba
+
 class HomeViewController: UIViewController {
 
     // MARK: - UI Elements
