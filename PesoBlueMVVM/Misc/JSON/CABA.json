@@ -14,7 +14,7 @@
     "price": "-",
     "cuisines": ["Bakery", "Cafe"],
     "instagram": "https://www.instagram.com/cocuboulangerie/",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/hfzly2l6fkcperlagypcb/Cocu-1.jpg?rlkey=6r4ajb6inm5012nqkypc6qju7&st=ueee8bmj&raw=1"
   },
   {
     "id": 1002,
@@ -31,7 +31,7 @@
     "price": "-",
     "cuisines": ["Cafe"],
     "instagram": "https://www.instagram.com/petitcolonba",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/w5p7md8ob0mej69t7uyks/petitcolon-2.jpg?rlkey=6t5v3lzb871ml5j2ebbtzqqav&raw=1"
   },
   {
     "id": 1003,
@@ -48,7 +48,7 @@
     "price": "-",
     "cuisines": ["Cafe", "Pastries"],
     "instagram": "https://www.instagram.com/confiterialaideal/",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/clr3o5h1y32rk0hz0v0e5/ideal.jpg?rlkey=2qnvbr8vkm5ykwlerhtkge1vc&st=g73bplhy&raw=1"
   },
   {
     "id": 1004,
@@ -65,7 +65,7 @@
     "price": "-",
     "cuisines": ["Cafe", "Bistro"],
     "instagram": "https://www.instagram.com/caferivas/",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/lhm29w5ft5oypbf7ewhnv/caferivas.jpg?rlkey=rumojv5ptzl0k56wbbuobtl9w&raw=1"
   },
   {
     "id": 1005,
@@ -82,7 +82,7 @@
     "price": "-",
     "cuisines": ["Cafe"],
     "instagram": "https://www.instagram.com/grancafetortoni",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/x52pjoql921rq69ahag61/Caf-_Tortoni-2.jpg?rlkey=gs5d94uclnvmile02r4wkftj4&raw=1"
   },
   {
     "id": 1006,
@@ -99,7 +99,7 @@
     "price": "-",
     "cuisines": ["Cafe", "Chocolate"],
     "instagram": "https://www.instagram.com/chocolates_rapanui",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/yw86fwe0gxswvjzr4yite/Rapanui.jpg?rlkey=urnj3i4rnomgawarmatu7au4a&raw=1"
   },
   {
     "id": 1007,
@@ -116,7 +116,7 @@
     "price": "-",
     "cuisines": ["Cafe", "Brunch"],
     "instagram": "https://www.instagram.com/paniesdelicioso/",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/m84lh8u3gy8hj55taivqy/pani-salvador-2.jpg?rlkey=pv5fre47aq1mqumw9g546c8ql&raw=1"
   },
   {
     "id": 1008,
@@ -133,7 +133,7 @@
     "price": "-",
     "cuisines": ["Cafe"],
     "instagram": "https://www.instagram.com/cuervocafe",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/6cr0cmk5uo4ibbdqvfl93/Cuervo-Cafe.jpg?rlkey=utp95j43y57n6a17m6gkqa6s5&raw=1"
   },
   {
     "id": 1009,
@@ -150,7 +150,7 @@
     "price": "-",
     "cuisines": ["Cafe", "Bakery"],
     "instagram": "https://www.instagram.com/padrecoffeeroasters",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/2862293r9e761nd7yzsms/padrecafeteria.jpg?rlkey=7ubg6nron27gh8k5y5gobk1km&raw=1"
   },
   {
     "id": 1010,
@@ -167,10 +167,10 @@
     "price": "-",
     "cuisines": ["Cafe"],
     "instagram": "https://www.instagram.com/rondddocafe/",
-    "image_url": "-"
+    "image_url": "https://www.dropbox.com/scl/fi/kx0x7fwyelxtg4ni2rafk/rondocafe.jpg?rlkey=610busg7a8ptc9wfpy7etcwo3&raw=1"
   },
   {
-      "id":1012,
+      "id":1011,
       "name":"Fogón Asado",
       "address":"Uriarte 1423",
       "city":"CABA",
@@ -184,7 +184,7 @@
       "price":3,
       "cuisines":["Parrilla"],
       "instagram":"https://www.instagram.com/fogonasado/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/101.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/e460uouau8gvy9rly4sip/fogonasado.jpg?rlkey=5jijg21tem1ktzzfbda9zh8nv&raw=1"
    },
    {
       "id":1012,
@@ -201,7 +201,7 @@
       "price":4,
       "cuisines":["Argentina"],
       "instagram":"https://www.instagram.com/elmercadofaena/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/102.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/vr0pqsr588q1w7icovk59/el-mercado-2.jpg?rlkey=alq4go798bcmnu5pnfh3miakj&raw=1"
    },
    {
       "id":1013,
@@ -218,7 +218,7 @@
       "price":3,
       "cuisines":["Parrilla"],
       "instagram":"https://www.instagram.com/hierro.palermo/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/103.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/jev23zpk16id4v00gvkrh/Hierroparrilla.jpg?rlkey=9zh4ylfd5440ick678gb4lg1r&raw=1"
    },
    {
       "id":1014,
@@ -235,7 +235,7 @@
       "price":5,
       "cuisines":["Parrilla"],
       "instagram":"https://www.instagram.com/donjulioparrilla/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/104.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/d31xokyttg4tove1n35y7/don-julio-2.jpg?rlkey=2wkabls27i5df89n7zazwyw7m&raw=1"
    },
    {
       "id":1015,
@@ -252,7 +252,7 @@
       "price":4,
       "cuisines":["Parrilla"],
       "instagram":"https://www.instagram.com/lacabrera_bsas/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/105.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/phvrznunjnb09qf7b421c/lacabrera.jpg?rlkey=k7oxa9q8hhmhxsc9g6xtqh151&raw=1"
    },
    {
       "id":1016,
@@ -269,7 +269,7 @@
       "price":3,
       "cuisines":["Italiana", "Mediterranea"],
       "instagram":"https://www.instagram.com/doro.italianbar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/106.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/ammlksnt2xg6dkkhexoip/doroitalianbar.jpeg?rlkey=d4b8jj6upo9wxw0wwhghut0wy&raw=1"
    },
    {
       "id":1017,
@@ -286,7 +286,7 @@
       "price":4,
       "cuisines":["Italiana", "Europea"],
       "instagram":"https://www.instagram.com/faenabsas/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/107.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/wvfmwiujtzp653jqaz1mz/italpast.jpg?rlkey=dnoeubia41xpdx0r8ynr2lbjz&raw=1"
    },
    {
       "id":1018,
@@ -303,7 +303,7 @@
       "price":5,
       "cuisines":["Japonesa", "Sushi”, “Bar”],
       "instagram":"https://www.instagram.com/nicky.bsas/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/108.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/w8vejsh8yi5alqr4iwsx7/nicky-harrison.jpg?rlkey=zjdnzsc3lx6v00kev5vxo5nth&raw=1"
    },
    {
       "id":1019,
@@ -320,7 +320,7 @@
       "price":3,
       "cuisines":["Mariscos", "Mediterranea"],
       "instagram":"https://www.instagram.com/tancattasca/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/109.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/gotdtz50xedeo86g8ef8y/Tancat-Tasca-Restaurant.jpg?rlkey=rqybvhe5ww1i8pssj56bucs7b&raw=1"
    },
    {
       "id":1020,
@@ -337,7 +337,7 @@
       "price":2,
       "cuisines":["Alemana", "Europea"],
       "instagram":"https://www.instagram.com/baralemandevoto/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/110.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/kmbunchobssnnx4wzadh0/bar-aleman-2.jpg?rlkey=ccafbquthidrzgycje4omc4rx&raw=1"
    },
    {
       "id":1021,
@@ -354,7 +354,7 @@
       "price":2,
       "cuisines":["Armenia"],
       "instagram":"https://www.instagram.com/restaurantesarkis/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/107.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/mh71bl9k9wynr46kianpa/sarkis.jpg?rlkey=t5ai8zidksca4dbq36x978bzp&raw=1"
    },
    {
       "id":1022,
@@ -371,7 +371,7 @@
       "price":4,
       "cuisines":["Fusion", "Argentina”, “Bar”],
       "instagram":"https://www.instagram.com/casacavia",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/108.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/7vkn2kcb0rxqp6co7kvh8/casacavia.jpg?rlkey=l6socg6cv5jltxjbbfxv8l48w&raw=1"
    },
    {
       "id":1023,
@@ -388,7 +388,7 @@
       "price":5,
       "cuisines":["Parrilla"],
       "instagram":"https://www.instagram.com/cabanalaslilasrestaurante/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/109.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/t72jgiobptt106y74ep98/cabana-las-lilas.jpg?rlkey=5girx30lnn079smiwaxps9xub&raw=1"
    },
    {
       "id":1024,
@@ -405,7 +405,7 @@
       "price":5,
       "cuisines":["Argentina"],
       "instagram":"https://www.instagram.com/elena.restaurante/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/110.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/k18g6jyjqfpkoveyvhoep/elenaresto.jpg?rlkey=q2kbzvrabkq6lgsbhsxownevb&raw=1"
    },
    {
       "id":1025,
@@ -422,7 +422,7 @@
       "price":4,
       "cuisines":["Contemporanea”, ”Bar”],
       "instagram":"https://www.instagram.com/crystal.skybar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/111.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/mxrenge3cyypqo2uqi4me/crystalbar.jpg?rlkey=u14cq8tcte1d4ffkxetyovqjp&raw=1"
    },
    {
       "id":1026,
@@ -439,7 +439,7 @@
       "price":4,
       "cuisines":["Parrilla"],
       "instagram":"https://www.instagram.com/rufinoarg",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/112.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/q7o9jn3l27z1o2tv3lzoy/rufinoresto.jpg?rlkey=j0jhbi18hwf5jsno76y6dhwen&raw=1"
    },
    {
       "id":1027,
@@ -456,7 +456,7 @@
       "price":4,
       "cuisines":["Argentina"],
       "instagram":"https://www.instagram.com/anchoitacava/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/113.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/eg46w7xhckik0g2booo5p/anchoita.jpg?rlkey=mvvp48v8rmhf2mkqqnto6w4iu&raw=1"
    },
    {
       "id":1028,
@@ -473,7 +473,7 @@
       "price":3,
       "cuisines":["Parrilla Latina"],
       "instagram":"https://www.instagram.com/estilocampo/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/114.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/0kjfqg5frvpylglxndk1x/restaurant-estilo-campo.jpg?rlkey=rx4qj0bnlci5a1pkp1hie8i3n&raw=1"
    },
    {
       "id":1029,
@@ -490,7 +490,7 @@
       "price":4,
       "cuisines":["Parrilla", "Mariscos"],
       "instagram":"https://www.instagram.com/fervorbrasas/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/115.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/6q8jhejks6ioqc4a95lu4/fervor.jpg?rlkey=lvu9x4aqkvcaptkyaig5z97eu&raw=1"
    },
    {
       "id":1030,
@@ -507,7 +507,7 @@
       "price":3,
       "cuisines":["Argentina"],
       "instagram":"https://www.instagram.com/elpreferidodepalermo/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/116.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/znn1enk4ddm7e26tueper/El-Preferido-2.jpg?rlkey=uy50341c8oizbrj9g0t27vqzd&raw=1"
    },
    {
       "id":1031,
@@ -524,7 +524,7 @@
       "price":2,
       "cuisines":["Bar", "Hamburguesería"],
       "instagram":"https://www.instagram.com/siguealconejoblancorestobar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/117.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/3c2pijqtuvda6uffz5yuq/siguealconejoblanco.jpg?rlkey=3q2ahqbmofpmbq2nkgaui6drm&raw=1"
    },
    {
       "id":1032,
@@ -541,7 +541,7 @@
       "price":4,
       "cuisines":["Parrilla", "Argentina"],
       "instagram":"https://www.instagram.com/cortecomedor/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/118.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/2zbp4y3csfdmdt3gq9br8/Corte-Comedor.jpg?rlkey=fb1dryxckzx8fuipibjzir7re&raw=1"
    },
    {
       "id":1033,
@@ -558,7 +558,7 @@
       "price":5,
       "cuisines":["Italiana"],
       "instagram":"https://www.instagram.com/cucinadonore/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/119.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/iuib1pagshukb33ka4qan/cucina-donore-2.jpg?rlkey=j22kgllgs8hm0t8j6vzwe6rgg&raw=1"
    },
    {
       "id":1034,
@@ -575,7 +575,7 @@
       "price":3,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/3monosbar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/120.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/piqtrtx40llcly11czoll/tres-monos.jpg?rlkey=31ggrqwxone2wat9fuy2y15r2&raw=1"
    },
    {
       "id":1035,
@@ -592,7 +592,7 @@
       "price":4,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/cochinchina.bar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/121.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/57txnfn5833ahipefayii/cochinchina.jpg?rlkey=1g8m1ek5p964n3axzjeenhm3h&raw=1"
    },
    {
       "id":1036,
@@ -609,7 +609,7 @@
       "price":3,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/konacornerba/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/122.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/xqqfnwawqeygwy40pemsq/Kona-korner.jpg?rlkey=qbvsgw5hr2rwbdqa7yxdqumuo&raw=1"
    },
    {
       "id":1037,
@@ -626,7 +626,7 @@
       "price":3,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/lpv______/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/123.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/gaz9gipjymomr0pe4lwbf/eLePeVe-Las-Patriotas.jpg?rlkey=3iz1pc6f5xqlpry7bdxkgny1c&raw=1"
    },
    {
       "id":1038,
@@ -643,7 +643,7 @@
       "price":4,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/leclubbacan/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/124.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/hr1j9ehw02n57bycvis05/le-club-bacan.jpg?rlkey=nrx73ywunen9lr6nkp3f4awlq&raw=1"
    },
    {
       "id":1039,
@@ -660,7 +660,7 @@
       "price":5,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/trade.skybar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/125.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/zk199np1z8us3y4ishmec/trade-bar.jpg?rlkey=smfxno8fcjfhwnvxhdhq4h06n&raw=1"
    },
    {
       "id":1040,
@@ -677,7 +677,7 @@
       "price":4,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/uptown.ba/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/126.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/zkd4zash010xdc44c520r/uptown-ba.jpg?rlkey=c8bzigyd8i64kpkr7qvdmcwg3&raw=1"
    },
    {
       "id":1041,
@@ -694,7 +694,7 @@
       "price":3,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/secuaz.bsas/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/127.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/lq0p5mrp0dy3vhn1r29kt/secuaz.jpg?rlkey=3dfhdr5q4dp2qzrvwhs8wj1d8&raw=1"
    },
    {
       "id":1042,
@@ -711,7 +711,7 @@
       "price":4,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/doppelbar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/128.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/jp1g59zxm7oospxac82ni/doppelbar.jpg?rlkey=bujwtns5l8d21zuanc7bwbr4w&raw=1"
    },
    {
       "id":1043,
@@ -728,7 +728,7 @@
       "price":3,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/ellimonbar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/129.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/cpw7j1w315wr4y5yycu8o/el-limon.jpg?rlkey=w32d05ybke9tyleuglqz2ggct&raw=1"
    },
    {
       "id":1044,
@@ -745,7 +745,7 @@
       "price":4,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/reydecopas_bar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/130.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/v5nis90czqz76xb5cbucw/rey-de-copas-2.jpg?rlkey=elpj68m6dxpcw4g9yzvb6q23v&raw=1"
    },
    {
       "id":1045,
@@ -762,7 +762,7 @@
       "price":3,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/mixtape.bar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/131.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/3borms3cj3xyqk8jkq2yv/mixtape-bar-2.jpg?rlkey=8tbjtgq8n6q9cm6skn9htzeq0&raw=1"
    },
    {
       "id":1046,
@@ -779,7 +779,7 @@
       "price":4,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/alfondo.bar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/132.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/lx9b37qyurvdoow9tmvbd/al-fondo-bar-2.jpg?rlkey=vocm4faf5ydzpi588w4r6qoz0&raw=1"
    },
    {
       "id":1047,
@@ -796,7 +796,7 @@
       "price":4,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/boticariobar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/133.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/b9yrahorhpk308h24s9om/BoticarioBar.jpg?rlkey=afu2sz3hcsvebjpu7nttmz4t0&raw=1"
    },
    {
       "id":1048,
@@ -813,7 +813,7 @@
       "price":5,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/presidentebar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/134.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/l5f5laq5rcl82m7frfz8n/presidente_bar-2.jpg?rlkey=p3aym35a6y0gr7849sltic4lw&raw=1"
    },
    {
       "id":1049,
@@ -830,7 +830,7 @@
       "price":5,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/museowhisky/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/135.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/ap5nkhh78f2fg6mz2wuou/el-museo-del-whisky.jpg?rlkey=s0edv6oqt51s3ggwa3rr6r9cn&raw=1"
    },
    {
       "id":1050,
@@ -847,7 +847,7 @@
       "price":3,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/puertaroja.santelmo/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/136.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/79xcz9pcii7qqdyfqlqbn/la-puerta-roja-2.jpg?rlkey=g4vrv1797o4tbihtb1j5xj1xc&raw=1"
    },
    {
       "id":1051,
@@ -864,7 +864,7 @@
       "price":5,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/faenabsas/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/137.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/ivedmz35gi3xb9pe86nlr/library-lounge-hotel-2.jpg?rlkey=9fi2brwcsdvwog93nrc6g7irg&raw=1"
    },
    {
       "id":1052,
@@ -881,7 +881,7 @@
       "price":3,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/blestpalermo/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/138.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/cxke7np8t5jkcv07y2d29/blest-palermo.jpg?rlkey=qyl229wsps3u5jppbf3mcum5n&raw=1"
    },
    {
       "id":1053,
@@ -898,7 +898,7 @@
       "price":4,
       "cuisines":["Bar"],
       "instagram":"https://www.instagram.com/desarmaderobar/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/139.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/8alzixklbqqrh3montjyw/Desarmadero.jpg?rlkey=mdn2qosotqqjvn2v794au7zje&raw=1"
    },
    {
       "id":1054,
@@ -915,7 +915,7 @@
       "price":3,
       "cuisines":["Bar", "Pub"],
       "instagram":"https://www.instagram.com/dtmpub/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/140.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/bqjmuzve3p6xjb54uiprq/down-town-matias-2.jpg?rlkey=caia3wmdvvrn2u4trukctf52h&raw=1"
    },
    {
       "id":1055,
@@ -932,7 +932,7 @@
       "price":4,
       "cuisines":["Bar", "Cervecería"],
       "instagram":"https://www.instagram.com/rabietacerveza/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/141.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/fvnilz6wk9576pdwu3uwz/rabieta-2.jpg?rlkey=4b478eh20zi9atbzn3nv5w4y8&raw=1"
    },
    {
       "id":1056,
@@ -949,7 +949,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/pizzeriaguerrin/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/142.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/dyrckodkii3na3wbqgmqe/guerrin.jpg?rlkey=7ambnffhav8daicupbxsv446c&raw=1"
    },
    {
       "id":1057,
@@ -966,7 +966,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/lascuartetaspizza/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/143.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/0c47ylildzew3tutb31wi/lascuartetas-2.jpg?rlkey=66gxhniuz4p5a0i2iv3lrr8f9&raw=1"
    },
    {
       "id":1058,
@@ -983,7 +983,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/pizzeriabanchero/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/144.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/2si7dlhp2b8ypik1cj4vj/banchero.jpg?rlkey=p8y4q6mzj029rkzbzwc7794df&raw=1"
    },
    {
       "id":1059,
@@ -1000,7 +1000,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/pizzerialamezzetta/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/145.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/byitv0uo78w3wcsc6l635/La-Mezzetta.jpg?rlkey=vpmu68y0rqpow3igwqfh92fli&raw=1"
    },
    {
       "id":1060,
@@ -1017,7 +1017,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/cuartito_paginaoficial/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/146.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/zjr41t5677e2omziv7cz3/el-cuartito.jpg?rlkey=3fgnxnbn71apkmqkrxxkm6gl5&raw=1"
    },
    {
       "id":1061,
@@ -1034,7 +1034,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/pizzaelimperio/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/147.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/22wjw2912m6u76vhb0wdb/el-imperio.jpg?rlkey=omq0qisdryfbczvsc2aiav8oz&raw=1"
    },
    {
       "id":1062,
@@ -1051,7 +1051,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/burgiopizzeria/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/148.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/0cm02b3cra5akznb761vs/burgio.jpg?rlkey=sop9a2fgk5ai9p2ygmanz8lrt&raw=1"
    },
    {
       "id":1063,
@@ -1068,7 +1068,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/siamonelforno/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/149.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/w3sghlf1qku4ftrgrgm44/siamo-nel-forno.jpg?rlkey=93ni5swrbe979d1mndbjxmq29&raw=1"
    },
    {
       "id":1064,
@@ -1085,7 +1085,7 @@
       "price":2,
       "cuisines":["Pizzería"],
       "instagram":"https://www.instagram.com/losinmortalespizza/",
-      "image_url":"https://resizer.otstatic.com/v2/profiles/legacy/150.jpg"
+      "image_url":"https://www.dropbox.com/scl/fi/0feidnv3mbhh5s5yeggsw/los-inmortales-2.jpg?rlkey=qtnyqb8w5mvlswldfnn4wphse&raw=1"
    },
    {
      "id": 1065,
@@ -1102,7 +1102,7 @@
      "price": 2,
      "cuisines": ["Cafe"],
      "instagram": "https://www.instagram.com/vivecafe/",
-     "image_url": "https://resizer.otstatic.com/v2/profiles/legacy/3424.jpg"
+     "image_url": "https://www.dropbox.com/scl/fi/4z535swmfp71u798xosbb/vive-cafe.jpg?rlkey=8tm0sjrl46sn7b32gqj05ds85&raw=1"
    },
    {
      "id": 1066,
@@ -1119,6 +1119,6 @@
      "price": 4,
      "cuisines": ["Cafe"],
      "instagram": "https://www.instagram.com/fullcitycoffeehouse/",
-     "image_url": "https://resizer.otstatic.com/v2/profiles/legacy/722.jpg"
-   },
+     "image_url": "https://www.dropbox.com/scl/fi/chjeqff86rtueb9tzdvx5/Full-City-Coffee-House-1b.jpg?rlkey=2w7z607x5mxqgcj3l72vx7ww8&raw=1"
+   }
 ]
