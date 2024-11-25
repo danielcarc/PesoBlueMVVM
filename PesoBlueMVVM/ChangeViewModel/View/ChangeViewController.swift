@@ -16,6 +16,7 @@ class ChangeViewController: UIViewController {
        
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = .init(width: UIScreen.main.bounds.width, height: 171)
+        
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         //registramos la celda
         vw.register(ChangeCollectionViewCell.self, forCellWithReuseIdentifier: "ChangeCollectionViewCell")
