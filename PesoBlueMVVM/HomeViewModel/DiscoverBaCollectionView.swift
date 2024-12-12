@@ -65,7 +65,7 @@ class DiscoverBaCollectionView: UIView {
 
     lazy var discoverCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: 200, height: 150)
+        layout.itemSize = .init(width: 160, height: 90)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10
 
@@ -82,10 +82,15 @@ class DiscoverBaCollectionView: UIView {
         super.init(frame: frame)
         setup()
     }
-
+    
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setup()
     }
+
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 }
 
 extension DiscoverBaCollectionView: UICollectionViewDataSource {

@@ -27,7 +27,7 @@ class QuickConversorView: UIView{
         //view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: 72).isActive = true
+        //view.heightAnchor.constraint(equalToConstant: 72).isActive = true
         return view
     }()
     
@@ -75,7 +75,7 @@ class QuickConversorView: UIView{
         view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: 72).isActive = true
+        //view.heightAnchor.constraint(equalToConstant: 72).isActive = true
         return view
     }()
     
@@ -126,12 +126,13 @@ class QuickConversorView: UIView{
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: .zero)
+        super.init(frame: frame)
         setupUI()
     }
-    
+        
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupUI()
     }
     
 }
@@ -161,16 +162,19 @@ extension QuickConversorView{
         
         NSLayoutConstraint.activate([
             // Title Label Constraints
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            titleLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
             
             // Stack View Constraints
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             
-            usdLabelsStackView.leadingAnchor.constraint(equalTo: usdContainerView.leadingAnchor, constant: 16),
+            usdContainerView.heightAnchor.constraint(equalToConstant: 72),
+            arsContainerView.heightAnchor.constraint(equalToConstant: 72),
+            
+            usdLabelsStackView.leadingAnchor.constraint(equalTo: usdContainerView.leadingAnchor, constant: 10),
             usdLabelsStackView.centerYAnchor.constraint(equalTo: usdContainerView.centerYAnchor),
             
             usdValueLabel.trailingAnchor.constraint(equalTo: usdContainerView.trailingAnchor, constant: -16),
@@ -178,7 +182,7 @@ extension QuickConversorView{
             
             usdValueLabel.widthAnchor.constraint(equalToConstant: 80),
             
-            arsLabelsStackView.leadingAnchor.constraint(equalTo: arsContainerView.leadingAnchor, constant: 16),
+            arsLabelsStackView.leadingAnchor.constraint(equalTo: arsContainerView.leadingAnchor, constant: 10),
             arsLabelsStackView.centerYAnchor.constraint(equalTo: arsContainerView.centerYAnchor),
             
             arsValueLabel.trailingAnchor.constraint(equalTo: arsContainerView.trailingAnchor, constant: -16),
@@ -189,3 +193,5 @@ extension QuickConversorView{
         
     }
 }
+
+

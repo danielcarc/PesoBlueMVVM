@@ -5,8 +5,10 @@
 //  Created by Daniel Carcacha on 12/11/2024.
 //
 
-import UIKit
 
+
+//agregar el descubre buenos aires, creando otra vista, sacar los constraints de los container de ars y usd laterales
+//hacer mas ancha la fotografia y menos alta, definir esto en quickconversionview para que ademas se vea el titulo
 
 //hacer el conversion rapida
 //ver de agregar mas ademas de brasil, uruguay y chile
@@ -18,9 +20,19 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    var quickConversorView : QuickConversorView!
-    var discoverBaCView : DiscoverBaCollectionView!
+    var quickConversorView = QuickConversorView()
+    var discoverBaCView = DiscoverBaCollectionView()
     
+    private var mainStackView: UIStackView = {
+        var stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+        
+  
     private let data : [TestData] = [
         TestData(image: "Obelisco", title: "Obelisco"),
         TestData(image: "googlelogo", title: "Caminito"),
@@ -30,37 +42,16 @@ class HomeViewController: UIViewController {
     
     
     override func loadView() {
-        let mainView = UIView()
-        mainView.backgroundColor = .white
-
-        quickConversorView = QuickConversorView()
-        discoverBaCView = DiscoverBaCollectionView()
-
-        mainView.addSubview(quickConversorView)
-        mainView.addSubview(discoverBaCView)
-
-        // Configura las constraints de ambas vistas
-        quickConversorView.translatesAutoresizingMaskIntoConstraints = false
-        discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            quickConversorView.topAnchor.constraint(equalTo: mainView.safeAreaLayoutGuide.topAnchor),
-            quickConversorView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-            quickConversorView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-            quickConversorView.heightAnchor.constraint(equalToConstant: 185),
-
-            discoverBaCView.topAnchor.constraint(equalTo: quickConversorView.bottomAnchor, constant: 16),
-            discoverBaCView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 16),
-            discoverBaCView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -16),
-            discoverBaCView.heightAnchor.constraint(equalToConstant: 250)
-        ])
-
-        self.view = mainView
+        
+        self.view = UIView()
+        self.view.backgroundColor = .white
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+       
+        setupUI()
         setup()
         
     }
@@ -69,6 +60,49 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController {
     func setup() {
-        discoverBaCView.updateData(data) // Pasas los datos al DiscoverBaCollectionView
+        
+        discoverBaCView.updateData(data)
+        
     }
 }
+
+
+
+extension HomeViewController{
+    
+    func setupUI(){
+        
+        addSubViews()
+        addConstraints()
+        
+    }
+    
+    func addSubViews(){
+        
+        view.addSubview(mainStackView)
+        
+        quickConversorView.translatesAutoresizingMaskIntoConstraints = false
+        discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
+        
+        mainStackView.addArrangedSubview(quickConversorView)
+        mainStackView.addArrangedSubview(discoverBaCView)
+        
+    }
+    
+    func addConstraints(){
+        NSLayoutConstraint.activate([
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            //mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            //mainStackView.heightAnchor.constraint(equalToConstant: 350),
+            
+            quickConversorView.heightAnchor.constraint(equalToConstant: 194),
+            discoverBaCView.heightAnchor.constraint(equalToConstant: 120)
+        ])
+        
+    }
+}
+
+

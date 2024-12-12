@@ -67,8 +67,8 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C555BAB32CE2D6AE00EC6010 /* User Defaults */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "User Defaults"; sourceTree = "<group>"; };
-		C56143062CE4314000760670 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
 		C561430A2CEC3CDE00760670 /* Misc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Misc; sourceTree = "<group>"; };
+		C57814272D08F746004A42C9 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,8 +192,8 @@
 		C58674092AC71FD3000FCD5B /* PesoBlueMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				C57814272D08F746004A42C9 /* HomeViewModel */,
 				C561430A2CEC3CDE00760670 /* Misc */,
-				C56143062CE4314000760670 /* HomeViewModel */,
 				C555BAB32CE2D6AE00EC6010 /* User Defaults */,
 				C5028CB32CD0563A0034AD10 /* PesoBlueMVVM.entitlements */,
 				C52D8A492CE2C1B600A827BD /* AppUser.swift */,
@@ -253,8 +253,8 @@
 			);
 			fileSystemSynchronizedGroups = (
 				C555BAB32CE2D6AE00EC6010 /* User Defaults */,
-				C56143062CE4314000760670 /* HomeViewModel */,
 				C561430A2CEC3CDE00760670 /* Misc */,
+				C57814272D08F746004A42C9 /* HomeViewModel */,
 			);
 			name = PesoBlueMVVM;
 			productName = PesoBlueMVVM;

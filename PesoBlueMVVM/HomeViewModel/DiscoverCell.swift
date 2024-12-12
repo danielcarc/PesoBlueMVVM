@@ -14,7 +14,7 @@ class DiscoverCell: UICollectionViewCell {
     private lazy var imageView : UIImageView = {
         var view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
+        view.contentMode = .scaleToFill
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         return view
