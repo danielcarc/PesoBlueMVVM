@@ -12,10 +12,11 @@ class DiscoverDataManager: DataManager{
     
     private var discoverItems: [DiscoverItem] = []
     
-    func fetch() {
+    func fetch() -> [DiscoverItem] {
         for data in loadPlist(file: "PlacesBa") {
             discoverItems.append(DiscoverItem(dict: data as! [String: String]))
         }
+        return discoverItems
     }
     
     func numberOfExploreItems() -> Int {

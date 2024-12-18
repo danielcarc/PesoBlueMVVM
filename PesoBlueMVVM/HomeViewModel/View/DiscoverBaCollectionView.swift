@@ -51,15 +51,17 @@ import UIKit
 //    }
 
 class DiscoverBaCollectionView: UIView {
-    private var data: [TestData] = []
+    
+    private var data: [DiscoverItem] = []
+    private var discoverManager : DiscoverDataManager = DiscoverDataManager()
 
-    func setData(_ data: [TestData]) {
-        self.data = data
+    func setData() {
+        self.data = discoverManager.fetch()
         discoverCollectionView.reloadData()
     }
     
-    func updateData(_ newData: [TestData]) {
-        self.data = newData
+    func updateData() {
+        self.data = discoverManager.fetch()
         discoverCollectionView.reloadData()
     }
     
@@ -103,6 +105,8 @@ class DiscoverBaCollectionView: UIView {
 //    }
 }
 
+//MARK: - UICollectionViewDataSource
+
 extension DiscoverBaCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         data.count
@@ -111,7 +115,7 @@ extension DiscoverBaCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = data[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DiscoverCell", for: indexPath) as! DiscoverCell
-        cell.set(image: item.image, title: item.title)
+        cell.set(image: item.image, title: item.name)
         return cell
     }
 }
@@ -130,7 +134,7 @@ private extension DiscoverBaCollectionView {
             
             discoverCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
             discoverCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            discoverCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10),
+            discoverCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             discoverCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
             
         ])

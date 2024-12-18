@@ -10,5 +10,11 @@ import Foundation
 
 class HomeViewModel{
     
+    private var discoverItems: [DiscoverItem] = []
     
+    var manager = DiscoverDataManager()
+    
+    func fetch(){
+        discoverItems = manager.fetch()
+    }
 }

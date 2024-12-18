@@ -4,6 +4,12 @@
 <array>
 	<dict>
 		<key>name</key>
+		<string>Paseos</string>
+		<key>image</key>
+		<string>Paseos.jpg</string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Restó</string>
 		<key>image</key>
 		<string>Resto.jpg</string>

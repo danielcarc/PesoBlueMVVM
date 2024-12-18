@@ -5,11 +5,6 @@
 //  Created by Daniel Carcacha on 12/11/2024.
 //
 
-
-
-//agregar el descubre buenos aires, creando otra vista, sacar los constraints de los container de ars y usd laterales
-//hacer mas ancha la fotografia y menos alta, definir esto en quickconversionview para que ademas se vea el titulo
-
 //hacer el conversion rapida
 //ver de agregar mas ademas de brasil, uruguay y chile
 //debajo el collection view de descubre buenos aires
@@ -33,13 +28,6 @@ class HomeViewController: UIViewController {
     }()
         
   
-    private let data : [TestData] = [
-        TestData(image: "Obelisco", title: "Obelisco"),
-        TestData(image: "googlelogo", title: "Caminito"),
-        TestData(image: "CircuitoChico", title: "Recoleta"),
-        TestData(image: "AppIcon", title: "Puente de la Mujer")
-    ]
-    
     
     override func loadView() {
         
@@ -61,7 +49,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     func setup() {
         
-        discoverBaCView.updateData(data)
+        discoverBaCView.updateData()
         
     }
 }
