@@ -62,10 +62,20 @@ class DiscoverBaCollectionView: UIView {
         self.data = newData
         discoverCollectionView.reloadData()
     }
+    
+    private lazy var discoverArgentinaLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .left
+        label.text = "Descubre Buenos Aires"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     lazy var discoverCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: 160, height: 90)
+        layout.itemSize = .init(width: 160, height: 120)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10
 
@@ -109,12 +119,18 @@ extension DiscoverBaCollectionView: UICollectionViewDataSource {
 private extension DiscoverBaCollectionView {
     
     func setup() {
+        addSubview(discoverArgentinaLabel)
         addSubview(discoverCollectionView)
         
         NSLayoutConstraint.activate([
-            discoverCollectionView.topAnchor.constraint(equalTo: topAnchor),
-            discoverCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            discoverCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            discoverArgentinaLabel.topAnchor.constraint(equalTo: topAnchor),
+            discoverArgentinaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            discoverArgentinaLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            //discoverArgentinaLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            
+            discoverCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
+            discoverCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            discoverCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 10),
             discoverCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
             
         ])

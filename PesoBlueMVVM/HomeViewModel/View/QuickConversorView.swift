@@ -71,9 +71,9 @@ class QuickConversorView: UIView{
     private lazy var arsContainerView : UIView = {
         var view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 8
-        view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor.lightGray.cgColor
+        //view.layer.cornerRadius = 8
+//        view.layer.borderWidth = 0.5
+//        view.layer.borderColor = UIColor.lightGray.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         //view.heightAnchor.constraint(equalToConstant: 72).isActive = true
         return view
@@ -171,10 +171,10 @@ extension QuickConversorView{
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             
-            usdContainerView.heightAnchor.constraint(equalToConstant: 72),
-            arsContainerView.heightAnchor.constraint(equalToConstant: 72),
+            usdContainerView.heightAnchor.constraint(equalToConstant: 50),
+            arsContainerView.heightAnchor.constraint(equalToConstant: 50),
             
-            usdLabelsStackView.leadingAnchor.constraint(equalTo: usdContainerView.leadingAnchor, constant: 10),
+            usdLabelsStackView.leadingAnchor.constraint(equalTo: usdContainerView.leadingAnchor, constant: 0),
             usdLabelsStackView.centerYAnchor.constraint(equalTo: usdContainerView.centerYAnchor),
             
             usdValueLabel.trailingAnchor.constraint(equalTo: usdContainerView.trailingAnchor, constant: -16),
@@ -182,7 +182,7 @@ extension QuickConversorView{
             
             usdValueLabel.widthAnchor.constraint(equalToConstant: 80),
             
-            arsLabelsStackView.leadingAnchor.constraint(equalTo: arsContainerView.leadingAnchor, constant: 10),
+            arsLabelsStackView.leadingAnchor.constraint(equalTo: arsContainerView.leadingAnchor, constant: 0),
             arsLabelsStackView.centerYAnchor.constraint(equalTo: arsContainerView.centerYAnchor),
             
             arsValueLabel.trailingAnchor.constraint(equalTo: arsContainerView.trailingAnchor, constant: -16),

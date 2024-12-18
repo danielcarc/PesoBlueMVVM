@@ -27,7 +27,7 @@ class HomeViewController: UIViewController {
         var stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = 10
+        stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -66,8 +66,6 @@ extension HomeViewController {
     }
 }
 
-
-
 extension HomeViewController{
     
     func setupUI(){
@@ -94,14 +92,11 @@ extension HomeViewController{
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            //mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            //mainStackView.heightAnchor.constraint(equalToConstant: 350),
             
-            quickConversorView.heightAnchor.constraint(equalToConstant: 194),
-            discoverBaCView.heightAnchor.constraint(equalToConstant: 120)
+            quickConversorView.heightAnchor.constraint(equalToConstant: 151),
+            discoverBaCView.heightAnchor.constraint(equalToConstant: 158)
         ])
-        
     }
 }
 
