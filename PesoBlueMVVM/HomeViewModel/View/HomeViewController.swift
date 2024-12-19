@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
     
     var quickConversorView = QuickConversorView()
     var discoverBaCView = DiscoverBaCollectionView()
+    var homeViewModel: HomeViewModel = HomeViewModel()
     
     private var mainStackView: UIStackView = {
         var stackView = UIStackView()
@@ -39,7 +40,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        setupUI()
         setup()
         
     }
@@ -47,12 +47,17 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController {
+    
     func setup() {
-        
+        setupUI()
+        setupQuickConversor()
         discoverBaCView.updateData()
         
     }
+    
 }
+
+//MARK: - Setup SubViews and Constraints
 
 extension HomeViewController{
     
@@ -87,5 +92,27 @@ extension HomeViewController{
         ])
     }
 }
+
+//MARK: - SetUp QuickConversor
+
+extension HomeViewController{
+    
+    func setupQuickConversor(){
+        
+        Task {
+            if let dolar = await homeViewModel.getDolarBlue()?.venta {
+                quickConversorView.setDolar(dolar: dolar)
+            } else {
+                print("No se pudo obtener el valor del dólar")
+            }
+            //necesito primero el countrycode, despues un switch dependiendo del pais que moneda se convierte y desde ahi a obtener el valor
+            let countryCode = homeViewModel.getUserCountry()
+            let value = await homeViewModel.getValueForCountry(countryCode: countryCode ?? "AR")
+            quickConversorView.setValue(value: value)
+            
+        }
+    }
+}
+
 
 

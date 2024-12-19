@@ -53,15 +53,15 @@ import UIKit
 class DiscoverBaCollectionView: UIView {
     
     private var data: [DiscoverItem] = []
-    private var discoverManager : DiscoverDataManager = DiscoverDataManager()
+    private var homeViewModel : HomeViewModel = HomeViewModel()
 
     func setData() {
-        self.data = discoverManager.fetch()
+        self.data = homeViewModel.fetch()
         discoverCollectionView.reloadData()
     }
     
     func updateData() {
-        self.data = discoverManager.fetch()
+        self.data = homeViewModel.fetch()
         discoverCollectionView.reloadData()
     }
     

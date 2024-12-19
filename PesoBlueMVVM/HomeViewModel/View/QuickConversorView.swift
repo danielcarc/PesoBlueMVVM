@@ -135,6 +135,15 @@ class QuickConversorView: UIView{
         setupUI()
     }
     
+    func setDolar(dolar: Double){
+        let dolarBlue = String(format: "%.2f", dolar)
+        usdValueLabel.text = "$ \(dolarBlue)"
+    }
+    
+    func setValue(value: String){
+        arsValueLabel.text = "$ \(value)"
+    }
+    
 }
 
 extension QuickConversorView{
