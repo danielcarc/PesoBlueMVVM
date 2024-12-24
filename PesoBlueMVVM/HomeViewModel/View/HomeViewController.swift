@@ -121,7 +121,8 @@ extension HomeViewController{
 extension HomeViewController: CollectionViewSelectionDelegate{
     
     func didSelectItem(_ item: DiscoverItem) {
-        let item = item
+        let selectedItem = item
+        homeViewModel.filteredItem(item: selectedItem)
         print(item.name)
     }
     

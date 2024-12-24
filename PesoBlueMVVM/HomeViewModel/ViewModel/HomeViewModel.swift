@@ -134,5 +134,23 @@ class HomeViewModel{
         
         return String(format: "%.2f", value) // Redondear y dar formato al valor resultante
     }
+    
+    func filteredItem(item: DiscoverItem) -> PlaceItem{
+        
+        switch item.name {
+        case "Paseos":
+            <#code#>
+        case "Resto":
+            <#code#>
+        case "Paseos":
+            <#code#>
+        case "Paseos":
+            <#code#>
+        case "Paseos":
+            <#code#>
+        default:
+            <#code#>
+        }
+    }
 
 }
