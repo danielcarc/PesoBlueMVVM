@@ -7,53 +7,15 @@
 
 import UIKit
 
-//class DiscoverBaCollectionView: UICollectionViewCell {
-//    
-//    private var dCell : DiscoverCell!
-//    
-//    var item : TestData? {
-//        didSet{
-//            
-//            guard let image = item?.image,
-//                  let title = item?.title
-//                  else { return }
-//            dCell?.set(image: image, title: title)
-//            
-//        }
-//    }
-//    
-//     lazy var discoverCollectionView: UICollectionView = {
-//        
-//        let layout = UICollectionViewFlowLayout()
-//        
-//        layout.itemSize = .init(width: 200, height: 150)
-//        layout.scrollDirection = .horizontal
-//        layout.minimumLineSpacing = 10
-//        
-//        let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        //registramos la celda
-//        vw.register(DiscoverCell.self, forCellWithReuseIdentifier: "DiscoverCell")
-//        
-//        vw.showsHorizontalScrollIndicator = false
-//        vw.backgroundColor = .white
-//        //vw.dataSource = self
-//        vw.translatesAutoresizingMaskIntoConstraints = false
-//        return vw
-//    }()
-//    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        setup()
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+protocol CollectionViewSelectionDelegate: AnyObject {
+    func didSelectItem(_ item: DiscoverItem) // Define el tipo de datos que envías
+}
 
 class DiscoverBaCollectionView: UIView {
     
     private var data: [DiscoverItem] = []
     private var homeViewModel : HomeViewModel = HomeViewModel()
+    weak var delegate: CollectionViewSelectionDelegate?
 
     func setData() {
         self.data = homeViewModel.fetch()
@@ -86,6 +48,7 @@ class DiscoverBaCollectionView: UIView {
         vw.showsHorizontalScrollIndicator = false
         vw.backgroundColor = .white
         vw.translatesAutoresizingMaskIntoConstraints = false
+        vw.delegate = self
         vw.dataSource = self
         return vw
     }()
@@ -118,6 +81,19 @@ extension DiscoverBaCollectionView: UICollectionViewDataSource {
         cell.set(image: item.image, title: item.name)
         return cell
     }
+    
+}
+
+//MARK: - UICollectionViewDelegate Methods
+
+extension DiscoverBaCollectionView: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let selectedItem = data[indexPath.item]
+        delegate?.didSelectItem(selectedItem)
+    }
+    
 }
 
 private extension DiscoverBaCollectionView {

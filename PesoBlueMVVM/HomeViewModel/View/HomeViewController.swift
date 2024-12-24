@@ -5,10 +5,9 @@
 //  Created by Daniel Carcacha on 12/11/2024.
 //
 
-//hacer el conversion rapida
-//ver de agregar mas ademas de brasil, uruguay y chile
 //debajo el collection view de descubre buenos aires
 //luego el de experiencias tipo tango, cafeteria, gastronomia, cocteleria y mas
+// hacer el segue a una vista nueva usando el elemento seleccionado ejemplo cafe
 //y luego top ciudades para visitar empezando con Bariloche, mendoza, ushuaia, cordoba
 
 import UIKit
@@ -17,6 +16,7 @@ class HomeViewController: UIViewController {
     
     var quickConversorView = QuickConversorView()
     var discoverBaCView = DiscoverBaCollectionView()
+    
     var homeViewModel: HomeViewModel = HomeViewModel()
     
     private var mainStackView: UIStackView = {
@@ -39,12 +39,13 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         setup()
         
     }
     
 }
+
+//MARK: - Setting the View
 
 extension HomeViewController {
     
@@ -52,7 +53,7 @@ extension HomeViewController {
         setupUI()
         setupQuickConversor()
         discoverBaCView.updateData()
-        
+        discoverBaCView.delegate = self
     }
     
 }
@@ -112,6 +113,18 @@ extension HomeViewController{
             
         }
     }
+}
+
+
+//MARK: - CollectionViewDelegate Methods
+
+extension HomeViewController: CollectionViewSelectionDelegate{
+    
+    func didSelectItem(_ item: DiscoverItem) {
+        let item = item
+        print(item.name)
+    }
+    
 }
 
 
