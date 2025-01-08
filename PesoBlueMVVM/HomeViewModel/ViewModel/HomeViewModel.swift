@@ -19,6 +19,8 @@ class HomeViewModel{
     
     
     var discoverManager = DiscoverDataManager()
+    var placeService = PlaceService()
+    
     
     func fetch() -> [DiscoverItem]{
         discoverItems = discoverManager.fetch()
@@ -135,22 +137,26 @@ class HomeViewModel{
         return String(format: "%.2f", value) // Redondear y dar formato al valor resultante
     }
     
-    func filteredItem(item: DiscoverItem) -> PlaceItem{
-        
-        switch item.name {
-        case "Paseos":
-            <#code#>
-        case "Resto":
-            <#code#>
-        case "Paseos":
-            <#code#>
-        case "Paseos":
-            <#code#>
-        case "Paseos":
-            <#code#>
-        default:
-            <#code#>
-        }
-    }
+    
 
 }
+extension HomeViewModel{
+    
+    func filteredItem(item: DiscoverItem) -> [PlaceItem]{
+        
+        let filter = item.name
+        //var places = placeService.fetchPlaces()
+        let filteredPlaces = filterPlaces(by: filter)
+        print(filteredPlaces.count)
+        return filteredPlaces
+    }
+    
+    func filterPlaces(by type: String) -> [PlaceItem] {
+        let places = placeService.fetchPlaces()
+        return places.filter { $0.placeType.lowercased() == type.lowercased() }
+    }
+    
+    
+    
+}
+

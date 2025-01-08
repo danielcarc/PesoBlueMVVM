@@ -10,25 +10,25 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Restó</string>
+		<string>Resto</string>
 		<key>image</key>
 		<string>Resto.jpg</string>
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Cocteles</string>
+		<string>Bar</string>
 		<key>image</key>
 		<string>Cocteles.jpg</string>
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Pizza</string>
+		<string>Pizzería</string>
 		<key>image</key>
 		<string>pizza.jpg</string>
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Café</string>
+		<string>Cafe</string>
 		<key>image</key>
 		<string>Cafe.jpg</string>
 	</dict>

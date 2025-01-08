@@ -24,7 +24,7 @@ class PlaceItem: NSObject, Decodable, MKAnnotation{
     let phone: String?
     let lat: Double?
     let long: Double?
-    let price: Int?
+    let price: String?
     let categories: [String]?
     let cuisines: [String]?
     let instagram: String
@@ -54,7 +54,7 @@ class PlaceItem: NSObject, Decodable, MKAnnotation{
         case placeDescription
     }
     
-    init(id: Int, name: String, address: String, city: String, state: String, area: String, postalCode: String, country: String, phone: String?, lat: Double, long: Double, price: Int?, categories: [String]?, cuisines: [String]?, instagram: String, imageUrl: String, placeType: String, placeDescription: String) {
+    init(id: Int, name: String, address: String, city: String, state: String, area: String, postalCode: String, country: String, phone: String?, lat: Double, long: Double, price: String?, categories: [String]?, cuisines: [String]?, instagram: String, imageUrl: String, placeType: String, placeDescription: String) {
         self.id = id
         self.name = name
         self.address = address

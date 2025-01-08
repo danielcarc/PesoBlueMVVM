@@ -11,6 +11,7 @@ import Foundation
 class DiscoverDataManager: DataManager{
     
     private var discoverItems: [DiscoverItem] = []
+    private var placeItems: [PlaceItem] = []
     
     func fetch() -> [DiscoverItem] {
         for data in loadPlist(file: "PlacesBa") {
@@ -27,5 +28,6 @@ class DiscoverDataManager: DataManager{
         discoverItems[index]
     }
     
-    
 }
+
+
