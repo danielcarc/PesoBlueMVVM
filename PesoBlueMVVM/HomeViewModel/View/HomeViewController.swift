@@ -5,9 +5,6 @@
 //  Created by Daniel Carcacha on 12/11/2024.
 //
 
-//debajo el collection view de descubre buenos aires
-//luego el de experiencias tipo tango, cafeteria, gastronomia, cocteleria y mas
-// hacer el segue a una vista nueva usando el elemento seleccionado ejemplo cafe
 //y luego top ciudades para visitar empezando con Bariloche, mendoza, ushuaia, cordoba
 
 import UIKit
@@ -116,15 +113,45 @@ extension HomeViewController{
 }
 
 
-//MARK: - CollectionViewDelegate Methods
+//MARK: - DiscoverCollectionViewDelegate Methods
 
 extension HomeViewController: CollectionViewSelectionDelegate{
     
     func didSelectItem(_ item: DiscoverItem) {
-        let selectedItem = item
-        homeViewModel.filteredItem(item: selectedItem)
-        print(item.name)
+        do {
+            let selectedPlaces = try homeViewModel.filteredItem(item: item)
+            
+            if selectedPlaces.isEmpty {
+                showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
+            } else {
+                let placesListVC = PlacesListViewController()
+                placesListVC.selectedPlaces = selectedPlaces
+                
+                if let navigationController = navigationController {
+                    navigationController.pushViewController(placesListVC, animated: true)
+                } else {
+                    print("Error: HomeViewController no está dentro de un UINavigationController.")
+                    present(placesListVC, animated: true)
+                }
+            }
+        } catch PlaceError.noPlacesAvailable {
+            showAlert(message: "No se encontraron lugares disponibles.")
+        } catch PlaceError.fileNotFound {
+            showAlert(message: "No se encontró el archivo de datos.")
+        } catch PlaceError.failedToParseData {
+            showAlert(message: "Hubo un problema al procesar los datos.")
+        } catch {
+            showAlert(message: "Ha ocurrido un error inesperado: \(error.localizedDescription).")
+        }
     }
+
+
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true, completion: nil)
+    }
+
     
 }
 

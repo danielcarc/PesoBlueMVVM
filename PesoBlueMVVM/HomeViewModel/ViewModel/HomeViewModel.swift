@@ -142,21 +142,30 @@ class HomeViewModel{
 }
 extension HomeViewModel{
     
-    func filteredItem(item: DiscoverItem) -> [PlaceItem]{
-        
+    func filteredItem(item: DiscoverItem) throws -> [PlaceItem] {
         let filter = item.name
-        //var places = placeService.fetchPlaces()
-        let filteredPlaces = filterPlaces(by: filter)
-        print(filteredPlaces.count)
+        
+        let filteredPlaces = try filterPlaces(by: filter)
+        
+        if filteredPlaces.isEmpty {
+            print("Advertencia: No se encontraron lugares para el tipo '\(filter)'.")
+        }
+        
         return filteredPlaces
     }
+
     
-    func filterPlaces(by type: String) -> [PlaceItem] {
-        let places = placeService.fetchPlaces()
-        return places.filter { $0.placeType.lowercased() == type.lowercased() }
+    func filterPlaces(by type: String) throws -> [PlaceItem] {
+        let places = try placeService.fetchPlaces() // Supongamos que fetchPlaces puede lanzar un error
+        
+        guard !places.isEmpty else {
+            throw PlaceError.noPlacesAvailable
+        }
+        
+        let filteredPlaces = places.filter { $0.placeType.lowercased() == type.lowercased() }
+        
+        return filteredPlaces
     }
-    
-    
     
 }
 

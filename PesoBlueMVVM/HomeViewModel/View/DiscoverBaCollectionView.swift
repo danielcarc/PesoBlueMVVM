@@ -63,9 +63,6 @@ class DiscoverBaCollectionView: UIView {
         setup()
     }
 
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
 }
 
 //MARK: - UICollectionViewDataSource
@@ -92,6 +89,7 @@ extension DiscoverBaCollectionView: UICollectionViewDelegate {
         
         let selectedItem = data[indexPath.item]
         delegate?.didSelectItem(selectedItem)
+        
     }
     
 }
@@ -106,7 +104,6 @@ private extension DiscoverBaCollectionView {
             discoverArgentinaLabel.topAnchor.constraint(equalTo: topAnchor),
             discoverArgentinaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             discoverArgentinaLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            //discoverArgentinaLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
             
             discoverCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
             discoverCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
