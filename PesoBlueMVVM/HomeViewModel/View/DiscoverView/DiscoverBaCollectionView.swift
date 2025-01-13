@@ -18,12 +18,12 @@ class DiscoverBaCollectionView: UIView {
     weak var delegate: CollectionViewSelectionDelegate?
 
     func setData() {
-        self.data = homeViewModel.fetch()
+        self.data = homeViewModel.fetchDiscoverItems()
         discoverCollectionView.reloadData()
     }
     
     func updateData() {
-        self.data = homeViewModel.fetch()
+        self.data = homeViewModel.fetchDiscoverItems()
         discoverCollectionView.reloadData()
     }
     

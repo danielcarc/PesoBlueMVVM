@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>El Calafate</string>
+		<key>image</key>
+		<string>calafate.jpg</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Villa La Angostura</string>
+		<key>image</key>
+		<string>angostura.jpg</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Salta</string>
+		<key>image</key>
+		<string>Salta.jpg</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Iguazu</string>
+		<key>image</key>
+		<string>Iguazu.jpg</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Cordoba</string>
+		<key>image</key>
+		<string>Cordoba.jpg</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Mendoza</string>
+		<key>image</key>
+		<string>Mendoza.jpg</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Ushuaia</string>
+		<key>image</key>
+		<string>Ushuaia.jpg</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Bariloche</string>
+		<key>image</key>
+		<string>Bariloche.jpg</string>
+	</dict>
+</array>
+</plist>

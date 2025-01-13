@@ -6,6 +6,7 @@
 //
 
 //y luego top ciudades para visitar empezando con Bariloche, mendoza, ushuaia, cordoba
+//hacerlas 2 por columnas por linea y arriba de todo la vista agregarle el clima del dia
 
 import UIKit
 
@@ -13,6 +14,7 @@ class HomeViewController: UIViewController {
     
     var quickConversorView = QuickConversorView()
     var discoverBaCView = DiscoverBaCollectionView()
+    var citysCView = CitysCollectionView()
     
     var homeViewModel: HomeViewModel = HomeViewModel()
     
@@ -50,6 +52,7 @@ extension HomeViewController {
         setupUI()
         setupQuickConversor()
         discoverBaCView.updateData()
+        citysCView.updateData()
         discoverBaCView.delegate = self
     }
     
@@ -72,9 +75,11 @@ extension HomeViewController{
         
         quickConversorView.translatesAutoresizingMaskIntoConstraints = false
         discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
+        citysCView.translatesAutoresizingMaskIntoConstraints = false
         
         mainStackView.addArrangedSubview(quickConversorView)
         mainStackView.addArrangedSubview(discoverBaCView)
+        mainStackView.addArrangedSubview(citysCView)
         
     }
     

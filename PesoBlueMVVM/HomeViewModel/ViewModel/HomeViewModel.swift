@@ -11,6 +11,7 @@ import Foundation
 class HomeViewModel{
     
     private var discoverItems: [DiscoverItem] = []
+    private var citysItem: [CitysItem] = []
     private var dolarBlue: DolarBlue?
     private var currency : Rates = Rates(BRL: Brl(rate: nil), CLP: Clp(rate: nil), UYU: Uyu(rate: nil))
     
@@ -19,10 +20,15 @@ class HomeViewModel{
     
     
     var discoverManager = DiscoverDataManager()
+    var citysManager = CitysDataManager()
     var placeService = PlaceService()
     
+    func fetchCitysItems() -> [CitysItem]{
+        citysItem = citysManager.fetch()
+        return citysItem
+    }
     
-    func fetch() -> [DiscoverItem]{
+    func fetchDiscoverItems() -> [DiscoverItem]{
         discoverItems = discoverManager.fetch()
         return discoverItems
     }
