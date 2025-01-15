@@ -163,13 +163,17 @@ extension HomeViewController: CollectionViewSelectionDelegate{
     
     func didSelectItem(_ item: DiscoverItem) {
         do {
-            let selectedPlaces = try homeViewModel.filteredItem(item: item)
+            let selectedCity = "CABA"
+            let selectedPlaces = try homeViewModel.fetchPlaces(city: selectedCity)
+            let placeType = item.name
             
             if selectedPlaces.isEmpty {
                 showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
             } else {
                 let placesListVC = PlacesListViewController()
                 placesListVC.selectedPlaces = selectedPlaces
+                placesListVC.selectedCity = selectedCity
+                placesListVC.placeType = placeType
                 
                 if let navigationController = navigationController {
                     navigationController.pushViewController(placesListVC, animated: true)
@@ -201,6 +205,39 @@ extension HomeViewController: CollectionViewSelectionDelegate{
 
 //MARK: - CitysViewDelegate Methods
 extension HomeViewController: CitysViewDelegate{
+    func didSelectItem(_ city: CitysItem) {
+        let selectedCity = String(city.name)
+        print(selectedCity)
+        
+        do{
+            let selectedPlaces = try homeViewModel.fetchPlaces(city: selectedCity)
+            if selectedPlaces.isEmpty {
+                showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
+            } else {
+                let placesListVC = PlacesListViewController()
+                placesListVC.selectedPlaces = selectedPlaces
+                placesListVC.selectedCity = selectedCity
+                //placesListVC.placeType = placeType
+                
+                if let navigationController = navigationController {
+                    navigationController.pushViewController(placesListVC, animated: true)
+                } else {
+                    print("Error: HomeViewController no está dentro de un UINavigationController.")
+                    present(placesListVC, animated: true)
+                }
+            }
+        }
+        catch PlaceError.noPlacesAvailable {
+            showAlert(message: "No se encontraron lugares disponibles.")
+        } catch PlaceError.fileNotFound {
+            showAlert(message: "No se encontró el archivo de datos.")
+        } catch PlaceError.failedToParseData {
+            showAlert(message: "Hubo un problema al procesar los datos.")
+        } catch {
+            showAlert(message: "Ha ocurrido un error inesperado: \(error.localizedDescription).")
+        }
+    }
+    
     func didUpdateItemCount(_ count: Int) {
         let labelSpace = 38.0
         let rows = ceil(Double(count) / 2.0) // Asumiendo 2 columnas

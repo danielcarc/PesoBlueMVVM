@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 struct DiscoverItem {
     let name: String
     let image: String

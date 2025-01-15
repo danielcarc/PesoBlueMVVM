@@ -8,7 +8,7 @@ import UIKit
 
 protocol CitysViewDelegate: AnyObject{
     func didUpdateItemCount(_ count: Int)
-    func didSelectItem(_ item: CitysItem)
+    func didSelectItem(_ city: CitysItem)
     
 }
 
@@ -113,7 +113,7 @@ extension CitysCollectionView: UICollectionViewDataSource{
 extension CitysCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let padding: CGFloat = 10
-        let collectionViewSize = collectionView.frame.size.width - padding * 3 // 3 porque son 2 celdas + padding inicial y final
+        let collectionViewSize = collectionView.frame.size.width - padding * 3 //3 porque son 2 celdas + padding inicial y final
         
         // Dividimos el ancho disponible entre 2 para obtener dos columnas
         return CGSize(width: collectionViewSize/2, height: 130)
@@ -122,7 +122,7 @@ extension CitysCollectionView: UICollectionViewDelegateFlowLayout {
 
 extension CitysCollectionView: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedItem = data[indexPath.item]
-        delegate?.didSelectItem(selectedItem)
+        let selectedCity = data[indexPath.item]
+        delegate?.didSelectItem(selectedCity)
     }
 }

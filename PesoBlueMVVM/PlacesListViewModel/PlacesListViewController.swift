@@ -10,11 +10,15 @@ import UIKit
 class PlacesListViewController: UIViewController {
     
     var selectedPlaces: [PlaceItem]?
+    var selectedCity: String?
+    var placeType: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(selectedPlaces?.count ?? "No se encontraron lugares")
+        print(selectedCity ?? "N/A")
+        print(placeType ?? "N/A place")
         // Do any additional setup after loading the view.
     }
     

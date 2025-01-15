@@ -148,10 +148,23 @@ class HomeViewModel{
 }
 extension HomeViewModel{
     
+    func fetchPlaces(city: String) throws -> [PlaceItem] {
+        let city = city
+        let places = try placeService.fetchPlaces(city: city) // Supongamos que fetchPlaces puede lanzar un error
+        guard !places.isEmpty else {
+            throw PlaceError.noPlacesAvailable
+        }
+        return places
+    }
+    
     func filteredItem(item: DiscoverItem) throws -> [PlaceItem] {
         let filter = item.name
+        let places = try placeService.fetchPlaces(city: filter) // Supongamos que fetchPlaces puede lanzar un error
+        guard !places.isEmpty else {
+            throw PlaceError.noPlacesAvailable
+        }
         
-        let filteredPlaces = try filterPlaces(by: filter)
+        let filteredPlaces = try filterPlaces(for: places, by: filter)
         
         if filteredPlaces.isEmpty {
             print("Advertencia: No se encontraron lugares para el tipo '\(filter)'.")
@@ -161,12 +174,10 @@ extension HomeViewModel{
     }
 
     
-    func filterPlaces(by type: String) throws -> [PlaceItem] {
-        let places = try placeService.fetchPlaces() // Supongamos que fetchPlaces puede lanzar un error
+    func filterPlaces(for place: [PlaceItem], by filter: String) throws -> [PlaceItem] {
         
-        guard !places.isEmpty else {
-            throw PlaceError.noPlacesAvailable
-        }
+        let places = place
+        let type = filter
         
         let filteredPlaces = places.filter { $0.placeType.lowercased() == type.lowercased() }
         
