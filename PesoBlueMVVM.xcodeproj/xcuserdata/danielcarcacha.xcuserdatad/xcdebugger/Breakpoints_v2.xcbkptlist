@@ -23,16 +23,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "90270FED-D832-485B-B803-7CBAC848D342"
+            uuid = "52FC619E-C6F9-4A18-A118-1CB8FBC86EDF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PesoBlueMVVM/PlacesListViewModel/PlacesListViewController.swift"
+            filePath = "PesoBlueMVVM/HomeViewModel/View/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "HomeViewController"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E435C60-91A8-44E4-9646-A07416DB60AE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PesoBlueMVVM/HomeViewModel/View/CitysView/CitysCollectionView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "updateData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

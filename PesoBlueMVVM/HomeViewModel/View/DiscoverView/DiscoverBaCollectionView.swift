@@ -37,7 +37,7 @@ class DiscoverBaCollectionView: UIView {
         return label
     }()
 
-    lazy var discoverCollectionView: UICollectionView = {
+    private lazy var discoverCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = .init(width: 160, height: 120)
         layout.scrollDirection = .horizontal
