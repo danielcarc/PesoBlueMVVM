@@ -5,6 +5,10 @@
 //  Created by Daniel Carcacha on 08/01/2025.
 //
 
+//agregar filtro y seleccion del editor, para esto que suba una pequeña vista de no se 250p
+// y seleccionar la opcion elegida
+//agregar favoritos
+// boton de back personalizado y boton de favoritos en el otro costado
 import UIKit
 
 class PlacesListViewController: UIViewController {
