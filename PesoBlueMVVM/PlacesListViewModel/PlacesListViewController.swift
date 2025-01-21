@@ -65,6 +65,8 @@ class PlacesListViewController: UIViewController {
 
 }
 
+//MARK: - AddSubViews and Setup Constraints
+
 extension PlacesListViewController{
     
     func setupUI(){
