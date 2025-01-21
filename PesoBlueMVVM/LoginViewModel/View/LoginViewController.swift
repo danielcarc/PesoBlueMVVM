@@ -29,7 +29,6 @@ class LoginViewController: UIViewController {
         }
     }
     
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -43,24 +42,10 @@ class LoginViewController: UIViewController {
         
     }
     
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
     }
-//    override func viewDidLayoutSubviews() {
-//            super.viewDidLayoutSubviews()
-//            // Llamar a layoutIfNeeded en caso de que necesite actualizar la vista
-//            loginView.layoutIfNeeded()
-//        }
-    
-    
-
     
 }
 

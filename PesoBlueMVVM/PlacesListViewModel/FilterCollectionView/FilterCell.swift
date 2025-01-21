@@ -1,14 +1,12 @@
 //
-//  DiscoverCell.swift
+//  FilterCell.swift
 //  PesoBlueMVVM
 //
-//  Created by Daniel Carcacha on 22/11/2024.
+//  Created by Daniel Carcacha on 20/01/2025.
 //
-
-
 import UIKit
 
-class DiscoverCell: UICollectionViewCell {
+class FilterCell: UICollectionViewCell{
     
     // MARK: - Public Properties
     private lazy var imageView : UIImageView = {
@@ -17,7 +15,7 @@ class DiscoverCell: UICollectionViewCell {
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.layer.cornerRadius = 8
-        view.clipsToBounds = true
+        
         return view
     }()
     
@@ -43,42 +41,40 @@ class DiscoverCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-private extension DiscoverCell {
     
-    private func setupViews() {
+}
+
+extension FilterCell{
+    
+    func setupViews(){
         
-        addsubviews()
+        addSubViews()
         setupConstraints()
-        
     }
     
-    func addsubviews() {
-        
+    func addSubViews(){
         self.backgroundColor = .white
-        self.layer.cornerRadius = 10
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.layer.cornerRadius = 10
         self.addSubview(imageView)
         self.addSubview(titleLabel)
+        
     }
     
-    func setupConstraints(){
-        
+    func setupConstraints() {
         NSLayoutConstraint.activate([
+            // ImageView - quitar el constraint de width fijo ya que ya está restringido por leading/trailing
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            //imageView.heightAnchor.constraint(equalTo: contentView.widthAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 90),
-            imageView.widthAnchor.constraint(equalToConstant: 160),
+            imageView.heightAnchor.constraint(equalToConstant: 80),
+            //sacar esta línea que esta en conflicto
+            //imageView.widthAnchor.constraint(equalToConstant: 100),
 
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            //titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        
     }
 }
-
-    
-

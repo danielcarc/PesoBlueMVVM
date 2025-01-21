@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
     
     var collectionViewHeightConstraint: NSLayoutConstraint!
     
-    var homeViewModel: HomeViewModel = HomeViewModel()
+    var homeViewModel = HomeViewModel()
     
     private var mainScrollView: UIScrollView = {
         var scrollView = UIScrollView()
@@ -118,7 +118,7 @@ extension HomeViewController{
             contentView.topAnchor.constraint(equalTo: mainScrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: mainScrollView.bottomAnchor),
+            //contentView.bottomAnchor.constraint(equalTo: mainScrollView.bottomAnchor),
             
             contentView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
             contentView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor),
