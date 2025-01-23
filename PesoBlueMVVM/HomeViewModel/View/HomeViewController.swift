@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = true
         scrollView.bounces = true
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isScrollEnabled = true
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
@@ -94,6 +95,10 @@ extension HomeViewController{
         mainScrollView.addSubview(contentView)
         contentView.addSubview(stackView)
         
+        mainScrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
         quickConversorView.translatesAutoresizingMaskIntoConstraints = false
         discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
         citysCView.translatesAutoresizingMaskIntoConstraints = false
@@ -126,7 +131,8 @@ extension HomeViewController{
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
             quickConversorView.heightAnchor.constraint(equalToConstant: 151),
             discoverBaCView.heightAnchor.constraint(equalToConstant: 158),
@@ -249,8 +255,6 @@ extension HomeViewController: CitysViewDelegate{
         view.layoutIfNeeded()
         print(count)
     }
-    
-    
     
 }
 

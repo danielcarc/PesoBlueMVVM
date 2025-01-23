@@ -33,7 +33,7 @@ class FilterCollectionView: UIView{
     private lazy var filterCollectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: 95, height: 110)
+        layout.itemSize = .init(width: 100, height: 110)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10
         //layout.estimatedItemSize = .init(width: 95, height: 110)

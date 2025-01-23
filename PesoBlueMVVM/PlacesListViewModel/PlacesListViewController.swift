@@ -19,6 +19,8 @@ class PlacesListViewController: UIViewController {
     var viewModel = PlaceListViewModel()
     
     var filterCView = FilterCollectionView()
+    var placeListCView = PlaceListCollectionView()
+    var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private var mainScrollView: UIScrollView = {
         var scrollView = UIScrollView()
@@ -58,23 +60,42 @@ class PlacesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        setupUI()
+        placeListCView.delegate = self
+        setup()
     }
     
-
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        mainScrollView.contentSize = CGSize(width: contentView.frame.width, height: contentView.frame.height)
+        print("ScrollView contentSize:", mainScrollView.contentSize)
+        print("ContentView frame:", contentView.frame)
+        print("StackView frame:", stackView.frame)
+    }
+    
 }
 
 //MARK: - AddSubViews and Setup Constraints
 
 extension PlacesListViewController{
     
-    func setupUI(){
+    func setup(){
         
-        filterCView.updateData()
+        
         addsubviews()
         setupConstraints()
+        setCollectionViews()
+    }
+    
+    func setCollectionViews(){
         
+        filterCView.updateData()
+       
+        if let selectedPlaces = selectedPlaces {
+            placeListCView.updateData(for: selectedPlaces, by: placeType ?? "All")
+        } else {
+            print("selectedPlaces es nil")
+            placeListCView.updateData(for: [], by: placeType ?? "All")
+        }
     }
     
     func addsubviews() {
@@ -82,35 +103,62 @@ extension PlacesListViewController{
         mainScrollView.addSubview(contentView)
         contentView.addSubview(stackView)
         
-        filterCView.translatesAutoresizingMaskIntoConstraints = false
+        self.mainScrollView.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
+        self.stackView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.addArrangedSubview(filterCView)
+        stackView.addArrangedSubview(placeListCView)
         
+        filterCView.translatesAutoresizingMaskIntoConstraints = false
+        placeListCView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupConstraints() {
+        
+        collectionViewHeightConstraint = placeListCView.heightAnchor.constraint(equalToConstant: 200)
         NSLayoutConstraint.activate([
-            // MainScrollView
             mainScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mainScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            mainScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            mainScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             mainScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            // ContentView - Simplificar sus constraints
+
             contentView.topAnchor.constraint(equalTo: mainScrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
-            
-            contentView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
+            contentView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor, constant: 10),
+            contentView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor, constant: -10),
+            contentView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor, constant: -20),
             contentView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor),
-            
-            // StackView
+
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
-            filterCView.heightAnchor.constraint(equalToConstant: 142)
-            
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stackView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+
+            filterCView.heightAnchor.constraint(equalToConstant: 142),
+            collectionViewHeightConstraint
         ])
+    }
+}
+
+extension PlacesListViewController: PlaceListCollectionViewDelegate {
+    
+    func didUpdateItemCount(_ count: Int) {
+        let labelSpacing = 38.0
+        let rows = ceil(Double(count))
+        let itemHeight = 238.0
+        let spacing = 10.0
+        let totalHeight = rows * itemHeight + (rows - 1) * spacing + labelSpacing
+        collectionViewHeightConstraint.constant = totalHeight
+        
+        
+        DispatchQueue.main.async {
+            self.placeListCView.layoutIfNeeded() // Asegúrate de refrescar el layout
+            self.stackView.layoutIfNeeded()
+            self.contentView.layoutIfNeeded()
+            self.mainScrollView.layoutIfNeeded()
+            self.view.layoutIfNeeded()
+            //self.view.bringSubviewToFront(self.placeListCView)
+        }
     }
 }

@@ -11,9 +11,10 @@ class PlaceCell: UICollectionViewCell {
     
     private lazy var placeImage: UIImageView = {
         var image = UIImageView()
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleToFill
         image.layer.cornerRadius = 8
         image.clipsToBounds = true
+        //image.heightAnchor.constraint(equalToConstant: 150).isActive
         
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
@@ -56,19 +57,12 @@ class PlaceCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var placeStackView: UIStackView = {
-        var stackView = UIStackView(arrangedSubviews: [placeName, priceLabel, typeLabel, distanceLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    func set(image: String, title: String, price: String, distance: String){
-        placeImage.image = UIImage(named: image)
+    func set(image: UIImage?, title: String, price: String, distance: String, type: String){
+        //var cellImage: UIImage = try await downloadImage(from: image)
+        placeImage.image = image
         placeName.text = title
         priceLabel.text = price
-        //falta type
+        typeLabel.text = type
         distanceLabel.text = distance
     }
     
@@ -84,6 +78,9 @@ class PlaceCell: UICollectionViewCell {
     
 }
 
+//MARK: - Setup SubViews and Constraints
+
+
 extension PlaceCell {
  
     func setupViews(){
@@ -95,9 +92,12 @@ extension PlaceCell {
     func addsubViews(){
         self.backgroundColor = .white
         self.layer.cornerRadius = 4
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(placeImage)
-        self.addSubview(placeStackView)
-        
+        self.addSubview(placeName)
+        self.addSubview(typeLabel)
+        self.addSubview(priceLabel)
+        self.addSubview(distanceLabel)
         
     }
     
@@ -108,11 +108,26 @@ extension PlaceCell {
             placeImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             placeImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             placeImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            placeImage.heightAnchor.constraint(equalToConstant: 100),
+            placeImage.heightAnchor.constraint(equalToConstant: 150),
+            //placeImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -20),
             
-            placeStackView.topAnchor.constraint(equalTo: placeImage.bottomAnchor, constant: 8),
-            placeStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            placeStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            placeName.topAnchor.constraint(equalTo: placeImage.bottomAnchor, constant: 8),
+            placeName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            placeName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            
+            typeLabel.topAnchor.constraint(equalTo: placeName.bottomAnchor, constant: 4),
+            typeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            typeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            
+            priceLabel.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 4),
+            priceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            
+            distanceLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 4),
+            distanceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            distanceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            
             
             
         ])

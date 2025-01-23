@@ -87,7 +87,7 @@ class PlaceItem: NSObject, Decodable, MKAnnotation{
     }
     
     var subtitle: String? {
-        if let cuisines = cuisines, !cuisines.isEmpty {
+        if let cuisines = categories, !cuisines.isEmpty {
             return cuisines.joined(separator: ", ")
         } else {
             return ""
