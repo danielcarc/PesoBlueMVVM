@@ -99,38 +99,37 @@ extension PlaceListCollectionView: UICollectionViewDataSource{
         let item = placeData[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceCell", for: indexPath) as! PlaceCell
 
-        // Configurar datos básicos de la celda
+        // Configura los datos básicos
         cell.set(image: nil, title: item.name, price: item.price ?? "N/A", distance: "Cargando...", type: item.subtitle ?? "N/A")
-        
-        // Obtener la ubicación del usuario
-        var distance: String = "Cargando..."
+
+        // Actualiza la distancia de forma independiente
         if let userLocation = locationManager.userLocation {
-            distance = viewModel.calculateDistance(from: userLocation, to: item)
+            Task {
+                let distance = viewModel.calculateDistance(from: userLocation, to: item)
+                await MainActor.run {
+                    if collectionView.indexPath(for: cell) == indexPath { // Verifica la reutilización
+                        cell.updateDistance(distance)
+                    }
+                }
+            }
         }
-        
-        // Descargar la imagen de forma asíncrona y actualizar todo en un solo paso
+
+        // Descarga la imagen de forma independiente
         Task {
             do {
                 let image = try await viewModel.downloadImage(from: item.imageUrl)
-                // Actualizar la celda completamente en el hilo principal
                 await MainActor.run {
-                    cell.set(image: image, title: item.name, price: item.price ?? "N/A", distance: distance, type: item.subtitle ?? "N/A")
+                    if collectionView.indexPath(for: cell) == indexPath { // Verifica la reutilización
+                        cell.updateImage(image)
+                    }
                 }
             } catch {
                 print("Error descargando imagen: \(error)")
-                // Actualizar solo los datos disponibles si hay un error
-                await MainActor.run {
-                    cell.set(image: nil, title: item.name, price: item.price ?? "N/A", distance: distance, type: item.subtitle ?? "N/A")
-                }
             }
         }
 
         return cell
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: collectionView.frame.width - 20, height: 228) // Ajusta el ancho según corresponda
-//    }
     
 }
 

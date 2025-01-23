@@ -66,6 +66,14 @@ class PlaceCell: UICollectionViewCell {
         distanceLabel.text = distance
     }
     
+    func updateDistance(_ distance: String) {
+        distanceLabel.text = distance
+    }
+    
+    func updateImage(_ image: UIImage?) {
+        placeImage.image = image
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
