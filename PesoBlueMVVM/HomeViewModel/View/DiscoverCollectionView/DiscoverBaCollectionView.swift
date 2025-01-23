@@ -46,6 +46,7 @@ class DiscoverBaCollectionView: UIView {
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vw.register(DiscoverCell.self, forCellWithReuseIdentifier: "DiscoverCell")
         vw.showsHorizontalScrollIndicator = false
+        vw.isScrollEnabled = true
         vw.backgroundColor = .white
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.delegate = self

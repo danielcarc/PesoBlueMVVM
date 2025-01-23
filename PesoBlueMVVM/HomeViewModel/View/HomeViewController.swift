@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
         var scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
         scrollView.bounces = true
+        //scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isScrollEnabled = true
         
@@ -58,6 +59,17 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setup()
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Asegúrate de que el tamaño de contentView se ajuste al tamaño de stackView
+        let stackViewHeight = stackView.frame.height
+        contentView.frame.size.height = stackViewHeight
+        
+        // Actualiza el tamaño de contenido del scrollView
+        mainScrollView.contentSize = CGSize(width: contentView.frame.width, height: contentView.frame.height)
     }
     
 }
@@ -120,13 +132,12 @@ extension HomeViewController{
             mainScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             mainScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            contentView.topAnchor.constraint(equalTo: mainScrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor),
-            //contentView.bottomAnchor.constraint(equalTo: mainScrollView.bottomAnchor),
-            
-            contentView.widthAnchor.constraint(equalTo: mainScrollView.widthAnchor),
-            contentView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor),
+            contentView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor), // Ancho igual
+            //contentView.heightAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.heightAnchor),
             
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -139,6 +150,10 @@ extension HomeViewController{
             collectionViewHeightConstraint
             //citysCView.heightAnchor.constraint(equalToConstant: 600)
         ])
+        let heightConstraint = contentView.heightAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.heightAnchor)
+        heightConstraint.priority = UILayoutPriority.defaultLow
+        heightConstraint.isActive = true
+        
     }
 }
 
@@ -252,8 +267,10 @@ extension HomeViewController: CitysViewDelegate{
         
         let totalHeight = rows * itemHeight + (rows - 1) * spacing + labelSpace
         collectionViewHeightConstraint.constant = totalHeight
+    
         view.layoutIfNeeded()
-        print(count)
+
+        //print(count)
     }
     
 }
