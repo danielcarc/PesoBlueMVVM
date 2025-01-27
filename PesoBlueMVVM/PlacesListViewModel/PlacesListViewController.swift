@@ -66,14 +66,6 @@ class PlacesListViewController: UIViewController {
         setup()
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        mainScrollView.contentSize = CGSize(width: contentView.frame.width, height: contentView.frame.height)
-////        print("ScrollView contentSize:", mainScrollView.contentSize)
-////        print("ContentView frame:", contentView.frame)
-////        print("StackView frame:", stackView.frame)
-//    }
-    
 }
 
 //MARK: - AddSubViews and Setup Constraints
@@ -89,7 +81,7 @@ extension PlacesListViewController{
     
     func setCollectionViews(){
         
-        filterCView.updateData()
+        filterCView.updateData(type: placeType ?? "All")
        
         if let selectedPlaces = selectedPlaces {
             placeListCView.updateData(for: selectedPlaces, by: placeType ?? "All")

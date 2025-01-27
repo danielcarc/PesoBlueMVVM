@@ -10,10 +10,12 @@ import UIKit
 class FilterCollectionView: UIView{
     
     private var data: [DiscoverItem] = []
-    
+    private var placeType: String?
+    private var selectedIndexPath: IndexPath?
     private var viewModel = PlaceListViewModel()
     
-    func updateData(){
+    func updateData(type: String){
+        placeType = type
         self.data = viewModel.fetchFilterItems()
         filterCollectionView.reloadData()
     }
@@ -71,10 +73,27 @@ extension FilterCollectionView: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = data[indexPath.item]
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! FilterCell
         cell.set(image: item.image, title: item.name)
+        
+        // Si el nombre coincide con `placeType`, actualiza el índice seleccionado
+        if item.name == placeType {
+            selectedIndexPath = indexPath
+        }
+        
+        // Configura el estado visual del borde
+        if indexPath == selectedIndexPath {
+            cell.layer.borderWidth = 1.0
+            cell.layer.borderColor = UIColor.black.cgColor
+        } else {
+            cell.layer.borderWidth = 0
+            cell.layer.borderColor = UIColor.clear.cgColor
+        }
+        
         return cell
     }
+
     
     
 }

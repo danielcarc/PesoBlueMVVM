@@ -20,6 +20,7 @@ class PlaceListCollectionView: UIView{
     var placeData: [PlaceItem] = []
     private let locationManager = LocationManager()
     weak var delegate: PlaceListCollectionViewDelegate?
+    var selectedIndex: IndexPath?
     
     
     func updateData(for places: [PlaceItem], by filter: String){
