@@ -61,7 +61,7 @@ class PlaceListCollectionView: UIView{
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vw.register(PlaceCell.self, forCellWithReuseIdentifier: "PlaceCell")
         vw.showsHorizontalScrollIndicator = false
-        vw.backgroundColor = .white
+        vw.backgroundColor = UIColor(hex: "F2F8FC")
         vw.isScrollEnabled = false
         vw.dataSource = self
         vw.delegate = self
@@ -136,7 +136,6 @@ extension PlaceListCollectionView: UICollectionViewDataSource{
 
 extension PlaceListCollectionView: UICollectionViewDelegate{
     
-    //me falta agregar constraints y addsubviews ademas de los metodos para rellenar las celdas
     func setup(){
         
         addSubview(quantityLabel)

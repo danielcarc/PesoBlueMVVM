@@ -25,7 +25,7 @@ class FilterCollectionView: UIView{
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.text = "Filtros"
-        label.textAlignment = .left
+        label.textAlignment = .center
         
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -43,7 +43,7 @@ class FilterCollectionView: UIView{
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vw.register(FilterCell.self, forCellWithReuseIdentifier: "FilterCell")
         vw.showsHorizontalScrollIndicator = false
-        vw.backgroundColor = .white
+        vw.backgroundColor = UIColor(hex: "F2F8FC")
         vw.dataSource = self
         vw.delegate = self
         vw.translatesAutoresizingMaskIntoConstraints = false

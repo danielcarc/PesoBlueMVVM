@@ -54,7 +54,11 @@ extension FilterCell{
     }
     
     func addSubViews(){
+        self.backgroundColor = .clear
         self.backgroundColor = .white
+        self.layer.cornerRadius = 8.0
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor.lightGray.cgColor
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = 10
         self.addSubview(imageView)
@@ -69,13 +73,11 @@ extension FilterCell{
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 3),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -3),
             imageView.heightAnchor.constraint(equalToConstant: 77),
-            //sacar esta línea que esta en conflicto
-            //imageView.widthAnchor.constraint(equalToConstant: 100),
 
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            //titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            
         ])
     }
 }

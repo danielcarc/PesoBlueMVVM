@@ -5,13 +5,12 @@
 //  Created by Daniel Carcacha on 08/01/2025.
 //
 
-//agregar filtro y recomendados
-// y seleccionar la opcion elegida
 // cuando hay un filtro seleccionado, en la nueva pantalla debe aparecer seleccionado
 //cuando hay un nuevo filtro seleccionado, se desselecciona el anterior y se selecciona el nuevo
 // luego se muestran los nuevos datos y se actualiza el collectionview
 //agregar favoritos
 // boton de back personalizado y boton de favoritos en el otro costado
+//tal vez agregar un recomendado a los mejores lugar en el json
 import UIKit
 
 class PlacesListViewController: UIViewController {
@@ -20,7 +19,6 @@ class PlacesListViewController: UIViewController {
     var selectedCity: String?
     var placeType: String?
     var viewModel = PlaceListViewModel()
-    
     var filterCView = FilterCollectionView()
     var placeListCView = PlaceListCollectionView()
     var collectionViewHeightConstraint: NSLayoutConstraint!
@@ -55,13 +53,15 @@ class PlacesListViewController: UIViewController {
     override func loadView() {
         
         self.view = UIView()
-        self.view.backgroundColor = .white
+//        let aliceBlue = UIColor(red: 240/255.0, green: 248/255.0, blue: 255/255.0, alpha: 1.0)
+//        self.view.backgroundColor  = aliceBlue
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
+        self.view.backgroundColor  = UIColor(hex: "F0F8FF")
         placeListCView.delegate = self
         setup()
     }
@@ -137,6 +137,8 @@ extension PlacesListViewController{
     }
 }
 
+//MARK: - UICollectionViewDelegate Methods
+
 extension PlacesListViewController: PlaceListCollectionViewDelegate {
     
     func didUpdateItemCount(_ count: Int) {
@@ -148,10 +150,6 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
         collectionViewHeightConstraint.constant = totalHeight
         
         DispatchQueue.main.async {
-//            self.placeListCView.layoutIfNeeded() // Asegúrate de refrescar el layout
-//            self.stackView.layoutIfNeeded()
-//            self.contentView.layoutIfNeeded()
-//            self.mainScrollView.layoutIfNeeded()
             self.view.layoutIfNeeded()
         }
     }
