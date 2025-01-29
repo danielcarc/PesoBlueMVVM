@@ -102,7 +102,7 @@ extension HomeViewController{
     }
     
     func addSubViews(){
-        
+        self.view.backgroundColor = UIColor(hex: "F0F8FF")
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
         contentView.addSubview(stackView)

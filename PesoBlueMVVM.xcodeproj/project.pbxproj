@@ -68,6 +68,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C555BAB32CE2D6AE00EC6010 /* User Defaults */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "User Defaults"; sourceTree = "<group>"; };
 		C561430A2CEC3CDE00760670 /* Misc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Misc; sourceTree = "<group>"; };
+		C5740BBD2D4A982500F6D687 /* PlaceViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlaceViewModel; sourceTree = "<group>"; };
 		C57814272D08F746004A42C9 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
 		C57814432D2EF628004A42C9 /* PlacesListViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlacesListViewModel; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -193,6 +194,7 @@
 		C58674092AC71FD3000FCD5B /* PesoBlueMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				C5740BBD2D4A982500F6D687 /* PlaceViewModel */,
 				C57814432D2EF628004A42C9 /* PlacesListViewModel */,
 				C57814272D08F746004A42C9 /* HomeViewModel */,
 				C561430A2CEC3CDE00760670 /* Misc */,
@@ -256,6 +258,7 @@
 			fileSystemSynchronizedGroups = (
 				C555BAB32CE2D6AE00EC6010 /* User Defaults */,
 				C561430A2CEC3CDE00760670 /* Misc */,
+				C5740BBD2D4A982500F6D687 /* PlaceViewModel */,
 				C57814272D08F746004A42C9 /* HomeViewModel */,
 				C57814432D2EF628004A42C9 /* PlacesListViewModel */,
 			);

@@ -47,7 +47,7 @@ class DiscoverBaCollectionView: UIView {
         vw.register(DiscoverCell.self, forCellWithReuseIdentifier: "DiscoverCell")
         vw.showsHorizontalScrollIndicator = false
         vw.isScrollEnabled = true
-        vw.backgroundColor = .white
+        vw.backgroundColor = UIColor(hex: "F0F8FF")
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.delegate = self
         vw.dataSource = self

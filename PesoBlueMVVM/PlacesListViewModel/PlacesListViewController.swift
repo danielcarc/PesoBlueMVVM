@@ -5,9 +5,6 @@
 //  Created by Daniel Carcacha on 08/01/2025.
 //
 
-// cuando hay un filtro seleccionado, en la nueva pantalla debe aparecer seleccionado
-//cuando hay un nuevo filtro seleccionado, se desselecciona el anterior y se selecciona el nuevo
-// luego se muestran los nuevos datos y se actualiza el collectionview
 //agregar favoritos
 // boton de back personalizado y boton de favoritos en el otro costado
 //tal vez agregar un recomendado a los mejores lugar en el json
@@ -89,6 +86,10 @@ extension PlacesListViewController{
     
     func addsubviews() {
         self.view.backgroundColor  = UIColor(hex: "F0F8FF")
+        let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
+        backButton.tintColor = UIColor.black
+
+        self.navigationItem.leftBarButtonItem = backButton
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
         contentView.addSubview(stackView)
@@ -132,12 +133,30 @@ extension PlacesListViewController{
         heightConstraint.priority = UILayoutPriority.defaultLow
         heightConstraint.isActive = true
     }
+    
+    @objc func didTapBack() {
+        // Regresar a la vista anterior
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 //MARK: - UICollectionViewDelegate Methods
 extension PlacesListViewController: PlaceListCollectionViewDelegate {
-    func didSelectItem(_ item: DiscoverItem) {
-        placeType = item.name
+    func didSelectItem(_ item: PlaceItem) {
+        guard let navigationController = navigationController else {
+                print("Error: No hay un NavigationController disponible")
+                return
+            }
+            
+            let placeVC = PlaceViewController()
+            placeVC.placeItem = item
+            navigationController.pushViewController(placeVC, animated: true) 
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true, completion: nil)
     }
     
     
@@ -158,8 +177,13 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
 extension PlacesListViewController: FilterCollectionViewDelegate {
     func didSelectFilter(_ filter: DiscoverItem) {
         self.placeType = filter.name
-        print(placeType ?? "all")
         filterCView.updateData(type: placeType ?? "All")
+        if let selectedPlaces = selectedPlaces {
+            placeListCView.updateData(for: selectedPlaces, by: placeType ?? "All")
+        } else {
+            print("selectedPlaces es nil")
+            placeListCView.updateData(for: [], by: placeType ?? "All")
+        }
     }
     
 }

@@ -50,7 +50,7 @@ class CitysCollectionView: UIView{
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor(hex: "F0F8FF")
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CitysCell.self, forCellWithReuseIdentifier: "CitysCell")

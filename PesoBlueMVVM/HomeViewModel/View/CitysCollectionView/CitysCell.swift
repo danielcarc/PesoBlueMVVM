@@ -25,6 +25,7 @@ class CitysCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.textColor = UIColor(named: "primaryTextColor") ?? .black
+        label.textAlignment = .center
         return label
     }()
     
