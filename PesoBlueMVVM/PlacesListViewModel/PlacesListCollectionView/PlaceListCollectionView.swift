@@ -11,6 +11,7 @@ import CoreLocation
 
 protocol PlaceListCollectionViewDelegate: AnyObject {
     func didUpdateItemCount(_ count: Int)
+    func didSelectItem(_ item: DiscoverItem)
 }
 
 class PlaceListCollectionView: UIView{
@@ -135,6 +136,15 @@ extension PlaceListCollectionView: UICollectionViewDataSource{
 }
 
 extension PlaceListCollectionView: UICollectionViewDelegate{
+   
+   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+    }
+
+}
+
+extension PlaceListCollectionView{
     
     func setup(){
         
@@ -160,5 +170,4 @@ extension PlaceListCollectionView: UICollectionViewDelegate{
         ])
         
     }
-    
 }

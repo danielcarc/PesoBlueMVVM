@@ -140,6 +140,10 @@ extension PlacesListViewController{
 //MARK: - UICollectionViewDelegate Methods
 
 extension PlacesListViewController: PlaceListCollectionViewDelegate {
+    func didSelectItem(_ item: DiscoverItem) {
+        placeType = item.name
+    }
+    
     
     func didUpdateItemCount(_ count: Int) {
         let labelSpacing = 38.0

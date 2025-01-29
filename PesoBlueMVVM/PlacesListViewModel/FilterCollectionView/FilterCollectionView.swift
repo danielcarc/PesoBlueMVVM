@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol FilterCollectionViewDelegate: AnyObject {
+    func didSelectFilter(_ filter: DiscoverItem)
+}
+
 class FilterCollectionView: UIView{
     
     private var data: [DiscoverItem] = []
     private var placeType: String?
     private var selectedIndexPath: IndexPath?
     private var viewModel = PlaceListViewModel()
+    weak var delegate: FilterCollectionViewDelegate?
     
     func updateData(type: String){
         placeType = type
@@ -93,8 +98,6 @@ extension FilterCollectionView: UICollectionViewDataSource{
         
         return cell
     }
-
-    
     
 }
 
@@ -129,14 +132,12 @@ extension FilterCollectionView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-//extension FilterCollectionView {
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        filterCollectionView.layoutIfNeeded()
-//        print("FilterCollectionView bounds: \(bounds)")
-//        print("FilterCollectionView contentSize: \(filterCollectionView.contentSize)")
-//        for cell in filterCollectionView.visibleCells {
-//            print("Cell frame: \(cell.frame)")
-//        }
-//    }
-//}
+extension FilterCollectionView : UICollectionViewDelegate{
+   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       
+       let filter = data[indexPath.item]
+       delegate?.didSelectFilter(filter)
+       
+    }
+
+}
