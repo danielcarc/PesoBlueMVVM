@@ -62,7 +62,7 @@ class PlaceListCollectionView: UIView{
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vw.register(PlaceCell.self, forCellWithReuseIdentifier: "PlaceCell")
         vw.showsHorizontalScrollIndicator = false
-        vw.backgroundColor = UIColor(hex: "F2F8FC")
+        vw.backgroundColor = UIColor(hex: "F0F8FF")
         vw.isScrollEnabled = false
         vw.dataSource = self
         vw.delegate = self

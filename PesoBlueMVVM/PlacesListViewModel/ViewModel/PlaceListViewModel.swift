@@ -15,6 +15,7 @@ class PlaceListViewModel{
     private let locationManager = LocationManager()
     
     func fetchFilterItems() -> [DiscoverItem] {
+        
         discoverItem = filterManager.fetch()
         return discoverItem
     }

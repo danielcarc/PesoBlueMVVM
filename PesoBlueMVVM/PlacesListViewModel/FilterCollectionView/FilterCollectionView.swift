@@ -16,6 +16,7 @@ class FilterCollectionView: UIView{
     private var data: [DiscoverItem] = []
     private var placeType: String?
     private var selectedIndexPath: IndexPath?
+    private var previousIndexPath: IndexPath?
     private var viewModel = PlaceListViewModel()
     weak var delegate: FilterCollectionViewDelegate?
     
@@ -48,7 +49,7 @@ class FilterCollectionView: UIView{
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vw.register(FilterCell.self, forCellWithReuseIdentifier: "FilterCell")
         vw.showsHorizontalScrollIndicator = false
-        vw.backgroundColor = UIColor(hex: "F2F8FC")
+        vw.backgroundColor = UIColor(hex: "F0F8FF")
         vw.dataSource = self
         vw.delegate = self
         vw.translatesAutoresizingMaskIntoConstraints = false
@@ -82,12 +83,11 @@ extension FilterCollectionView: UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! FilterCell
         cell.set(image: item.image, title: item.name)
         
-        // Si el nombre coincide con `placeType`, actualiza el índice seleccionado
         if item.name == placeType {
             selectedIndexPath = indexPath
         }
         
-        // Configura el estado visual del borde
+        //configura el estado visual del borde
         if indexPath == selectedIndexPath {
             cell.layer.borderWidth = 1.0
             cell.layer.borderColor = UIColor.black.cgColor
@@ -100,6 +100,36 @@ extension FilterCollectionView: UICollectionViewDataSource{
     }
     
 }
+
+extension FilterCollectionView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 110)
+    }
+}
+
+extension FilterCollectionView : UICollectionViewDelegate{
+   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       let previousIndexPath = selectedIndexPath
+       
+       //actualizamos el nuevo índice seleccionado
+       selectedIndexPath = indexPath
+       
+       //llamamos al delegado
+       let filter = data[indexPath.item]
+       delegate?.didSelectFilter(filter)
+       
+       //recargamos solo las celdas afectadas (la anterior y la nueva seleccionada)
+       var indexPathsToReload: [IndexPath] = [indexPath]
+       if let previous = previousIndexPath {
+           indexPathsToReload.append(previous)
+       }
+       
+       collectionView.reloadItems(at: indexPathsToReload)
+       
+    }
+
+}
+
 
 
 //MARK: - Setup CollectionView Constraints
@@ -126,18 +156,3 @@ extension FilterCollectionView{
     }
 }
 
-extension FilterCollectionView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 110)
-    }
-}
-
-extension FilterCollectionView : UICollectionViewDelegate{
-   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       
-       let filter = data[indexPath.item]
-       delegate?.didSelectFilter(filter)
-       
-    }
-
-}

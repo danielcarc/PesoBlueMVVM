@@ -13,7 +13,9 @@ class FilterDataManager: DataManager{
     //private var placeItems: [PlaceItem] = []
     
     func fetch() -> [DiscoverItem] {
+        discoverItems.removeAll()
         for data in loadPlist(file: "PlacesBa") {
+            
             discoverItems.append(DiscoverItem(dict: data as! [String: String]))
         }
         return discoverItems

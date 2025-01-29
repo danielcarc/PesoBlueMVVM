@@ -53,16 +53,12 @@ class PlacesListViewController: UIViewController {
     override func loadView() {
         
         self.view = UIView()
-//        let aliceBlue = UIColor(red: 240/255.0, green: 248/255.0, blue: 255/255.0, alpha: 1.0)
-//        self.view.backgroundColor  = aliceBlue
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor  = UIColor(hex: "F0F8FF")
         placeListCView.delegate = self
+        filterCView.delegate = self
         setup()
     }
     
@@ -92,6 +88,7 @@ extension PlacesListViewController{
     }
     
     func addsubviews() {
+        self.view.backgroundColor  = UIColor(hex: "F0F8FF")
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
         contentView.addSubview(stackView)
@@ -138,7 +135,6 @@ extension PlacesListViewController{
 }
 
 //MARK: - UICollectionViewDelegate Methods
-
 extension PlacesListViewController: PlaceListCollectionViewDelegate {
     func didSelectItem(_ item: DiscoverItem) {
         placeType = item.name
@@ -157,4 +153,13 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
             self.view.layoutIfNeeded()
         }
     }
+}
+
+extension PlacesListViewController: FilterCollectionViewDelegate {
+    func didSelectFilter(_ filter: DiscoverItem) {
+        self.placeType = filter.name
+        print(placeType ?? "all")
+        filterCView.updateData(type: placeType ?? "All")
+    }
+    
 }
