@@ -71,7 +71,8 @@ class QuickConversorView: UIView{
     private lazy var arsContainerView : UIView = {
         var view = UIView()
         view.backgroundColor = .white
-
+        view.layer.cornerRadius = 8
+        view.layer.borderColor = UIColor.lightGray.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view

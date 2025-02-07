@@ -116,7 +116,7 @@ extension PlaceCell {
             placeImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             placeImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             placeImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            placeImage.heightAnchor.constraint(equalToConstant: 150),
+            placeImage.heightAnchor.constraint(equalToConstant: 190),
             //placeImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -20),
             
             placeName.topAnchor.constraint(equalTo: placeImage.bottomAnchor, constant: 8),

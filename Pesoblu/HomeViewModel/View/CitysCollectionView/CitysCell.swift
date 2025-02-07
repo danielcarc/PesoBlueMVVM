@@ -24,6 +24,7 @@ class CitysCell: UICollectionViewCell {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.numberOfLines = 0
         label.textColor = UIColor(named: "primaryTextColor") ?? .black
         label.textAlignment = .center
         return label
@@ -60,6 +61,7 @@ private extension CitysCell {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(imageView)
         self.addSubview(titleLabel)
+        //imageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupConstraints(){
@@ -70,11 +72,11 @@ private extension CitysCell {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
             imageView.heightAnchor.constraint(equalToConstant: 100),
-            imageView.widthAnchor.constraint(equalToConstant: 170),
+            imageView.widthAnchor.constraint(equalToConstant: 166),
 
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         ])
         
     }

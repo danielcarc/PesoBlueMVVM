@@ -52,7 +52,7 @@ class PlaceListCollectionView: UIView{
         let screenWidth = UIScreen.main.bounds.width
         let itemWidth = screenWidth - 40
         var layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: itemWidth, height: 238)
+        layout.itemSize = .init(width: itemWidth, height: 278)
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10) // Añade márgenes

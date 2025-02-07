@@ -45,8 +45,8 @@ class CitysCollectionView: UIView{
         let totalSpacing = layout.minimumInteritemSpacing * 1 // Espacio entre dos celdas
         let availableWidth = UIScreen.main.bounds.width - totalSpacing - 20
         let cellWidth = availableWidth / 2
-        layout.itemSize = .init(width: cellWidth, height: 130)
-        
+        //layout.itemSize = .init(width: cellWidth, height: 130)
+        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width / 2 - 15, height: 130)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false

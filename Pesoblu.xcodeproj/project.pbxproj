@@ -24,7 +24,7 @@
 		C58674142AC71FD5000FCD5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58674132AC71FD5000FCD5B /* Assets.xcassets */; };
 		C58674172AC71FD5000FCD5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */; };
 		C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */; };
-		C5B015CF2CCC296900204A03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5B015CE2CCC296900204A03 /* GoogleService-Info.plist */; };
+		C5B49F182D53FA4D005AE2A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5B49F172D53FA4D005AE2A9 /* GoogleService-Info.plist */; };
 		C5C47C0A2CC9D8FF00238099 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C5C47C092CC9D8FF00238099 /* FirebaseAuth */; };
 		C5C47C0D2CCAE5D500238099 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C5C47C0C2CCAE5D500238099 /* GoogleSignIn */; };
 		C5C47C0F2CCAE5D500238099 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C5C47C0E2CCAE5D500238099 /* GoogleSignInSwift */; };
@@ -40,7 +40,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C5028CB32CD0563A0034AD10 /* Pesoblu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pesoblu.entitlements; sourceTree = "<group>"; };
 		C513DE9C2ACDB5340066AFCA /* ChangeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCollectionViewCell.swift; sourceTree = "<group>"; };
 		C513DE9E2ACDBB090066AFCA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		C513DEA02ACDC17D0066AFCA /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
@@ -60,7 +59,7 @@
 		C58674162AC71FD5000FCD5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C58674182AC71FD5000FCD5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		C5B015CE2CCC296900204A03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C5B49F172D53FA4D005AE2A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5C47C122CCAF16600238099 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		C5E4E73E2CC05826000A06C4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,7 +198,6 @@
 				C57814272D08F746004A42C9 /* HomeViewModel */,
 				C561430A2CEC3CDE00760670 /* Misc */,
 				C555BAB32CE2D6AE00EC6010 /* User Defaults */,
-				C5028CB32CD0563A0034AD10 /* Pesoblu.entitlements */,
 				C52D8A492CE2C1B600A827BD /* AppUser.swift */,
 				C59B3F432CBDD1CF00E0C532 /* LoginViewModel */,
 				C513DEFA2AE8D99F0066AFCA /* TabBarController */,
@@ -207,8 +205,8 @@
 				C513DEA22ACDFEFE0066AFCA /* ChangeViewModel */,
 				C586740A2AC71FD3000FCD5B /* AppDelegate.swift */,
 				C586740C2AC71FD3000FCD5B /* SceneDelegate.swift */,
+				C5B49F172D53FA4D005AE2A9 /* GoogleService-Info.plist */,
 				C58674132AC71FD5000FCD5B /* Assets.xcassets */,
-				C5B015CE2CCC296900204A03 /* GoogleService-Info.plist */,
 				C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */,
 				C58674182AC71FD5000FCD5B /* Info.plist */,
 			);
@@ -310,8 +308,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C58674172AC71FD5000FCD5B /* LaunchScreen.storyboard in Resources */,
+				C5B49F182D53FA4D005AE2A9 /* GoogleService-Info.plist in Resources */,
 				C58674142AC71FD5000FCD5B /* Assets.xcassets in Resources */,
-				C5B015CF2CCC296900204A03 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

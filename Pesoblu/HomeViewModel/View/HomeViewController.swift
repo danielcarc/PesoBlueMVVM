@@ -70,6 +70,9 @@ class HomeViewController: UIViewController {
         
         // Actualiza el tamaño de contenido del scrollView
         mainScrollView.contentSize = CGSize(width: contentView.frame.width, height: contentView.frame.height)
+        
+        // Añadir la restricción de ancho solo después de que el frame esté calculado
+        contentView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor).isActive = true
     }
     
 }
@@ -107,13 +110,13 @@ extension HomeViewController{
         mainScrollView.addSubview(contentView)
         contentView.addSubview(stackView)
         
-        mainScrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+//        mainScrollView.translatesAutoresizingMaskIntoConstraints = false
+//        contentView.translatesAutoresizingMaskIntoConstraints = false
+//        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        quickConversorView.translatesAutoresizingMaskIntoConstraints = false
-        discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
-        citysCView.translatesAutoresizingMaskIntoConstraints = false
+//        quickConversorView.translatesAutoresizingMaskIntoConstraints = false
+//        discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
+//        citysCView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.addArrangedSubview(quickConversorView)
         stackView.addArrangedSubview(discoverBaCView)
@@ -137,7 +140,7 @@ extension HomeViewController{
             contentView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor), // Ancho igual
-            //contentView.heightAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.heightAnchor),
+            
             
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

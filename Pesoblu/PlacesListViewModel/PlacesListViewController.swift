@@ -163,7 +163,7 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
     func didUpdateItemCount(_ count: Int) {
         let labelSpacing = 38.0
         let rows = ceil(Double(count))
-        let itemHeight = 238.0
+        let itemHeight = 278.0
         let spacing = 10.0
         let totalHeight = rows * itemHeight + (rows - 1) * spacing + labelSpacing
         collectionViewHeightConstraint.constant = totalHeight

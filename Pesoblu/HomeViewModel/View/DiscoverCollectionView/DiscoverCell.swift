@@ -60,6 +60,8 @@ private extension DiscoverCell {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(imageView)
         self.addSubview(titleLabel)
+        //imageView.translatesAutoresizingMaskIntoConstraints = false
+        
     }
     
     func setupConstraints(){
