@@ -24,7 +24,6 @@ class HomeViewController: UIViewController {
         var scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
         scrollView.bounces = true
-        //scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isScrollEnabled = true
         
@@ -64,14 +63,14 @@ class HomeViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        // Asegúrate de que el tamaño de contentView se ajuste al tamaño de stackView
+        //se asegura de que el tamaño de contentView se ajuste al tamaño de stackView
         let stackViewHeight = stackView.frame.height
         contentView.frame.size.height = stackViewHeight
         
-        // Actualiza el tamaño de contenido del scrollView
+        //actualiza el tamaño de contenido del scrollView
         mainScrollView.contentSize = CGSize(width: contentView.frame.width, height: contentView.frame.height)
         
-        // Añadir la restricción de ancho solo después de que el frame esté calculado
+        //añadir la restricción de ancho solo después de que el frame esté calculado
         contentView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor).isActive = true
     }
     
@@ -167,15 +166,26 @@ extension HomeViewController{
     func setupQuickConversor(){
         
         Task {
-            if let dolar = await homeViewModel.getDolarBlue()?.venta {
-                quickConversorView.setDolar(dolar: dolar)
-            } else {
-                print("No se pudo obtener el valor del dólar")
+            do{
+                if let dolarBlue = try await homeViewModel.getDolarBlue() {
+                    quickConversorView.setDolar(dolar: dolarBlue.venta)
+                } else {
+                    print("No se pudo obtener el valor del dólar")
+                }
+                let countryCode = homeViewModel.getUserCountry() ?? "AR"
+                let value = try await homeViewModel.getValueForCountry(countryCode: countryCode)
+                quickConversorView.setValue(value: value)
+            } catch APIError.invalidURL {
+                showAlert(message: "URL mal formada")
+            } catch APIError.requestFailed(let statusCode) {
+                showAlert(message: "Error en la API, código: \(statusCode)")
+            } catch APIError.invalidResponse {
+                showAlert(message: "Respuesta no válida del servidor")
+            } catch APIError.decodingError {
+                showAlert(message: "Error al decodificar los datos")
+            } catch {
+                showAlert(message: "Error desconocido: \(error.localizedDescription)")
             }
-            let countryCode = homeViewModel.getUserCountry()
-            let value = await homeViewModel.getValueForCountry(countryCode: countryCode ?? "AR")
-            quickConversorView.setValue(value: value)
-            
         }
     }
 }

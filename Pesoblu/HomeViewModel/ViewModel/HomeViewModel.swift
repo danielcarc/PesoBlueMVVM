@@ -35,28 +35,32 @@ class HomeViewModel{
     
     
     @MainActor
-    func getDolarBlue() async -> DolarBlue?{
-        
+    func getDolarBlue() async throws -> DolarBlue? {
+        guard let url = URL(string: "https://dolarapi.com/v1/dolares/blue") else {
+            throw APIError.invalidURL
+        }
+
         do {
-            guard let url = URL(string: "https://dolarapi.com/v1/dolares/blue") else {
-                print("URL inválida")
-                return nil
-            }
             let (data, response) = try await URLSession.shared.data(from: url)
-            
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                print("Error en response")
-                return nil
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw APIError.invalidResponse
             }
-            
+
+            guard httpResponse.statusCode == 200 else {
+                throw APIError.requestFailed(statusCode: httpResponse.statusCode)
+            }
+
             let jsonDecoder = JSONDecoder()
             let dolarBlue = try jsonDecoder.decode(DolarBlue.self, from: data)
             self.dolarBlue = dolarBlue
-            //print(dolarBlue.venta)
             return dolarBlue
+        } catch let decodingError as DecodingError {
+            print("Error al decodificar: \(decodingError)")
+            throw APIError.decodingError
         } catch {
-            print(error.localizedDescription)
-            return nil
+            print("Error inesperado: \(error.localizedDescription)")
+            throw error
         }
     }
     
@@ -78,43 +82,37 @@ class HomeViewModel{
     }
     
     @MainActor
-    func fetchChange() async -> Rates?{
+    func fetchChange() async throws -> Rates? {
+        guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP&format=json") else {
+            throw APIError.invalidURL
+        }
         
-        do{
-            guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP&format=json") else {
-                print("URL inválida")
-                return nil
-            }
-            
+        do {
             let (data, response) = try await URLSession.shared.data(from: url)
             
-            if let httpResponse = response as? HTTPURLResponse {
-                guard httpResponse.statusCode == 200 else {
-                    print("Error en response: \(httpResponse.statusCode)")
-                    return nil
-                }
-            } else {
-                print("Error en el formato de respuesta")
-                return nil
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw APIError.invalidResponse
+            }
+            
+            guard httpResponse.statusCode == 200 else {
+                throw APIError.requestFailed(statusCode: httpResponse.statusCode)
             }
             
             let jsonDecoder = JSONDecoder()
-            
             let currencyData = try jsonDecoder.decode(CurrencyResponse.self, from: data)
             self.currency = currencyData.rates
-            return self.currency
-            //await self.delegate?.didFinish()
-            //print(currency)
-        }
-        catch{
-            //self.delegate?.didFail(error: error)
-            print("Error: \(error.localizedDescription)")
-            return nil
+            return currencyData.rates
+        } catch let decodingError as DecodingError {
+            print("Error al decodificar: \(decodingError)")
+            throw APIError.decodingError
+        } catch {
+            print("Error inesperado: \(error.localizedDescription)")
+            throw error
         }
     }
     
-    func getValueForCountry(countryCode: String) async -> String {
-        guard let currentRates = await fetchChange() else {
+    func getValueForCountry(countryCode: String) async throws -> String {
+        guard let currentRates = try await fetchChange() else {
             return "Datos no disponibles" // Mensaje más descriptivo cuando no hay datos
         }
         

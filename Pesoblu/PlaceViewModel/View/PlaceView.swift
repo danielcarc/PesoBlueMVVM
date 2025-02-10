@@ -13,6 +13,8 @@ class PlaceView: UIView{
     
     private var viewModel = PlaceViewModel()
     
+    var place: PlaceItem?
+    
     private lazy var stackView: UIStackView = {
         var sv = UIStackView()
         sv.axis = .vertical
@@ -106,17 +108,19 @@ class PlaceView: UIView{
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.layer.cornerRadius = 12
+        mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openInMaps)))
         mapView.translatesAutoresizingMaskIntoConstraints = false
         
         return mapView
     }()
     
     func setData(item: PlaceItem){
-        let place = item
-        nameLabel.text = place.name
-        categoriesLabel.text = place.categories?.joined(separator: " · ")
-        addressLabel.text = "📍 \(place.address), \(place.area)"
-        descriptionLabel.text = place.placeDescription
+        
+        place = item
+        nameLabel.text = item.name
+        categoriesLabel.text = item.categories?.joined(separator: " · ")
+        addressLabel.text = "📍 \(item.address), \(item.area)"
+        descriptionLabel.text = item.placeDescription
         phoneIconButton.accessibilityLabel = item.phone
         instagramIconButton.accessibilityLabel = item.instagram
         
@@ -133,12 +137,18 @@ class PlaceView: UIView{
         }
         
         let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: place.lat ?? 0.0, longitude: place.long ?? 0.0)
-        annotation.title = place.name
+        annotation.coordinate = CLLocationCoordinate2D(latitude: item.lat ?? 0.0, longitude: item.long ?? 0.0)
+        annotation.title = place?.name
         mapView.addAnnotation(annotation)
         let region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: false)
     }
+    
+//    private func setupMapGesture() {
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openInMaps))
+//        mapView.addGestureRecognizer(tapGesture)
+//    }
+
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -208,26 +218,31 @@ extension PlaceView{
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
-//    @objc private func callPhone(sender: UIButton) {
-//        guard let phoneNumber = sender.accessibilityLabel,
-//              !phoneNumber.isEmpty,
-//              let url = URL(string: "tel://\(phoneNumber)") else {
-//            print("Número inválido.")
-//            return
-//        }
-//
-//        print("Intentando llamar a: \(url.absoluteString)")
-//
-//        if UIApplication.shared.canOpenURL(url) {
-//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//        } else {
-//            print("No se puede abrir la app de llamadas.")
-//        }
-//    }
-    
     @objc private func openInstagram(sender: UIButton) {
         if let instagramURL = sender.accessibilityLabel, let url = URL(string: instagramURL) {
             UIApplication.shared.open(url)
         }
     }
+    
+    @objc private func openInMaps() {
+      
+        if let place = self.place {
+            //let placeName = place.name
+            let latitude = place.lat ?? 0.0
+            let longitude = place.long ?? 0.0
+            
+            let urlString = "maps://?q=\(place.name)&ll=\(latitude),\(longitude)"
+            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            } else {
+                // Si Apple Maps no está disponible, abrimos Google Maps en el navegador
+                let googleMapsURL = "https://www.google.com/maps/search/?api=1&query=\(latitude),\(longitude)"
+                if let url = URL(string: googleMapsURL) {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }
+        else {return}
+    }
+
 }
