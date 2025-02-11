@@ -155,32 +155,32 @@ extension HomeViewModel{
         return places
     }
     
-    func filteredItem(item: DiscoverItem) throws -> [PlaceItem] {
-        let filter = item.name
-        let places = try placeService.fetchPlaces(city: filter) // Supongamos que fetchPlaces puede lanzar un error
-        guard !places.isEmpty else {
-            throw PlaceError.noPlacesAvailable
-        }
-        
-        let filteredPlaces = try filterPlaces(for: places, by: filter)
-        
-        if filteredPlaces.isEmpty {
-            print("Advertencia: No se encontraron lugares para el tipo '\(filter)'.")
-        }
-        
-        return filteredPlaces
-    }
+//    func filteredItem(item: DiscoverItem) throws -> [PlaceItem] {
+//        let filter = item.name
+//        let places = try placeService.fetchPlaces(city: filter) // Supongamos que fetchPlaces puede lanzar un error
+//        guard !places.isEmpty else {
+//            throw PlaceError.noPlacesAvailable
+//        }
+//        
+//        let filteredPlaces = try filterPlaces(for: places, by: filter)
+//        
+//        if filteredPlaces.isEmpty {
+//            print("Advertencia: No se encontraron lugares para el tipo '\(filter)'.")
+//        }
+//        
+//        return filteredPlaces
+//    }
 
     
-    func filterPlaces(for place: [PlaceItem], by filter: String) throws -> [PlaceItem] {
-        
-        let places = place
-        let type = filter
-        
-        let filteredPlaces = places.filter { $0.placeType.lowercased() == type.lowercased() }
-        
-        return filteredPlaces
-    }
+//    func filterPlaces(for place: [PlaceItem], by filter: String) throws -> [PlaceItem] {
+//        
+//        let places = place
+//        let type = filter
+//        
+//        let filteredPlaces = places.filter { $0.placeType.lowercased() == type.lowercased() }
+//        
+//        return filteredPlaces
+//    }
     
 }
 

@@ -21,7 +21,7 @@ class CitysCollectionView: UIView{
     func updateData() {
         
         self.data = homeViewModel.fetchCitysItems()
-        collectionView.reloadData()
+        citysCollectionView.reloadData()
         delegate?.didUpdateItemCount(data.count)
         print("Items count updated: \(data.count)")
     }
@@ -36,7 +36,7 @@ class CitysCollectionView: UIView{
         return label
     }()
     
-    private lazy var collectionView: UICollectionView = {
+    private lazy var citysCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
@@ -75,17 +75,17 @@ extension CitysCollectionView{
     
     func setup() {
         addSubview(discoverArgentinaLabel)
-        addSubview(collectionView)
+        addSubview(citysCollectionView)
         
         NSLayoutConstraint.activate([
             discoverArgentinaLabel.topAnchor.constraint(equalTo: topAnchor),
             discoverArgentinaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             discoverArgentinaLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            collectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            citysCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
+            citysCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            citysCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            citysCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
             
         ])
     }
@@ -124,5 +124,12 @@ extension CitysCollectionView: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCity = data[indexPath.item]
         delegate?.didSelectItem(selectedCity)
+    }
+}
+
+
+extension CitysCollectionView {
+    var collectionViewForTesting: UICollectionView {
+        return citysCollectionView
     }
 }

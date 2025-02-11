@@ -39,6 +39,16 @@
 		C5E4E75D2CC09670000A06C4 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = C5E4E75C2CC09670000A06C4 /* FirebaseAnalyticsOnDeviceConversion */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C5B49F212D5AC965005AE2A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C58673FF2AC71FD3000FCD5B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C58674062AC71FD3000FCD5B;
+			remoteInfo = Pesoblu;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		C513DE9C2ACDB5340066AFCA /* ChangeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCollectionViewCell.swift; sourceTree = "<group>"; };
 		C513DE9E2ACDBB090066AFCA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -60,6 +70,7 @@
 		C58674182AC71FD5000FCD5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C5B49F172D53FA4D005AE2A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C5B49F1D2D5AC965005AE2A9 /* PesobluTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PesobluTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C47C122CCAF16600238099 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		C5E4E73E2CC05826000A06C4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +81,7 @@
 		C5740BBD2D4A982500F6D687 /* PlaceViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlaceViewModel; sourceTree = "<group>"; };
 		C57814272D08F746004A42C9 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
 		C57814432D2EF628004A42C9 /* PlacesListViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlacesListViewModel; sourceTree = "<group>"; };
+		C5B49F1E2D5AC965005AE2A9 /* PesobluTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PesobluTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +99,13 @@
 				C5E4E7582CC09545000A06C4 /* FirebaseAnalytics in Frameworks */,
 				C5C47C0A2CC9D8FF00238099 /* FirebaseAuth in Frameworks */,
 				C5C47C0D2CCAE5D500238099 /* GoogleSignIn in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5B49F1A2D5AC965005AE2A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				C58674092AC71FD3000FCD5B /* Pesoblu */,
+				C5B49F1E2D5AC965005AE2A9 /* PesobluTests */,
 				C5E4E75B2CC09670000A06C4 /* Frameworks */,
 				C58674082AC71FD3000FCD5B /* Products */,
 			);
@@ -186,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				C58674072AC71FD3000FCD5B /* Pesoblu.app */,
+				C5B49F1D2D5AC965005AE2A9 /* PesobluTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -265,6 +286,29 @@
 			productReference = C58674072AC71FD3000FCD5B /* Pesoblu.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C5B49F1C2D5AC965005AE2A9 /* PesobluTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5B49F232D5AC965005AE2A9 /* Build configuration list for PBXNativeTarget "PesobluTests" */;
+			buildPhases = (
+				C5B49F192D5AC965005AE2A9 /* Sources */,
+				C5B49F1A2D5AC965005AE2A9 /* Frameworks */,
+				C5B49F1B2D5AC965005AE2A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C5B49F222D5AC965005AE2A9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C5B49F1E2D5AC965005AE2A9 /* PesobluTests */,
+			);
+			name = PesobluTests;
+			packageProductDependencies = (
+			);
+			productName = PesobluTests;
+			productReference = C5B49F1D2D5AC965005AE2A9 /* PesobluTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -272,11 +316,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					C58674062AC71FD3000FCD5B = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					C5B49F1C2D5AC965005AE2A9 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = C58674062AC71FD3000FCD5B;
 					};
 				};
 			};
@@ -298,6 +346,7 @@
 			projectRoot = "";
 			targets = (
 				C58674062AC71FD3000FCD5B /* Pesoblu */,
+				C5B49F1C2D5AC965005AE2A9 /* PesobluTests */,
 			);
 		};
 /* End PBXProject section */
@@ -310,6 +359,13 @@
 				C58674172AC71FD5000FCD5B /* LaunchScreen.storyboard in Resources */,
 				C5B49F182D53FA4D005AE2A9 /* GoogleService-Info.plist in Resources */,
 				C58674142AC71FD5000FCD5B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5B49F1B2D5AC965005AE2A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,7 +396,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C5B49F192D5AC965005AE2A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C5B49F222D5AC965005AE2A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C58674062AC71FD3000FCD5B /* Pesoblu */;
+			targetProxy = C5B49F212D5AC965005AE2A9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */ = {
@@ -484,6 +555,7 @@
 				DEVELOPMENT_TEAM = TKYW6DY62B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pesoblu/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Pesoblu;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
@@ -512,6 +584,7 @@
 				DEVELOPMENT_TEAM = TKYW6DY62B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pesoblu/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Pesoblu;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
@@ -526,6 +599,44 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C5B49F242D5AC965005AE2A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TKYW6DY62B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dcarcacha.PesobluTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pesoblu.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pesoblu";
+			};
+			name = Debug;
+		};
+		C5B49F252D5AC965005AE2A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TKYW6DY62B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dcarcacha.PesobluTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pesoblu.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pesoblu";
 			};
 			name = Release;
 		};
@@ -546,6 +657,15 @@
 			buildConfigurations = (
 				C586741C2AC71FD5000FCD5B /* Debug */,
 				C586741D2AC71FD5000FCD5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5B49F232D5AC965005AE2A9 /* Build configuration list for PBXNativeTarget "PesobluTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5B49F242D5AC965005AE2A9 /* Debug */,
+				C5B49F252D5AC965005AE2A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

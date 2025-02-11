@@ -84,9 +84,11 @@ extension HomeViewController {
         setupUI()
         setupQuickConversor()
         citysCView.delegate = self
+        //citysCView.citysCollectionView.dataSource = self
         discoverBaCView.updateData()
         citysCView.updateData()
         discoverBaCView.delegate = self
+        //discoverBaCView.discoverCollectionView.dataSource = self
         
     }
     
