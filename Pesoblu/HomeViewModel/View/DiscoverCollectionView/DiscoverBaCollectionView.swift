@@ -114,3 +114,9 @@ private extension DiscoverBaCollectionView {
         ])
     }
 }
+
+extension DiscoverBaCollectionView {
+    var collectionViewForTesting: UICollectionView {
+        return discoverCollectionView
+    }
+}

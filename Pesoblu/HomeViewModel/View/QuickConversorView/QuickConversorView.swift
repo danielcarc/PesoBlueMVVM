@@ -146,6 +146,15 @@ class QuickConversorView: UIView{
 }
 
 extension QuickConversorView{
+    var usdLabelTesting: UILabel {
+        return usdValueLabel
+    }
+    var arsvalueLabelTesting: UILabel {
+        return arsValueLabel
+    }
+}
+
+extension QuickConversorView{
     
     private func setupUI() {
         

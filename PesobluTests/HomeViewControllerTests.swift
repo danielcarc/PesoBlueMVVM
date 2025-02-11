@@ -7,6 +7,7 @@
 
 import Testing
 import XCTest
+import UIKit
 @testable import Pesoblu
 
 
@@ -47,8 +48,59 @@ final class HomeViewControllerTests: XCTestCase{
         // Verificamos que el dataSource del collectionView sea el propio CitysCollectionView
         XCTAssertTrue(citysCView.collectionViewForTesting.dataSource === citysCView)
     }
+    func test_DiscoverCollectionView_conformsToUICollectionViewDataSource() {
+        // Instanciamos el CitysCollectionView
+        let discoverCView = CitysCollectionView()
 
+        // Comprobamos que el objeto se conforme con el protocolo UICollectionViewDataSource
+        XCTAssertTrue(discoverCView.conforms(to: UICollectionViewDataSource.self))
+
+        // Verificamos que el dataSource del collectionView sea el propio CitysCollectionView
+        XCTAssertTrue(discoverCView.collectionViewForTesting.dataSource === discoverCView)
+    }
     
-    
-    
+    @MainActor
+    func testSetupQuickConversor_Success() async {
+        let mockViewModel = MockHomeViewModel()
+        let view = QuickConversorView()
+        let sut = HomeViewController(homeViewModel: mockViewModel, quickConversorView: view)
+
+        sut.setupQuickConversor()
+        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 segundos
+
+        XCTAssertEqual(view.usdLabelTesting.text, "$ 1000.00")
+        XCTAssertEqual(view.arsvalueLabelTesting.text, "$ 5000.0")
+    }
+
 }
+
+
+class MockHomeViewModel: HomeViewModelProtocol {
+    func fetchPlaces(city: String) throws -> [Pesoblu.PlaceItem] {
+        return []
+    }
+    
+    var shouldFail = false
+    var apiError: APIError?
+    
+    func getDolarBlue() async throws -> DolarBlue? {
+        if shouldFail, let error = apiError {
+            throw error
+        }
+        let dolar: DolarBlue = .init(moneda: "1", casa: "2", nombre: "3", compra: 1000.0, venta: 1000.0, fechaActualizacion: "13")
+        
+        return dolar  // Valor simulado
+    }
+
+    func getUserCountry() -> String? {
+        return "AR"
+    }
+
+    func getValueForCountry(countryCode: String) async throws -> String {
+        if shouldFail, let error = apiError {
+            throw error
+        }
+        return "5000.0" // Valor simulado
+    }
+}
+

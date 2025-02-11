@@ -7,12 +7,12 @@
 
 
 struct DolarBlue: Codable {
-    let moneda: String
-    let casa: String
-    let nombre: String
-    let compra: Double
-    let venta: Double
-    let fechaActualizacion: String
+    var moneda: String
+    var casa: String
+    var nombre: String
+    var compra: Double
+    var venta: Double
+    var fechaActualizacion: String
     
     enum CodingKeys: String, CodingKey {
         case moneda

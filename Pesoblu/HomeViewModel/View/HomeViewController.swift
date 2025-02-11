@@ -12,13 +12,22 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    var quickConversorView = QuickConversorView()
+    var quickConversorView : QuickConversorView
     var discoverBaCView = DiscoverBaCollectionView()
     var citysCView = CitysCollectionView()
     
     var collectionViewHeightConstraint: NSLayoutConstraint!
     
-    var homeViewModel = HomeViewModel()
+    private let homeViewModel: HomeViewModelProtocol
+    
+    init(homeViewModel: HomeViewModelProtocol = HomeViewModel(), quickConversorView: QuickConversorView = QuickConversorView()) {
+        self.homeViewModel = homeViewModel
+        self.quickConversorView = quickConversorView
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+    }
     
     private var mainScrollView: UIScrollView = {
         var scrollView = UIScrollView()
@@ -177,17 +186,24 @@ extension HomeViewController{
                 let countryCode = homeViewModel.getUserCountry() ?? "AR"
                 let value = try await homeViewModel.getValueForCountry(countryCode: countryCode)
                 quickConversorView.setValue(value: value)
-            } catch APIError.invalidURL {
-                showAlert(message: "URL mal formada")
-            } catch APIError.requestFailed(let statusCode) {
-                showAlert(message: "Error en la API, código: \(statusCode)")
-            } catch APIError.invalidResponse {
-                showAlert(message: "Respuesta no válida del servidor")
-            } catch APIError.decodingError {
-                showAlert(message: "Error al decodificar los datos")
+            } catch let error as APIError {
+                handleAPIError(error)
             } catch {
                 showAlert(message: "Error desconocido: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    private func handleAPIError(_ error: APIError) {
+        switch error {
+            case .invalidURL:
+                showAlert(message: "URL mal formada")
+            case .requestFailed(let statusCode):
+                showAlert(message: "Error en la API, código: \(statusCode)")
+            case .invalidResponse:
+                showAlert(message: "Respuesta no válida del servidor")
+            case .decodingError:
+                showAlert(message: "Error al decodificar los datos")
         }
     }
 }

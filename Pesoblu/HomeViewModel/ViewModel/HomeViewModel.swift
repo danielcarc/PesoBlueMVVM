@@ -7,8 +7,15 @@
 
 import Foundation
 
+protocol HomeViewModelProtocol {
+    func getDolarBlue() async throws -> DolarBlue?
+    func getUserCountry() -> String?
+    func getValueForCountry(countryCode: String) async throws -> String
+    func fetchPlaces(city: String) throws -> [PlaceItem]
+}
 
-class HomeViewModel{
+
+class HomeViewModel: HomeViewModelProtocol{
     
     private var discoverItems: [DiscoverItem] = []
     private var citysItem: [CitysItem] = []
