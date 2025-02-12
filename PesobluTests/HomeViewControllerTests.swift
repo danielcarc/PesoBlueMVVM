@@ -71,12 +71,42 @@ final class HomeViewControllerTests: XCTestCase{
         XCTAssertEqual(view.usdLabelTesting.text, "$ 1000.00")
         XCTAssertEqual(view.arsvalueLabelTesting.text, "$ 5000.0")
     }
+    
+    @MainActor
+    func testSetupQuickConversor_InvalidURL() async {
+        let mockViewModel = MockHomeViewModel()
+        mockViewModel.shouldFail = true
+        mockViewModel.apiError = .invalidURL
+
+        let sut = HomeViewController(homeViewModel: mockViewModel)
+
+        sut.setupQuickConversor()
+        try? await Task.sleep(nanoseconds: 500_000_000)
+
+        XCTAssertEqual(sut.alertMessage, "URL mal formada")
+    }
+    
+    @MainActor
+    func testSetupQuickConversor_DecodingError() async {
+        let mockViewModel = MockHomeViewModel()
+        mockViewModel.shouldFail = true
+        mockViewModel.apiError = .decodingError
+
+        let sut = HomeViewController(homeViewModel: mockViewModel)
+
+        sut.setupQuickConversor()
+        try? await Task.sleep(nanoseconds: 500_000_000)
+
+        XCTAssertEqual(sut.alertMessage, "Error al decodificar los datos")
+    }
+    
+    
 
 }
 
 
 class MockHomeViewModel: HomeViewModelProtocol {
-    func fetchPlaces(city: String) throws -> [Pesoblu.PlaceItem] {
+    func fetchPlaces(city: String) throws -> [PlaceItem] {
         return []
     }
     

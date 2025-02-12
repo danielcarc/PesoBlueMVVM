@@ -99,8 +99,8 @@
             filePath = "Pesoblu/HomeViewModel/View/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "addSubViews()"
             landmarkType = "7">
          </BreakpointContent>

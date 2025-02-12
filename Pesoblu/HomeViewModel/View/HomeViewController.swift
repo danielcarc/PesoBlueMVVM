@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
     var quickConversorView : QuickConversorView
     var discoverBaCView = DiscoverBaCollectionView()
     var citysCView = CitysCollectionView()
+    var alertMessage: String?
     
     var collectionViewHeightConstraint: NSLayoutConstraint!
     
@@ -247,6 +248,7 @@ extension HomeViewController: CollectionViewSelectionDelegate{
 
 
     func showAlert(message: String) {
+        self.alertMessage = message
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true, completion: nil)
