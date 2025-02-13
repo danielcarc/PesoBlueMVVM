@@ -14,9 +14,19 @@ protocol CitysViewDelegate: AnyObject{
 
 class CitysCollectionView: UIView{
     
-    private var data : [CitysItem] = []
-    private var homeViewModel = HomeViewModel()
+    private var data: [CitysItem] = []
+    private let homeViewModel: HomeViewModelProtocol  // Usamos el protocolo en lugar de la clase concreta
     weak var delegate: CitysViewDelegate?
+    
+    init(homeViewModel: HomeViewModelProtocol, frame: CGRect = .zero) {
+        self.homeViewModel = homeViewModel
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func updateData() {
         
@@ -57,15 +67,15 @@ class CitysCollectionView: UIView{
         return collectionView
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setup()
+//    }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        setup()
+//    }
     
 }
 

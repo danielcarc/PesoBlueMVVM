@@ -20,8 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(windowScene: windowScene)
         
+        let homeViewModel = HomeViewModel(
+            currencyService: CurrencyService(),
+            locationService: LocationService(),
+            placesService: PlaceService()
+        )
 //        self.window?.rootViewController = PesoBlueTabBarControllerViewController()
-        let navigationController = UINavigationController(rootViewController: HomeViewController())
+        let navigationController = UINavigationController(rootViewController: HomeViewController(homeViewModel: homeViewModel))
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         

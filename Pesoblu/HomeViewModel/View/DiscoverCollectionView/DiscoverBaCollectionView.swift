@@ -14,9 +14,19 @@ protocol CollectionViewSelectionDelegate: AnyObject {
 class DiscoverBaCollectionView: UIView {
     
     private var data: [DiscoverItem] = []
-    private var homeViewModel : HomeViewModel = HomeViewModel()
+    private var homeViewModel : HomeViewModelProtocol
     weak var delegate: CollectionViewSelectionDelegate?
-
+    
+    init(homeViewModel: HomeViewModelProtocol, frame: CGRect = .zero) {
+        self.homeViewModel = homeViewModel
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func setData() {
         self.data = homeViewModel.fetchDiscoverItems()
         discoverCollectionView.reloadData()
@@ -54,15 +64,15 @@ class DiscoverBaCollectionView: UIView {
         return vw
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setup()
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        setup()
+//    }
 
 }
 

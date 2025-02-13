@@ -7,8 +7,11 @@
 
 import Foundation
 
+protocol PlacesServiceProtocol {
+    func fetchPlaces(city: String) throws -> [PlaceItem]
+}
 
-class PlaceService{
+class PlaceService: PlacesServiceProtocol{
     
     func fetchPlaces(city: String) throws -> [PlaceItem] {
         guard let url = Bundle.main.url(forResource: city, withExtension: "json") else {

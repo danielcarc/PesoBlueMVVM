@@ -12,10 +12,23 @@ protocol HomeViewModelProtocol {
     func getUserCountry() -> String?
     func getValueForCountry(countryCode: String) async throws -> String
     func fetchPlaces(city: String) throws -> [PlaceItem]
+    func fetchCitysItems() -> [CitysItem]
+    func fetchDiscoverItems() -> [DiscoverItem]
 }
 
 
 class HomeViewModel: HomeViewModelProtocol{
+    private let currencyService: CurrencyServiceProtocol
+    private let locationService: LocationServiceProtocol
+    private let placesService: PlacesServiceProtocol
+    
+    init(currencyService: CurrencyServiceProtocol,
+         locationService: LocationServiceProtocol,
+         placesService: PlacesServiceProtocol) {
+        self.currencyService = currencyService
+        self.locationService = locationService
+        self.placesService = placesService
+    }
     
     private var discoverItems: [DiscoverItem] = []
     private var citysItem: [CitysItem] = []
@@ -40,127 +53,143 @@ class HomeViewModel: HomeViewModelProtocol{
         return discoverItems
     }
     
-    
-    @MainActor
     func getDolarBlue() async throws -> DolarBlue? {
-        guard let url = URL(string: "https://dolarapi.com/v1/dolares/blue") else {
-            throw APIError.invalidURL
-        }
-
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw APIError.invalidResponse
-            }
-
-            guard httpResponse.statusCode == 200 else {
-                throw APIError.requestFailed(statusCode: httpResponse.statusCode)
-            }
-
-            let jsonDecoder = JSONDecoder()
-            let dolarBlue = try jsonDecoder.decode(DolarBlue.self, from: data)
-            self.dolarBlue = dolarBlue
-            return dolarBlue
-        } catch let decodingError as DecodingError {
-            print("Error al decodificar: \(decodingError)")
-            throw APIError.decodingError
-        } catch {
-            print("Error inesperado: \(error.localizedDescription)")
-            throw error
-        }
-    }
-    
-    func countryCode(){
-        if let countryCode = getUserCountry() {
-            print("Código del país: \(countryCode)") // Ejemplo: "BR" para Brasil
-        } else {
-            print("No se pudo determinar el país.")
-        }
-    }
-    
-    func getUserCountry() -> String? {
-        let identifier = Locale.current.identifier // Ejemplo: "en_BR"
-        let components = identifier.split(separator: "_")
-        if components.count > 1 {
-            return String(components[1]) // Devuelve "BR"
-        }
-        return nil // Si no hay región, devuelve nil
-    }
-    
-    @MainActor
-    func fetchChange() async throws -> Rates? {
-        guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP&format=json") else {
-            throw APIError.invalidURL
-        }
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw APIError.invalidResponse
-            }
-            
-            guard httpResponse.statusCode == 200 else {
-                throw APIError.requestFailed(statusCode: httpResponse.statusCode)
-            }
-            
-            let jsonDecoder = JSONDecoder()
-            let currencyData = try jsonDecoder.decode(CurrencyResponse.self, from: data)
-            self.currency = currencyData.rates
-            return currencyData.rates
-        } catch let decodingError as DecodingError {
-            print("Error al decodificar: \(decodingError)")
-            throw APIError.decodingError
-        } catch {
-            print("Error inesperado: \(error.localizedDescription)")
-            throw error
-        }
+        return try await currencyService.getDolarBlue()
     }
     
     func getValueForCountry(countryCode: String) async throws -> String {
-        guard let currentRates = try await fetchChange() else {
-            return "Datos no disponibles" // Mensaje más descriptivo cuando no hay datos
-        }
-        
-        var value = dolarBlue?.venta ?? 0.0 // Usar valor por defecto si `dolarBlue?.venta` es `nil`
-        
-        switch countryCode {
-        case "BR":
-            guard let rateBRL = Double(currentRates.BRL.rate ?? "0.00") else {
-                return "N/A BRL"
-            }
-            value /= rateBRL
-        case "UY":
-            guard let rateUYU = Double(currentRates.UYU.rate ?? "0.00") else {
-                return "N/A UYU"
-            }
-            value /= rateUYU
-        case "CL":
-            guard let rateCLP = Double(currentRates.CLP.rate ?? "0.00") else {
-                return "N/A CLP"
-            }
-            value /= rateCLP
-        default:
-            return "Código de país no reconocido" // Mensaje más descriptivo para código de país no válido
-        }
-        
-        return String(format: "%.2f", value) // Redondear y dar formato al valor resultante
+        return try await currencyService.getValueForCountry(countryCode: countryCode)
     }
+    
+    func fetchPlaces(city: String) throws -> [PlaceItem] {
+        return try placeService.fetchPlaces(city: city)
+    }
+    
+    func getUserCountry () -> String?{
+        return locationService.getUserCountry()
+    }
+    
+    
+//    @MainActor
+//    func getDolarBlue() async throws -> DolarBlue? {
+//        guard let url = URL(string: "https://dolarapi.com/v1/dolares/blue") else {
+//            throw APIError.invalidURL
+//        }
+//
+//        do {
+//            let (data, response) = try await URLSession.shared.data(from: url)
+//
+//            guard let httpResponse = response as? HTTPURLResponse else {
+//                throw APIError.invalidResponse
+//            }
+//
+//            guard httpResponse.statusCode == 200 else {
+//                throw APIError.requestFailed(statusCode: httpResponse.statusCode)
+//            }
+//
+//            let jsonDecoder = JSONDecoder()
+//            let dolarBlue = try jsonDecoder.decode(DolarBlue.self, from: data)
+//            self.dolarBlue = dolarBlue
+//            return dolarBlue
+//        } catch let decodingError as DecodingError {
+//            print("Error al decodificar: \(decodingError)")
+//            throw APIError.decodingError
+//        } catch {
+//            print("Error inesperado: \(error.localizedDescription)")
+//            throw error
+//        }
+//    }
+    
+//    func countryCode(){
+//        if let countryCode = getUserCountry() {
+//            print("Código del país: \(countryCode)") // Ejemplo: "BR" para Brasil
+//        } else {
+//            print("No se pudo determinar el país.")
+//        }
+//    }
+    
+//    func getUserCountry() -> String? {
+//        let identifier = Locale.current.identifier // Ejemplo: "en_BR"
+//        let components = identifier.split(separator: "_")
+//        if components.count > 1 {
+//            return String(components[1]) // Devuelve "BR"
+//        }
+//        return nil // Si no hay región, devuelve nil
+//    }
+    
+//    @MainActor
+//    func fetchChange() async throws -> Rates? {
+//        guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP&format=json") else {
+//            throw APIError.invalidURL
+//        }
+//        
+//        do {
+//            let (data, response) = try await URLSession.shared.data(from: url)
+//            
+//            guard let httpResponse = response as? HTTPURLResponse else {
+//                throw APIError.invalidResponse
+//            }
+//            
+//            guard httpResponse.statusCode == 200 else {
+//                throw APIError.requestFailed(statusCode: httpResponse.statusCode)
+//            }
+//            
+//            let jsonDecoder = JSONDecoder()
+//            let currencyData = try jsonDecoder.decode(CurrencyResponse.self, from: data)
+//            self.currency = currencyData.rates
+//            return currencyData.rates
+//        } catch let decodingError as DecodingError {
+//            print("Error al decodificar: \(decodingError)")
+//            throw APIError.decodingError
+//        } catch {
+//            print("Error inesperado: \(error.localizedDescription)")
+//            throw error
+//        }
+//    }
+    
+//    func getValueForCountry(countryCode: String) async throws -> String {
+//        guard let currentRates = try await fetchChange() else {
+//            return "Datos no disponibles" // Mensaje más descriptivo cuando no hay datos
+//        }
+//        
+//        var value = dolarBlue?.venta ?? 0.0 // Usar valor por defecto si `dolarBlue?.venta` es `nil`
+//        
+//        switch countryCode {
+//        case "BR":
+//            guard let rateBRL = Double(currentRates.BRL.rate ?? "0.00") else {
+//                return "N/A BRL"
+//            }
+//            value /= rateBRL
+//        case "UY":
+//            guard let rateUYU = Double(currentRates.UYU.rate ?? "0.00") else {
+//                return "N/A UYU"
+//            }
+//            value /= rateUYU
+//        case "CL":
+//            guard let rateCLP = Double(currentRates.CLP.rate ?? "0.00") else {
+//                return "N/A CLP"
+//            }
+//            value /= rateCLP
+//        default:
+//            return "Código de país no reconocido" // Mensaje más descriptivo para código de país no válido
+//        }
+//        
+//        return String(format: "%.2f", value) // Redondear y dar formato al valor resultante
+//    }
     
     
 
 }
 extension HomeViewModel{
     
-    func fetchPlaces(city: String) throws -> [PlaceItem] {
-        let city = city
-        let places = try placeService.fetchPlaces(city: city) // Supongamos que fetchPlaces puede lanzar un error
-        guard !places.isEmpty else {
-            throw PlaceError.noPlacesAvailable
-        }
-        return places
-    }
+//    func fetchPlaces(city: String) throws -> [PlaceItem] {
+//        let city = city
+//        let places = try placeService.fetchPlaces(city: city) // Supongamos que fetchPlaces puede lanzar un error
+//        guard !places.isEmpty else {
+//            throw PlaceError.noPlacesAvailable
+//        }
+//        return places
+//    }
     
 //    func filteredItem(item: DiscoverItem) throws -> [PlaceItem] {
 //        let filter = item.name

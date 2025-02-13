@@ -13,19 +13,27 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var quickConversorView : QuickConversorView
-    var discoverBaCView = DiscoverBaCollectionView()
-    var citysCView = CitysCollectionView()
+    var discoverBaCView : DiscoverBaCollectionView
+    var citysCView : CitysCollectionView
     var alertMessage: String?
     
     var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private let homeViewModel: HomeViewModelProtocol
     
-    init(homeViewModel: HomeViewModelProtocol = HomeViewModel(), quickConversorView: QuickConversorView = QuickConversorView()) {
+    init(homeViewModel: HomeViewModelProtocol,
+         quickConversorView: QuickConversorView = QuickConversorView(),
+         discoverBaCView: DiscoverBaCollectionView? = nil,
+         citysCView: CitysCollectionView? = nil) {
+        
         self.homeViewModel = homeViewModel
         self.quickConversorView = quickConversorView
+        self.discoverBaCView = discoverBaCView ?? DiscoverBaCollectionView(homeViewModel: homeViewModel)
+        self.citysCView = citysCView ?? CitysCollectionView(homeViewModel: homeViewModel)
+        
         super.init(nibName: nil, bundle: nil)
     }
+
     required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
     }

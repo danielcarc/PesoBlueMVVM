@@ -15,9 +15,15 @@ class PesoBlueTabBarController: UITabBarController {
         configureTabs()
     }
     
-    private func configureTabs(){
+    private func configureTabs() {
         
-        let vc1 = HomeViewController()
+        let homeViewModel = HomeViewModel(
+            currencyService: CurrencyService(),
+            locationService: LocationService(),
+            placesService: PlaceService()
+        )
+        
+        let vc1 = HomeViewController(homeViewModel: homeViewModel)
         let vc2 = ChangeViewController()
         let vc3 = CurrencyViewController()
         
@@ -36,4 +42,5 @@ class PesoBlueTabBarController: UITabBarController {
         
         setViewControllers([nav1, nav2, nav3], animated: false)
     }
+
 }
