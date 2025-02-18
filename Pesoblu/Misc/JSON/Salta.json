@@ -9,14 +9,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 431 0182",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.790326,
+        "long": -65.404127,
         "price": "$$ - $$$",
         "categories": ["Cafe"],
         "instagram": "https://www.instagram.com/cafedelconvento_salta/?hl=es",
         "image_url": "https://www.dropbox.com/scl/fi/u73aza544sxpmll4j3tgk/Cefe-del-convento-2.jpg?rlkey=w6bgvgdon8gk87ptz6c0qz892&raw=1",
         "placeType": "Cafe",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un café con encanto en Salta, ideal para disfrutar de un café artesanal acompañado de exquisitos pasteles y tortas. Su ambiente tranquilo y acogedor es perfecto para relajarte y disfrutar de una experiencia única."
     },
     {
         "id": 301,
@@ -28,14 +28,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 431 4659",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.788870,
+        "long": -65.409733,
         "price": "$$ - $$$",
         "categories": ["Cafe", "Bar"],
         "instagram": "https://www.instagram.com/cafevangogh_/",
         "image_url": "https://www.dropbox.com/scl/fi/6y2vdb88nt2oc38kfe9qf/van-gogh.jpg?rlkey=lz4d9ytpfjyslpdtv0p2fdyyd&raw=1",
         "placeType": "Cafe",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un encantador café en Salta, perfecto para disfrutar de un buen café artesanal y una variedad de opciones de repostería casera. El ambiente artístico y relajado te invita a pasar un momento agradable solo o en buena compañía."
     },
     {
         "id": 302,
@@ -47,14 +47,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 422 3266",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.794919,
+        "long": -65.406150,
         "price": "$$ - $$$",
         "categories": ["Pizzeria", "Restaurant"],
         "instagram": "https://www.instagram.com/lafiamma.sla/?hl=es-la",
         "image_url": "https://www.dropbox.com/scl/fi/wtqhy0tol9jl49ljqzu7t/la-fiamma.jpg?rlkey=lp7fxnw9naaz0eg7ofyc1g3fk&raw=1",
         "placeType": "Pizzeria",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Una pizzería tradicional en Salta, donde podrás disfrutar de pizzas al estilo italiano con una selección de ingredientes frescos y sabrosos. El ambiente acogedor es perfecto para una comida casual o una salida en familia."
     },
     {
         "id": 303,
@@ -66,14 +66,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 609 2895",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.786744,
+        "long": -65.405104,
         "price": "$$ - $$$",
         "categories": ["Pizzeria", "Restaurant"],
         "instagram": "https://www.instagram.com/oh_pizzaresto/?hl=es",
         "image_url": "https://www.dropbox.com/scl/fi/vep39i86xfpiy0km7abl9/oh-pizze.jpeg?rlkey=f6rsv3azc4z196cq3xzwtyv9d&raw=1",
         "placeType": "Pizzeria",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Una pizzería encantadora en el corazón de Salta, donde podrás disfrutar de pizzas artesanales preparadas con ingredientes frescos y de alta calidad. El ambiente es ideal para compartir una comida deliciosa con amigos y familia."
     },
     {
         "id": 304,
@@ -84,15 +84,15 @@
         "area": "Salta",
         "postal_code": "--",
         "country": "Argentina",
-        "phone": "+54 387 20 1933",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "phone": "+54 387 420 1933",
+        "lat": -24.791585,
+        "long": -65.402629,
         "price": "$$ - $$$",
         "categories": ["Bar", "Cerveceria"],
         "instagram": "https://www.instagram.com/biercerveceriaartesanal/?hl=es",
         "image_url": "https://www.dropbox.com/scl/fi/1djqzyms1eqmgqxfjwtxl/bier.jpg?rlkey=iblx5pvzbvxa8ecrmb14615aq&raw=1",
         "placeType": "Bar",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un bar único en Salta, especializado en cervezas artesanales locales, donde puedes disfrutar de una excelente selección de brebajes en un ambiente relajado y amigable. Perfecto para los amantes de la cerveza artesanal y la buena compañía."
     },
     {
         "id": 305,
@@ -104,14 +104,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 245 2248",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.786372,
+        "long": -65.404150,
         "price": "$$ - $$$",
         "categories": ["Bar", "Cerveceria"],
         "instagram": "https://www.instagram.com/explore/locations/104629554312700/cerveza-patagonia/?next=%2Fmahayel11%2F",
         "image_url": "https://www.dropbox.com/scl/fi/zmzczrv03tnn8k1qz0m3s/paragonia.jpg?rlkey=byazlxwrtg39usay141bzwf3x&raw=1",
         "placeType": "Bar",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un espacio único en Salta para disfrutar de una amplia variedad de cervezas artesanales de Patagonia, acompañado de un ambiente relajado y amistoso. Ideal para los amantes de la cerveza y la buena compañía."
     },
     {
         "id": 306,
@@ -123,14 +123,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 400 0000",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.786833,
+        "long": -65.411950,
         "price": "$$ - $$$",
         "categories": ["Bar", "Restaurante"],
         "instagram": "https://www.instagram.com/alejandro1hotel/?hl=es",
         "image_url": "https://www.dropbox.com/scl/fi/ucyy5zt9gg3iixtnk5quk/el-meson.jpg?rlkey=aghrvxpxbpmi29ohhujejbx1b&raw=1",
         "placeType": "Resto",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un restaurante y bar emblemático en el corazón de Salta, donde podrás disfrutar de platos regionales y bebidas tradicionales en un ambiente elegante y cómodo. Perfecto para una experiencia culinaria única."
     },
     {
         "id": 307,
@@ -142,14 +142,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 403 6308",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.789896,
+        "long": -65.409956,
         "price": "$$ - $$$",
         "categories": ["Bar", "Restaurante","Regional"],
         "instagram": "https://www.instagram.com/complejoadobe/",
         "image_url": "https://www.dropbox.com/scl/fi/or6z48ufyqf8qcywmq90e/adobe.jpg?rlkey=9d1meyt4qvbb7gnfwdobocrhh&raw=1",
         "placeType": "Resto",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un restaurante típico de la región, donde podrás disfrutar de platos tradicionales salteños en un ambiente cálido y acogedor. Ideal para quienes buscan una experiencia auténtica de la cocina regional argentina."
     },
     {
         "id": 308,
@@ -161,14 +161,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 434 2835",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.787869,
+        "long": -65.437049,
         "price": "$$ - $$$",
         "categories": ["Latina", "Restaurante","Regional"],
         "instagram": "https://www.instagram.com/casonadelmolino/?hl=es",
         "image_url": "https://www.dropbox.com/scl/fi/v8znqmy0ek2ekj8yckad6/la-casona.jpeg?rlkey=de6xp9q6pnvtawg00ddtfuvxq&raw=1",
         "placeType": "Resto",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un rincón tradicional de Salta donde la gastronomía regional se combina con la música en vivo. Famoso por sus peñas folklóricas espontáneas, este histórico lugar ofrece empanadas salteñas, tamales y locro en un ambiente auténtico y acogedor."
     },
     {
         "id": 309,
@@ -180,14 +180,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 437 0592",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.788872,
+        "long": -65.411068,
         "price": "$$ - $$$",
         "categories": ["Museo"],
         "instagram": "--",
         "image_url": "https://www.dropbox.com/scl/fi/wmb5hpya7ldw8i048atbj/maam-museo-de-arqueologia.jpg?rlkey=wyixd6hjesvrikr1fk640374d&raw=1",
         "placeType": "Paseos",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un museo único que resguarda los famosos Niños del Llullaillaco, tres momias incas descubiertas en la cima del volcán a más de 6.700 metros de altura. A través de su exhibición, ofrece una fascinante mirada a la cultura inca y los rituales ancestrales de los pueblos andinos."
     },
     {
         "id": 310,
@@ -199,14 +199,14 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "--",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -25.178220,
+        "long": -65.852662,
         "price": "$$ - $$$",
         "categories": ["Montaña"],
         "instagram": "--",
         "image_url": "https://www.dropbox.com/scl/fi/5tw69kf3yer5vd9f3kcyd/cuesta-2.jpg?rlkey=fiem3xym5abl6yt4n40j0ehd9&raw=1",
         "placeType": "Paseos",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "Un camino de montaña impresionante que serpentea entre paisajes majestuosos, conectando Salta con el Valle Calchaquí. Con curvas pronunciadas y vistas panorámicas espectaculares, es un recorrido imperdible para los amantes de la naturaleza y la aventura."
     },
     {
         "id": 311,
@@ -218,13 +218,13 @@
         "postal_code": "--",
         "country": "Argentina",
         "phone": "+54 387 431 0641",
-        "lat": -34.591149,
-        "long": -58.427926,
+        "lat": -24.793855,
+        "long": -65.401649,
         "price": "$$ - $$$",
         "categories": ["Teleferico"],
         "instagram": "--",
         "image_url": "https://www.dropbox.com/scl/fi/ekd0yh1d9ftfdd51g2djd/teleferico-2.jpg?rlkey=6qwjnotpg04jpdpe1qd5bet4t&raw=1",
         "placeType": "Paseos",
-        "placeDescription": "Un lugar acogedor en Palermo Soho, ideal para disfrutar de deliciosas opciones de repostería y café artesanal."
+        "placeDescription": "El Teleférico San Bernardo ofrece una vista panorámica espectacular de la ciudad de Salta y sus alrededores. Un paseo imperdible para disfrutar de la naturaleza y capturar increíbles fotografías desde la cima del cerro San Bernardo."
     }
 ]
