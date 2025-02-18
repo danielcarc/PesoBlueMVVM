@@ -50,10 +50,10 @@
         "lat": -24.794919,
         "long": -65.406150,
         "price": "$$ - $$$",
-        "categories": ["Pizzeria", "Restaurant"],
+        "categories": ["Pizzería", "Restaurant"],
         "instagram": "https://www.instagram.com/lafiamma.sla/?hl=es-la",
         "image_url": "https://www.dropbox.com/scl/fi/wtqhy0tol9jl49ljqzu7t/la-fiamma.jpg?rlkey=lp7fxnw9naaz0eg7ofyc1g3fk&raw=1",
-        "placeType": "Pizzeria",
+        "placeType": "Pizzería",
         "placeDescription": "Una pizzería tradicional en Salta, donde podrás disfrutar de pizzas al estilo italiano con una selección de ingredientes frescos y sabrosos. El ambiente acogedor es perfecto para una comida casual o una salida en familia."
     },
     {
@@ -69,10 +69,10 @@
         "lat": -24.786744,
         "long": -65.405104,
         "price": "$$ - $$$",
-        "categories": ["Pizzeria", "Restaurant"],
+        "categories": ["Pizzería", "Restaurant"],
         "instagram": "https://www.instagram.com/oh_pizzaresto/?hl=es",
         "image_url": "https://www.dropbox.com/scl/fi/vep39i86xfpiy0km7abl9/oh-pizze.jpeg?rlkey=f6rsv3azc4z196cq3xzwtyv9d&raw=1",
-        "placeType": "Pizzeria",
+        "placeType": "Pizzería",
         "placeDescription": "Una pizzería encantadora en el corazón de Salta, donde podrás disfrutar de pizzas artesanales preparadas con ingredientes frescos y de alta calidad. El ambiente es ideal para compartir una comida deliciosa con amigos y familia."
     },
     {
