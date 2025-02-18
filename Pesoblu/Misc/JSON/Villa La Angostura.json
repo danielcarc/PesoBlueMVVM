@@ -1,4 +1,4 @@
-{
+[
     {
         "id": 400,
         "name": "Alma Mora",
@@ -319,7 +319,7 @@
         "categories": ["Bosque", "Aire Libre"],
         "instagram": "https://www.instagram.com/valhallaenlapatagonia/?hl=es-la",
         "image_url": "https://www.dropbox.com/scl/fi/gg4pmh9ojbnmlepr130mg/arrayanes-2.jpg?rlkey=erw4kregvqngmufm04xfnkbk0&raw=1",
-        "placeType": "Pasesos",
+        "placeType": "Paseos",
         "placeDescription": "Un bosque único en el mundo, famoso por sus árboles de arrayán de color canela y su corteza lisa. Se puede recorrer en bicicleta, a pie o en barco, disfrutando de senderos rodeados de naturaleza pura. Un paseo inolvidable en Villa La Angostura."
     }
-}
+]
