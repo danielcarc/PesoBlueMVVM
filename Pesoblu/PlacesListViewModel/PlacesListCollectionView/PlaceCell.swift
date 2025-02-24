@@ -70,8 +70,21 @@ class PlaceCell: UICollectionViewCell {
         distanceLabel.text = distance
     }
     
-    func updateImage(_ image: UIImage?) {
-        placeImage.image = image
+//    func updateImage(_ image: UIImage?) {
+//        placeImage.image = image
+//    }
+    func updateImage(url: String){
+        if let imageUrl = URL(string: url) {
+            placeImage.kf.setImage(with: imageUrl,
+                                   placeholder: UIImage(systemName: "photo"),
+                                   options: [.transition(.fade(0.3)),
+                                             .cacheOriginalImage
+                                   ]
+            )
+        }
+        else{
+            placeImage.image = UIImage(systemName: "photo")
+        }
     }
     
     override init(frame: CGRect) {

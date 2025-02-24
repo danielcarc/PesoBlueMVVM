@@ -116,20 +116,9 @@ extension PlaceListCollectionView: UICollectionViewDataSource{
             }
         }
 
-        // Descarga la imagen de forma independiente
-        Task {
-            do {
-                let image = try await viewModel.downloadImage(from: item.imageUrl)
-                await MainActor.run {
-                    if collectionView.indexPath(for: cell) == indexPath { // Verifica la reutilización
-                        cell.updateImage(image)
-                    }
-                }
-            } catch {
-                print("Error descargando imagen: \(error)")
-            }
-        }
-
+        //usamos ahora kingfisher para la descarga
+        cell.updateImage(url: item.imageUrl)
+        
         return cell
     }
     

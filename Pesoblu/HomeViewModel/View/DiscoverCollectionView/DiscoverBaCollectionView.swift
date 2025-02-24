@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol CollectionViewSelectionDelegate: AnyObject {
     func didSelectItem(_ item: DiscoverItem) // Define el tipo de datos que envías
@@ -63,16 +64,6 @@ class DiscoverBaCollectionView: UIView {
         vw.dataSource = self
         return vw
     }()
-
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        setup()
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        setup()
-//    }
 
 }
 

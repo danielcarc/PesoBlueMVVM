@@ -9,6 +9,7 @@
 //hacerlas 2 por columnas por linea y arriba de todo la vista agregarle el clima del dia
 
 import UIKit
+import Kingfisher
 
 class HomeViewController: UIViewController {
     
@@ -75,6 +76,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        print(KingfisherManager.shared)
         
     }
     
@@ -107,9 +109,7 @@ extension HomeViewController {
         citysCView.updateData()
         discoverBaCView.delegate = self
         //discoverBaCView.discoverCollectionView.dataSource = self
-        
     }
-    
 }
 
 //MARK: - Setup SubViews and Constraints
@@ -117,10 +117,8 @@ extension HomeViewController {
 extension HomeViewController{
     
     func setupUI(){
-        
         addSubViews()
         addConstraints()
-        
     }
     
     func addSubViews(){
@@ -128,14 +126,6 @@ extension HomeViewController{
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
         contentView.addSubview(stackView)
-        
-//        mainScrollView.translatesAutoresizingMaskIntoConstraints = false
-//        contentView.translatesAutoresizingMaskIntoConstraints = false
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        quickConversorView.translatesAutoresizingMaskIntoConstraints = false
-//        discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
-//        citysCView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.addArrangedSubview(quickConversorView)
         stackView.addArrangedSubview(discoverBaCView)
@@ -159,7 +149,6 @@ extension HomeViewController{
             contentView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor), // Ancho igual
-            
             
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
