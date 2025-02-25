@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol PlaceCellDelegate: AnyObject {
+    func placeCellDidFailToLoadImage(_ cell: PlaceCell, error: Error)
+}
+
 class PlaceCell: UICollectionViewCell {
+    
+    weak var delegate: PlaceCellDelegate?
     
     private lazy var placeImage: UIImageView = {
         var image = UIImageView()
@@ -70,20 +76,23 @@ class PlaceCell: UICollectionViewCell {
         distanceLabel.text = distance
     }
     
-//    func updateImage(_ image: UIImage?) {
-//        placeImage.image = image
-//    }
-    func updateImage(url: String){
-        if let imageUrl = URL(string: url) {
-            placeImage.kf.setImage(with: imageUrl,
-                                   placeholder: UIImage(systemName: "photo"),
-                                   options: [.transition(.fade(0.3)),
-                                             .cacheOriginalImage
-                                   ]
-            )
-        }
-        else{
+    func updateImage(url: String) {
+        guard let imageUrl = URL(string: url) else {
             placeImage.image = UIImage(systemName: "photo")
+            return
+        }
+
+        placeImage.kf.setImage(
+            with: imageUrl,
+            placeholder: UIImage(systemName: "photo"),
+            options: [.transition(.fade(0.3)), .cacheOriginalImage]
+        ) { result in
+            switch result {
+            case .success:
+                break  // Imagen cargada correctamente
+            case .failure(let error):
+                self.delegate?.placeCellDidFailToLoadImage(self, error: error)  // Notificar el error
+            }
         }
     }
     

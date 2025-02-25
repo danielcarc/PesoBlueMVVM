@@ -9,6 +9,7 @@
 // boton de back personalizado y boton de favoritos en el otro costado
 //tal vez agregar un recomendado a los mejores lugar en el json
 import UIKit
+import Foundation
 
 class PlacesListViewController: UIViewController {
     
@@ -142,6 +143,10 @@ extension PlacesListViewController{
 
 //MARK: - UICollectionViewDelegate Methods
 extension PlacesListViewController: PlaceListCollectionViewDelegate {
+    func placeListCViewDidFailToLoadImage(_ collectionView: PlaceListCollectionView, error: any Error) {
+        showAlert(title: "Error de Imagen", message: "No se pudo cargar la imagen. Intente nuevamente mas tarde")
+    }
+    
     func didSelectItem(_ item: PlaceItem) {
         guard let navigationController = navigationController else {
                 print("Error: No hay un NavigationController disponible")
@@ -152,13 +157,6 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
             placeVC.placeItem = item
             navigationController.pushViewController(placeVC, animated: true) 
     }
-    
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true, completion: nil)
-    }
-    
     
     func didUpdateItemCount(_ count: Int) {
         let labelSpacing = 38.0
@@ -186,4 +184,13 @@ extension PlacesListViewController: FilterCollectionViewDelegate {
         }
     }
     
+}
+//MARK: - Alert Methods
+
+extension PlacesListViewController{
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }

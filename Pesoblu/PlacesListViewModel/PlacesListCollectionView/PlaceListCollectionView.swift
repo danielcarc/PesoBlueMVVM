@@ -12,6 +12,7 @@ import CoreLocation
 protocol PlaceListCollectionViewDelegate: AnyObject {
     func didUpdateItemCount(_ count: Int)
     func didSelectItem(_ item: PlaceItem)
+    func placeListCViewDidFailToLoadImage(_ collectionView: PlaceListCollectionView, error: Error)
 }
 
 class PlaceListCollectionView: UIView{
@@ -115,10 +116,8 @@ extension PlaceListCollectionView: UICollectionViewDataSource{
                 }
             }
         }
-
         //usamos ahora kingfisher para la descarga
         cell.updateImage(url: item.imageUrl)
-        
         return cell
     }
     
@@ -130,12 +129,9 @@ extension PlaceListCollectionView: UICollectionViewDataSource{
 extension PlaceListCollectionView: UICollectionViewDelegate{
    
    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       
        let item: PlaceItem = placeData[indexPath.item]
        delegate?.didSelectItem(item)
-        
     }
-
 }
 
 //MARK: - Setup and Constraints
@@ -164,6 +160,13 @@ extension PlaceListCollectionView{
             placeCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         
         ])
-        
     }
+}
+
+extension PlaceListCollectionView: PlaceCellDelegate{
+    func placeCellDidFailToLoadImage(_ cell: PlaceCell, error: any Error) {
+        delegate?.placeListCViewDidFailToLoadImage(self, error: error)
+    }
+    
+    
 }
