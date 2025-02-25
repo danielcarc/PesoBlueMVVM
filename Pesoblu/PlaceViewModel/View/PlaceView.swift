@@ -8,18 +8,24 @@
 import Foundation
 import UIKit
 import MapKit
+import Kingfisher
+
+protocol PlaceViewDelegate: AnyObject{
+    func didFailToLoadImage(_ view: PlaceView, error: Error)
+}
 
 class PlaceView: UIView{
     
     private var viewModel = PlaceViewModel()
     
+    weak var delegate: PlaceViewDelegate?
     var place: PlaceItem?
     
     private lazy var stackView: UIStackView = {
         var sv = UIStackView()
         sv.axis = .vertical
         sv.distribution = .fill
-        sv.spacing = 12
+        sv.spacing = 24
         sv.translatesAutoresizingMaskIntoConstraints = false
         
         return sv
@@ -27,7 +33,7 @@ class PlaceView: UIView{
     
     private lazy var placeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.isUserInteractionEnabled = true
@@ -76,7 +82,7 @@ class PlaceView: UIView{
     
     private lazy var phoneIconButton: UIButton = {
         var button = UIButton()
-        button.setImage(UIImage(systemName: "phone.fill"), for: .normal)
+        button.setImage(UIImage(named: "phone-outcome"), for: .normal)
         button.tintColor = .black
         button.accessibilityLabel = "Llamar a Siamo nel Forno"
         button.addTarget(self, action: #selector(callPhone(sender:)), for: .touchUpInside)
@@ -87,7 +93,7 @@ class PlaceView: UIView{
     
     private lazy var instagramIconButton: UIButton = {
         var button = UIButton()
-        button.setImage(UIImage(systemName: "camera.fill"), for: .normal)
+        button.setImage(UIImage(named: "instagram"), for: .normal)
         button.tintColor = .black
         button.accessibilityLabel = "Abrir Instagram de Siamo nel Forno"
         button.addTarget(self, action: #selector(openInstagram(sender:)), for: .touchUpInside)
@@ -123,18 +129,8 @@ class PlaceView: UIView{
         descriptionLabel.text = item.placeDescription
         phoneIconButton.accessibilityLabel = item.phone
         instagramIconButton.accessibilityLabel = item.instagram
-        
-        Task {
-            do {
-                let image = try await viewModel.downloadImage(from: item.imageUrl)
-                await MainActor.run {
-                    placeImageView.image = image
-                }
-            }
-            catch {
-                print("Error descargando imagen: \(error)")
-            }
-        }
+
+        updateImage(url: item.imageUrl)
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: item.lat ?? 0.0, longitude: item.long ?? 0.0)
@@ -144,12 +140,26 @@ class PlaceView: UIView{
         mapView.setRegion(region, animated: false)
     }
     
-//    private func setupMapGesture() {
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openInMaps))
-//        mapView.addGestureRecognizer(tapGesture)
-//    }
+    func updateImage(url: String) {
+        guard let imageUrl = URL(string: url) else {
+            placeImageView.image = UIImage(systemName: "photo")
+            return
+        }
 
-    
+        placeImageView.kf.setImage(
+            with: imageUrl,
+            placeholder: UIImage(systemName: "photo"),
+            options: [.transition(.fade(0.3)), .cacheOriginalImage]
+        ) { result in
+            switch result {
+            case .success:
+                break  // Imagen cargada correctamente
+            case .failure(let error):
+                self.delegate?.didFailToLoadImage(self, error: error)  // Notificar el error
+            }
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
@@ -169,6 +179,7 @@ extension PlaceView{
     }
     
     func addViews(){
+        
         self.addSubview(stackView)
         stackView.addArrangedSubview(placeImageView)
         stackView.addArrangedSubview(nameLabel)

@@ -10,6 +10,8 @@ import MapKit
 
 class PlaceViewController: UIViewController {
     
+    
+    
     var placeItem: PlaceItem?
     private lazy var placeView = PlaceView()
     
@@ -42,6 +44,11 @@ class PlaceViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "F0F8FF")
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
+        backButton.tintColor = UIColor.black
+        self.navigationItem.leftBarButtonItem = backButton
+        placeView.delegate = self
         
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -82,5 +89,25 @@ class PlaceViewController: UIViewController {
             placeView.widthAnchor.constraint(equalTo: contentView.widthAnchor)
             
         ])
+    }
+}
+
+extension PlaceViewController: PlaceViewDelegate{
+    func didFailToLoadImage(_ view: PlaceView, error: any Error) {
+        showAlert(title: "Error de Imagen", message: "Error al cargar imagen. Intente nuevamente mas tarde.")
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+}
+
+extension PlaceViewController{
+    
+    @objc func didTapBack() {
+        // Regresar a la vista anterior
+        navigationController?.popViewController(animated: true)
     }
 }
