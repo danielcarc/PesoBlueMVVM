@@ -57,9 +57,9 @@ private extension DiscoverCell {
         
         self.backgroundColor = .white
         self.layer.cornerRadius = 10
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(imageView)
-        self.addSubview(titleLabel)
+        //self.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
         //imageView.translatesAutoresizingMaskIntoConstraints = false
         
     }

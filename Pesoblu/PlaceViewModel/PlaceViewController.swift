@@ -10,11 +10,8 @@ import MapKit
 
 class PlaceViewController: UIViewController {
     
-    
-    
     var placeItem: PlaceItem?
     private lazy var placeView = PlaceView()
-    
     
     private lazy var scrollView : UIScrollView = {
         var sview = UIScrollView()
@@ -23,23 +20,19 @@ class PlaceViewController: UIViewController {
         //scrollView.contentInsetAdjustmentBehavior = .never
         sview.showsHorizontalScrollIndicator = false
         sview.isScrollEnabled = true
-        
         sview.translatesAutoresizingMaskIntoConstraints = false
-        
         return sview
     }()
     
     private lazy var contentView : UIView = {
         var content = UIView()
         content.translatesAutoresizingMaskIntoConstraints = false
-        
         return content
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
     }
     
     private func setupUI() {
@@ -68,8 +61,6 @@ class PlaceViewController: UIViewController {
     
 
     private func setupConstraints() {
-        
-        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

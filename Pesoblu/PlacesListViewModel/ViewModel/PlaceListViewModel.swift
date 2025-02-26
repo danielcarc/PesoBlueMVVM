@@ -20,24 +20,24 @@ class PlaceListViewModel{
         return discoverItem
     }
     
-    func downloadImage(from url: String) async throws -> UIImage {
-        guard let url = URL(string: url) else {
-            throw URLError(.badURL)
-        }
-        
-        let (imageData, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw URLError(.badServerResponse)
-        }
-        
-        guard let image = UIImage(data: imageData) else {
-            throw URLError(.cannotDecodeRawData)
-        }
-        
-        return image
-    }
+//    func downloadImage(from url: String) async throws -> UIImage {
+//        guard let url = URL(string: url) else {
+//            throw URLError(.badURL)
+//        }
+//        
+//        let (imageData, response) = try await URLSession.shared.data(from: url)
+//        
+//        guard let httpResponse = response as? HTTPURLResponse,
+//              httpResponse.statusCode == 200 else {
+//            throw URLError(.badServerResponse)
+//        }
+//        
+//        guard let image = UIImage(data: imageData) else {
+//            throw URLError(.cannotDecodeRawData)
+//        }
+//        
+//        return image
+//    }
     
     func calculateDistance(from userLocation: CLLocation, to place: PlaceItem) -> String {
         // Verifica si latitud y longitud tienen valores

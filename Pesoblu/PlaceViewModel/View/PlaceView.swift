@@ -196,9 +196,7 @@ extension PlaceView{
     }
     
     func addConstraints(){
-        
         NSLayoutConstraint.activate([
-            
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
@@ -207,7 +205,6 @@ extension PlaceView{
             placeImageView.heightAnchor.constraint(equalToConstant: 200),
             mapView.heightAnchor.constraint(equalToConstant: 200)
         ])
-        
     }
 }
 

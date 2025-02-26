@@ -5,9 +5,6 @@
 //  Created by Daniel Carcacha on 12/11/2024.
 //
 
-//y luego top ciudades para visitar empezando con Bariloche, mendoza, ushuaia, cordoba
-//hacerlas 2 por columnas por linea y arriba de todo la vista agregarle el clima del dia
-
 import UIKit
 import Kingfisher
 
@@ -53,7 +50,6 @@ class HomeViewController: UIViewController {
     private let contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        //view.backgroundColor = .lightGray
         return view
     }()
     
@@ -75,45 +71,36 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        print(KingfisherManager.shared)
+        setupQuickConversor()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
     }
     
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+       super.viewDidLayoutSubviews()
         
-        //se asegura de que el tamaño de contentView se ajuste al tamaño de stackView
-        let stackViewHeight = stackView.frame.height
-        contentView.frame.size.height = stackViewHeight
-        
-        //actualiza el tamaño de contenido del scrollView
-        mainScrollView.contentSize = CGSize(width: contentView.frame.width, height: contentView.frame.height)
-        
-        //añadir la restricción de ancho solo después de que el frame esté calculado
-        contentView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor).isActive = true
+        if mainScrollView.superview == nil {
+            setup()
+        }
     }
     
 }
 
 //MARK: - Setting the View
-
 extension HomeViewController {
-    
     func setup() {
         setupUI()
-        setupQuickConversor()
         citysCView.delegate = self
-        //citysCView.citysCollectionView.dataSource = self
         discoverBaCView.updateData()
-        citysCView.updateData()
+        citysCView.updateData() // Asegurar que los datos se carguen cuando la vista esté lista
         discoverBaCView.delegate = self
-        //discoverBaCView.discoverCollectionView.dataSource = self
     }
 }
 
 //MARK: - Setup SubViews and Constraints
-
 extension HomeViewController{
     
     func setupUI(){
@@ -125,24 +112,22 @@ extension HomeViewController{
         self.view.backgroundColor = UIColor(hex: "F0F8FF")
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
-        contentView.addSubview(stackView)
         
+        contentView.addSubview(stackView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(quickConversorView)
         stackView.addArrangedSubview(discoverBaCView)
         stackView.addArrangedSubview(citysCView)
-        
     }
     
     func addConstraints(){
-        
         collectionViewHeightConstraint = citysCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
-               
         NSLayoutConstraint.activate([
             
             mainScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mainScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            mainScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            mainScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mainScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            mainScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            mainScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             contentView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor),
@@ -154,24 +139,18 @@ extension HomeViewController{
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            stackView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            //stackView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
             quickConversorView.heightAnchor.constraint(equalToConstant: 151),
             discoverBaCView.heightAnchor.constraint(equalToConstant: 158),
             collectionViewHeightConstraint
             //citysCView.heightAnchor.constraint(equalToConstant: 600)
         ])
-        let heightConstraint = contentView.heightAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.heightAnchor)
-        heightConstraint.priority = UILayoutPriority.defaultLow
-        heightConstraint.isActive = true
-        
     }
 }
 
 //MARK: - SetUp QuickConversor
-
 extension HomeViewController{
-    
     func setupQuickConversor(){
         
         Task {
@@ -206,9 +185,7 @@ extension HomeViewController{
     }
 }
 
-
 //MARK: - DiscoverCollectionViewDelegate Methods
-
 extension HomeViewController: CollectionViewSelectionDelegate{
     
     func didSelectItem(_ item: DiscoverItem) {
@@ -243,7 +220,6 @@ extension HomeViewController: CollectionViewSelectionDelegate{
         }
     }
 
-
     func showAlert(message: String) {
         self.alertMessage = message
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
@@ -251,8 +227,6 @@ extension HomeViewController: CollectionViewSelectionDelegate{
         present(alert, animated: true, completion: nil)
     }
 }
-
-
 
 //MARK: - CitysViewDelegate Methods
 extension HomeViewController: CitysViewDelegate{
@@ -299,7 +273,6 @@ extension HomeViewController: CitysViewDelegate{
         collectionViewHeightConstraint.constant = totalHeight
     
         view.layoutIfNeeded()
-
         //print(count)
     }
     

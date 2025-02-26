@@ -32,8 +32,10 @@ class CitysCollectionView: UIView{
         
         self.data = homeViewModel.fetchCitysItems()
         citysCollectionView.reloadData()
+        citysCollectionView.collectionViewLayout.invalidateLayout()
         delegate?.didUpdateItemCount(data.count)
         print("Items count updated: \(data.count)")
+        print("datos cargados :\(data)")
     }
     
     private lazy var discoverArgentinaLabel: UILabel = {
@@ -51,31 +53,23 @@ class CitysCollectionView: UIView{
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
-        
+        let totalHorizontalPadding: CGFloat = 40
         let totalSpacing = layout.minimumInteritemSpacing * 1 // Espacio entre dos celdas
-        let availableWidth = UIScreen.main.bounds.width - totalSpacing - 20
-        let cellWidth = availableWidth / 2
+        let availableWidth = UIScreen.main.bounds.width - totalHorizontalPadding - layout.minimumInteritemSpacing
+        let itemWidth = availableWidth / 2
         //layout.itemSize = .init(width: cellWidth, height: 130)
-        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width / 2 - 15, height: 130)
+        layout.itemSize = CGSize(width: itemWidth, height: 130)
+        print("ancho de celda \(itemWidth)")
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = UIColor(hex: "F0F8FF")
+        collectionView.isScrollEnabled = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CitysCell.self, forCellWithReuseIdentifier: "CitysCell")
         return collectionView
     }()
-    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        setup()
-//    }
-    
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        setup()
-//    }
     
 }
 
@@ -95,40 +89,43 @@ extension CitysCollectionView{
             citysCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
             citysCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             citysCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            citysCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            citysCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            //citysCollectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 588)
             
         ])
+        DispatchQueue.main.async {
+            print("frame de uicview \(self.citysCollectionView.frame)")
+        }
     }
 }
 
 //MARK: - UICollectionViewDataSource Methods
 
-extension CitysCollectionView: UICollectionViewDataSource{
-    
+extension CitysCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        data.count
+        print("Número de ítems: \(data.count)")
+        return data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = data[indexPath.item]
+        print("Configurando celda en \(indexPath) con \(item.name)")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CitysCell", for: indexPath) as! CitysCell
         cell.set(image: item.image, title: item.name)
         return cell
     }
-    
-    
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension CitysCollectionView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let padding: CGFloat = 10
-        let collectionViewSize = collectionView.frame.size.width - padding * 3 //3 porque son 2 celdas + padding inicial y final
-        
-        // Dividimos el ancho disponible entre 2 para obtener dos columnas
-        return CGSize(width: collectionViewSize/2, height: 130)
-    }
-}
+//// MARK: - UICollectionViewDelegateFlowLayout
+//extension CitysCollectionView: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let padding: CGFloat = 10
+//        let collectionViewSize = collectionView.frame.size.width - padding * 3 //3 porque son 2 celdas + padding inicial y final
+//        
+//        // Dividimos el ancho disponible entre 2 para obtener dos columnas
+//        return CGSize(width: collectionViewSize/2, height: 130)
+//    }
+//}
 
 extension CitysCollectionView: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

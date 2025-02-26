@@ -58,9 +58,9 @@ private extension CitysCell {
         
         self.backgroundColor = .white
         self.layer.cornerRadius = 10
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(imageView)
-        self.addSubview(titleLabel)
+        //self.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
         //imageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -72,11 +72,12 @@ private extension CitysCell {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
             imageView.heightAnchor.constraint(equalToConstant: 100),
-            imageView.widthAnchor.constraint(equalToConstant: 166),
+            //imageView.widthAnchor.constraint(equalToConstant: 166),
 
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
         
     }
