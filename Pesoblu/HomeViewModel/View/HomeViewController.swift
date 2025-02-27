@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Kingfisher
+//import Kingfisher
 
 class HomeViewController: UIViewController {
     
@@ -63,10 +63,8 @@ class HomeViewController: UIViewController {
     }()
         
     override func loadView() {
-        
         self.view = UIView()
         self.view.backgroundColor = .white
-        
     }
     
     override func viewDidLoad() {
@@ -81,7 +79,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
        super.viewDidLayoutSubviews()
-        
+        //Desde aca nos aseguramos que las subvistas se creen despues del self.view, caso contrario este vale 0 y se marcan errores
         if mainScrollView.superview == nil {
             setup()
         }
@@ -139,12 +137,10 @@ extension HomeViewController{
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            //stackView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
             quickConversorView.heightAnchor.constraint(equalToConstant: 151),
             discoverBaCView.heightAnchor.constraint(equalToConstant: 158),
             collectionViewHeightConstraint
-            //citysCView.heightAnchor.constraint(equalToConstant: 600)
         ])
     }
 }
@@ -273,7 +269,6 @@ extension HomeViewController: CitysViewDelegate{
         collectionViewHeightConstraint.constant = totalHeight
     
         view.layoutIfNeeded()
-        //print(count)
     }
     
 }

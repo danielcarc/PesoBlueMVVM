@@ -54,23 +54,18 @@ private extension DiscoverCell {
     }
     
     func addsubviews() {
-        
         self.backgroundColor = .white
         self.layer.cornerRadius = 10
-        //self.translatesAutoresizingMaskIntoConstraints = false
+
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
-        //imageView.translatesAutoresizingMaskIntoConstraints = false
-        
     }
     
     func setupConstraints(){
-        
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            //imageView.heightAnchor.constraint(equalTo: contentView.widthAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 90),
             imageView.widthAnchor.constraint(equalToConstant: 160),
 
@@ -78,7 +73,6 @@ private extension DiscoverCell {
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
-        
     }
 }
 

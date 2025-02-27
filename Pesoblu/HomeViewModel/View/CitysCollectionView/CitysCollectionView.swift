@@ -29,13 +29,10 @@ class CitysCollectionView: UIView{
     }
     
     func updateData() {
-        
         self.data = homeViewModel.fetchCitysItems()
         citysCollectionView.reloadData()
         citysCollectionView.collectionViewLayout.invalidateLayout()
         delegate?.didUpdateItemCount(data.count)
-        print("Items count updated: \(data.count)")
-        print("datos cargados :\(data)")
     }
     
     private lazy var discoverArgentinaLabel: UILabel = {
@@ -90,12 +87,8 @@ extension CitysCollectionView{
             citysCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             citysCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             citysCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            //citysCollectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 588)
             
         ])
-        DispatchQueue.main.async {
-            print("frame de uicview \(self.citysCollectionView.frame)")
-        }
     }
 }
 
@@ -103,29 +96,16 @@ extension CitysCollectionView{
 
 extension CitysCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Número de ítems: \(data.count)")
         return data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = data[indexPath.item]
-        print("Configurando celda en \(indexPath) con \(item.name)")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CitysCell", for: indexPath) as! CitysCell
         cell.set(image: item.image, title: item.name)
         return cell
     }
 }
-
-//// MARK: - UICollectionViewDelegateFlowLayout
-//extension CitysCollectionView: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let padding: CGFloat = 10
-//        let collectionViewSize = collectionView.frame.size.width - padding * 3 //3 porque son 2 celdas + padding inicial y final
-//        
-//        // Dividimos el ancho disponible entre 2 para obtener dos columnas
-//        return CGSize(width: collectionViewSize/2, height: 130)
-//    }
-//}
 
 extension CitysCollectionView: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -48,20 +48,15 @@ class CitysCell: UICollectionViewCell {
 private extension CitysCell {
     
     private func setupViews() {
-        
         addsubviews()
         setupConstraints()
-        
     }
     
     func addsubviews() {
-        
         self.backgroundColor = .white
         self.layer.cornerRadius = 10
-        //self.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
-        //imageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupConstraints(){
@@ -70,9 +65,7 @@ private extension CitysCell {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
             imageView.heightAnchor.constraint(equalToConstant: 100),
-            //imageView.widthAnchor.constraint(equalToConstant: 166),
 
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
