@@ -14,14 +14,13 @@ protocol PlaceCellDelegate: AnyObject {
 class PlaceCell: UICollectionViewCell {
     
     weak var delegate: PlaceCellDelegate?
-    
+    //MARK: - Properties
+
     private lazy var placeImage: UIImageView = {
         var image = UIImageView()
         image.contentMode = .scaleToFill
         image.layer.cornerRadius = 8
         image.clipsToBounds = true
-        //image.heightAnchor.constraint(equalToConstant: 150).isActive
-        
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -30,17 +29,14 @@ class PlaceCell: UICollectionViewCell {
         var label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .label
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    //mostrar precio, tipo de lugar, y ver si se puede distancia
     private lazy var priceLabel: UILabel = {
         var label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .secondaryLabel
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -50,7 +46,6 @@ class PlaceCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -59,12 +54,11 @@ class PlaceCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
+    //MARK: - Set Methods
     func set(image: UIImage?, title: String, price: String, distance: String, type: String){
-        //var cellImage: UIImage = try await downloadImage(from: image)
         placeImage.image = image
         placeName.text = title
         priceLabel.text = price
@@ -104,37 +98,30 @@ class PlaceCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }
 
-//MARK: - Setup SubViews and Constraints
-
+//MARK: - Setup SubViews and Constraints Methods
 
 extension PlaceCell {
  
     func setupViews(){
         addsubViews()
         setupConstraints()
-        
     }
     
     func addsubViews(){
         self.backgroundColor = .white
         self.layer.cornerRadius = 4
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(placeImage)
-        self.addSubview(placeName)
-        self.addSubview(typeLabel)
-        self.addSubview(priceLabel)
-        self.addSubview(distanceLabel)
-        
+        contentView.addSubview(placeImage)
+        contentView.addSubview(placeName)
+        contentView.addSubview(typeLabel)
+        contentView.addSubview(priceLabel)
+        contentView.addSubview(distanceLabel)
     }
     
     func setupConstraints(){
         
         NSLayoutConstraint.activate([
-            
             placeImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             placeImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             placeImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -157,9 +144,6 @@ extension PlaceCell {
             distanceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             distanceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-            
-            
-            
         ])
     }
     

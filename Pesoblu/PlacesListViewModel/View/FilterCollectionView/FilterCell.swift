@@ -8,14 +8,13 @@ import UIKit
 
 class FilterCell: UICollectionViewCell{
     
-    // MARK: - Public Properties
+    // MARK: - Properties
     private lazy var imageView : UIImageView = {
         var view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.layer.cornerRadius = 8
-        
         return view
     }()
     
@@ -48,7 +47,6 @@ class FilterCell: UICollectionViewCell{
 extension FilterCell{
     
     func setupViews(){
-        
         addSubViews()
         setupConstraints()
     }
@@ -59,10 +57,9 @@ extension FilterCell{
         self.layer.cornerRadius = 8.0
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.lightGray.cgColor
-        self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = 10
-        self.addSubview(imageView)
-        self.addSubview(titleLabel)
+        contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
         
     }
     
@@ -77,7 +74,6 @@ extension FilterCell{
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
         ])
     }
 }

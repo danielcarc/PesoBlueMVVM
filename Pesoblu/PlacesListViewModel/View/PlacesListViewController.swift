@@ -13,12 +13,25 @@ import Foundation
 
 class PlacesListViewController: UIViewController {
     
+    var filterCView : FilterCollectionView
+    var placeListCView : PlaceListCollectionView
+    var placeListViewModel : PlaceListViewModelProtocol
+    init(placeListViewModel: PlaceListViewModelProtocol,
+         filterCView : FilterCollectionView? = nil,
+         placeListCView : PlaceListCollectionView? =  nil){
+        self.placeListViewModel = placeListViewModel
+        self.filterCView = filterCView ?? FilterCollectionView(viewModel : placeListViewModel)
+        self.placeListCView = placeListCView ?? PlaceListCollectionView(viewModel : placeListViewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var selectedPlaces: [PlaceItem]?
     var selectedCity: String?
     var placeType: String?
-    var viewModel = PlaceListViewModel()
-    var filterCView = FilterCollectionView()
-    var placeListCView = PlaceListCollectionView()
     var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private var mainScrollView: UIScrollView = {
@@ -57,26 +70,28 @@ class PlacesListViewController: UIViewController {
         super.viewDidLoad()
         placeListCView.delegate = self
         filterCView.delegate = self
-        setup()
+        //setup()
     }
-    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if mainScrollView.superview == nil {
+            setup()
+        }
+    }
 }
 
-//MARK: - AddSubViews and Setup Constraints
+//MARK: - AddSubViews and Setup Constraints and Set Collection Views Data
 
 extension PlacesListViewController{
     
     func setup(){
-        
         addsubviews()
         setupConstraints()
         setCollectionViews()
     }
     
     func setCollectionViews(){
-        
         filterCView.updateData(type: placeType ?? "All")
-       
         if let selectedPlaces = selectedPlaces {
             placeListCView.updateData(for: selectedPlaces, by: placeType ?? "All")
         } else {
@@ -135,10 +150,6 @@ extension PlacesListViewController{
         heightConstraint.isActive = true
     }
     
-    @objc func didTapBack() {
-        // Regresar a la vista anterior
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 //MARK: - UICollectionViewDelegate Methods
@@ -172,6 +183,8 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
     }
 }
 
+//MARK: - FilterCollectionViewDelegate Methods
+
 extension PlacesListViewController: FilterCollectionViewDelegate {
     func didSelectFilter(_ filter: DiscoverItem) {
         self.placeType = filter.name
@@ -192,5 +205,14 @@ extension PlacesListViewController{
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
+    }
+}
+
+//MARK: - Button Methods
+extension PlacesListViewController{
+    
+    @objc func didTapBack() {
+        // Regresar a la vista anterior
+        navigationController?.popViewController(animated: true)
     }
 }

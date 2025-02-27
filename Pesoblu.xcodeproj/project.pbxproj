@@ -81,7 +81,7 @@
 		C561430A2CEC3CDE00760670 /* Misc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Misc; sourceTree = "<group>"; };
 		C5740BBD2D4A982500F6D687 /* PlaceViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlaceViewModel; sourceTree = "<group>"; };
 		C57814272D08F746004A42C9 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
-		C57814432D2EF628004A42C9 /* PlacesListViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlacesListViewModel; sourceTree = "<group>"; };
+		C58BAEED2D70B59100AD9559 /* PlacesListViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlacesListViewModel; sourceTree = "<group>"; };
 		C5B49F1E2D5AC965005AE2A9 /* PesobluTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PesobluTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -216,9 +216,9 @@
 		C58674092AC71FD3000FCD5B /* Pesoblu */ = {
 			isa = PBXGroup;
 			children = (
-				C5740BBD2D4A982500F6D687 /* PlaceViewModel */,
-				C57814432D2EF628004A42C9 /* PlacesListViewModel */,
 				C57814272D08F746004A42C9 /* HomeViewModel */,
+				C58BAEED2D70B59100AD9559 /* PlacesListViewModel */,
+				C5740BBD2D4A982500F6D687 /* PlaceViewModel */,
 				C561430A2CEC3CDE00760670 /* Misc */,
 				C555BAB32CE2D6AE00EC6010 /* User Defaults */,
 				C52D8A492CE2C1B600A827BD /* AppUser.swift */,
@@ -281,7 +281,7 @@
 				C561430A2CEC3CDE00760670 /* Misc */,
 				C5740BBD2D4A982500F6D687 /* PlaceViewModel */,
 				C57814272D08F746004A42C9 /* HomeViewModel */,
-				C57814432D2EF628004A42C9 /* PlacesListViewModel */,
+				C58BAEED2D70B59100AD9559 /* PlacesListViewModel */,
 			);
 			name = Pesoblu;
 			productName = Pesoblu;

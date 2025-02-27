@@ -7,11 +7,13 @@
 
 import Foundation
 
+protocol CityDataServiceProtocol{
+    func fetch() -> [CitysItem]
+}
 
-class CitysDataManager: DataManager{
+class CityDataService: DataManager, CityDataServiceProtocol{
     
     private var cityItems: [CitysItem] = []
-    //private var placeItems: [PlaceItem] = []
     
     func fetch() -> [CitysItem] {
         for data in loadPlist(file: "CitysAr") {

@@ -17,7 +17,22 @@ protocol PlaceListCollectionViewDelegate: AnyObject {
 
 class PlaceListCollectionView: UIView{
     
-    var viewModel = PlaceListViewModel()
+    var viewModel : PlaceListViewModelProtocol
+    
+    init(viewModel: PlaceListViewModelProtocol, frame: CGRect = .zero) {
+        self.viewModel = viewModel
+        super.init(frame: frame)
+        setup()
+        locationManager.onLocationUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.placeCollectionView.reloadData()
+            }
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     var placeData: [PlaceItem] = []
     private let locationManager = LocationManager()
@@ -72,21 +87,21 @@ class PlaceListCollectionView: UIView{
         
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-        locationManager.onLocationUpdate = { [weak self] in
-            DispatchQueue.main.async {
-                self?.placeCollectionView.reloadData()
-            }
-        }
-    }
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setup()
+//        locationManager.onLocationUpdate = { [weak self] in
+//            DispatchQueue.main.async {
+//                self?.placeCollectionView.reloadData()
+//            }
+//        }
+//    }
 
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        setup()
+//    }
     
 }
 

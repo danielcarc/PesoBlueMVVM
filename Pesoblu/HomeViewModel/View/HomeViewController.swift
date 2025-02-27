@@ -193,7 +193,10 @@ extension HomeViewController: CollectionViewSelectionDelegate{
             if selectedPlaces.isEmpty {
                 showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
             } else {
-                let placesListVC = PlacesListViewController()
+                let placeListViewModel = PlaceListViewModel(
+                    distanceService: DistanceService(),
+                    filterDataService: FilterDataService())
+                let placesListVC = PlacesListViewController(placeListViewModel: placeListViewModel)
                 placesListVC.selectedPlaces = selectedPlaces
                 placesListVC.selectedCity = selectedCity
                 placesListVC.placeType = placeType
@@ -228,14 +231,16 @@ extension HomeViewController: CollectionViewSelectionDelegate{
 extension HomeViewController: CitysViewDelegate{
     func didSelectItem(_ city: CitysItem) {
         let selectedCity = String(city.name)
-        print(selectedCity)
         
         do{
             let selectedPlaces = try homeViewModel.fetchPlaces(city: selectedCity)
             if selectedPlaces.isEmpty {
                 showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
             } else {
-                let placesListVC = PlacesListViewController()
+                let placeListViewModel = PlaceListViewModel(
+                    distanceService: DistanceService(),
+                    filterDataService: FilterDataService())
+                let placesListVC = PlacesListViewController(placeListViewModel: placeListViewModel)
                 placesListVC.selectedPlaces = selectedPlaces
                 placesListVC.selectedCity = selectedCity
                 //placesListVC.placeType = placeType

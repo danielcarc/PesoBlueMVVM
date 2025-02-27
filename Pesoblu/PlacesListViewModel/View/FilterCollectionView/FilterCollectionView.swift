@@ -13,12 +13,23 @@ protocol FilterCollectionViewDelegate: AnyObject {
 
 class FilterCollectionView: UIView{
     
+    private var viewModel: PlaceListViewModelProtocol
+    weak var delegate: FilterCollectionViewDelegate?
+    
+    init(viewModel: PlaceListViewModelProtocol, frame: CGRect = .zero) {
+        self.viewModel = viewModel
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var data: [DiscoverItem] = []
     private var placeType: String?
     private var selectedIndexPath: IndexPath?
     private var previousIndexPath: IndexPath?
-    private var viewModel = PlaceListViewModel()
-    weak var delegate: FilterCollectionViewDelegate?
     
     func updateData(type: String){
         placeType = type
@@ -56,16 +67,6 @@ class FilterCollectionView: UIView{
         
         return vw
     }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
     
 }
 

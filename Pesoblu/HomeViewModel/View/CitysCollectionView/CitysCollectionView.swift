@@ -56,7 +56,6 @@ class CitysCollectionView: UIView{
         let itemWidth = availableWidth / 2
         //layout.itemSize = .init(width: cellWidth, height: 130)
         layout.itemSize = CGSize(width: itemWidth, height: 130)
-        print("ancho de celda \(itemWidth)")
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false

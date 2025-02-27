@@ -20,7 +20,9 @@ class PesoBlueTabBarController: UITabBarController {
         let homeViewModel = HomeViewModel(
             currencyService: CurrencyService(),
             locationService: LocationService(),
-            placesService: PlaceService()
+            placesService: PlaceService(),
+            discoverDataService: DiscoverDataService(),
+            cityDataService: CityDataService()
         )
         
         let vc1 = HomeViewController(homeViewModel: homeViewModel)

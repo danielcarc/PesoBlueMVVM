@@ -1,20 +1,24 @@
 //
-//  DiscoverDataManager.swift
+//  FilterDataManager.swift
 //  PesoBlueMVVM
 //
-//  Created by Daniel Carcacha on 10/12/2024.
+//  Created by Daniel Carcacha on 20/01/2025.
 //
 
 import Foundation
 
-
-class DiscoverDataManager: DataManager{
+protocol FilterDataServiceProtocol{
+    func fetch() -> [DiscoverItem]
+}
+class FilterDataService: DataManager, FilterDataServiceProtocol{
     
     private var discoverItems: [DiscoverItem] = []
     //private var placeItems: [PlaceItem] = []
     
     func fetch() -> [DiscoverItem] {
+        discoverItems.removeAll()
         for data in loadPlist(file: "PlacesBa") {
+            
             discoverItems.append(DiscoverItem(dict: data as! [String: String]))
         }
         return discoverItems
@@ -24,10 +28,4 @@ class DiscoverDataManager: DataManager{
         discoverItems.count
     }
     
-    func exploreItem(at index: Int) -> DiscoverItem {
-        discoverItems[index]
-    }
-    
 }
-
-
