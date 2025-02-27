@@ -17,7 +17,6 @@ class PlaceViewController: UIViewController {
         var sview = UIScrollView()
         sview.showsVerticalScrollIndicator = true
         sview.bounces = true
-        //scrollView.contentInsetAdjustmentBehavior = .never
         sview.showsHorizontalScrollIndicator = false
         sview.isScrollEnabled = true
         sview.translatesAutoresizingMaskIntoConstraints = false
@@ -84,6 +83,14 @@ class PlaceViewController: UIViewController {
 }
 
 extension PlaceViewController: PlaceViewDelegate{
+    func didFailToOpenInstagram(title: String, message: String) {
+        showAlert(title: title, message: message)
+    }
+    
+    func didFailToCall() {
+        showAlert(title: "Error de Llamada", message: "No se puede realizar la llamada. Verifica el número o el dispositivo.")
+    }
+    
     func didFailToLoadImage(_ view: PlaceView, error: any Error) {
         showAlert(title: "Error de Imagen", message: "Error al cargar imagen. Intente nuevamente mas tarde.")
     }

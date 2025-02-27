@@ -12,6 +12,8 @@ import Kingfisher
 
 protocol PlaceViewDelegate: AnyObject{
     func didFailToLoadImage(_ view: PlaceView, error: Error)
+    func didFailToCall()
+    func didFailToOpenInstagram(title: String, message: String)
 }
 
 class PlaceView: UIView{
@@ -27,7 +29,6 @@ class PlaceView: UIView{
         sv.distribution = .fill
         sv.spacing = 24
         sv.translatesAutoresizingMaskIntoConstraints = false
-        
         return sv
     }()
     
@@ -38,7 +39,6 @@ class PlaceView: UIView{
         imageView.layer.cornerRadius = 12
         imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
         return imageView
     }()
     
@@ -47,7 +47,6 @@ class PlaceView: UIView{
         label.font = UIFont.boldSystemFont(ofSize: 24)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -56,7 +55,6 @@ class PlaceView: UIView{
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -65,7 +63,6 @@ class PlaceView: UIView{
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -76,7 +73,6 @@ class PlaceView: UIView{
         sv.distribution = .fillProportionally
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.spacing = 16
-        
         return sv
     }()
     
@@ -87,7 +83,6 @@ class PlaceView: UIView{
         button.accessibilityLabel = "Llamar a Siamo nel Forno"
         button.addTarget(self, action: #selector(callPhone(sender:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
@@ -98,7 +93,6 @@ class PlaceView: UIView{
         button.accessibilityLabel = "Abrir Instagram de Siamo nel Forno"
         button.addTarget(self, action: #selector(openInstagram(sender:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
@@ -107,7 +101,6 @@ class PlaceView: UIView{
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -116,13 +109,11 @@ class PlaceView: UIView{
         mapView.layer.cornerRadius = 12
         mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openInMaps)))
         mapView.translatesAutoresizingMaskIntoConstraints = false
-        
         return mapView
     }()
     
     func setData(item: PlaceItem){
-        
-        place = item
+        //place = item
         nameLabel.text = item.name
         categoriesLabel.text = item.categories?.joined(separator: " · ")
         addressLabel.text = "📍 \(item.address), \(item.area)"
@@ -134,7 +125,7 @@ class PlaceView: UIView{
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: item.lat ?? 0.0, longitude: item.long ?? 0.0)
-        annotation.title = place?.name
+        annotation.title = item.name
         mapView.addAnnotation(annotation)
         let region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: false)
@@ -145,7 +136,6 @@ class PlaceView: UIView{
             placeImageView.image = UIImage(systemName: "photo")
             return
         }
-
         placeImageView.kf.setImage(
             with: imageUrl,
             placeholder: UIImage(systemName: "photo"),
@@ -167,7 +157,6 @@ class PlaceView: UIView{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
     }
 }
 
@@ -208,28 +197,98 @@ extension PlaceView{
     }
 }
 
+//MARK: - TapGesture Methods
+
 extension PlaceView{
     
     @objc private func expandImage() {
-        // Animación para expandir la imagen
+        guard let superview = self.superview else { return }
+        
+        //crear fondo oscuro en el que se ve el background
+        let backgroundView = UIView(frame: superview.bounds)
+        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        backgroundView.tag = 100 // Tag para identificarlo
+        superview.addSubview(backgroundView)
+        
+        //crear copia de la imagen para expandir
+        let expandedImageView = UIImageView(image: placeImageView.image)
+        expandedImageView.contentMode = .scaleAspectFit
+        expandedImageView.isUserInteractionEnabled = true
+        expandedImageView.layer.cornerRadius = 12 // Mantener el estilo
+        expandedImageView.clipsToBounds = true
+        
+        //posicionar la imagen en su ubicación original relativa al superview
+        expandedImageView.frame = placeImageView.convert(placeImageView.bounds, to: superview)
+        superview.addSubview(expandedImageView)
+        
+        //agregar gesto para cerrar
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissExpandedImage))
+        expandedImageView.addGestureRecognizer(tapGesture)
+        
+        //animamos la expansión
+        UIView.animate(withDuration: 0.3) {
+            expandedImageView.frame = superview.bounds
+            expandedImageView.center = superview.center
+        }
+    }
+    
+    @objc private func dismissExpandedImage(_ sender: UITapGestureRecognizer) {
+        guard let expandedImageView = sender.view as? UIImageView,
+              let superview = self.superview,
+              let backgroundView = superview.viewWithTag(100) else { return }
+        
+        //anima contracción a la posición original
+        UIView.animate(withDuration: 0.3, animations: {
+            expandedImageView.frame = self.placeImageView.convert(self.placeImageView.bounds, to: superview)
+            backgroundView.alpha = 0
+        }) { _ in
+            expandedImageView.removeFromSuperview()
+            backgroundView.removeFromSuperview()
+        }
     }
     
     @objc private func callPhone(sender: UIButton) {
         guard let phoneNumber = sender.accessibilityLabel,
               !phoneNumber.isEmpty,
-              let url = URL(string: "tel://\(phoneNumber)"),
+              //esto valida que solo contiene numeros validos de un telefono
+              phoneNumber.rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789+- ").inverted) == nil,
+              let url = URL(string: "telprompt://\(phoneNumber)"),
               UIApplication.shared.canOpenURL(url) else {
+            delegate?.didFailToCall()
             print("No se puede abrir la app de llamadas o el número es inválido.")
             return
         }
-
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     @objc private func openInstagram(sender: UIButton) {
-        if let instagramURL = sender.accessibilityLabel, let url = URL(string: instagramURL) {
-            UIApplication.shared.open(url)
+        //obtengo la URL web del accessibilityLabel
+        guard let instagramWebURL = sender.accessibilityLabel?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !instagramWebURL.isEmpty,
+              let urlComponents = URLComponents(string: instagramWebURL),
+              urlComponents.scheme == "https",
+              urlComponents.host == "www.instagram.com",
+              let username = urlComponents.path.split(separator: "/").first else {
+            delegate?.didFailToOpenInstagram(title: "Error al abrir Instagram", message: "URL de Instagram inválida.")
+            return
         }
+        
+        //construir la URL para la app de Instagram
+        let appURLString = "instagram://user?username=\(username)"
+        guard let appURL = URL(string: appURLString),
+              UIApplication.shared.canOpenURL(appURL) else {
+            //fallback al navegador con la URL web original
+            guard let webURL = URL(string: instagramWebURL),
+                  UIApplication.shared.canOpenURL(webURL) else {
+                delegate?.didFailToOpenInstagram(title: "Error al abrir Instagram", message: "No se puede abrir Instagram. Verifica la URL o instala la app.")
+                return
+            }
+            UIApplication.shared.open(webURL, options: [:], completionHandler: nil)
+            return
+        }
+        
+        //abrir la app de instagram directamente
+        UIApplication.shared.open(appURL, options: [:], completionHandler: nil)
     }
     
     @objc private func openInMaps() {
