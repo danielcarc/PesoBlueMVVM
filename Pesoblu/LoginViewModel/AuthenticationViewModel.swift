@@ -29,8 +29,6 @@ class AuthenticationViewModel{
 
 extension AuthenticationViewModel{
     
-    
-    
     enum AuthenticationError: Error{
         case tokenError(message: String)
     }

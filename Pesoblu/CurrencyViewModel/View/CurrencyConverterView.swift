@@ -6,8 +6,17 @@
 //
 
 import UIKit
+import Combine
 
-class CurrencyView: UIView {
+class CurrencyConverterView: UIView {
+    
+    private var cvm = CurrencyConverterViewModel()
+    private var cancellables = Set<AnyCancellable>()
+    
+    var currencyFromPeso: String = "0.0"
+    var currencyToPeso: String = "0.0"
+    var pesoToDolar: String = "0.0"
+    var currencyToDolarValue: String = "0.0"
     
     private lazy var viewtextseg : UIView = {
         var view = UIView()
@@ -28,10 +37,8 @@ class CurrencyView: UIView {
         text.textAlignment = .center
         text.backgroundColor = .white
         text.layer.cornerRadius = 7
-        
         text.keyboardType = .decimalPad
         text.font = .systemFont(ofSize: 17)
-        text.addTarget(self, action: #selector(cantidadTextEditingChanged), for: .editingChanged)
 
         text.translatesAutoresizingMaskIntoConstraints = false
         
@@ -40,11 +47,11 @@ class CurrencyView: UIView {
     
     private lazy var segcontrol: UISegmentedControl = {
         var control = UISegmentedControl()
-        control.insertSegment(withTitle: "---", at: 0, animated: false)
-        control.insertSegment(withTitle: "---", at: 1, animated: false)
+        control.insertSegment(withTitle: "$ -> Moneda", at: 0, animated: false)
+        control.insertSegment(withTitle: "Moneda -> $", at: 1, animated: false)
         control.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
-        //control.setTitle("---", forSegmentAt: 1)
         control.isMultipleTouchEnabled = false
+        control.isEnabled = false
         control.translatesAutoresizingMaskIntoConstraints = false
         
         return control
@@ -80,6 +87,7 @@ class CurrencyView: UIView {
         text.layer.shadowRadius = 3
         text.layer.shadowOpacity = 0.3
         text.inputView = currencypickerview
+        text.isEnabled = false
         text.translatesAutoresizingMaskIntoConstraints = false
         
         return text
@@ -237,84 +245,16 @@ class CurrencyView: UIView {
         // Oculta el teclado al tocar la pantalla fuera del campo de texto
         self.endEditing(true)
     }
-    
-    func setDisableFields(){
-        if quantitytextfield.text == nil{
-            currencytextfield.isEnabled = false
-            segcontrol.isEnabled = false
-        }else{
-            currencytextfield.isEnabled = true
-        }
-        
-    }
-    
-    @objc private func cantidadTextEditingChanged(_ textField: UITextField) {
-        //print("El texto ha cambiado: \(textField.text ?? "")")
-        if quantitytextfield.text?.isEmpty ?? true{
-            currencytextfield.isEnabled = false
-            segcontrol.isEnabled = false
-            
-        }else if quantitytextfield.text?.isEmpty ?? false{
-            currencytextfield.isEnabled = true
-            segcontrol.isEnabled = true
-        }
 
-    }
-    
-    func setEmptyQuantityTextField(quantity: UITextField){
-        if quantity.text?.isEmpty ?? true{
-            currencytextfield.isEnabled = false
-            segcontrol.isEnabled = false
-            valuebuylabel.text = "0.00"
-            valuesellLabel.text = "0.00"
-            buylabel.text = "Compra"
-            sellLabel.text = "En Dolares"
+    func setEnableControl(){
+        currencytextfield.isEnabled = true
+        if currencytextfield.text?.isEmpty ?? true {
             currencytextfield.text = "Seleccione una moneda para convertir"
             currencytextfield.textColor = .systemRed
         }
-//        else {
-//            currencytextfield.isEnabled = true
-//            segcontrol.isEnabled = true
-//        }
-    }
-    
-    func setEnableFields(){
-        if quantitytextfield.text?.isEmpty ?? false{
-            currencytextfield.isEnabled = true
-            segcontrol.isEnabled = true
-        }
-        
-    }
-    
-    
-    func setEnableControl(){
+        currencytextfield.textColor = .systemRed // Añadimos el color aquí también para consistencia
         segcontrol.isEnabled = true
         segcontrol.selectedSegmentIndex = 0
-    }
-
-    func getPickerView() -> UIPickerView{
-        return currencypickerview
-    }
-    
-    func getSelectedSegControl() -> Int{
-        return segcontrol.selectedSegmentIndex
-    }
-    
-    //solo para chequear errores
-    func getQuantityTextField() -> UITextField{
-        return quantitytextfield
-    }
-    
-    func getQuantityText() -> String{
-        if let text = quantitytextfield.text {
-            return text
-        } else {
-            return ""
-        }
-    }
-    
-    func getCurrencyTextField() -> UITextField{
-        return currencytextfield
     }
     
     func getTextForCurrency() -> String{
@@ -347,11 +287,6 @@ class CurrencyView: UIView {
         
     }
     
-    var currencyFromPeso: String = "0.0"
-    var currencyToPeso: String = "0.0"
-    var pesoToDolar: String = "0.0"
-    var currencyToDolarValue: String = "0.0"
-    
     func setTextForConvertValues(currencyValueFromPeso: String, currencyValueToPeso: String,  dolarValue: String, currencyToDolar: String){
         valuebuylabel.text = currencyValueFromPeso
         valuesellLabel.text = dolarValue
@@ -361,21 +296,16 @@ class CurrencyView: UIView {
         currencyToDolarValue = currencyToDolar
     }
     
-    func setCurrencyText(){
-        //currencytextfield.isEnabled = false
-        currencytextfield.text = "Seleccione una moneda para convertir"
-        currencytextfield.textColor = .systemRed
-        buylabel.text = "Compra"
-        valuebuylabel.text = "0.00"
-        sellLabel.text = "En Dolares"
-        valuesellLabel.text = "0.00"
-        segcontrol.isEnabled = false
-        
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
+        currencypickerview.delegate = self
+        currencypickerview.dataSource = self
+        cvm.delegate = self
+        quantitytextfield.delegate = self
+        currencytextfield.delegate = self
+        setupBindings()
+        hideKeyboardWhenTappedAround()
     }
     
     func resigncurrencytext(){
@@ -392,15 +322,15 @@ class CurrencyView: UIView {
     
 }
 
-private extension CurrencyView{
+private extension CurrencyConverterView{
     
     func setup(){
-        
         //self.backgroundColor = .white
         addsubviews()
         setupconstraints()
-        
     }
+    
+    //MARK: - Setup and Constraints Methods
     
     private func addsubviews(){
         
@@ -429,7 +359,6 @@ private extension CurrencyView{
         sellview.addSubview(valuesellview)
         
         valuesellview.addSubview(valuesellLabel)
-        
     }
     
     private func setupconstraints(){
@@ -503,6 +432,101 @@ private extension CurrencyView{
         
         ])
     }
+}
+
+extension CurrencyConverterView: UITextFieldDelegate{
     
+    //MARK: - TextField & PickerView Methods
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+extension CurrencyConverterView: UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        cvm.currencyArray.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        cvm.getTextForPicker(row: row)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("moneda seleccionada: \(cvm.currencyArray[row])")
+        cvm.updateCurrency(currency: cvm.currencyArray[row])
+        currencytextfield.text = cvm.getTextForPicker(row: row)
+        setTextForSegControl(segmentControl: currencytextfield.text ?? "")
+        currencytextfield.resignFirstResponder()
+        setEnableControl()
+    }
+}
+
+//MARK: - Delegate Methods
+
+extension CurrencyConverterView: CurrencyViewModelDelegate{
+    func didFail(error: Error) {
+        print(error.localizedDescription)
+        //aca colocar un showalert en realidad va en el view controller
+    }
+    
+    func didFinish() async {
+        
+    }
+}
+
+//MARK: - Binding Methods
+
+extension CurrencyConverterView{
+    func setupBindings(){
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: quantitytextfield)
+            .map { ($0.object as? UITextField)?.text ?? "" }
+            .sink { [weak self] text in
+                guard let self = self else { return }
+                let amount = Double(text)
+                print("Monto ingresado: \(String(describing: amount))")
+                self.cvm.updateAmount(amount)
+                
+                if text.isEmpty || amount == nil || amount == 0 {
+                    self.resetControls()
+                } else {
+                    self.setEnableControl()
+                }
+            }
+            .store(in: &cancellables)
+        
+        cvm.convertedValues
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (currencyFromPeso, currencyToPeso, pesoToDolar, currencyToDolarValue) in
+                guard let self = self else { return }
+                self.currencyFromPeso = currencyFromPeso
+                self.currencyToPeso = currencyToPeso
+                self.pesoToDolar = pesoToDolar
+                self.currencyToDolarValue = currencyToDolarValue
+                self.valuebuylabel.text = currencyFromPeso
+                self.valuesellLabel.text = pesoToDolar
+                
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func resetControls() {
+        currencytextfield.isEnabled = false
+        currencytextfield.text = nil
+        currencytextfield.placeholder = "Seleccione una moneda para convertir"
+        currencypickerview.selectRow(0, inComponent: 0, animated: false)
+        segcontrol.isEnabled = false
+        segcontrol.setTitle("$ -> Moneda", forSegmentAt: 0)
+        segcontrol.setTitle("Moneda -> $", forSegmentAt: 1)
+        buylabel.text = "Compra"
+        valuebuylabel.text = "0.00"
+        sellLabel.text = "En Dolares"
+        valuesellLabel.text = "0.00"
+        cvm.resetCurrency()
+    }
     
 }

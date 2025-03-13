@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		C513DE9D2ACDB5340066AFCA /* ChangeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DE9C2ACDB5340066AFCA /* ChangeCollectionViewCell.swift */; };
 		C513DE9F2ACDBB090066AFCA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DE9E2ACDBB090066AFCA /* Model.swift */; };
-		C513DEA12ACDC17D0066AFCA /* CurrencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEA02ACDC17D0066AFCA /* CurrencyViewModel.swift */; };
+		C513DEA12ACDC17D0066AFCA /* CurrencyConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEA02ACDC17D0066AFCA /* CurrencyConverterViewModel.swift */; };
 		C513DEAB2ACE00040066AFCA /* ChangeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEAA2ACE00040066AFCA /* ChangeResponse.swift */; };
 		C513DEAD2ACE00520066AFCA /* ChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEAC2ACE00520066AFCA /* ChangeViewModel.swift */; };
 		C513DED12AE839240066AFCA /* BeginTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED02AE839240066AFCA /* BeginTabViewController.swift */; };
-		C513DED32AE83ADF0066AFCA /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED22AE83ADF0066AFCA /* CurrencyViewController.swift */; };
-		C513DED72AE83B480066AFCA /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED62AE83B480066AFCA /* CurrencyView.swift */; };
+		C513DED32AE83ADF0066AFCA /* CurrencyConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED22AE83ADF0066AFCA /* CurrencyConverterViewController.swift */; };
+		C513DED72AE83B480066AFCA /* CurrencyConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED62AE83B480066AFCA /* CurrencyConverterView.swift */; };
 		C51C8ABE2BD87FBC008777C8 /* PesoBlueTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */; };
 		C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D8A492CE2C1B600A827BD /* AppUser.swift */; };
 		C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55DA6882ACB136F00871340 /* ChangeView.swift */; };
@@ -53,12 +53,12 @@
 /* Begin PBXFileReference section */
 		C513DE9C2ACDB5340066AFCA /* ChangeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCollectionViewCell.swift; sourceTree = "<group>"; };
 		C513DE9E2ACDBB090066AFCA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		C513DEA02ACDC17D0066AFCA /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
+		C513DEA02ACDC17D0066AFCA /* CurrencyConverterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewModel.swift; sourceTree = "<group>"; };
 		C513DEAA2ACE00040066AFCA /* ChangeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeResponse.swift; sourceTree = "<group>"; };
 		C513DEAC2ACE00520066AFCA /* ChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeViewModel.swift; sourceTree = "<group>"; };
 		C513DED02AE839240066AFCA /* BeginTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginTabViewController.swift; sourceTree = "<group>"; };
-		C513DED22AE83ADF0066AFCA /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
-		C513DED62AE83B480066AFCA /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
+		C513DED22AE83ADF0066AFCA /* CurrencyConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewController.swift; sourceTree = "<group>"; };
+		C513DED62AE83B480066AFCA /* CurrencyConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterView.swift; sourceTree = "<group>"; };
 		C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PesoBlueTabBarController.swift; sourceTree = "<group>"; };
 		C52D8A492CE2C1B600A827BD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		C55DA6882ACB136F00871340 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
@@ -82,6 +82,7 @@
 		C5740BBD2D4A982500F6D687 /* PlaceViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlaceViewModel; sourceTree = "<group>"; };
 		C57814272D08F746004A42C9 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
 		C58BAEED2D70B59100AD9559 /* PlacesListViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlacesListViewModel; sourceTree = "<group>"; };
+		C58BAEF92D71129D00AD9559 /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
 		C5B49F1E2D5AC965005AE2A9 /* PesobluTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PesobluTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -171,7 +172,7 @@
 		C513DEA82ACDFFB30066AFCA /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C513DEA02ACDC17D0066AFCA /* CurrencyViewModel.swift */,
+				C513DEA02ACDC17D0066AFCA /* CurrencyConverterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -179,8 +180,8 @@
 		C513DEA92ACDFFB90066AFCA /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C513DED22AE83ADF0066AFCA /* CurrencyViewController.swift */,
-				C513DED62AE83B480066AFCA /* CurrencyView.swift */,
+				C513DED22AE83ADF0066AFCA /* CurrencyConverterViewController.swift */,
+				C513DED62AE83B480066AFCA /* CurrencyConverterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -222,6 +223,7 @@
 				C561430A2CEC3CDE00760670 /* Misc */,
 				C555BAB32CE2D6AE00EC6010 /* User Defaults */,
 				C52D8A492CE2C1B600A827BD /* AppUser.swift */,
+				C58BAEF92D71129D00AD9559 /* Service */,
 				C59B3F432CBDD1CF00E0C532 /* LoginViewModel */,
 				C513DEFA2AE8D99F0066AFCA /* TabBarController */,
 				C513DEA32ACDFF110066AFCA /* CurrencyViewModel */,
@@ -282,6 +284,7 @@
 				C5740BBD2D4A982500F6D687 /* PlaceViewModel */,
 				C57814272D08F746004A42C9 /* HomeViewModel */,
 				C58BAEED2D70B59100AD9559 /* PlacesListViewModel */,
+				C58BAEF92D71129D00AD9559 /* Service */,
 			);
 			name = Pesoblu;
 			productName = Pesoblu;
@@ -390,11 +393,11 @@
 				C513DE9F2ACDBB090066AFCA /* Model.swift in Sources */,
 				C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */,
 				C513DEAD2ACE00520066AFCA /* ChangeViewModel.swift in Sources */,
-				C513DED72AE83B480066AFCA /* CurrencyView.swift in Sources */,
+				C513DED72AE83B480066AFCA /* CurrencyConverterView.swift in Sources */,
 				C51C8ABE2BD87FBC008777C8 /* PesoBlueTabBarController.swift in Sources */,
 				C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */,
-				C513DEA12ACDC17D0066AFCA /* CurrencyViewModel.swift in Sources */,
-				C513DED32AE83ADF0066AFCA /* CurrencyViewController.swift in Sources */,
+				C513DEA12ACDC17D0066AFCA /* CurrencyConverterViewModel.swift in Sources */,
+				C513DED32AE83ADF0066AFCA /* CurrencyConverterViewController.swift in Sources */,
 				C513DEAB2ACE00040066AFCA /* ChangeResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

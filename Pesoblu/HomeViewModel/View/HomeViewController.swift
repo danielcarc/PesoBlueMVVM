@@ -243,8 +243,7 @@ extension HomeViewController: CitysViewDelegate{
                 let placesListVC = PlacesListViewController(placeListViewModel: placeListViewModel)
                 placesListVC.selectedPlaces = selectedPlaces
                 placesListVC.selectedCity = selectedCity
-                //placesListVC.placeType = placeType
-                
+
                 if let navigationController = navigationController {
                     navigationController.pushViewController(placesListVC, animated: true)
                 } else {
