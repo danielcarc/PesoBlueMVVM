@@ -25,9 +25,12 @@ class PesoBlueTabBarController: UITabBarController {
             cityDataService: CityDataService()
         )
         
+        let currencyConverterViewModel = CurrencyConverterViewModel(currencyService: CurrencyService(), notificationService: NotificationService())
+            
+        
         let vc1 = HomeViewController(homeViewModel: homeViewModel)
         let vc2 = ChangeViewController()
-        let vc3 = CurrencyConverterViewController()
+        let vc3 = CurrencyConverterViewController( currencyConverterViewModel: currencyConverterViewModel)
         
         // Set Tab Images
         vc1.tabBarItem.image = UIImage(systemName: "house.fill")

@@ -27,9 +27,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             discoverDataService: DiscoverDataService(),
             cityDataService: CityDataService()
         )
+        let currencyConverterViewModel = CurrencyConverterViewModel(currencyService: CurrencyService(), notificationService: NotificationService())
 //        self.window?.rootViewController = PesoBlueTabBarControllerViewController()
-        //let navigationController = UINavigationController(rootViewController: HomeViewController(homeViewModel: homeViewModel))
-        let navigationController = UINavigationController(rootViewController: CurrencyConverterViewController())
+        let navigationController = UINavigationController(rootViewController: HomeViewController(homeViewModel: homeViewModel))
+      //  let navigationController = UINavigationController(rootViewController: CurrencyConverterViewController(currencyConverterViewModel: currencyConverterViewModel))
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         

@@ -16,7 +16,7 @@ protocol PlaceViewDelegate: AnyObject{
     func didFailToOpenInstagram(title: String, message: String)
 }
 
-class PlaceView: UIView{
+final class PlaceView: UIView{
     
     private var viewModel = PlaceViewModel()
     
@@ -113,7 +113,7 @@ class PlaceView: UIView{
     }()
     
     func setData(item: PlaceItem){
-        //place = item
+        place = item
         nameLabel.text = item.name
         categoriesLabel.text = item.categories?.joined(separator: " · ")
         addressLabel.text = "📍 \(item.address), \(item.area)"
@@ -292,24 +292,34 @@ extension PlaceView{
     }
     
     @objc private func openInMaps() {
-      
         if let place = self.place {
-            //let placeName = place.name
             let latitude = place.lat ?? 0.0
             let longitude = place.long ?? 0.0
             
-            let urlString = "maps://?q=\(place.name)&ll=\(latitude),\(longitude)"
-            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-            } else {
-                // Si Apple Maps no está disponible, abrimos Google Maps en el navegador
-                let googleMapsURL = "https://www.google.com/maps/search/?api=1&query=\(latitude),\(longitude)"
-                if let url = URL(string: googleMapsURL) {
+            let encodedPlaceName = place.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            let urlString = "maps://?q=\(encodedPlaceName)&ll=\(latitude),\(longitude)"
+            print("URL generada: \(urlString)")
+            
+            if let url = URL(string: urlString) {
+                print("URL válida: \(url)")
+                let canOpen = UIApplication.shared.canOpenURL(url)
+                print("¿Puede abrir Apple Maps?: \(canOpen)")
+                if canOpen {
                     UIApplication.shared.open(url)
+                } else {
+                    let googleMapsURL = "https://www.google.com/maps/search/?api=1&query=\(latitude),\(longitude)"
+                    print("Intentando Google Maps: \(googleMapsURL)")
+                    if let url = URL(string: googleMapsURL) {
+                        UIApplication.shared.open(url)
+                    }
                 }
+            } else {
+                print("URL inválida para Apple Maps")
             }
+        } else {
+            print("No hay lugar definido")
+            return
         }
-        else {return}
     }
 
 }

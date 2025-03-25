@@ -25,6 +25,7 @@
 		C58674172AC71FD5000FCD5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */; };
 		C58BAE6E2D69181200AD9559 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C58BAE6D2D69181200AD9559 /* Kingfisher */; };
 		C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */; };
+		C59C3B022D87BD9200C9BEA1 /* fetchChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C3B012D87BD9100C9BEA1 /* fetchChange.swift */; };
 		C5B49F182D53FA4D005AE2A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5B49F172D53FA4D005AE2A9 /* GoogleService-Info.plist */; };
 		C5C47C0A2CC9D8FF00238099 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C5C47C092CC9D8FF00238099 /* FirebaseAuth */; };
 		C5C47C0D2CCAE5D500238099 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C5C47C0C2CCAE5D500238099 /* GoogleSignIn */; };
@@ -70,6 +71,7 @@
 		C58674162AC71FD5000FCD5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C58674182AC71FD5000FCD5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C59C3B012D87BD9100C9BEA1 /* fetchChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchChange.swift; sourceTree = "<group>"; };
 		C5B49F172D53FA4D005AE2A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5B49F1D2D5AC965005AE2A9 /* PesobluTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PesobluTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C47C122CCAF16600238099 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				C513DEA02ACDC17D0066AFCA /* CurrencyConverterViewModel.swift */,
+				C59C3B012D87BD9100C9BEA1 /* fetchChange.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */,
 				C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */,
 				C513DE9F2ACDBB090066AFCA /* Model.swift in Sources */,
+				C59C3B022D87BD9200C9BEA1 /* fetchChange.swift in Sources */,
 				C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */,
 				C513DEAD2ACE00520066AFCA /* ChangeViewModel.swift in Sources */,
 				C513DED72AE83B480066AFCA /* CurrencyConverterView.swift in Sources */,

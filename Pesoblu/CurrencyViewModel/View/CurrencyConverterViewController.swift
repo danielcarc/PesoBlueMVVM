@@ -9,33 +9,38 @@ import UIKit
 import Combine
 import UserNotifications
 
-class CurrencyConverterViewController: UIViewController {
+final class CurrencyConverterViewController: UIViewController {
     
-    var currencyView : CurrencyConverterView!
+    var currencyView : CurrencyConverterView?
+    private let currencyConverterViewModel: CurrencyConverterViewModelProtocol
     
-    let cvm = CurrencyConverterViewModel()
+    init(currencyView: CurrencyConverterView? = nil, currencyConverterViewModel: CurrencyConverterViewModelProtocol) {
+        self.currencyView = currencyView
+        self.currencyConverterViewModel = currencyConverterViewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
-        currencyView = CurrencyConverterView()
+        currencyView = CurrencyConverterView(frame: .zero, currencyConverterViewModel: currencyConverterViewModel)
         self.view = currencyView
     }
     
     override func viewDidLoad() {
-        
-        //aca armar un metodo setup para dejar mas limpio esto
         super.viewDidLoad()
         setup()
 
     }
 }
 extension CurrencyConverterViewController{
+    
     func setup(){
-       
-        //currencyView.hideKeyboardWhenTappedAround()
-        //currencyView.setDisableFields()
-        title = "Calcular"
+        title = "Convertir"
         navigationController?.navigationBar.prefersLargeTitles = true
-        //setupBindings()
         startTimer()
     }
 }
@@ -47,9 +52,9 @@ extension CurrencyConverterViewController{
     func startTimer(){
         Timer.scheduledTimer(withTimeInterval: 6000, repeats: true) { timer in
             Task{
-                if let dolar = await self.cvm.getDolar() {
-                    let dolarNow = String(format: "%.2f", dolar.venta ?? 0.0)
-                    await self.cvm.checkPermission(dolar: dolarNow)
+                if let dolar = try await self.currencyConverterViewModel.getDolar() {
+                    let dolarNow = String(format: "%.2f", dolar.venta)
+                    await self.currencyConverterViewModel.checkPermission(dolar: dolarNow)
                 }
             }
         }

@@ -10,8 +10,26 @@ import Combine
 
 class CurrencyConverterView: UIView {
     
-    private var cvm = CurrencyConverterViewModel()
+    
     private var cancellables = Set<AnyCancellable>()
+    weak var delegate: CurrencyConverterViewModel?
+    
+    private var currencyConverterViewModel: CurrencyConverterViewModelProtocol
+    
+    
+    init(frame: CGRect = .zero, currencyConverterViewModel: CurrencyConverterViewModelProtocol) {
+        self.currencyConverterViewModel = currencyConverterViewModel
+        super.init(frame: frame)
+        
+        setup()
+        currencypickerview.delegate = self
+        currencypickerview.dataSource = self
+        //currencyConverterViewModel.delegate = self
+        quantitytextfield.delegate = self
+        currencytextfield.delegate = self
+        setupBindings()
+        hideKeyboardWhenTappedAround()
+    }
     
     var currencyFromPeso: String = "0.0"
     var currencyToPeso: String = "0.0"
@@ -296,17 +314,7 @@ class CurrencyConverterView: UIView {
         currencyToDolarValue = currencyToDolar
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        setup()
-        currencypickerview.delegate = self
-        currencypickerview.dataSource = self
-        cvm.delegate = self
-        quantitytextfield.delegate = self
-        currencytextfield.delegate = self
-        setupBindings()
-        hideKeyboardWhenTappedAround()
-    }
+    
     
     func resigncurrencytext(){
         currencytextfield.resignFirstResponder()
@@ -322,6 +330,8 @@ class CurrencyConverterView: UIView {
     
 }
 
+//MARK: - Setup and Constraints Methods
+
 private extension CurrencyConverterView{
     
     func setup(){
@@ -330,7 +340,7 @@ private extension CurrencyConverterView{
         setupconstraints()
     }
     
-    //MARK: - Setup and Constraints Methods
+  
     
     private func addsubviews(){
         
@@ -434,9 +444,11 @@ private extension CurrencyConverterView{
     }
 }
 
+//MARK: - TextField & PickerView Methods
+
 extension CurrencyConverterView: UITextFieldDelegate{
     
-    //MARK: - TextField & PickerView Methods
+   
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -449,17 +461,18 @@ extension CurrencyConverterView: UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        cvm.currencyArray.count
+        currencyConverterViewModel.getCurrencyArray().count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        cvm.getTextForPicker(row: row)
+        currencyConverterViewModel.getTextForPicker(row: row)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("moneda seleccionada: \(cvm.currencyArray[row])")
-        cvm.updateCurrency(currency: cvm.currencyArray[row])
-        currencytextfield.text = cvm.getTextForPicker(row: row)
+        //print("moneda seleccionada: \(currencyConverterViewModel.getCurrencyArray[row]())")
+        let currencyArray = currencyConverterViewModel.getCurrencyArray()
+        currencyConverterViewModel.updateCurrency(currency: currencyArray[row])
+        currencytextfield.text = currencyConverterViewModel.getTextForPicker(row: row)
         setTextForSegControl(segmentControl: currencytextfield.text ?? "")
         currencytextfield.resignFirstResponder()
         setEnableControl()
@@ -487,9 +500,9 @@ extension CurrencyConverterView{
             .map { ($0.object as? UITextField)?.text ?? "" }
             .sink { [weak self] text in
                 guard let self = self else { return }
-                let amount = Double(text)
+                let amount = Double(((text)))
                 print("Monto ingresado: \(String(describing: amount))")
-                self.cvm.updateAmount(amount)
+                self.currencyConverterViewModel.updateAmount(amount)
                 
                 if text.isEmpty || amount == nil || amount == 0 {
                     self.resetControls()
@@ -499,7 +512,7 @@ extension CurrencyConverterView{
             }
             .store(in: &cancellables)
         
-        cvm.convertedValues
+        currencyConverterViewModel.getConvertedValues()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (currencyFromPeso, currencyToPeso, pesoToDolar, currencyToDolarValue) in
                 guard let self = self else { return }
@@ -526,7 +539,7 @@ extension CurrencyConverterView{
         valuebuylabel.text = "0.00"
         sellLabel.text = "En Dolares"
         valuesellLabel.text = "0.00"
-        cvm.resetCurrency()
+        currencyConverterViewModel.resetCurrency()
     }
     
 }

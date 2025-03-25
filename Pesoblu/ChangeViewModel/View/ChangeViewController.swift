@@ -88,8 +88,8 @@ extension ChangeViewController{
 extension ChangeViewController{
     
     @objc func goToCurrencyVC(){
-        let nextScreen = CurrencyConverterViewController()
-        self.navigationController?.pushViewController(nextScreen, animated: true)
+        //let nextScreen = CurrencyConverterViewController()
+        //self.navigationController?.pushViewController(nextScreen, animated: true)
     }
 }
 
