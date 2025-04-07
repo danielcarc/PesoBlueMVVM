@@ -12,7 +12,7 @@ import UserNotifications
 final class CurrencyConverterViewController: UIViewController {
     
     var currencyView : CurrencyConverterView?
-    private let currencyConverterViewModel: CurrencyConverterViewModelProtocol
+    let currencyConverterViewModel: CurrencyConverterViewModelProtocol
     
     init(currencyView: CurrencyConverterView? = nil, currencyConverterViewModel: CurrencyConverterViewModelProtocol) {
         self.currencyView = currencyView

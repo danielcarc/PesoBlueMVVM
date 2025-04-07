@@ -18,6 +18,8 @@ class DiscoverBaCollectionView: UIView {
     private var homeViewModel : HomeViewModelProtocol
     weak var delegate: CollectionViewSelectionDelegate?
     
+    
+    
     init(homeViewModel: HomeViewModelProtocol, frame: CGRect = .zero) {
         self.homeViewModel = homeViewModel
         super.init(frame: frame)

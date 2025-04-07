@@ -36,7 +36,7 @@ protocol CurrencyConverterViewModelProtocol {
 
 class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
     
-    private var currency : Rates = Rates(BRL: Brl(rate: nil), CLP: Clp(rate: nil), UYU: Uyu(rate: nil))
+    var currency : Rates = Rates(BRL: Brl(rate: nil), CLP: Clp(rate: nil), UYU: Uyu(rate: nil))
     //private(set) var dolar : ExchangeRate?
     
     var currencyArray = ["BRL","CLP","UYU"]

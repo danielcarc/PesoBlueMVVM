@@ -104,6 +104,9 @@ extension HomeViewController{
     func setupUI(){
         addSubViews()
         addConstraints()
+        setupDiscoverCollectionView()
+        setupCitysCollectionView()
+        
     }
     
     func addSubViews(){
@@ -114,12 +117,12 @@ extension HomeViewController{
         contentView.addSubview(stackView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(quickConversorView)
-        stackView.addArrangedSubview(discoverBaCView)
-        stackView.addArrangedSubview(citysCView)
+//        stackView.addArrangedSubview(discoverBaCView)
+//        stackView.addArrangedSubview(citysCView)
     }
     
     func addConstraints(){
-        collectionViewHeightConstraint = citysCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
+        //collectionViewHeightConstraint = citysCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
         NSLayoutConstraint.activate([
             
             mainScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -139,9 +142,31 @@ extension HomeViewController{
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             quickConversorView.heightAnchor.constraint(equalToConstant: 151),
-            discoverBaCView.heightAnchor.constraint(equalToConstant: 158),
+            //discoverBaCView.heightAnchor.constraint(equalToConstant: 158),
+            //collectionViewHeightConstraint
+        ])
+    }
+    
+    func setupDiscoverCollectionView() {
+        stackView.addArrangedSubview(discoverBaCView)
+        discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
+        // Ajustá las constraints según tu diseño
+        NSLayoutConstraint.activate([
+            discoverBaCView.heightAnchor.constraint(equalToConstant: 158)
+        ])
+        discoverBaCView.collectionViewForTesting.reloadData()
+        discoverBaCView.updateData()
+    }
+    func setupCitysCollectionView() {
+        stackView.addArrangedSubview(citysCView)
+        citysCView.translatesAutoresizingMaskIntoConstraints = false
+        // Ajustá las constraints según tu diseño
+        collectionViewHeightConstraint = citysCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
+        NSLayoutConstraint.activate([
             collectionViewHeightConstraint
         ])
+        citysCView.collectionViewForTesting.reloadData()
+        citysCView.updateData()
     }
 }
 
