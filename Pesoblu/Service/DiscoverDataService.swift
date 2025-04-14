@@ -17,6 +17,7 @@ class DiscoverDataService: DataManager, DiscoverDataServiceProtocol{
     //private var placeItems: [PlaceItem] = []
     
     func fetch() -> [DiscoverItem] {
+        discoverItems = []
         for data in loadPlist(file: "PlacesBa") {
             discoverItems.append(DiscoverItem(dict: data as! [String: String]))
         }

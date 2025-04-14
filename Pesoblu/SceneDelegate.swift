@@ -19,19 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         self.window = UIWindow(windowScene: windowScene)
-        
-        let homeViewModel = HomeViewModel(
-            currencyService: CurrencyService(),
-            locationService: LocationService(),
-            placesService: PlaceService(),
-            discoverDataService: DiscoverDataService(),
-            cityDataService: CityDataService()
-        )
-        let currencyConverterViewModel = CurrencyConverterViewModel(currencyService: CurrencyService(), notificationService: NotificationService())
-//        self.window?.rootViewController = PesoBlueTabBarControllerViewController()
-        let navigationController = UINavigationController(rootViewController: HomeViewController(homeViewModel: homeViewModel))
-      //  let navigationController = UINavigationController(rootViewController: CurrencyConverterViewController(currencyConverterViewModel: currencyConverterViewModel))
-        window?.rootViewController = navigationController
+        let loginVC = LoginViewController()
+        window?.rootViewController = loginVC
         window?.makeKeyAndVisible()
         
     }

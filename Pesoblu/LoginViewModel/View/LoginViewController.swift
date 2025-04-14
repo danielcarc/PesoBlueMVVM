@@ -39,23 +39,19 @@ class LoginViewController: UIViewController {
             AnalyticsParameterScreenName: "Login Screen",
             AnalyticsParameterScreenClass: String(describing: type(of: self))
         ])
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
-    
-}
 
+}
 
 //MARK: - Sign in Methods
 
 extension LoginViewController {
     
     func didTapSignUpGoogle() async {
-        
         do {
             if try await authVM.singInWithGoogle() {
                 let user = loggedUser.loadUser()
@@ -63,10 +59,16 @@ extension LoginViewController {
                     "user_email": "\(user?.email ?? "unknown")"
                 ])
                 print("User tapped Google Sign-In")
-                //la vista actual tiene que estar embebida en un navigation controller para que se ejecute
-                let tabBarController = PesoBlueTabBarController()
-                self.navigationController?.setViewControllers([tabBarController], animated: true)
                 
+                let tabBarController = PesoBlueTabBarController()
+                
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let window = windowScene.windows.first {
+                    window.rootViewController = tabBarController
+                    window.makeKeyAndVisible()
+                    
+                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil, completion: nil)
+                }
             } else {
                 print("Error signing in with Google")
             }
@@ -77,7 +79,6 @@ extension LoginViewController {
             print("Unexpected error: \(error.localizedDescription)")
             // Maneja errores inesperados si es necesario
         }
-        
     }
     
     

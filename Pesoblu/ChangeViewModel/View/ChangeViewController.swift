@@ -48,8 +48,6 @@ extension ChangeViewController{
         rightButtonBar.addTarget(self, action: #selector(goToCurrencyVC), for: .touchUpInside)
         rightButtonBar.setTitleColor(UIColor(red: 87/255, green: 147/255, blue: 215/255, alpha: 1), for:.normal)
         rightButtonBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        
     }
 }
 
@@ -78,8 +76,8 @@ extension ChangeViewController{
         viewModel.delegate = self
     }
     func setTitle(){
-        title = "Cotizaciones"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Cotización"
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
 }
 
@@ -92,7 +90,6 @@ extension ChangeViewController{
         //self.navigationController?.pushViewController(nextScreen, animated: true)
     }
 }
-
 
 //MARK: - ChangeViewModelDelegate Methods
 

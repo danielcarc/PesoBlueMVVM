@@ -102,6 +102,10 @@ extension HomeViewController {
 extension HomeViewController{
     
     func setupUI(){
+        title = "Home"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        extendedLayoutIncludesOpaqueBars = true
+        edgesForExtendedLayout = .all
         addSubViews()
         addConstraints()
         setupDiscoverCollectionView()
@@ -150,7 +154,6 @@ extension HomeViewController{
     func setupDiscoverCollectionView() {
         stackView.addArrangedSubview(discoverBaCView)
         discoverBaCView.translatesAutoresizingMaskIntoConstraints = false
-        // Ajustá las constraints según tu diseño
         NSLayoutConstraint.activate([
             discoverBaCView.heightAnchor.constraint(equalToConstant: 158)
         ])
@@ -160,7 +163,6 @@ extension HomeViewController{
     func setupCitysCollectionView() {
         stackView.addArrangedSubview(citysCView)
         citysCView.translatesAutoresizingMaskIntoConstraints = false
-        // Ajustá las constraints según tu diseño
         collectionViewHeightConstraint = citysCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
         NSLayoutConstraint.activate([
             collectionViewHeightConstraint
