@@ -12,7 +12,6 @@
 		C513DEA12ACDC17D0066AFCA /* CurrencyConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEA02ACDC17D0066AFCA /* CurrencyConverterViewModel.swift */; };
 		C513DEAB2ACE00040066AFCA /* ChangeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEAA2ACE00040066AFCA /* ChangeResponse.swift */; };
 		C513DEAD2ACE00520066AFCA /* ChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEAC2ACE00520066AFCA /* ChangeViewModel.swift */; };
-		C513DED12AE839240066AFCA /* BeginTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED02AE839240066AFCA /* BeginTabViewController.swift */; };
 		C513DED32AE83ADF0066AFCA /* CurrencyConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED22AE83ADF0066AFCA /* CurrencyConverterViewController.swift */; };
 		C513DED72AE83B480066AFCA /* CurrencyConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DED62AE83B480066AFCA /* CurrencyConverterView.swift */; };
 		C51C8ABE2BD87FBC008777C8 /* PesoBlueTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */; };
@@ -26,7 +25,6 @@
 		C58BAE6E2D69181200AD9559 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C58BAE6D2D69181200AD9559 /* Kingfisher */; };
 		C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */; };
 		C5AFD62E2DA7425500B3D244 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5AFD62D2DA7425500B3D244 /* GoogleService-Info.plist */; };
-		C5AFD6332DA8BEAD00B3D244 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AFD6322DA8BEA500B3D244 /* CustomNavigationController.swift */; };
 		C5C47C0A2CC9D8FF00238099 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C5C47C092CC9D8FF00238099 /* FirebaseAuth */; };
 		C5C47C0D2CCAE5D500238099 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C5C47C0C2CCAE5D500238099 /* GoogleSignIn */; };
 		C5C47C0F2CCAE5D500238099 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C5C47C0E2CCAE5D500238099 /* GoogleSignInSwift */; };
@@ -57,7 +55,6 @@
 		C513DEA02ACDC17D0066AFCA /* CurrencyConverterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewModel.swift; sourceTree = "<group>"; };
 		C513DEAA2ACE00040066AFCA /* ChangeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeResponse.swift; sourceTree = "<group>"; };
 		C513DEAC2ACE00520066AFCA /* ChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeViewModel.swift; sourceTree = "<group>"; };
-		C513DED02AE839240066AFCA /* BeginTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginTabViewController.swift; sourceTree = "<group>"; };
 		C513DED22AE83ADF0066AFCA /* CurrencyConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewController.swift; sourceTree = "<group>"; };
 		C513DED62AE83B480066AFCA /* CurrencyConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterView.swift; sourceTree = "<group>"; };
 		C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PesoBlueTabBarController.swift; sourceTree = "<group>"; };
@@ -72,7 +69,6 @@
 		C58674182AC71FD5000FCD5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C5AFD62D2DA7425500B3D244 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C5AFD6322DA8BEA500B3D244 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		C5B49F1D2D5AC965005AE2A9 /* PesobluTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PesobluTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C47C122CCAF16600238099 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		C5E4E73E2CC05826000A06C4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -192,9 +188,7 @@
 		C513DEFA2AE8D99F0066AFCA /* TabBarController */ = {
 			isa = PBXGroup;
 			children = (
-				C5AFD6322DA8BEA500B3D244 /* CustomNavigationController.swift */,
 				C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */,
-				C513DED02AE839240066AFCA /* BeginTabViewController.swift */,
 			);
 			path = TabBarController;
 			sourceTree = "<group>";
@@ -389,12 +383,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */,
-				C5AFD6332DA8BEAD00B3D244 /* CustomNavigationController.swift in Sources */,
 				C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */,
 				C513DE9D2ACDB5340066AFCA /* ChangeCollectionViewCell.swift in Sources */,
 				C5E4E73F2CC05826000A06C4 /* LoginView.swift in Sources */,
 				C5C47C132CCAF16600238099 /* AuthenticationViewModel.swift in Sources */,
-				C513DED12AE839240066AFCA /* BeginTabViewController.swift in Sources */,
 				C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */,
 				C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */,
 				C513DE9F2ACDBB090066AFCA /* Model.swift in Sources */,

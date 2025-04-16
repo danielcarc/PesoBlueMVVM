@@ -9,7 +9,12 @@ import Foundation
 
 import FirebaseAuth
 
-final class UserService {
+protocol UserServiceProtocol{
+    func saveUser(_ user: AppUser)
+    func loadUser() -> AppUser?
+}
+
+final class UserService: UserServiceProtocol {
     
     private let userDefaultsKey = "currentUser"
     

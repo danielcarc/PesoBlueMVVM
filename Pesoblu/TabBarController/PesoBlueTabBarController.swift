@@ -26,11 +26,13 @@ class PesoBlueTabBarController: UITabBarController {
             cityDataService: CityDataService()
         )
         
+        let userProfileViewModel = UserProfileViewModel(userService: UserService())
+        
         let vc1 = HomeViewController(homeViewModel: homeViewModel)
         vc1.title = "Home"
         let vc2 = ChangeViewController()
         vc2.title = "Cotización"
-        let userProfileView = UserProfileView()
+        let userProfileView = UserProfileView(userProfileViewModel: userProfileViewModel)
         let userProfileHostingController = UIHostingController(rootView: userProfileView)
         userProfileHostingController.title = "Perfil"
         
@@ -43,9 +45,9 @@ class PesoBlueTabBarController: UITabBarController {
         let nav2 = UINavigationController(rootViewController: vc2)
         let nav3 = UINavigationController(rootViewController: userProfileHostingController)
         
-        vc1.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house.fill"), tag: 0)
-        vc2.tabBarItem = UITabBarItem(title: "Cotización", image: UIImage(systemName: "arrow.left.arrow.right.square.fill"), tag: 1)
-        userProfileHostingController.tabBarItem = UITabBarItem(title: "Perfil", image: UIImage(systemName: "person.fill"), tag: 2)
+        vc1.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home-01"), tag: 0)
+        vc2.tabBarItem = UITabBarItem(title: "Cotización", image: UIImage(named: "exchange-01"), tag: 1)
+        userProfileHostingController.tabBarItem = UITabBarItem(title: "Perfil", image: UIImage(named: "user-square"), tag: 2)
         
         setViewControllers([nav1, nav2, nav3], animated: false)
     }

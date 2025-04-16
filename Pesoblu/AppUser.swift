@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
 import FirebaseAuth
+import Kingfisher
 
 struct AppUser: Codable{
     
@@ -14,12 +16,15 @@ struct AppUser: Codable{
     let email: String?
     let displayName: String?
     let photoURL: URL?
+    let preferredCurrency: String?
+    let providerID: String?
     
-    init(firebaseUser: User) {
+    init(firebaseUser: User, preferredCurrency: String?) {
         self.uid = firebaseUser.uid
         self.email = firebaseUser.email
         self.displayName = firebaseUser.displayName
         self.photoURL = firebaseUser.photoURL
+        self.providerID = firebaseUser.providerID
+        self.preferredCurrency = preferredCurrency
     }
-    
 }

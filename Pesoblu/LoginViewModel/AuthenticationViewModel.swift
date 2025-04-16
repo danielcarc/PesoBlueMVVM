@@ -82,7 +82,7 @@ extension AuthenticationViewModel{
             let result = try await Auth.auth().signIn(with: credential)
             //Extraemos el usuario de result
             let firebaseUser = result.user
-            let appUser = AppUser(firebaseUser: firebaseUser)
+            let appUser = AppUser(firebaseUser: firebaseUser, preferredCurrency: nil)
             let existingUser = userService.loadUser()
             if existingUser?.uid != appUser.uid {
                 // Guardar solo si es un usuario nuevo o si hay cambios
