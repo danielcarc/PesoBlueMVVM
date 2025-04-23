@@ -7,63 +7,82 @@
 
 import SwiftUI
 import Kingfisher
-import SwiftUI
 import GoogleSignIn
 import GoogleSignInSwift
 
-struct UserProfileView: View {
-    
-    @State private var isSignedIn: Bool = true
-    @State private var errorMessage: String?
-    
-    // Estado para la moneda preferida y su edición
-    @State private var preferredCurrency: String = "BR"
-    @State private var isEditingCurrency: Bool = false
-    private let currencyOptions = ["ARS", "USD", "BRL", "EUR"] // Opciones de monedas
-    
-    private let userProfileViewModel: UserProfileViewModelProtocol
-    init(userProfileViewModel: UserProfileViewModelProtocol){
-        self.userProfileViewModel = userProfileViewModel
-    }
+enum CurrencyOptions: String, CaseIterable {
+    case ARS = "Peso Argentino"
+    case USD = "Dolar Americano"
+    case BRL = "Real Brasileiro"
+    case EUR = "Euro"
+    case UYU = "Peso Uruguayo"
+    case CLP = "Peso Chileno"
+}
 
+struct UserProfileView: View {
+    private let userProfileViewModel: UserProfileViewModelProtocol
+    
+    @State private var state: UserProfileState = .loading
+    @State private var preferredCurrency: String
+    @State private var isEditingCurrency: Bool = false
+    private let currencyOptions: [CurrencyOptions] = CurrencyOptions.allCases
+    
+    init(userProfileViewModel: UserProfileViewModelProtocol) {
+        self.userProfileViewModel = userProfileViewModel
+        self._preferredCurrency = State(initialValue: userProfileViewModel.preferredCurrency)
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                // Foto de perfil
-                if let user = userProfileViewModel.loadUser(){
+                switch state {
+                case .loading:
+                    Text("Cargando perfil...")
+                        .foregroundColor(.gray)
+                        .padding(.top, 32)
+                    
+                case .error(let message):
+                    Text(message)
+                        .foregroundColor(.red)
+                        .padding(.top, 32)
+                    
+                case .loaded(let user):
+                    // Foto de perfil
                     KFImage.url(user.photoURL)
+                        .placeholder {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .foregroundColor(.blue)
+                        }
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .padding()
-                        .foregroundColor(.blue)
                         .frame(width: 160, height: 160)
                         .clipShape(Circle())
                         .overlay(Circle().stroke(Color.white, lineWidth: 3))
-                        .padding(.top, 16) // Reducir padding superior para mover la foto más arriba
+                        .padding(.top, 16)
                     
                     // Espacio adicional entre la foto y los textos
                     Spacer()
                         .frame(height: 32)
                     
-                    // Contenedor opaco para los textos
+                    // Contenedor para Nombre y Email
                     VStack(spacing: 12) {
                         HStack {
                             Text("Nombre: ")
                                 .bold()
-                            Text(user.displayName ?? "")
+                            Text(user.displayName ?? "Sin nombre")
                             Spacer()
                         }
                         
                         HStack {
                             Text("Email: ")
                                 .bold()
-                            Text(user.email ?? "")
+                            Text(user.email ?? "Sin email")
                             Spacer()
                         }
-                        
                     }
                     .padding()
-                    .background(Color.white.opacity(0.8)) // Fondo opaco
+                    .background(Color.white.opacity(0.8))
                     .cornerRadius(12)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
                     .padding(.horizontal, 16)
@@ -78,15 +97,18 @@ struct UserProfileView: View {
                             if isEditingCurrency {
                                 Picker("Moneda", selection: $preferredCurrency) {
                                     ForEach(currencyOptions, id: \.self) { currency in
-                                        Text(currency).tag(currency)
+                                        Text(currency.rawValue).tag(currency.rawValue)
                                     }
                                 }
                                 .pickerStyle(.menu)
-                                .onChange(of: preferredCurrency, initial: false) { oldValue, newValue in
-                                    isEditingCurrency = false // Cerrar el picker al seleccionar una nueva moneda
+                                .onChange(of: preferredCurrency) {oldValue, newValue in
+                                    userProfileViewModel.savePreferredCurrency(newValue)
+                                    isEditingCurrency = false
+                                    // Actualizamos el estado para reflejar el cambio
+                                    state = userProfileViewModel.getState()
                                 }
                             } else {
-                                Text(user.preferredCurrency ?? "")
+                                Text(preferredCurrency)
                                     .font(.system(size: 16))
                                     .foregroundColor(.gray)
                                 
@@ -104,42 +126,28 @@ struct UserProfileView: View {
                             .foregroundColor(.gray)
                     }
                     .padding()
-                    .background(Color.white.opacity(0.8)) // Fondo opaco
+                    .background(Color.white.opacity(0.8))
                     .cornerRadius(12)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
                     .padding(.horizontal, 16)
                     .padding(.top, 32)
                     
-                    // Botón "Cómprame un cafecito"
+                    // Botón "Invítame un Cafecito"
                     Link(destination: URL(string: "https://cafecito.app/danielcarcacha")!) {
-                        Label("Invitame un Cafecito", image: "coffee") // Usar imagen desde assets
+                        Label("Invítame un Cafecito", image: "coffee")
                             .font(.system(size: 16, weight: .regular))
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.blue) // Fondo azul
-                            .clipShape(RoundedRectangle(cornerRadius: 8)) // Aplicar cornerRadius al fondo
+                            .background(Color.blue)
+                            .cornerRadius(8)
                             .padding(.top, 32)
                             .padding(.horizontal, 16)
                     }
                     
-                    // Boton "Cerrar sesión"
+                    // Botón "Cerrar sesión"
                     Button(action: {
-                        GIDSignIn.sharedInstance.signOut()
-                        isSignedIn = false
-                        
-                        errorMessage = nil
-                        
-                        // Volver a la pantalla de login
-                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                           let window = windowScene.windows.first {
-                            let loginVC = LoginViewController()
-                            window.rootViewController = loginVC
-                            window.makeKeyAndVisible()
-                            
-                            // Animación de transición
-                            UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil, completion: nil)
-                        }
+                        userProfileViewModel.signOut()
                     }) {
                         Text("Cerrar sesión")
                             .font(.system(size: 16, weight: .medium))
@@ -157,14 +165,25 @@ struct UserProfileView: View {
                 }
             }
         }
+        .background(Color(UIColor(hex: "F0F8FF")))
+        .navigationTitle("Perfil")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            userProfileViewModel.loadUserData()
+            state = userProfileViewModel.getState()
+            preferredCurrency = userProfileViewModel.preferredCurrency//se sincroniza despues de cargar al user
+        }
+        .onChange(of: isEditingCurrency) {
+            state = userProfileViewModel.getState()
+            preferredCurrency = userProfileViewModel.preferredCurrency //sincronizamos despues de cambios
+        }
     }
 }
 
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        let userProfileViewModel = UserProfileViewModel(userService: UserService())
-            
-        UserProfileView(userProfileViewModel: userProfileViewModel)
+        let userService = UserService()
+        let viewModel = UserProfileViewModel(userService: userService)
+        UserProfileView(userProfileViewModel: viewModel)
     }
 }
-

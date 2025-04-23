@@ -16,11 +16,11 @@ class AuthenticationViewModel{
     
     private let userService = UserService()
     
-    enum AuthenticationState {
-      case unauthenticated
-      case authenticating
-      case authenticated
-    }
+//    enum AuthenticationState {
+//      case unauthenticated
+//      case authenticating
+//      case authenticated
+//    }
     
 }
 

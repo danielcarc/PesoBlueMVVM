@@ -12,11 +12,15 @@ import FirebaseAuth
 protocol UserServiceProtocol{
     func saveUser(_ user: AppUser)
     func loadUser() -> AppUser?
+    func savePreferredCurrency(_ currency: String)
+    func loadPreferredCurrency() -> String?
+    func deleteUser()
 }
 
 final class UserService: UserServiceProtocol {
     
     private let userDefaultsKey = "currentUser"
+    private let preferredCurrencyKey = "preferredCurrency"
     
     // Guardar usuario en UserDefaults
     func saveUser(_ user: AppUser) {
@@ -42,8 +46,25 @@ final class UserService: UserServiceProtocol {
         }
     }
     
+    // Guardar solo la moneda preferida actualizando el usuario existente
+    func savePreferredCurrency(_ currency: String) {
+        UserDefaults.standard.set(currency, forKey: preferredCurrencyKey)
+        
+        // Actualizamos el usuario almacenado si existe
+        if var currentUser = loadUser() {
+            currentUser.preferredCurrency = currency
+            saveUser(currentUser)
+        }
+        
+    }
+    
+    func loadPreferredCurrency() -> String? {
+        return UserDefaults.standard.string(forKey: preferredCurrencyKey)
+    }
+    
     // Eliminar usuario de UserDefaults (por ejemplo, en logout)
     func deleteUser() {
         UserDefaults.standard.removeObject(forKey: userDefaultsKey)
+        UserDefaults.standard.removeObject(forKey: preferredCurrencyKey)
     }
 }

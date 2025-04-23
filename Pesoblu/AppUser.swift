@@ -16,7 +16,7 @@ struct AppUser: Codable{
     let email: String?
     let displayName: String?
     let photoURL: URL?
-    let preferredCurrency: String?
+    var preferredCurrency: String?
     let providerID: String?
     
     init(firebaseUser: User, preferredCurrency: String?) {

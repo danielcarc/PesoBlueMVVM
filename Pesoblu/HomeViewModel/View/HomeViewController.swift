@@ -121,8 +121,6 @@ extension HomeViewController{
         contentView.addSubview(stackView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(quickConversorView)
-//        stackView.addArrangedSubview(discoverBaCView)
-//        stackView.addArrangedSubview(citysCView)
     }
     
     func addConstraints(){
