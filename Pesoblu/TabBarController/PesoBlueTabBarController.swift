@@ -27,10 +27,14 @@ class PesoBlueTabBarController: UITabBarController {
         )
         
         let userProfileViewModel = UserProfileViewModel(userService: UserService())
+        let currencies: [CurrencyItem] = []
+        let rates = Rates()
+        let changeViewModel = ChangeViewModel(currencyService: CurrencyService(), currencies: currencies, rates: rates)
+        
         
         let vc1 = HomeViewController(homeViewModel: homeViewModel)
         vc1.title = "Home"
-        let vc2 = ChangeViewController()
+        let vc2 = ChangeViewController(viewModel: changeViewModel)
         vc2.title = "Cotización"
         let userProfileView = UserProfileView(userProfileViewModel: userProfileViewModel)
         let userProfileHostingController = UIHostingController(rootView: userProfileView)

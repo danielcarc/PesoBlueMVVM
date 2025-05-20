@@ -4,33 +4,26 @@
 //
 //  Created by Daniel Francisco Carcacha on 04/10/23.
 //
-
+import Foundation
 import UIKit
 
 class ChangeCollectionViewCell: UICollectionViewCell {
     
     private var view : ChangeView?
     
-    var item : ChangesResponse? {
+    var item : CurrencyItem? {
         didSet{
-            
-            if item?.oficial != nil {
-                guard let nameLabel = item?.oficial?.dolarLabel,
-                      let valueSell = item?.oficial?.value_sell,
-                      let valueBuy = item?.oficial?.value_buy else { return }
-                view?.set(nameLabel: nameLabel, valueSell: valueSell, valueBuy: valueBuy)
-            }else if item?.blue != nil{
-                guard let nameLabel = item?.blue?.dolarLabel,
-                      let valueSell = item?.blue?.value_sell,
-                      let valueBuy = item?.blue?.value_buy else { return }
-                view?.set(nameLabel: nameLabel, valueSell: valueSell, valueBuy: valueBuy)
-            }else{
-                guard let nameLabel = item?.blue_euro?.dolarLabel,
-                      let valueSell = item?.blue_euro?.value_sell,
-                      let valueBuy = item?.blue_euro?.value_buy else { return }
-                view?.set(nameLabel: nameLabel, valueSell: valueSell, valueBuy: valueBuy)
+            if let item = item {
+                updateView(with: item)
             }
         }
+    }
+    func updateView(with currencies: CurrencyItem){
+
+        guard let nameLabel = currencies.currencyTitle,
+              let valueSell = currencies.currencyLabel,
+              let valueBuy = currencies.rate else { return }
+        view?.set(currencyTitle: nameLabel, currencyLabel: valueSell, valueBuy: Double(valueBuy) ?? 0.0)
     }
     
     override init(frame: CGRect) {
@@ -48,7 +41,7 @@ extension ChangeCollectionViewCell{
 }
 private extension ChangeCollectionViewCell{
     func setup(){
-        
+        contentView.backgroundColor = .clear
         guard view == nil else {return}
         
         view = ChangeView()

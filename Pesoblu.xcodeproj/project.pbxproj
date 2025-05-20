@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C513DE9D2ACDB5340066AFCA /* ChangeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DE9C2ACDB5340066AFCA /* ChangeCollectionViewCell.swift */; };
-		C513DE9F2ACDBB090066AFCA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DE9E2ACDBB090066AFCA /* Model.swift */; };
+		C513DE9F2ACDBB090066AFCA /* CurrencyResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DE9E2ACDBB090066AFCA /* CurrencyResponseModel.swift */; };
 		C513DEA12ACDC17D0066AFCA /* CurrencyConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEA02ACDC17D0066AFCA /* CurrencyConverterViewModel.swift */; };
 		C513DEAB2ACE00040066AFCA /* ChangeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEAA2ACE00040066AFCA /* ChangeResponse.swift */; };
 		C513DEAD2ACE00520066AFCA /* ChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513DEAC2ACE00520066AFCA /* ChangeViewModel.swift */; };
@@ -51,7 +51,7 @@
 
 /* Begin PBXFileReference section */
 		C513DE9C2ACDB5340066AFCA /* ChangeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCollectionViewCell.swift; sourceTree = "<group>"; };
-		C513DE9E2ACDBB090066AFCA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		C513DE9E2ACDBB090066AFCA /* CurrencyResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyResponseModel.swift; sourceTree = "<group>"; };
 		C513DEA02ACDC17D0066AFCA /* CurrencyConverterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewModel.swift; sourceTree = "<group>"; };
 		C513DEAA2ACE00040066AFCA /* ChangeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeResponse.swift; sourceTree = "<group>"; };
 		C513DEAC2ACE00520066AFCA /* ChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeViewModel.swift; sourceTree = "<group>"; };
@@ -81,6 +81,7 @@
 		C57814272D08F746004A42C9 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
 		C58BAEED2D70B59100AD9559 /* PlacesListViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlacesListViewModel; sourceTree = "<group>"; };
 		C58BAEF92D71129D00AD9559 /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
+		C58BC0422DC44BD400C6FFD5 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 		C5AFD6292DA374A900B3D244 /* UserProfileViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UserProfileViewModel; sourceTree = "<group>"; };
 		C5B49F1E2D5AC965005AE2A9 /* PesobluTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PesobluTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -163,7 +164,7 @@
 		C513DEA72ACDFFAE0066AFCA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C513DE9E2ACDBB090066AFCA /* Model.swift */,
+				C513DE9E2ACDBB090066AFCA /* CurrencyResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -215,6 +216,7 @@
 		C58674092AC71FD3000FCD5B /* Pesoblu */ = {
 			isa = PBXGroup;
 			children = (
+				C58BC0422DC44BD400C6FFD5 /* Models */,
 				C59B3F432CBDD1CF00E0C532 /* LoginViewModel */,
 				C5AFD6292DA374A900B3D244 /* UserProfileViewModel */,
 				C57814272D08F746004A42C9 /* HomeViewModel */,
@@ -284,6 +286,7 @@
 				C57814272D08F746004A42C9 /* HomeViewModel */,
 				C58BAEED2D70B59100AD9559 /* PlacesListViewModel */,
 				C58BAEF92D71129D00AD9559 /* Service */,
+				C58BC0422DC44BD400C6FFD5 /* Models */,
 				C5AFD6292DA374A900B3D244 /* UserProfileViewModel */,
 			);
 			name = Pesoblu;
@@ -389,7 +392,7 @@
 				C5C47C132CCAF16600238099 /* AuthenticationViewModel.swift in Sources */,
 				C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */,
 				C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */,
-				C513DE9F2ACDBB090066AFCA /* Model.swift in Sources */,
+				C513DE9F2ACDBB090066AFCA /* CurrencyResponseModel.swift in Sources */,
 				C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */,
 				C513DEAD2ACE00520066AFCA /* ChangeViewModel.swift in Sources */,
 				C513DED72AE83B480066AFCA /* CurrencyConverterView.swift in Sources */,

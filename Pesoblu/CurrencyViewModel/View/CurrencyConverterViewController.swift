@@ -52,7 +52,7 @@ extension CurrencyConverterViewController{
     func startTimer(){
         Timer.scheduledTimer(withTimeInterval: 6000, repeats: true) { timer in
             Task{
-                if let dolar = try await self.currencyConverterViewModel.getDolar() {
+                if let dolar = try await self.currencyConverterViewModel.getDolarBlue() {
                     let dolarNow = String(format: "%.2f", dolar.venta)
                     await self.currencyConverterViewModel.checkPermission(dolar: dolarNow)
                 }

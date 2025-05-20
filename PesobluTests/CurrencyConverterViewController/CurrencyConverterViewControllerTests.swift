@@ -49,7 +49,7 @@ class CurrencyConverterViewControllerTests: XCTestCase {
         // When
         // Ejecutamos el bloque del timer manualmente en lugar de esperar 6000s
         Task {
-            if let dolar = try await viewController.currencyConverterViewModel.getDolar() {
+            if let dolar = try await viewController.currencyConverterViewModel.getDolarBlue() {
                 let dolarNow = String(format: "%.2f", dolar.venta)
                 await viewController.currencyConverterViewModel.checkPermission(dolar: dolarNow)
             }

@@ -7,110 +7,97 @@
 
 import UIKit
 
+//hacer un una vista como la que me muestra Galileo AI
+// ex : Ars - Peso Argentino               1000
+//      Argentina
+
 class ChangeView: UIView {
 
     private lazy var viewDolar: UIView = {
         var view = UIView()
-        view.backgroundColor = UIColor(red: 213/255.0, green: 229/255.0, blue: 252/255.0, alpha: 1)
+        view.backgroundColor = .white //UIColor(hex: "F0F8FF")
+        //view.backgroundColor = UIColor(red: 213/255.0, green: 229/255.0, blue: 252/255.0, alpha: 1)
         view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var stackHorizontal: UIStackView = {
+        var stackView = UIStackView(arrangedSubviews: [])
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var titleStackView: UIStackView = {
+        var stackView = UIStackView(arrangedSubviews: [])
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var viewCurrencyTitle: UIView = {
+        var view = UIView()
+        view.backgroundColor = .clear
+        //view.layer.cornerRadius = 10
         //view.layer.borderWidth = 1
-        //view.layer.borderColor = UIColor.white.cgColor
-        view.layer.shadowRadius = 3
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var viewLabelDolarOficial: UIView = {
-        var view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.white.cgColor
-        view.layer.shadowRadius = 3
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var viewLabelDolarOficialCompra: UIView = {
+    private lazy var viewCurrencyLabel: UIView = {
         var view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.layer.shadowRadius = 3
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.backgroundColor = .clear
+        //view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var viewLabelDolarOficialVenta: UIView = {
+    private lazy var viewValueBuyLabel: UIView = {
         var view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.layer.shadowRadius = 3
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.backgroundColor = .clear
+        //view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var currencyTipeLabel: UILabel = {
+    private lazy var currencyTitleLabel: UILabel = {
         var label = UILabel()
-        label.font = .systemFont(ofSize: 17)
-        label.textColor = UIColor(red: 64/255.0, green: 154/255.0, blue: 255/255.0, alpha: 1)
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.textColor = .black//UIColor(red: 64/255.0, green: 154/255.0, blue: 255/255.0, alpha: 1)
         label.text = "Dolar Oficial"
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var currencyBuyLabel: UILabel = {
+    private lazy var currencySubtitleLabel: UILabel = {
         var label = UILabel()
-        label.font = .systemFont(ofSize: 17)
+        
         label.textColor = .systemGray2
-        label.text = "Compra"
-        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 14)
+        label.text = "Argentina"
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var currencyBuyValueLabel: UILabel = {
+    private lazy var currencyValueLabel: UILabel = {
         var label = UILabel()
         
         label.textColor = .black
-        label.font = .systemFont(ofSize: 22)
+        label.font = .systemFont(ofSize: 14)
         label.text = "174"
-        label.textAlignment = .center
+        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    
-    private lazy var currencySellLabel: UILabel = {
-        var label = UILabel()
-        label.font = .systemFont(ofSize: 17)
-        label.textColor = .systemGray2
-        label.text = "Venta"
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var currencySellValueLabel: UILabel = {
-        var label = UILabel()
-        
-        label.textColor = .black
-        label.font = .systemFont(ofSize: 22)
-        label.text = "193"
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -121,14 +108,10 @@ class ChangeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
-    func set(nameLabel: String, valueSell: Double, valueBuy: Double){
-        currencyTipeLabel.text = nameLabel
-        currencyBuyValueLabel.text = String(format: "%.2f", valueBuy)
-        currencySellValueLabel.text = String(format: "%.2f", valueSell)
-        
-        
+    func set(currencyTitle: String, currencyLabel: String, valueBuy: Double){
+        currencyTitleLabel.text = currencyTitle
+        currencyValueLabel.text = String(format: "%.2f", valueBuy)// este es el qie muestra el valor
+        currencySubtitleLabel.text = currencyLabel
     }
     
 }
@@ -141,22 +124,22 @@ private extension ChangeView {
     }
     
     private func addsubviews(){
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         self.layer.cornerRadius = 10
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(viewDolar)
         
-        viewDolar.addSubview(viewLabelDolarOficial)
-        viewDolar.addSubview(viewLabelDolarOficialCompra)
-        viewDolar.addSubview(viewLabelDolarOficialVenta)
+        viewDolar.addSubview(stackHorizontal)
+        stackHorizontal.addArrangedSubview(titleStackView)
+        stackHorizontal.addArrangedSubview(viewValueBuyLabel)
         
-        viewLabelDolarOficial.addSubview(currencyTipeLabel)
+        titleStackView.addArrangedSubview(viewCurrencyTitle)
+        titleStackView.addArrangedSubview(viewCurrencyLabel)
         
-        viewLabelDolarOficialCompra.addSubview(currencyBuyLabel)
-        viewLabelDolarOficialCompra.addSubview(currencyBuyValueLabel)
+        viewCurrencyTitle.addSubview(currencyTitleLabel)
+        viewCurrencyLabel.addSubview(currencySubtitleLabel)
+        viewValueBuyLabel.addSubview(currencyValueLabel)
         
-        viewLabelDolarOficialVenta.addSubview(currencySellLabel)
-        viewLabelDolarOficialVenta.addSubview(currencySellValueLabel)
     }
     
     private func setupConstraints() {
@@ -165,39 +148,30 @@ private extension ChangeView {
             viewDolar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             viewDolar.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor),
             viewDolar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            viewDolar.heightAnchor.constraint(equalToConstant: 155),
+            viewDolar.heightAnchor.constraint(equalToConstant: 80),
+            
+            //stackhorizontal constraints
+            stackHorizontal.leadingAnchor.constraint(equalTo: viewDolar.leadingAnchor, constant: 10),
+            stackHorizontal.topAnchor.constraint(equalTo: viewDolar.topAnchor, constant: 10),
+            stackHorizontal.trailingAnchor.constraint(equalTo: viewDolar.trailingAnchor, constant: -10), // Corregido
+            stackHorizontal.bottomAnchor.constraint(equalTo: viewDolar.bottomAnchor, constant: -10),
+            
+            currencyTitleLabel.leadingAnchor.constraint(equalTo: viewCurrencyTitle.leadingAnchor),
+            currencyTitleLabel.trailingAnchor.constraint(equalTo: viewCurrencyTitle.trailingAnchor),
+            currencyTitleLabel.topAnchor.constraint(equalTo: viewCurrencyTitle.topAnchor),
+            currencyTitleLabel.bottomAnchor.constraint(equalTo: viewCurrencyTitle.bottomAnchor),
+            
+            currencySubtitleLabel.leadingAnchor.constraint(equalTo: viewCurrencyLabel.leadingAnchor, constant: 0), // Indentar el subtítulo
+            currencySubtitleLabel.trailingAnchor.constraint(equalTo: viewCurrencyLabel.trailingAnchor),
+            currencySubtitleLabel.topAnchor.constraint(equalTo: viewCurrencyLabel.topAnchor),
+            currencySubtitleLabel.bottomAnchor.constraint(equalTo: viewCurrencyLabel.bottomAnchor),
+            
+            currencyValueLabel.trailingAnchor.constraint(equalTo: viewValueBuyLabel.trailingAnchor),
+            currencyValueLabel.topAnchor.constraint(equalTo: viewValueBuyLabel.topAnchor),
+            currencyValueLabel.bottomAnchor.constraint(equalTo: viewValueBuyLabel.bottomAnchor),
+            currencyValueLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 60),
             
             
-            viewLabelDolarOficial.leadingAnchor.constraint(equalTo: viewDolar.leadingAnchor, constant: 8),
-            viewLabelDolarOficial.topAnchor.constraint(equalTo: viewDolar.topAnchor, constant: 8),
-            viewLabelDolarOficial.trailingAnchor.constraint(equalTo: viewDolar.trailingAnchor, constant: -8),
-            viewLabelDolarOficial.heightAnchor.constraint(equalToConstant: 40),
-            
-            viewLabelDolarOficialCompra.leadingAnchor.constraint(equalTo: viewDolar.leadingAnchor, constant: 8),
-            viewLabelDolarOficialCompra.topAnchor.constraint(equalTo: viewLabelDolarOficial.bottomAnchor, constant: 8),
-            viewLabelDolarOficialCompra.widthAnchor.constraint(equalTo: viewDolar.widthAnchor, multiplier: 0.5, constant: -12),
-            viewLabelDolarOficialCompra.bottomAnchor.constraint(equalTo: viewDolar.bottomAnchor, constant: -8),
-            
-            viewLabelDolarOficialVenta.widthAnchor.constraint(equalTo: viewDolar.widthAnchor, multiplier: 0.5, constant: -12),
-            viewLabelDolarOficialVenta.trailingAnchor.constraint(equalTo: viewDolar.trailingAnchor, constant: -8),
-            viewLabelDolarOficialVenta.topAnchor.constraint(equalTo: viewLabelDolarOficial.bottomAnchor, constant: 8),
-            viewLabelDolarOficialVenta.bottomAnchor.constraint(equalTo: viewDolar.bottomAnchor, constant: -8),
-            
-            currencyTipeLabel.centerXAnchor.constraint(equalTo: viewLabelDolarOficial.centerXAnchor),
-            currencyTipeLabel.centerYAnchor.constraint(equalTo: viewLabelDolarOficial.centerYAnchor),
-            
-            currencyBuyLabel.centerXAnchor.constraint(equalTo: viewLabelDolarOficialCompra.centerXAnchor),
-            currencyBuyLabel.topAnchor.constraint(equalTo: viewLabelDolarOficialCompra.topAnchor, constant: 8),
-            
-            currencyBuyValueLabel.centerXAnchor.constraint(equalTo: viewLabelDolarOficialCompra.centerXAnchor),
-            currencyBuyValueLabel.bottomAnchor.constraint(equalTo: viewLabelDolarOficialCompra.bottomAnchor, constant: -8),
-            
-            currencySellLabel.centerXAnchor.constraint(equalTo: viewLabelDolarOficialVenta.centerXAnchor),
-            currencySellLabel.topAnchor.constraint(equalTo: viewLabelDolarOficialVenta.topAnchor, constant: 8),
-            
-            currencySellValueLabel.centerXAnchor.constraint(equalTo: viewLabelDolarOficialVenta.centerXAnchor),
-            currencySellValueLabel.bottomAnchor.constraint(equalTo: viewLabelDolarOficialVenta.bottomAnchor, constant: -8)
-        
         ])
         
     }

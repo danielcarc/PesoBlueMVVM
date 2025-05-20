@@ -39,7 +39,7 @@ class HomeViewModel: HomeViewModelProtocol{
     private var discoverItems: [DiscoverItem] = []
     private var citysItem: [CitysItem] = []
     private var dolarBlue: DolarBlue?
-    private var currency : Rates = Rates(BRL: Brl(rate: nil), CLP: Clp(rate: nil), UYU: Uyu(rate: nil))
+    //private var currency : Rates = Rates(BRL: Brl(rate: nil), CLP: Clp(rate: nil), UYU: Uyu(rate: nil))
     
     func fetchCitysItems() -> [CitysItem]{
         return cityDataService.fetch()

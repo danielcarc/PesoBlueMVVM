@@ -7,10 +7,11 @@
 
 import Foundation
 
-//struct ChangeResponse: Decodable{
-//    
-//    var change: [ChangesResponse]
-//}
+protocol CurrencyItem {
+    var currencyTitle: String? {get set}
+    var currencyLabel: String? {get set}
+    var rate: String? {get}
+}
 
 struct ChangesResponse: Decodable{
     
@@ -42,17 +43,37 @@ struct ChangesResponse: Decodable{
     
 }
 
-struct Oficial: Decodable{
+struct Oficial: Decodable, CurrencyItem{
+    var rate: String?{
+        return String(value_sell)
+    }
+    
+    var currencyTitle: String?
+    
+    var currencyLabel: String?
+    
     var dolarLabel: String?
     let value_sell: Double
     let value_buy: Double
 }
-struct Blue: Decodable{
+struct Blue: Decodable, CurrencyItem{
+    var currencyTitle: String?
+    var rate: String?{
+        return String(value_sell)
+    }
+    var currencyLabel: String?
+    
     var dolarLabel: String?
     let value_sell: Double
     let value_buy: Double
 }
-struct BlueEuro: Decodable{
+struct BlueEuro: Decodable, CurrencyItem{
+    var currencyTitle: String?
+    var rate: String?{
+        return String(value_sell)
+    }
+    var currencyLabel: String?
+    
     var dolarLabel: String?
     let value_sell: Double
     let value_buy: Double

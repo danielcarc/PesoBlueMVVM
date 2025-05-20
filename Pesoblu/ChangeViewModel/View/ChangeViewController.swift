@@ -9,18 +9,27 @@ import UIKit
 
 class ChangeViewController: UIViewController {
     
+    private var viewModel : ChangeViewModelProtocol
     
-    private var viewModel = ChangeViewModel()
+    init(viewModel: ChangeViewModelProtocol) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var collectionView : UICollectionView = {
        
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: UIScreen.main.bounds.width, height: 171)
+        layout.itemSize = .init(width: UIScreen.main.bounds.width, height: 80)
         
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         //registramos la celda
         vw.register(ChangeCollectionViewCell.self, forCellWithReuseIdentifier: "ChangeCollectionViewCell")
-        
+        vw.backgroundColor = .clear
         vw.dataSource = self
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
@@ -34,7 +43,7 @@ class ChangeViewController: UIViewController {
         
         setup()
         setupBtn()
-        viewModel.getChange()
+        viewModel.getChangeOfCurrencies()
         setTitle()
         setDelegate()
         
@@ -44,7 +53,7 @@ class ChangeViewController: UIViewController {
 //MARK: - Setup Button and CollectionView
 extension ChangeViewController{
     func setupBtn(){
-        rightButtonBar.setTitle("Ir a Calcular", for: .normal)
+        rightButtonBar.setImage(UIImage(named: "calculator"), for: .normal)
         rightButtonBar.addTarget(self, action: #selector(goToCurrencyVC), for: .touchUpInside)
         rightButtonBar.setTitleColor(UIColor(red: 87/255, green: 147/255, blue: 215/255, alpha: 1), for:.normal)
         rightButtonBar.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +66,9 @@ extension ChangeViewController{
 private extension ChangeViewController{
     func setup(){
         
-        view.backgroundColor = .white
+        self.view.backgroundColor = UIColor(hex: "F0F8FF")
+        //self.backgroundColor = .black
+        //self.view.backgroundColor = UIColor(red: 213/255.0, green: 229/255.0, blue: 252/255.0, alpha: 1)
         self.view.addSubview(collectionView)
         let barButtonItem = UIBarButtonItem(customView: rightButtonBar)
         self.navigationItem.rightBarButtonItem = barButtonItem
@@ -86,8 +97,9 @@ extension ChangeViewController{
 extension ChangeViewController{
     
     @objc func goToCurrencyVC(){
-        //let nextScreen = CurrencyConverterViewController()
-        //self.navigationController?.pushViewController(nextScreen, animated: true)
+        let currencyConverterViewModel = CurrencyConverterViewModel(currencyService: CurrencyService(), notificationService: NotificationService())
+        let nextScreen = CurrencyConverterViewController( currencyConverterViewModel: currencyConverterViewModel)
+        self.navigationController?.pushViewController(nextScreen, animated: true)
     }
 }
 
@@ -107,12 +119,12 @@ extension ChangeViewController: ChangeViewModelDelegate{
 
 extension ChangeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.changes.count
+        viewModel.currencies.count
     
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = viewModel.changes[indexPath.item]
+        let item = viewModel.currencies[indexPath.item]
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChangeCollectionViewCell", for: indexPath) as! ChangeCollectionViewCell
 
@@ -122,5 +134,5 @@ extension ChangeViewController: UICollectionViewDataSource{
     }
 }
 
-#Preview("ChangeViewController", traits: .defaultLayout, body: { ChangeViewController()})
+//#Preview("ChangeViewController", traits: .defaultLayout, body: { ChangeViewController()})
 

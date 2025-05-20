@@ -23,7 +23,7 @@ import UIKit
 import Combine
 
 protocol CurrencyConverterViewModelProtocol {
-    func getDolar() async throws -> DolarBlue?
+    func getDolarBlue() async throws -> DolarBlue?
     func checkPermission(dolar: String)
     func getTextForPicker(row: Int) -> String
     func resetCurrency()
@@ -36,7 +36,7 @@ protocol CurrencyConverterViewModelProtocol {
 
 class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
     
-    var currency : Rates = Rates(BRL: Brl(rate: nil), CLP: Clp(rate: nil), UYU: Uyu(rate: nil))
+    var currency : Rates = Rates()
     //private(set) var dolar : ExchangeRate?
     
     var currencyArray = ["BRL","CLP","UYU"]
@@ -69,8 +69,8 @@ class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
 
     @MainActor
     func fetchExchangeRates() async throws -> Rates{
-       // return currencyService.fetchExchangeRates()
-        guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP&format=json")
+       // return currencyService.fetchExchangeRates() modificar esto que tiene que venir desde currencyservice
+        guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP,EUR,GBP,COP,JPY,ILS,MXN,PYG,PEN,RUB,CAD,BOB&format=json")
         else {throw APIError.invalidURL}
         
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -87,7 +87,7 @@ class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
     }
     
     @MainActor
-    func getDolar() async throws -> DolarBlue?{
+    func getDolarBlue() async throws -> DolarBlue?{
         return try await currencyService.getDolarBlue()
     }
     
@@ -151,7 +151,7 @@ extension CurrencyConverterViewModel {
             }
             Task {
                 do {
-                    let dolar = try await self.getDolar()
+                    let dolar = try await self.getDolarBlue()
                     let dolarValue = dolar?.venta ?? 0.0
                     let currencyValue = Double(self.valueForCurrency(currencyText: self.getTextForPicker(row: self.currencyArray.firstIndex(of: fromCurrency) ?? 0))) ?? 0.0
                     
@@ -176,7 +176,7 @@ extension CurrencyConverterViewModel {
         var dolarValue: Double = 0.0
         
         while retries < maxRetries {
-            if let exchangeRate = try await getDolar() {
+            if let exchangeRate = try await getDolarBlue() {
                 dolarValue = exchangeRate.venta
                 if dolarValue > 0 {
                     let dolarConvert = quantity / dolarValue
@@ -197,9 +197,9 @@ extension CurrencyConverterViewModel {
     
     func valueForCurrency(currencyText: String) -> String {
         switch currencyText {
-        case "Real Brasil": return currency.BRL.rate ?? "0.0"
-        case "Peso Chile": return currency.CLP.rate ?? "0.0"
-        case "Peso Uruguay": return currency.UYU.rate ?? "0.0"
+        case "Real Brasil": return currency.BRL?.rawRate ?? "0.0"
+        case "Peso Chile": return currency.CLP?.rawRate ?? "0.0"
+        case "Peso Uruguay": return currency.UYU?.rawRate ?? "0.0"
         default: return "0.0"
         }
     }

@@ -37,7 +37,7 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
         updateMockValues()
     }
     
-    func getDolar() async throws -> DolarBlue? {
+    func getDolarBlue() async throws -> DolarBlue? {
         return try await currencyService.getDolarBlue()
     }
     
