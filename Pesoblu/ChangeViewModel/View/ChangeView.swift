@@ -16,7 +16,6 @@ class ChangeView: UIView {
     private lazy var viewDolar: UIView = {
         var view = UIView()
         view.backgroundColor = .white //UIColor(hex: "F0F8FF")
-        //view.backgroundColor = UIColor(red: 213/255.0, green: 229/255.0, blue: 252/255.0, alpha: 1)
         view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -44,8 +43,6 @@ class ChangeView: UIView {
     private lazy var viewCurrencyTitle: UIView = {
         var view = UIView()
         view.backgroundColor = .clear
-        //view.layer.cornerRadius = 10
-        //view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.white.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -54,7 +51,6 @@ class ChangeView: UIView {
     private lazy var viewCurrencyLabel: UIView = {
         var view = UIView()
         view.backgroundColor = .clear
-        //view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -62,7 +58,6 @@ class ChangeView: UIView {
     private lazy var viewValueBuyLabel: UIView = {
         var view = UIView()
         view.backgroundColor = .clear
-        //view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -70,7 +65,7 @@ class ChangeView: UIView {
     private lazy var currencyTitleLabel: UILabel = {
         var label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .bold)
-        label.textColor = .black//UIColor(red: 64/255.0, green: 154/255.0, blue: 255/255.0, alpha: 1)
+        label.textColor = .black
         label.text = "Dolar Oficial"
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -110,10 +105,10 @@ class ChangeView: UIView {
     
     func set(currencyTitle: String, currencyLabel: String, valueBuy: Double){
         currencyTitleLabel.text = currencyTitle
-        currencyValueLabel.text = String(format: "%.2f", valueBuy)// este es el qie muestra el valor
+        var text = String(format: "%.2f", valueBuy)
+        currencyValueLabel.text =  "$ \(text)"// este es el qie muestra el valor
         currencySubtitleLabel.text = currencyLabel
     }
-    
 }
 
 private extension ChangeView {
@@ -153,7 +148,7 @@ private extension ChangeView {
             //stackhorizontal constraints
             stackHorizontal.leadingAnchor.constraint(equalTo: viewDolar.leadingAnchor, constant: 10),
             stackHorizontal.topAnchor.constraint(equalTo: viewDolar.topAnchor, constant: 10),
-            stackHorizontal.trailingAnchor.constraint(equalTo: viewDolar.trailingAnchor, constant: -10), // Corregido
+            stackHorizontal.trailingAnchor.constraint(equalTo: viewDolar.trailingAnchor, constant: -10),
             stackHorizontal.bottomAnchor.constraint(equalTo: viewDolar.bottomAnchor, constant: -10),
             
             currencyTitleLabel.leadingAnchor.constraint(equalTo: viewCurrencyTitle.leadingAnchor),
@@ -171,8 +166,6 @@ private extension ChangeView {
             currencyValueLabel.bottomAnchor.constraint(equalTo: viewValueBuyLabel.bottomAnchor),
             currencyValueLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 60),
             
-            
         ])
-        
     }
 }

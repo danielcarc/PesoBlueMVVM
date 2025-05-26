@@ -17,6 +17,7 @@
 		C51C8ABE2BD87FBC008777C8 /* PesoBlueTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */; };
 		C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D8A492CE2C1B600A827BD /* AppUser.swift */; };
 		C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55DA6882ACB136F00871340 /* ChangeView.swift */; };
+		C5826C302DE4124200BD0022 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5826C2F2DE4124200BD0022 /* Alamofire */; };
 		C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740A2AC71FD3000FCD5B /* AppDelegate.swift */; };
 		C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740C2AC71FD3000FCD5B /* SceneDelegate.swift */; };
 		C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740E2AC71FD3000FCD5B /* ChangeViewController.swift */; };
@@ -100,6 +101,7 @@
 				C5E4E74A2CC08509000A06C4 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				C5E4E7582CC09545000A06C4 /* FirebaseAnalytics in Frameworks */,
 				C58BAE6E2D69181200AD9559 /* Kingfisher in Frameworks */,
+				C5826C302DE4124200BD0022 /* Alamofire in Frameworks */,
 				C5C47C0A2CC9D8FF00238099 /* FirebaseAuth in Frameworks */,
 				C5C47C0D2CCAE5D500238099 /* GoogleSignIn in Frameworks */,
 			);
@@ -349,6 +351,7 @@
 				C5E4E7402CC07B2A000A06C4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C5C47C0B2CCAE5D500238099 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				C58BAE6C2D69181200AD9559 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				C5826C2E2DE4121B00BD0022 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = C58674082AC71FD3000FCD5B /* Products */;
 			projectDirPath = "";
@@ -681,6 +684,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C5826C2E2DE4121B00BD0022 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 		C58BAE6C2D69181200AD9559 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -708,6 +719,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C5826C2F2DE4124200BD0022 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5826C2E2DE4121B00BD0022 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		C58BAE6D2D69181200AD9559 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C58BAE6C2D69181200AD9559 /* XCRemoteSwiftPackageReference "Kingfisher" */;

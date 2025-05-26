@@ -5,6 +5,7 @@
 //  Created by Daniel Carcacha on 12/02/2025.
 //
 import Foundation
+import Alamofire
 
 protocol CurrencyServiceProtocol{
     func getDolarBlue() async throws -> DolarBlue?
@@ -20,8 +21,8 @@ class CurrencyService: CurrencyServiceProtocol {
     private let apiKey = "99f81f10b5b6b92679b9051bdce40b7647f150e0"
     
     private var dolarBlue: DolarBlue?
-    private var dolarOficial: DolarOficial?
-    private var dolarMep: DolarMEP?
+    //private var dolarOficial: DolarOficial?
+    //private var dolarMep: DolarMEP?
     private var rates: Rates?
     private var currencies: [CurrencyItem] = []
     
@@ -38,8 +39,8 @@ class CurrencyService: CurrencyServiceProtocol {
         }
 
         let jsonDecoder = JSONDecoder()
-        self.dolarBlue = try jsonDecoder.decode(DolarBlue.self, from: data)
-        return self.dolarBlue
+        let dolarBlue = try jsonDecoder.decode(DolarBlue.self, from: data)
+        return dolarBlue
     }
     
     @MainActor
@@ -52,30 +53,44 @@ class CurrencyService: CurrencyServiceProtocol {
             throw APIError.invalidResponse
         }
         let jsonDecoder = JSONDecoder()
-        self.dolarOficial = try jsonDecoder.decode(DolarOficial.self, from: data)
-        return self.dolarOficial
+        let dolarOficial = try jsonDecoder.decode(DolarOficial.self, from: data)
+        return dolarOficial
     }
     
     @MainActor
     func getDolarMep() async throws -> DolarMEP? {
-        guard let url = URL(string: "https://dolarapi.com/v1/dolares/bolsa")else {
-            throw APIError.invalidURL
+        let url = "https://dolarapi.com/v1/dolares/bolsa"
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.request(url)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: DolarMEP.self) { response in
+                    switch response.result {
+                    case .success(let dolarMep):
+                        //self.dolarMep = dolarMep
+                        continuation.resume(returning: dolarMep)
+                    case .failure(let error):
+                        if let afError = error.asAFError {
+                            if afError.responseCode == nil {
+                                continuation.resume(throwing: APIError.invalidURL)
+                            } else {
+                                continuation.resume(throwing: APIError.invalidResponse)
+                            }
+                        } else {
+                            continuation.resume(throwing: error)
+                        }
+                    }
+                }
         }
-        let (data, response) = try await URLSession.shared.data(from: url)
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else{
-            throw APIError.invalidResponse
-        }
-        let jsonDecoder = JSONDecoder()
-        self.dolarMep = try jsonDecoder.decode(DolarMEP.self, from: data)
-        return dolarMep
     }
     
     
     @MainActor
     func getValueForCountry(countryCode: String) async throws -> String {
         rates = try await fetchExchangeRates()
+        let dolarMep = try await getDolarMep()?.rate ?? "0.0"
         
-        var value = dolarBlue?.venta ?? 0.0
+        var value = Double(dolarMep) ?? 0.0
         switch countryCode {
         case "BR":
             guard let rate = Double(rates?.BRL?.rawRate ?? "0.00") else { return "N/A BRL" }
@@ -115,24 +130,11 @@ class CurrencyService: CurrencyServiceProtocol {
 
 extension CurrencyService{
     func getChangeOfCurrencies() async throws -> Rates {
-//        var dolarmep = try await getDolarMep()
-//        dolarmep.currencyTitle = "Dolar MEP"
-//        rates = try await fetchExchangeRates()
-//        currencies.append(getUyuValue(currency: dolarmep.venta))
-//        if let dolarmep = try await getDolarMep() {
-//            // Asignar el valor a la propiedad si lo necesitas después
-//            dolarMep = dolarmep
-//            dolarMep?.currencyTitle = "Dolar MEP"
-//            rates = try await fetchExchangeRates()
-//            // Pasar dolarmep a getUyuValue, que ahora es no opcional y compatible con CurrencyItem
-//            currencies.append(getUyuValue(currency: dolarmep.venta))
-//        }
+
         var currencies : Rates
         currencies = try await fetchExchangeRates()
         return currencies
     }
-    
-    
 }
 
 
