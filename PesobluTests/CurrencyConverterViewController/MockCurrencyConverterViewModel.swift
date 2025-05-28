@@ -21,6 +21,7 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
     init(currencyService: CurrencyServiceProtocol, notificationService: NotificationServiceProtocol) {
         self.currencyService = currencyService
         self.notificationService = notificationService
+        
     }
     
     func getConvertedValues() -> AnyPublisher<(String, String, String, String), Never> {
@@ -55,7 +56,7 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
         }
     }
     
-    func resetCurrency() {
+    func resetCurrency(){
         selectedCurrency = "BRL"
         updateMockValues()
     }
@@ -65,15 +66,15 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
     }
     
     func convertDolar(quantity: Double) async throws -> String {
-        guard let dolarValue = (currencyService as? MockCurrencyService)?.dolarValue, dolarValue > 0 else {
+        guard let dolarValue = try await (currencyService as? MockCurrencyService)?.getDolarMep(), dolarValue.venta > 0 else {
             throw ConversionError.invalidDollarRate
         }
-        let result = quantity / dolarValue
+        let result = quantity / dolarValue.venta
         return String(format: "%.2f", result)
     }
     
     private func updateMockValues() {
-        guard let dolarValue = (currencyService as? MockCurrencyService)?.dolarValue, dolarValue > 0 else {
+        guard let dolarValue = (currencyService as? MockCurrencyService)?.mockDolarMep, dolarValue.venta > 0 else {
             convertedValuesSubject.send(("0.00", "0.00", "0.00", "0.00"))
             return
         }
@@ -86,9 +87,9 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
         default: currencyValue = 0.0
         }
         
-        let pesoToDolar = amount / dolarValue
-        let currencyFromPeso = (amount / dolarValue) * currencyValue
-        let currencyToPeso = (amount / currencyValue) * dolarValue
+        let pesoToDolar = amount / dolarValue.venta
+        let currencyFromPeso = (amount / dolarValue.venta) * currencyValue
+        let currencyToPeso = (amount / currencyValue) * dolarValue.venta
         let currencyToDolarValue = amount / currencyValue
         
         convertedValuesSubject.send((

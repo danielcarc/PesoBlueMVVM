@@ -60,15 +60,12 @@ extension ChangeViewController{
     }
 }
 
-
 //MARK: - Setup CollectionView
 
 private extension ChangeViewController{
     func setup(){
         
         self.view.backgroundColor = UIColor(hex: "F0F8FF")
-        //self.backgroundColor = .black
-        //self.view.backgroundColor = UIColor(red: 213/255.0, green: 229/255.0, blue: 252/255.0, alpha: 1)
         self.view.addSubview(collectionView)
         let barButtonItem = UIBarButtonItem(customView: rightButtonBar)
         self.navigationItem.rightBarButtonItem = barButtonItem

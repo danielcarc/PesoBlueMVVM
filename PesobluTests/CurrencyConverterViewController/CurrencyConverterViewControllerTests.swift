@@ -43,7 +43,7 @@ class CurrencyConverterViewControllerTests: XCTestCase {
     
     func testStartTimerCallsGetDolar() async {
         // Given
-        mockCurrencyService.dolarValue = 150.0
+        mockCurrencyService.mockDolarMep = DolarMEP(moneda: "Moneda", casa: "casa", nombre: "moneda", compra: 900.0, venta: 950.0, fechaActualizacion: "fecha")
         let expectation = XCTestExpectation(description: "Timer triggers getDolar")
         
         // When

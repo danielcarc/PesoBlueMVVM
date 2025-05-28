@@ -17,8 +17,8 @@ class CurrencyConverterViewModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        mockCurrencyService.rates = Rates(BRL: Brl(rate: "5.0"), CLP: Clp(rate: "900.0"), UYU: Uyu(rate: "40.0"))
-        mockCurrencyService.dolarValue = 150.0
+        mockCurrencyService.mockRates = Rates(UYU: Uyu(rawRate: "40.0"), BRL: Brl(rawRate: "5.0"), CLP: Clp(rawRate: "900.0"))
+        //mockCurrencyService.dolarValue = 150.0
         viewModel = MockCurrencyConverterViewModel(currencyService: mockCurrencyService, notificationService: mockNotificationService)
         cancellables = Set<AnyCancellable>()
     }
@@ -30,14 +30,14 @@ class CurrencyConverterViewModelTests: XCTestCase {
     }
     
     func testConvertDolarSuccess() async throws {
-        mockCurrencyService.dolarValue = 150.0
-        let quantity = 300.0
+        mockCurrencyService.mockDolarMep = DolarMEP(moneda: "Moneda", casa: "casa", nombre: "moneda", compra: 900.0, venta: 950.0, fechaActualizacion: "fecha")
+        let quantity = 1800.0
         let result = try await viewModel.convertDolar(quantity: quantity)
         XCTAssertEqual(result, "2.00")
     }
     
     func testConvertDolarThrowsInvalidRate() async {
-        mockCurrencyService.dolarValue = 0.0
+        mockCurrencyService.mockDolarMep = DolarMEP(moneda: "Moneda", casa: "casa", nombre: "moneda", compra: 900.0, venta: 950.0, fechaActualizacion: "fecha")
         do {
             _ = try await viewModel.convertDolar(quantity: 300.0)
             XCTFail("Debería haber lanzado un error")
@@ -57,7 +57,7 @@ class CurrencyConverterViewModelTests: XCTestCase {
     
     func testConvertedValuesPublishesCorrectly() async {
         // Given
-        mockCurrencyService.dolarValue = 150.0
+        mockCurrencyService.mockDolarMep = DolarMEP(moneda: "Moneda", casa: "casa", nombre: "moneda", compra: 900.0, venta: 950.0, fechaActualizacion: "fecha")
         viewModel.updateAmount(300.0)
         viewModel.updateCurrency(currency: "BRL")
         

@@ -24,15 +24,13 @@ class ChangeViewModel: ChangeViewModelProtocol{
     
     
     private let currencyService: CurrencyServiceProtocol
-    //private(set)var changes : [ChangesResponse] = []
     var currencies: [CurrencyItem]
     var rates : Rates
     var delegate: ChangeViewModelDelegate?
     
-    init(delegate: ChangeViewModelDelegate? = nil, currencyService: CurrencyServiceProtocol, /*changes: [ChangesResponse],*/ /*changeArray: [String] = ["Oficial", "Blue", "Euro Blue"], */currencies: [CurrencyItem], rates: Rates) {
+    init(delegate: ChangeViewModelDelegate? = nil, currencyService: CurrencyServiceProtocol, currencies: [CurrencyItem], rates: Rates) {
         self.delegate = delegate
-        //self.changes = changes
-        //self.changeArray = changeArray
+       
         self.currencyService = currencyService
         self.currencies = currencies
         self.rates = rates
@@ -50,12 +48,11 @@ class ChangeViewModel: ChangeViewModelProtocol{
         }
     }
     
-    
     private func fetchCurrencies() async {
         do{
-            //var dolarMep: DolarMEP?
+            
             if var mep = try await currencyService.getDolarMep(){
-                //dolarMep = mep
+                
                 mep.currencyTitle = "USD MEP - Dólar Americano"
                 mep.currencyLabel = "Dólar Bolsa de Valores / MEP"
                 currencies.append(mep)
@@ -280,43 +277,4 @@ extension ChangeViewModel{
         bob.currencyLabel = "Bolivia"
         return bob
     }
-    /*
-     COP colombiano
-     GBP greatbritain pound
-     JPY japon
-     Jpy Japón
-     ILS Israel
-     Mxn México
-     Pyg Paraguay
-     Pen Perú
-     Rub ruso
-     Cad Canada
-     Bob Bolivia
-     */
-    
-    //        Task{ [weak self] in
-    //            do{
-    //                guard let url = URL(string: "https://api.bluelytics.com.ar/v2/latest") else { return }
-    //                let (data, _) =  try await URLSession.shared.data(from: url)
-    //                let jsonDecoder = JSONDecoder()
-    //                let changesResponse = try jsonDecoder.decode(ChangesResponse.self, from: data)
-    //
-    //                if var oficial = changesResponse.oficial {
-    //                    oficial.dolarLabel = "Dolar Oficial"
-    //                    self?.changes.append(ChangesResponse(oficial: oficial, blue: nil, blue_euro: nil, last_update: changesResponse.last_update))
-    //                }
-    //                if var blue = changesResponse.blue {
-    //                    blue.dolarLabel = "Dolar Blue"
-    //                    self?.changes.append(ChangesResponse(oficial: nil, blue: blue, blue_euro: nil, last_update: changesResponse.last_update))
-    //                }
-    //                if var blueEuro = changesResponse.blue_euro {
-    //                    blueEuro.dolarLabel = "Euro Blue"
-    //                    self?.changes.append(ChangesResponse(oficial: nil, blue: nil, blue_euro: blueEuro, last_update: changesResponse.last_update))
-    //                }
-    //                self?.delegate?.didFinish()
-    //            }
-    //            catch{
-    //                self?.delegate?.didFail(error: error)
-    //            }
-//              }
 }

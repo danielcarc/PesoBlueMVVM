@@ -46,22 +46,21 @@ struct Rates: Decodable{
         case CAD = "CAD"
         case BOB = "BOB"
     }
-    init(){
-        self.BRL = nil
-        self.CLP = nil
-        self.UYU = nil
-        self.EUR = nil
-        self.GBP = nil
-        self.COP = nil
-        self.JPY = nil
-        self.ILS = nil
-        self.MXN = nil
-        self.PYG = nil
-        self.PEN = nil
-        self.RUB = nil
-        self.CAD = nil
-        self.BOB = nil
-    }
+    init(UYU: Uyu? = nil, BRL: Brl? = nil, CLP: Clp? = nil, COP: Cop? = nil, GBP: Gbp? = nil, JPY: Jpy? = nil, ILS: Ils? = nil, MXN: Mxn? = nil, PYG: Pyg? = nil, PEN: Pen? = nil, RUB: Rub? = nil, CAD: Cad? = nil, BOB: Bob? = nil) {
+            self.UYU = UYU
+            self.BRL = BRL
+            self.CLP = CLP
+            self.COP = COP
+            self.GBP = GBP
+            self.JPY = JPY
+            self.ILS = ILS
+            self.MXN = MXN
+            self.PYG = PYG
+            self.PEN = PEN
+            self.RUB = RUB
+            self.CAD = CAD
+            self.BOB = BOB
+        }
 }
 
 struct Bob: Decodable, CurrencyItem{

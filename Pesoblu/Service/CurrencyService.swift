@@ -20,9 +20,7 @@ class CurrencyService: CurrencyServiceProtocol {
     private let currencyUrl = "https://api.getgeoapi.com/v2/currency/convert?api_key="
     private let apiKey = "99f81f10b5b6b92679b9051bdce40b7647f150e0"
     
-    private var dolarBlue: DolarBlue?
-    //private var dolarOficial: DolarOficial?
-    //private var dolarMep: DolarMEP?
+    //private var dolarBlue: DolarBlue?
     private var rates: Rates?
     private var currencies: [CurrencyItem] = []
     
@@ -83,7 +81,6 @@ class CurrencyService: CurrencyServiceProtocol {
                 }
         }
     }
-    
     
     @MainActor
     func getValueForCountry(countryCode: String) async throws -> String {

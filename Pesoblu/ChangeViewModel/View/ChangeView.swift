@@ -105,7 +105,7 @@ class ChangeView: UIView {
     
     func set(currencyTitle: String, currencyLabel: String, valueBuy: Double){
         currencyTitleLabel.text = currencyTitle
-        var text = String(format: "%.2f", valueBuy)
+        let text = String(format: "%.2f", valueBuy)
         currencyValueLabel.text =  "$ \(text)"// este es el qie muestra el valor
         currencySubtitleLabel.text = currencyLabel
     }
