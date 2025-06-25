@@ -7,13 +7,33 @@
 
 import UIKit
 import FirebaseAnalytics
+import Combine
 
-class LoginViewController: UIViewController {
+protocol LoginViewProtocol: AnyObject {
+    func didTapSignUpGoogle() async
+    func didTapSignUpApple()
+}
+
+class LoginViewController: UIViewController, LoginViewProtocol {
     
-    let authVM = AuthenticationViewModel()
-    let loggedUser = UserService()
+    var authVM : AuthenticationViewModelProtocol
+    let userService : UserService
+    private let coordinator: NavigationCoordinator
+    private var cancellables = Set<AnyCancellable>()
     
     var loginView : LoginView!
+    private var activityIndicator: UIActivityIndicatorView!
+    
+    init(authVM: AuthenticationViewModelProtocol, userService: UserService, coordinator: NavigationCoordinator) {
+        self.authVM = authVM
+        self.userService = userService
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         loginView = LoginView()
@@ -27,6 +47,45 @@ class LoginViewController: UIViewController {
         loginView.onAppleSignInTap = { [weak self] in
             self?.didTapSignUpApple()
         }
+        
+        authVM.onAuthenticationSuccess = { [weak self] in
+            guard let self = self else { return }
+            let user = self.userService.loadUser()
+            Analytics.logEvent("user_logged_in", parameters: [
+                "user_email": "\(user?.email ?? "unknown")"
+            ])
+            print("User authenticated successfully with Google")
+            self.coordinator.showTabBar()
+        }
+        authVM.delegate = self // Configurar el delegate para errores
+        
+        setupStateObservation()
+        setupActivityIndicator()
+    }
+    
+    private func setupActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func setupStateObservation() {
+        authVM.authenticationState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .authenticating:
+                    self.activityIndicator.startAnimating()
+                case .authenticated, .unauthenticated:
+                    self.activityIndicator.stopAnimating()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,42 +112,45 @@ extension LoginViewController {
     
     func didTapSignUpGoogle() async {
         do {
-            if try await authVM.singInWithGoogle() {
-                let user = loggedUser.loadUser()
-                Analytics.logEvent("user_logged_in", parameters: [
-                    "user_email": "\(user?.email ?? "unknown")"
-                ])
-                print("User tapped Google Sign-In")
-                
-                let tabBarController = PesoBlueTabBarController()
-                
-                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                   let window = windowScene.windows.first {
-                    window.rootViewController = tabBarController
-                    window.makeKeyAndVisible()
-                    
-                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil, completion: nil)
-                }
-            } else {
-                print("Error signing in with Google")
-            }
+            try await authVM.singInWithGoogle()
         } catch let error as AuthenticationViewModel.AuthError {
             print("AuthError: \(error.localizedDescription)")
-            // Aquí puedes mostrar una alerta con error.localizedDescription al usuario
+            showErrorAlert(error)
         } catch {
             print("Unexpected error: \(error.localizedDescription)")
-            // Maneja errores inesperados si es necesario
+            showErrorAlert(AuthenticationViewModel.AuthError.unknown)
         }
     }
     
     
     // el sign in with apple se agrega apenas antes de publicar la app
     func didTapSignUpApple() {
-         Analytics.logEvent("user_logged_in", parameters: [
-                 "user_email": "user@example.com"
-             ])
-             print("User tapped Apple Sign-In")
-     }
+        Analytics.logEvent("user_logged_in", parameters: [
+            "user_email": "user@example.com"
+        ])
+        print("User tapped Apple Sign-In")
+    }
+}
+
+extension LoginViewController: AuthenticationDelegate{
+    private func showErrorAlert(_ error: AuthenticationViewModel.AuthError) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showError(_ error: Error) {
+        if let authError = error as? AuthenticationViewModel.AuthError {
+            showErrorAlert(authError)
+        } else {
+            showErrorAlert(AuthenticationViewModel.AuthError.unknown)
+        }
+    }
+    
+    static func create(authVM: AuthenticationViewModelProtocol, userService: UserService, coordinator: NavigationCoordinator) -> LoginViewController {
+        let controller = LoginViewController(authVM: authVM, userService: userService, coordinator: coordinator)
+        return controller
+    }
 }
 
 

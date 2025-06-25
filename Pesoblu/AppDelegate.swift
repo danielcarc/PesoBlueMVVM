@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
 //import FirebaseCore
 //import FirebaseAnalytics
 //import FirebaseFirestore
@@ -18,10 +19,16 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var firebaseApp: FirebaseApp?
+    var gidSignIn: GIDSignIn?
+    var userService: UserService?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        firebaseApp = FirebaseApp.app()
+        gidSignIn = GIDSignIn.sharedInstance
+        userService = UserService()
         Analytics.setAnalyticsCollectionEnabled(true)
 
         return true

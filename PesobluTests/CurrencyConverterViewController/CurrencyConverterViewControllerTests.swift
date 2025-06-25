@@ -55,7 +55,7 @@ class CurrencyConverterViewControllerTests: XCTestCase {
             }
             // Then
             XCTAssertTrue(self.mockNotificationService.didCheckPermission)
-            XCTAssertEqual(self.mockNotificationService.lastDolar, "150.00")
+            XCTAssertEqual(self.mockNotificationService.lastDolar, "900.00")
             expectation.fulfill()
         }
         

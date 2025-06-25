@@ -47,7 +47,7 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
     }
     
     func getTextForPicker(row: Int) -> String {
-        let currencyArray = ["BRL", "CLP", "UYU"]
+        _ = ["BRL", "CLP", "UYU"]
         switch row {
         case 0: return "Real Brasil"
         case 1: return "Peso Chile"
@@ -87,10 +87,10 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
         default: currencyValue = 0.0
         }
         
-        let pesoToDolar = amount / dolarValue.venta
-        let currencyFromPeso = (amount / dolarValue.venta) * currencyValue
-        let currencyToPeso = (amount / currencyValue) * dolarValue.venta
-        let currencyToDolarValue = amount / currencyValue
+        let pesoToDolar = amount / dolarValue.venta // 450 / 900 = 0.5
+        let currencyFromPeso = (amount / dolarValue.venta) * currencyValue // 450 / 900 * 5.0 = 2.5
+        let currencyToPeso = (amount / currencyValue) * dolarValue.venta  // 450 / 5 * 900 = 81000
+        let currencyToDolarValue = amount / currencyValue // 450 / 5 = 90
         
         convertedValuesSubject.send((
             String(format: "%.2f", currencyFromPeso),

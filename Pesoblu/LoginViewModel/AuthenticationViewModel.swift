@@ -10,24 +10,47 @@ import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 import GoogleSignInSwift
+import Combine
 
-
-class AuthenticationViewModel{
-    
-    private let userService = UserService()
-    
-//    enum AuthenticationState {
-//      case unauthenticated
-//      case authenticating
-//      case authenticated
-//    }
-    
+protocol AuthenticationViewModelProtocol: AnyObject {
+    var onAuthenticationSuccess: (() -> Void)? { get set }
+    func singInWithGoogle() async throws
+    func signOut() throws
+    var delegate: AuthenticationDelegate? { get set }
+    var authenticationState: AnyPublisher<AuthenticationState, Never> { get }
 }
 
+enum AuthenticationState {
+    case unauthenticated
+    case authenticating
+    case authenticated
+}
 
-//MARK: - Google Sign In
+protocol AuthenticationDelegate: AnyObject {
+    func showError(_ error: Error)
+}
 
-extension AuthenticationViewModel{
+class AuthenticationViewModel: AuthenticationViewModelProtocol{
+    @Published private var _authenticationState: AuthenticationState = .unauthenticated
+    
+    weak var delegate: AuthenticationDelegate?
+    var onAuthenticationSuccess: (() -> Void)?
+    
+    private let firebaseApp: FirebaseApp
+    private let gidSignIn: GIDSignIn
+    private let userService: UserService
+    
+    init(firebaseApp: FirebaseApp, gidSignIn: GIDSignIn, userService: UserService) {
+        self.firebaseApp = firebaseApp
+        self.gidSignIn = gidSignIn
+        self.userService = userService
+    }
+    
+    var authenticationState: AnyPublisher<AuthenticationState, Never> {
+        $_authenticationState
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
     
     enum AuthenticationError: Error{
         case tokenError(message: String)
@@ -53,8 +76,16 @@ extension AuthenticationViewModel{
         }
     }
     
+}
+
+
+//MARK: - Google Sign In
+
+extension AuthenticationViewModel{
+    
     @MainActor //esto por llamar rootviewcontroller y window desde un hilo que no es el pricipal, por ello mainactor
-    func singInWithGoogle() async throws -> Bool{
+    func singInWithGoogle() async throws{
+        _authenticationState = .authenticating
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             fatalError("No Client ID found in Firebase Configuration")
         }
@@ -65,7 +96,6 @@ extension AuthenticationViewModel{
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first,
               let rootViewController = window.rootViewController else {
-            print("There is no root view controller")
             throw AuthError.unknown
             //return false
         }
@@ -91,15 +121,13 @@ extension AuthenticationViewModel{
             } else {
                 print("User already exists in UserDefaults")
             }
+            _authenticationState = .authenticated
+            onAuthenticationSuccess?()
             
-            return true
         }
-        catch let error as AuthError {
-            print("AuthError: \(error.localizedDescription)")
+        catch {
+            delegate?.showError(error)
             throw error
-        } catch {
-            print("Unexpected Error: \(error.localizedDescription)")
-            throw AuthError.unknown
         }
         
     }
@@ -107,6 +135,7 @@ extension AuthenticationViewModel{
     func signOut() throws {
         try Auth.auth().signOut()
         userService.deleteUser()
+        _authenticationState = .unauthenticated
     }
 }
 

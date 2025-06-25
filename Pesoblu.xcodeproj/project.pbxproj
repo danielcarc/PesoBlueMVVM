@@ -18,6 +18,7 @@
 		C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D8A492CE2C1B600A827BD /* AppUser.swift */; };
 		C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55DA6882ACB136F00871340 /* ChangeView.swift */; };
 		C5826C302DE4124200BD0022 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5826C2F2DE4124200BD0022 /* Alamofire */; };
+		C5826C392E08E8DA00BD0022 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5826C382E08E8DA00BD0022 /* NavigationCoordinator.swift */; };
 		C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740A2AC71FD3000FCD5B /* AppDelegate.swift */; };
 		C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740C2AC71FD3000FCD5B /* SceneDelegate.swift */; };
 		C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740E2AC71FD3000FCD5B /* ChangeViewController.swift */; };
@@ -61,6 +62,7 @@
 		C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PesoBlueTabBarController.swift; sourceTree = "<group>"; };
 		C52D8A492CE2C1B600A827BD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		C55DA6882ACB136F00871340 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
+		C5826C382E08E8DA00BD0022 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		C58674072AC71FD3000FCD5B /* Pesoblu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pesoblu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C586740A2AC71FD3000FCD5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C586740C2AC71FD3000FCD5B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 		C5E4E73B2CC052E5000A06C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C5826C382E08E8DA00BD0022 /* NavigationCoordinator.swift */,
 				C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */,
 				C5E4E73E2CC05826000A06C4 /* LoginView.swift */,
 			);
@@ -391,6 +394,7 @@
 				C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */,
 				C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */,
 				C513DE9D2ACDB5340066AFCA /* ChangeCollectionViewCell.swift in Sources */,
+				C5826C392E08E8DA00BD0022 /* NavigationCoordinator.swift in Sources */,
 				C5E4E73F2CC05826000A06C4 /* LoginView.swift in Sources */,
 				C5C47C132CCAF16600238099 /* AuthenticationViewModel.swift in Sources */,
 				C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */,

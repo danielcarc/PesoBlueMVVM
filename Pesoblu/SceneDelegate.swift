@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,9 +21,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         self.window = UIWindow(windowScene: windowScene)
-        let loginVC = LoginViewController()
-        window?.rootViewController = loginVC
-        window?.makeKeyAndVisible()
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+           let firebaseApp = appDelegate.firebaseApp,
+           let gidSignIn = appDelegate.gidSignIn,
+           let userService = appDelegate.userService {
+            let authVM = AuthenticationViewModel(firebaseApp: firebaseApp, gidSignIn: gidSignIn, userService: userService)
+            let coordinator = NavigationCoordinator()
+            let loginVC = LoginViewController.create(authVM: authVM, userService: userService, coordinator: coordinator)
+            window?.rootViewController = loginVC
+            window?.makeKeyAndVisible()
+        } else {
+            fatalError("Failed to access Firebase or dependencies from AppDelegate")
+        }
         
     }
 
