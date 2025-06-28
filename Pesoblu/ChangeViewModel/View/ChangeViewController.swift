@@ -11,6 +11,8 @@ class ChangeViewController: UIViewController {
     
     private var viewModel : ChangeViewModelProtocol
     
+    private lazy var rightButtonBar = UIButton()
+    
     init(viewModel: ChangeViewModelProtocol) {
         self.viewModel = viewModel
         
@@ -35,7 +37,7 @@ class ChangeViewController: UIViewController {
         return vw
     }()
     
-    private lazy var rightButtonBar = UIButton()
+    
 
     
     override func viewDidLoad() {

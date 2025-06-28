@@ -19,6 +19,8 @@
 		C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55DA6882ACB136F00871340 /* ChangeView.swift */; };
 		C5826C302DE4124200BD0022 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5826C2F2DE4124200BD0022 /* Alamofire */; };
 		C5826C392E08E8DA00BD0022 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5826C382E08E8DA00BD0022 /* NavigationCoordinator.swift */; };
+		C5826C432E0F6EE500BD0022 /* PesobluModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5826C412E0F6EE500BD0022 /* PesobluModel.xcdatamodeld */; };
+		C5826C442E0F6EE500BD0022 /* PesobluModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5826C412E0F6EE500BD0022 /* PesobluModel.xcdatamodeld */; };
 		C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740A2AC71FD3000FCD5B /* AppDelegate.swift */; };
 		C586740D2AC71FD3000FCD5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740C2AC71FD3000FCD5B /* SceneDelegate.swift */; };
 		C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740E2AC71FD3000FCD5B /* ChangeViewController.swift */; };
@@ -63,6 +65,7 @@
 		C52D8A492CE2C1B600A827BD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		C55DA6882ACB136F00871340 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
 		C5826C382E08E8DA00BD0022 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
+		C5826C422E0F6EE500BD0022 /* PesobluModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PesobluModel.xcdatamodel; sourceTree = "<group>"; };
 		C58674072AC71FD3000FCD5B /* Pesoblu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pesoblu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C586740A2AC71FD3000FCD5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C586740C2AC71FD3000FCD5B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -239,6 +242,7 @@
 				C58674132AC71FD5000FCD5B /* Assets.xcassets */,
 				C58674152AC71FD5000FCD5B /* LaunchScreen.storyboard */,
 				C58674182AC71FD5000FCD5B /* Info.plist */,
+				C5826C412E0F6EE500BD0022 /* PesobluModel.xcdatamodeld */,
 			);
 			path = Pesoblu;
 			sourceTree = "<group>";
@@ -394,6 +398,7 @@
 				C59B3F482CBDD3E600E0C532 /* LoginViewController.swift in Sources */,
 				C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */,
 				C513DE9D2ACDB5340066AFCA /* ChangeCollectionViewCell.swift in Sources */,
+				C5826C442E0F6EE500BD0022 /* PesobluModel.xcdatamodeld in Sources */,
 				C5826C392E08E8DA00BD0022 /* NavigationCoordinator.swift in Sources */,
 				C5E4E73F2CC05826000A06C4 /* LoginView.swift in Sources */,
 				C5C47C132CCAF16600238099 /* AuthenticationViewModel.swift in Sources */,
@@ -415,6 +420,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5826C432E0F6EE500BD0022 /* PesobluModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,6 +790,19 @@
 			productName = FirebaseAnalyticsOnDeviceConversion;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		C5826C412E0F6EE500BD0022 /* PesobluModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C5826C422E0F6EE500BD0022 /* PesobluModel.xcdatamodel */,
+			);
+			currentVersion = C5826C422E0F6EE500BD0022 /* PesobluModel.xcdatamodel */;
+			path = PesobluModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C58673FF2AC71FD3000FCD5B /* Project object */;
 }
