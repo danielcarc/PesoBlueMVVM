@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import MapKit
 import Kingfisher
+import CoreData
 
 protocol PlaceViewDelegate: AnyObject{
     func didFailToLoadImage(_ view: PlaceView, error: Error)
@@ -18,7 +19,14 @@ protocol PlaceViewDelegate: AnyObject{
 
 final class PlaceView: UIView{
     
-    private var viewModel = PlaceViewModel()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     weak var delegate: PlaceViewDelegate?
     var place: PlaceItem?
@@ -150,14 +158,7 @@ final class PlaceView: UIView{
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        setup()
-    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension PlaceView{

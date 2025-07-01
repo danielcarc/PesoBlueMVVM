@@ -16,6 +16,7 @@ class CityDataService: DataManager, CityDataServiceProtocol{
     private var cityItems: [CitysItem] = []
     
     func fetch() -> [CitysItem] {
+        cityItems = []
         for data in loadPlist(file: "CitysAr") {
             cityItems.append(CitysItem(dict: data as! [String: String]))
         }

@@ -7,26 +7,30 @@
 
 import Foundation
 import UIKit
+import CoreData
 
-
-class PlaceViewModel{
+protocol PlaceViewModelProtocol{
+    func saveFavoriteStatus(placeId: String, isFavorite: Bool) async throws
+    func loadFavoriteStatus(placeId: String) async throws -> Bool
     
-//    func downloadImage(from url: String) async throws -> UIImage {
-//        guard let url = URL(string: url) else {
-//            throw URLError(.badURL)
-//        }
-//        
-//        let (imageData, response) = try await URLSession.shared.data(from: url)
-//        
-//        guard let httpResponse = response as? HTTPURLResponse,
-//              httpResponse.statusCode == 200 else {
-//            throw URLError(.badServerResponse)
-//        }
-//        
-//        guard let image = UIImage(data: imageData) else {
-//            throw URLError(.cannotDecodeRawData)
-//        }
-//        
-//        return image
-//    }
+}
+
+class PlaceViewModel: PlaceViewModelProtocol{
+    
+    private var coreDataService: CoreDataServiceProtocol
+    
+    init(coreDataService: CoreDataServiceProtocol){
+        self.coreDataService = coreDataService
+    }
+    
+    func saveFavoriteStatus(placeId: String, isFavorite: Bool) async throws{
+        return try await coreDataService.saveFavoriteStatus(placeId: placeId, isFavorite: isFavorite)
+    }
+    
+    func loadFavoriteStatus(placeId: String) async throws -> Bool{
+        //var isFavorite: Bool = false
+        return try await coreDataService.loadFavoriteStatus(placeId: placeId)
+    }
+    
+
 }

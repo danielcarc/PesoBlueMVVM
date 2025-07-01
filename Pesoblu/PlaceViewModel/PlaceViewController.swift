@@ -11,14 +11,24 @@ import CoreData
 
 class PlaceViewController: UIViewController {
     
+    private var placeView: PlaceView
+        private let placeViewModel: PlaceViewModelProtocol
+        var placeItem: PlaceItem?
+        
+        init(placeView: PlaceView, placeViewModel: PlaceViewModelProtocol) {
+            self.placeView = placeView
+            self.placeViewModel = placeViewModel
+            super.init(nibName: nil, bundle: nil)
+            setupDependencies()
+        }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var context: NSManagedObjectContext {
         (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext ?? NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     }
-    
-    var placeItem: PlaceItem?
-    private lazy var placeView = PlaceView()
-    
-    //private lazy var favoriteButton = UIButton()
     
     private var isFavorite: Bool = false {
         didSet {
@@ -61,6 +71,10 @@ class PlaceViewController: UIViewController {
 
 extension PlaceViewController{
     
+    func setupDependencies(){
+        placeView.delegate = self
+    }
+    
     private func setupUI() {
         view.backgroundColor = UIColor(hex: "F0F8FF")
         
@@ -69,8 +83,17 @@ extension PlaceViewController{
         self.navigationItem.leftBarButtonItem = backButton
         setupNavigationButton()
         
-        placeView.delegate = self
         
+        setupViews()
+        
+        setupConstraints()
+        if let placeItem = placeItem {
+            placeView.setData(item: placeItem)
+            loadFavoriteStatus()
+        }
+    }
+    
+    func setupViews(){
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -79,12 +102,6 @@ extension PlaceViewController{
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         placeView.translatesAutoresizingMaskIntoConstraints = false
-        
-        setupConstraints()
-        if let placeItem = placeItem {
-            placeView.setData(item: placeItem)
-        }
-        
     }
     
 
@@ -151,25 +168,37 @@ extension PlaceViewController{
         }, completion: nil)
     }
     
-    func saveFavoriteStatus(){
-        guard let placeId = placeItem?.id else { return }
-        let fetchRequest : NSFetchRequest<FavoritePlace> = FavoritePlace.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", placeId)
-        
-        do{
-            let results = try context.fetch(fetchRequest)
-            if let favorite = results.first {
-                favorite.isFavorite = isFavorite
-            }
-            else{
-                let newFavorite = FavoritePlace(context: context)
-                newFavorite.placeId = String(placeId)
-                newFavorite.isFavorite = isFavorite
-            }
-            try context.save()
+    func loadFavoriteStatus() {
+        guard let id = placeItem?.id else {
+            print("Error: placeId is nil")
+            return
         }
-        catch{
-            print("Error saving favorite status: \(error.localizedDescription)")
+        let placeId = String(id)
+        
+        Task{
+            do{
+                self.isFavorite = try await self.placeViewModel.loadFavoriteStatus(placeId: placeId)
+            }
+            catch{
+                self.showAlert(title: "Error", message: "\(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func saveFavoriteStatus(){
+        guard let id = placeItem?.id else {
+            print("Error: placeId is nil")
+            return
+        }
+        let placeId = String(id)
+        
+        Task{
+            do{
+                try await placeViewModel.saveFavoriteStatus(placeId: placeId, isFavorite: isFavorite)
+            }
+            catch{
+                showAlert(title: "Error", message: "Error saving favorite status: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -181,6 +210,6 @@ extension PlaceViewController{
     @objc private func toggleFavorite() {
         isFavorite.toggle()
         saveFavoriteStatus()
-        // Aquí cambiaremos el color y guardaremos en Core Data
+        
     }
 }

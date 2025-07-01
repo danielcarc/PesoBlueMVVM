@@ -10,6 +10,7 @@
 //tal vez agregar un recomendado a los mejores lugar en el json
 import UIKit
 import Foundation
+import CoreData
 
 class PlacesListViewController: UIViewController {
     
@@ -160,13 +161,16 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
     
     func didSelectItem(_ item: PlaceItem) {
         guard let navigationController = navigationController else {
-                print("Error: No hay un NavigationController disponible")
-                return
-            }
-            
-            let placeVC = PlaceViewController()
-            placeVC.placeItem = item
-            navigationController.pushViewController(placeVC, animated: true) 
+            print("Error: No hay un NavigationController disponible")
+            return
+        }
+        let placeView = PlaceView()
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let coreDataService = CoreDataService(context: context)
+        let placeviewmodel = PlaceViewModel(coreDataService: coreDataService)
+        let placeVC = PlaceViewController(placeView: placeView, placeViewModel: placeviewmodel)
+        placeVC.placeItem = item
+        navigationController.pushViewController(placeVC, animated: true)
     }
     
     func didUpdateItemCount(_ count: Int) {

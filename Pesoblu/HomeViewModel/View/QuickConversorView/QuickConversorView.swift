@@ -18,16 +18,12 @@ class QuickConversorView: UIView{
         return label
     }()
     
-    
-    
     private lazy var usdContainerView : UIView = {
         var view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 8
-        //view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
-        //view.heightAnchor.constraint(equalToConstant: 72).isActive = true
         return view
     }()
     
@@ -144,23 +140,11 @@ class QuickConversorView: UIView{
     }
     
 }
-
-extension QuickConversorView{
-    var usdLabelTesting: UILabel {
-        return usdValueLabel
-    }
-    var arsvalueLabelTesting: UILabel {
-        return arsValueLabel
-    }
-}
-
 extension QuickConversorView{
     
     private func setupUI() {
-        
         addSubViews()
         setupConstraints()
-        
     }
     
     func addSubViews(){
@@ -172,11 +156,9 @@ extension QuickConversorView{
         
         arsContainerView.addSubview(arsLabelsStackView)
         arsContainerView.addSubview(arsValueLabel)
-        
     }
     
     func setupConstraints(){
-        
         NSLayoutConstraint.activate([
             // Title Label Constraints
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
@@ -208,6 +190,17 @@ extension QuickConversorView{
             arsValueLabel.widthAnchor.constraint(equalToConstant: 80)
         ])
         
+    }
+}
+
+//MARK: - QuickConversorView Testing
+
+extension QuickConversorView{
+    var usdLabelTesting: UILabel {
+        return usdValueLabel
+    }
+    var arsvalueLabelTesting: UILabel {
+        return arsValueLabel
     }
 }
 
