@@ -18,7 +18,6 @@
 		C52D8A4A2CE2C1B600A827BD /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D8A492CE2C1B600A827BD /* AppUser.swift */; };
 		C55DA6892ACB136F00871340 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55DA6882ACB136F00871340 /* ChangeView.swift */; };
 		C5826C302DE4124200BD0022 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5826C2F2DE4124200BD0022 /* Alamofire */; };
-		C5826C392E08E8DA00BD0022 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5826C382E08E8DA00BD0022 /* NavigationCoordinator.swift */; };
 		C5826C432E0F6EE500BD0022 /* PesobluModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5826C412E0F6EE500BD0022 /* PesobluModel.xcdatamodeld */; };
 		C5826C442E0F6EE500BD0022 /* PesobluModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5826C412E0F6EE500BD0022 /* PesobluModel.xcdatamodeld */; };
 		C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C586740A2AC71FD3000FCD5B /* AppDelegate.swift */; };
@@ -64,7 +63,6 @@
 		C51C8ABD2BD87FBC008777C8 /* PesoBlueTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PesoBlueTabBarController.swift; sourceTree = "<group>"; };
 		C52D8A492CE2C1B600A827BD /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		C55DA6882ACB136F00871340 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
-		C5826C382E08E8DA00BD0022 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		C5826C422E0F6EE500BD0022 /* PesobluModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PesobluModel.xcdatamodel; sourceTree = "<group>"; };
 		C58674072AC71FD3000FCD5B /* Pesoblu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pesoblu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C586740A2AC71FD3000FCD5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +83,7 @@
 		C561430A2CEC3CDE00760670 /* Misc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Misc; sourceTree = "<group>"; };
 		C5740BBD2D4A982500F6D687 /* PlaceViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlaceViewModel; sourceTree = "<group>"; };
 		C57814272D08F746004A42C9 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
+		C5826C602E16F8A200BD0022 /* Coordinators */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coordinators; sourceTree = "<group>"; };
 		C58BAEED2D70B59100AD9559 /* PlacesListViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlacesListViewModel; sourceTree = "<group>"; };
 		C58BAEF92D71129D00AD9559 /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
 		C58BC0422DC44BD400C6FFD5 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
@@ -223,6 +222,7 @@
 		C58674092AC71FD3000FCD5B /* Pesoblu */ = {
 			isa = PBXGroup;
 			children = (
+				C5826C602E16F8A200BD0022 /* Coordinators */,
 				C58BC0422DC44BD400C6FFD5 /* Models */,
 				C59B3F432CBDD1CF00E0C532 /* LoginViewModel */,
 				C5AFD6292DA374A900B3D244 /* UserProfileViewModel */,
@@ -259,7 +259,6 @@
 		C5E4E73B2CC052E5000A06C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C5826C382E08E8DA00BD0022 /* NavigationCoordinator.swift */,
 				C59B3F472CBDD3E600E0C532 /* LoginViewController.swift */,
 				C5E4E73E2CC05826000A06C4 /* LoginView.swift */,
 			);
@@ -293,6 +292,7 @@
 				C561430A2CEC3CDE00760670 /* Misc */,
 				C5740BBD2D4A982500F6D687 /* PlaceViewModel */,
 				C57814272D08F746004A42C9 /* HomeViewModel */,
+				C5826C602E16F8A200BD0022 /* Coordinators */,
 				C58BAEED2D70B59100AD9559 /* PlacesListViewModel */,
 				C58BAEF92D71129D00AD9559 /* Service */,
 				C58BC0422DC44BD400C6FFD5 /* Models */,
@@ -399,7 +399,6 @@
 				C586740F2AC71FD3000FCD5B /* ChangeViewController.swift in Sources */,
 				C513DE9D2ACDB5340066AFCA /* ChangeCollectionViewCell.swift in Sources */,
 				C5826C442E0F6EE500BD0022 /* PesobluModel.xcdatamodeld in Sources */,
-				C5826C392E08E8DA00BD0022 /* NavigationCoordinator.swift in Sources */,
 				C5E4E73F2CC05826000A06C4 /* LoginView.swift in Sources */,
 				C5C47C132CCAF16600238099 /* AuthenticationViewModel.swift in Sources */,
 				C586740B2AC71FD3000FCD5B /* AppDelegate.swift in Sources */,

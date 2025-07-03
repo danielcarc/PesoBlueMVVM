@@ -35,12 +35,11 @@ class CoreDataService: CoreDataServiceProtocol{
                 newFavorite.isFavorite = isFavorite
             }
             try self.context.save()
-        }catch{
+        }
+        catch{
             throw error
         }
     }
-    
-    
     
     func loadFavoriteStatus(placeId: String) async throws -> Bool {
         var results: [FavoritePlace] = []

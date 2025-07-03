@@ -36,7 +36,7 @@ class PesoBlueTabBarController: UITabBarController {
         vc1.title = "Home"
         let vc2 = ChangeViewController(viewModel: changeViewModel)
         vc2.title = "Cotización"
-        let userProfileView = UserProfileView(userProfileViewModel: userProfileViewModel)
+        let userProfileView = UserProfileView(viewModel: userProfileViewModel, onSignOut: {})
         let userProfileHostingController = UIHostingController(rootView: userProfileView)
         userProfileHostingController.title = "Perfil"
         

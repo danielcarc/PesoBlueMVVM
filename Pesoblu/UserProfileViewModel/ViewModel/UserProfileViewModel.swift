@@ -25,16 +25,21 @@ protocol UserProfileViewModelProtocol {
     func signOut()
 }
 
-class UserProfileViewModel: UserProfileViewModelProtocol {
+protocol UserProfileViewModelDelegate: AnyObject{
+    func didSignOut()
+    
+}
+
+class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     private var state: UserProfileState = .loading
     var preferredCurrency: String
-    private weak var coordinator: NavigationCoordinator?
+    weak var delegate : UserProfileViewModelDelegate?
+    @Published var didSignOut = false
     
     private let userService: UserServiceProtocol
     
-    init(userService: UserServiceProtocol, coordinator: NavigationCoordinator? = nil) {
+    init(userService: UserServiceProtocol) {
         self.userService = userService
-        self.coordinator = coordinator
         self.preferredCurrency = userService.loadPreferredCurrency() ?? CurrencyOptions.ARS.rawValue
     }
     
@@ -64,6 +69,6 @@ class UserProfileViewModel: UserProfileViewModelProtocol {
     func signOut() {
         GIDSignIn.sharedInstance.signOut()
         userService.deleteUser()
-        coordinator?.showLoginScreen()
+        delegate?.didSignOut()
     }
 }

@@ -20,17 +20,22 @@ enum CurrencyOptions: String, CaseIterable {
 }
 
 struct UserProfileView: View {
-    private let userProfileViewModel: UserProfileViewModelProtocol
+    @ObservedObject private var viewModel: UserProfileViewModel
+    var onSignOut: () -> Void
     
     @State private var state: UserProfileState = .loading
     @State private var preferredCurrency: String
     @State private var isEditingCurrency: Bool = false
     private let currencyOptions: [CurrencyOptions] = CurrencyOptions.allCases
     
-    init(userProfileViewModel: UserProfileViewModelProtocol) {
-        self.userProfileViewModel = userProfileViewModel
-        self._preferredCurrency = State(initialValue: userProfileViewModel.preferredCurrency)
+    
+    
+    init(viewModel: UserProfileViewModel, onSignOut: @escaping () -> Void) {
+        self.viewModel = viewModel
+        self.onSignOut = onSignOut
+        self._preferredCurrency = State(initialValue: viewModel.preferredCurrency)
     }
+    
     
     var body: some View {
         ScrollView {
@@ -102,10 +107,10 @@ struct UserProfileView: View {
                                 }
                                 .pickerStyle(.menu)
                                 .onChange(of: preferredCurrency) {oldValue, newValue in
-                                    userProfileViewModel.savePreferredCurrency(newValue)
+                                    viewModel.savePreferredCurrency(newValue)
                                     isEditingCurrency = false
                                     // Actualizamos el estado para reflejar el cambio
-                                    state = userProfileViewModel.getState()
+                                    state = viewModel.getState()
                                 }
                             } else {
                                 Text(preferredCurrency)
@@ -147,7 +152,7 @@ struct UserProfileView: View {
                     
                     // Botón "Cerrar sesión"
                     Button(action: {
-                        userProfileViewModel.signOut()
+                        viewModel.signOut()
                     }) {
                         Text("Cerrar sesión")
                             .font(.system(size: 16, weight: .medium))
@@ -169,14 +174,20 @@ struct UserProfileView: View {
         .navigationTitle("Perfil")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            userProfileViewModel.loadUserData()
-            state = userProfileViewModel.getState()
-            preferredCurrency = userProfileViewModel.preferredCurrency//se sincroniza despues de cargar al user
+            viewModel.loadUserData()
+            state = viewModel.getState()
+            preferredCurrency = viewModel.preferredCurrency//se sincroniza despues de cargar al user
         }
         .onChange(of: isEditingCurrency) {
-            state = userProfileViewModel.getState()
-            preferredCurrency = userProfileViewModel.preferredCurrency //sincronizamos despues de cambios
+            state = viewModel.getState()
+            preferredCurrency = viewModel.preferredCurrency //sincronizamos despues de cambios
         }
+        .onChange(of: viewModel.didSignOut) {
+            if viewModel.didSignOut {
+                onSignOut()
+            }
+        }
+
     }
 }
 
@@ -184,6 +195,6 @@ struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         let userService = UserService()
         let viewModel = UserProfileViewModel(userService: userService)
-        UserProfileView(userProfileViewModel: viewModel)
+        UserProfileView(viewModel: viewModel, onSignOut: {})
     }
 }

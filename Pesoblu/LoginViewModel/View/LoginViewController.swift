@@ -18,13 +18,13 @@ class LoginViewController: UIViewController, LoginViewProtocol {
     
     var authVM : AuthenticationViewModelProtocol
     let userService : UserService
-    private let coordinator: NavigationCoordinator
+    private let coordinator: LoginNavigationDelegate
     private var cancellables = Set<AnyCancellable>()
     
     var loginView : LoginView!
     private var activityIndicator: UIActivityIndicatorView!
     
-    init(authVM: AuthenticationViewModelProtocol, userService: UserService, coordinator: NavigationCoordinator) {
+    init(authVM: AuthenticationViewModelProtocol, userService: UserService, coordinator: LoginNavigationDelegate) {
         self.authVM = authVM
         self.userService = userService
         self.coordinator = coordinator
@@ -55,7 +55,7 @@ class LoginViewController: UIViewController, LoginViewProtocol {
                 "user_email": "\(user?.email ?? "unknown")"
             ])
             print("User authenticated successfully with Google")
-            self.coordinator.showTabBar()
+            coordinator.didLoginSuccessfully()
         }
         authVM.delegate = self // Configurar el delegate para errores
         
@@ -147,9 +147,19 @@ extension LoginViewController: AuthenticationDelegate{
         }
     }
     
-    static func create(authVM: AuthenticationViewModelProtocol, userService: UserService, coordinator: NavigationCoordinator) -> LoginViewController {
-        let controller = LoginViewController(authVM: authVM, userService: userService, coordinator: coordinator)
-        return controller
+//    static func create(authVM: AuthenticationViewModelProtocol, userService: UserService, coordinator: LoginCoordinatorDelegate) -> LoginViewController {
+//        let controller = LoginViewController(authVM: authVM, userService: userService, coordinator: coordinator)
+//        return controller
+//    }
+}
+
+extension LoginViewController {
+    static func create(authVM: AuthenticationViewModel,
+                       userService: UserService,
+                       coordinator: LoginNavigationDelegate) -> LoginViewController {
+        let vc = LoginViewController(authVM: authVM, userService: userService, coordinator: coordinator)
+        //vc.coordinator = coordinator
+        return vc
     }
 }
 

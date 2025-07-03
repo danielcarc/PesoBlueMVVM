@@ -157,8 +157,6 @@ final class PlaceView: UIView{
             }
         }
     }
-
-    
 }
 
 extension PlaceView{
@@ -182,7 +180,6 @@ extension PlaceView{
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(expandImage))
         placeImageView.addGestureRecognizer(tapGesture)
-        
     }
     
     func addConstraints(){
@@ -287,7 +284,6 @@ extension PlaceView{
             UIApplication.shared.open(webURL, options: [:], completionHandler: nil)
             return
         }
-        
         //abrir la app de instagram directamente
         UIApplication.shared.open(appURL, options: [:], completionHandler: nil)
     }

@@ -12,29 +12,20 @@ import GoogleSignIn
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var appCoordinator: AppCoordinator?
 
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        self.window = UIWindow(windowScene: windowScene)
+        let window = UIWindow(windowScene: windowScene)
+        self.window = window
         
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-           let firebaseApp = appDelegate.firebaseApp,
-           let gidSignIn = appDelegate.gidSignIn,
-           let userService = appDelegate.userService {
-            let authVM = AuthenticationViewModel(firebaseApp: firebaseApp, gidSignIn: gidSignIn, userService: userService)
-            let coordinator = NavigationCoordinator()
-            let loginVC = LoginViewController.create(authVM: authVM, userService: userService, coordinator: coordinator)
-            window?.rootViewController = loginVC
-            window?.makeKeyAndVisible()
-        } else {
-            fatalError("Failed to access Firebase or dependencies from AppDelegate")
-        }
-        
+        let appCoordinator = AppCoordinator(window: window) 
+        self.appCoordinator = appCoordinator
+        appCoordinator.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
