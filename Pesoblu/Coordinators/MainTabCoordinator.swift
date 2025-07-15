@@ -7,18 +7,45 @@
 import UIKit
 
 class MainTabCoordinator: Coordinator {
-
     var window: UIWindow
-    var navigationController: UINavigationController = UINavigationController()
+    var navigationController: UINavigationController
+    weak var appCoordinator: AppCoordinator?
 
-    init(window: UIWindow) {
+    private var homeCoordinator: HomeCoordinator!
+    private var changeCoordinator: ChangeCoordinator!
+    private var profileCoordinator: ProfileCoordinator!
+
+    init(window: UIWindow, appCoordinator: AppCoordinator? = nil) {
         self.window = window
+        self.navigationController = UINavigationController()
+        self.appCoordinator = appCoordinator
     }
 
     func start() {
-        let tabBarController = PesoBlueTabBarController()
-        // Podés inyectar coordinadores hijos para cada tab si querés
-        window.rootViewController = tabBarController
+        homeCoordinator = HomeCoordinator()
+        homeCoordinator.start()
+
+        changeCoordinator = ChangeCoordinator()
+        changeCoordinator.start()
+
+        profileCoordinator = ProfileCoordinator(navigationController: UINavigationController(), userService: UserService())
+        profileCoordinator.parentCoordinator = self
+        profileCoordinator.start()
+
+        let tabBar = PesoBlueTabBarController(
+            viewControllers: [
+                homeCoordinator.navigationController,
+                changeCoordinator.navigationController,
+                profileCoordinator.navigationController
+            ]
+        )
+
+        window.rootViewController = tabBar
         window.makeKeyAndVisible()
     }
+
+    func didSignOutFromProfile() {
+        appCoordinator?.didFinishSession()
+    }
 }
+

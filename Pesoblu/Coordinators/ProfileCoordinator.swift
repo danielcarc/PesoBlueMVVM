@@ -11,24 +11,29 @@ class ProfileCoordinator: Coordinator {
 
     var navigationController: UINavigationController
     let userService: UserServiceProtocol
-    weak var appCoordinator: AppCoordinator?
+    weak var parentCoordinator: MainTabCoordinator?
+    
 
     init(navigationController: UINavigationController,
-         userService: UserServiceProtocol,
-         appCoordinator: AppCoordinator? = nil) {
+         userService: UserServiceProtocol) {
         self.navigationController = navigationController
         self.userService = userService
-        self.appCoordinator = appCoordinator
     }
-
+    
     func start() {
-        let viewModel = UserProfileViewModel(userService: userService)
-
-        let profileView = UserProfileView(viewModel: viewModel) {
-            self.appCoordinator?.showLogin() // ✅ Reemplazá por el flujo correcto
+        let viewModel = UserProfileViewModel(userService: UserService())
+        let profileView = UserProfileView(viewModel: viewModel) { [weak self] in
+            self?.handleSignOut()
         }
 
-        let hostingController = UIHostingController(rootView: profileView)
-        navigationController.pushViewController(hostingController, animated: true)
+        let hostingVC = UIHostingController(rootView: profileView)
+        hostingVC.title = "Perfil"
+        hostingVC.tabBarItem = UITabBarItem(title: "Perfil", image: UIImage(named: "user-square"), tag: 2)
+        navigationController.setViewControllers([hostingVC], animated: false)
+    }
+
+    private func handleSignOut() {
+        // Volver al login u otra acción del flujo
+        parentCoordinator?.didSignOutFromProfile()
     }
 }

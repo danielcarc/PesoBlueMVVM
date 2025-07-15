@@ -10,6 +10,7 @@ class AppCoordinator: Coordinator{
     var window: UIWindow
     var navigationController: UINavigationController
     var childCoordinator: Coordinator?
+    weak var mainTabCoordinator: MainTabCoordinator?
     
     init(window: UIWindow){
         self.window = window
@@ -20,7 +21,13 @@ class AppCoordinator: Coordinator{
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         
-        showLogin()
+        // Verificar estado de autenticación
+        let userService = UserService()
+        if userService.loadUser() != nil {
+            showMainApp()
+        } else {
+            showLogin()
+        }
     }
     
     func showLogin() {
@@ -37,18 +44,21 @@ class AppCoordinator: Coordinator{
             gidSignIn: gidSignIn,
             userService: userService
         )
-        
         loginCoordinator.delegate = self
         childCoordinator = loginCoordinator
-        loginCoordinator.start()
+        UIView.transition(with: window, duration: 0.4, options: [.transitionFlipFromLeft], animations: {
+            self.window.rootViewController = self.navigationController
+        }, completion: { _ in
+            loginCoordinator.start()
+        })
     }
     
-    private func showMainApp(){
-        let tabCoordinator = MainTabCoordinator(window: window)
+    func showMainApp() {
+        let tabCoordinator = MainTabCoordinator(window: window, appCoordinator: self)
+        mainTabCoordinator = tabCoordinator
         childCoordinator = tabCoordinator
         tabCoordinator.start()
     }
-    
 }
 
 extension AppCoordinator: LoginNavigationDelegate {
@@ -62,10 +72,23 @@ extension AppCoordinator{
         let userService = UserService()
         let profileCoordinator = ProfileCoordinator(
             navigationController: navigationController,
-            userService: userService,
-            appCoordinator: self
+            userService: userService
         )
         profileCoordinator.start()
         childCoordinator = profileCoordinator
     }
+    
+    func didFinishSession() {
+        // Limpiar coordinadores actuales
+        childCoordinator = nil
+        mainTabCoordinator = nil
+        
+        // También reiniciamos el UINavigationController, por si fue usado en algún tab
+        navigationController = UINavigationController()
+        window.rootViewController = navigationController
+        
+        // Mostrar login
+        showLogin()
+    }
+
 }

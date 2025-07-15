@@ -146,11 +146,7 @@ extension LoginViewController: AuthenticationDelegate{
             showErrorAlert(AuthenticationViewModel.AuthError.unknown)
         }
     }
-    
-//    static func create(authVM: AuthenticationViewModelProtocol, userService: UserService, coordinator: LoginCoordinatorDelegate) -> LoginViewController {
-//        let controller = LoginViewController(authVM: authVM, userService: userService, coordinator: coordinator)
-//        return controller
-//    }
+
 }
 
 extension LoginViewController {

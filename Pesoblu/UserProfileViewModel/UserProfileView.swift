@@ -10,28 +10,22 @@ import Kingfisher
 import GoogleSignIn
 import GoogleSignInSwift
 
-enum CurrencyOptions: String, CaseIterable {
-    case ARS = "Peso Argentino"
-    case USD = "Dolar Americano"
-    case BRL = "Real Brasileiro"
-    case EUR = "Euro"
-    case UYU = "Peso Uruguayo"
-    case CLP = "Peso Chileno"
-}
 
 struct UserProfileView: View {
-    @ObservedObject private var viewModel: UserProfileViewModel
-    var onSignOut: () -> Void
     
+    @StateObject private var viewModel = UserProfileViewModel(userService: UserService())
+    var onSignOut: () -> Void
     @State private var state: UserProfileState = .loading
     @State private var preferredCurrency: String
     @State private var isEditingCurrency: Bool = false
     private let currencyOptions: [CurrencyOptions] = CurrencyOptions.allCases
+    @State private var showSignOutAlert = false
+    @State private var showToast = false
     
     
     
     init(viewModel: UserProfileViewModel, onSignOut: @escaping () -> Void) {
-        self.viewModel = viewModel
+        _viewModel = StateObject(wrappedValue: viewModel)
         self.onSignOut = onSignOut
         self._preferredCurrency = State(initialValue: viewModel.preferredCurrency)
     }
@@ -125,10 +119,6 @@ struct UserProfileView: View {
                                 }
                             }
                         }
-                        
-                        Text("Último acceso: 11")
-                            .font(.system(size: 16))
-                            .foregroundColor(.gray)
                     }
                     .padding()
                     .background(Color.white.opacity(0.8))
@@ -152,7 +142,7 @@ struct UserProfileView: View {
                     
                     // Botón "Cerrar sesión"
                     Button(action: {
-                        viewModel.signOut()
+                        showSignOutAlert = true
                     }) {
                         Text("Cerrar sesión")
                             .font(.system(size: 16, weight: .medium))
@@ -165,9 +155,19 @@ struct UserProfileView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 16)
                     .padding(.bottom, 16)
-                    
+                    .alert(isPresented: $showSignOutAlert) {
+                        Alert(
+                            title: Text("¿Estás seguro que deseas cerrar sesión?"),
+                            primaryButton: .destructive(Text("Cerrar sesión")) {
+                                signOutConfirmed()
+                            },
+                            secondaryButton: .cancel(Text("Cancelar"))
+                        )
+                    }
+                    .overlay(toastView())
                     Spacer()
                 }
+                    
             }
         }
         .background(Color(UIColor(hex: "F0F8FF")))
@@ -176,25 +176,60 @@ struct UserProfileView: View {
         .onAppear {
             viewModel.loadUserData()
             state = viewModel.getState()
-            preferredCurrency = viewModel.preferredCurrency//se sincroniza despues de cargar al user
+            preferredCurrency = viewModel.preferredCurrency
         }
         .onChange(of: isEditingCurrency) {
             state = viewModel.getState()
             preferredCurrency = viewModel.preferredCurrency //sincronizamos despues de cambios
         }
+
         .onChange(of: viewModel.didSignOut) {
             if viewModel.didSignOut {
-                onSignOut()
+                showToast = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    showToast = false
+                    onSignOut()
+                }
             }
         }
-
     }
 }
 
-struct UserProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        let userService = UserService()
-        let viewModel = UserProfileViewModel(userService: userService)
-        UserProfileView(viewModel: viewModel, onSignOut: {})
+extension UserProfileView{
+    private func signOutConfirmed() {
+        viewModel.signOut()
+        showToast = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            showToast = false
+        }
     }
+
+    @ViewBuilder
+    private func toastView() -> some View {
+        if showToast {
+            VStack {
+                Spacer()
+                Text("Sesión cerrada correctamente")
+                    .font(.subheadline)
+                    .padding()
+                    .background(Color.black.opacity(0.8))
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+                    .padding(.bottom, 40)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .animation(.easeInOut, value: showToast)
+            }
+        }
+    }
+
 }
+
+//struct UserProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let userService = UserService()
+//        let viewModel = UserProfileViewModel(userService: userService)
+//        UserProfileView(viewModel: viewModel)
+//    }
+//}

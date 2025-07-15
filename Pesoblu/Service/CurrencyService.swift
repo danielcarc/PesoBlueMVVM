@@ -119,7 +119,7 @@ class CurrencyService: CurrencyServiceProtocol {
 
         let jsonDecoder = JSONDecoder()
         let dlp: Rates = try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
-        print (dlp)
+        //print (dlp)
         //return try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
         return dlp
     }

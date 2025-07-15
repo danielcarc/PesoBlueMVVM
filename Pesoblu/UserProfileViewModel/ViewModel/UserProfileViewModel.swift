@@ -19,6 +19,7 @@ enum UserProfileState {
 
 protocol UserProfileViewModelProtocol {
     var preferredCurrency: String { get set }
+    var didSignOut: Bool { get }
     func getState() -> UserProfileState
     func loadUserData()
     func savePreferredCurrency(_ currency: String)
@@ -27,18 +28,19 @@ protocol UserProfileViewModelProtocol {
 
 protocol UserProfileViewModelDelegate: AnyObject{
     func didSignOut()
-    
 }
 
 class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     private var state: UserProfileState = .loading
     var preferredCurrency: String
-    weak var delegate : UserProfileViewModelDelegate?
-    @Published var didSignOut = false
+    weak var delegate: UserProfileViewModelDelegate?
+    @Published var didSignOut: Bool = false
     
     private let userService: UserServiceProtocol
+    var onSignOutCallback: (() -> Void)?
     
     init(userService: UserServiceProtocol) {
+        //self.delegate = delegate
         self.userService = userService
         self.preferredCurrency = userService.loadPreferredCurrency() ?? CurrencyOptions.ARS.rawValue
     }
@@ -69,6 +71,8 @@ class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     func signOut() {
         GIDSignIn.sharedInstance.signOut()
         userService.deleteUser()
-        delegate?.didSignOut()
+        didSignOut = true
     }
 }
+
+
