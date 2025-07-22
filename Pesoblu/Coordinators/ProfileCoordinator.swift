@@ -28,7 +28,7 @@ class ProfileCoordinator: Coordinator {
 
         let hostingVC = UIHostingController(rootView: profileView)
         hostingVC.title = "Perfil"
-        hostingVC.tabBarItem = UITabBarItem(title: "Perfil", image: UIImage(named: "user-square"), tag: 2)
+        hostingVC.tabBarItem = UITabBarItem(title: "Perfil", image: UIImage(named: "user-square"), tag: 3)
         navigationController.setViewControllers([hostingVC], animated: false)
     }
 

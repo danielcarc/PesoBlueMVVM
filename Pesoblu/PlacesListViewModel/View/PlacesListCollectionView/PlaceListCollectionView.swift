@@ -86,23 +86,6 @@ class PlaceListCollectionView: UIView{
         return vw
         
     }()
-    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        setup()
-//        locationManager.onLocationUpdate = { [weak self] in
-//            DispatchQueue.main.async {
-//                self?.placeCollectionView.reloadData()
-//            }
-//        }
-//    }
-
-    
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        setup()
-//    }
-    
 }
 
 

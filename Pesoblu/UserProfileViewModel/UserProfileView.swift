@@ -223,13 +223,4 @@ extension UserProfileView{
             }
         }
     }
-
 }
-
-//struct UserProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let userService = UserService()
-//        let viewModel = UserProfileViewModel(userService: userService)
-//        UserProfileView(viewModel: viewModel)
-//    }
-//}

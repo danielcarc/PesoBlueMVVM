@@ -46,11 +46,16 @@ class AppCoordinator: Coordinator{
         )
         loginCoordinator.delegate = self
         childCoordinator = loginCoordinator
-        UIView.transition(with: window, duration: 0.4, options: [.transitionFlipFromLeft], animations: {
-            self.window.rootViewController = self.navigationController
-        }, completion: { _ in
-            loginCoordinator.start()
-        })
+        let transition = CATransition()
+        transition.duration = 0.35
+        transition.type = .push
+        transition.subtype = .fromRight
+        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        
+        window.layer.add(transition, forKey: kCATransition)
+        window.rootViewController = navigationController
+        
+        loginCoordinator.start()
     }
     
     func showMainApp() {

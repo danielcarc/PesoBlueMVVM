@@ -54,7 +54,6 @@ class LoginViewController: UIViewController, LoginViewProtocol {
             Analytics.logEvent("user_logged_in", parameters: [
                 "user_email": "\(user?.email ?? "unknown")"
             ])
-            print("User authenticated successfully with Google")
             coordinator.didLoginSuccessfully()
         }
         authVM.delegate = self // Configurar el delegate para errores
@@ -90,9 +89,6 @@ class LoginViewController: UIViewController, LoginViewProtocol {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        print("Superview frame: \(self.view.frame)")
-        
         // Registrar pantalla en Firebase Analytics
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
             AnalyticsParameterScreenName: "Login Screen",
@@ -103,7 +99,6 @@ class LoginViewController: UIViewController, LoginViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
 }
 
 //MARK: - Sign in Methods
@@ -154,11 +149,8 @@ extension LoginViewController {
                        userService: UserService,
                        coordinator: LoginNavigationDelegate) -> LoginViewController {
         let vc = LoginViewController(authVM: authVM, userService: userService, coordinator: coordinator)
-        //vc.coordinator = coordinator
         return vc
     }
 }
 
-
-//#Preview("LoginViewController", traits: .defaultLayout, body: { LoginViewController()})
 

@@ -84,6 +84,7 @@
 		C5740BBD2D4A982500F6D687 /* PlaceViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlaceViewModel; sourceTree = "<group>"; };
 		C57814272D08F746004A42C9 /* HomeViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeViewModel; sourceTree = "<group>"; };
 		C5826C602E16F8A200BD0022 /* Coordinators */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coordinators; sourceTree = "<group>"; };
+		C5826C792E274D2D00BD0022 /* FavoriteViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FavoriteViewModel; sourceTree = "<group>"; };
 		C58BAEED2D70B59100AD9559 /* PlacesListViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlacesListViewModel; sourceTree = "<group>"; };
 		C58BAEF92D71129D00AD9559 /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
 		C58BC0422DC44BD400C6FFD5 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
@@ -222,6 +223,7 @@
 		C58674092AC71FD3000FCD5B /* Pesoblu */ = {
 			isa = PBXGroup;
 			children = (
+				C5826C792E274D2D00BD0022 /* FavoriteViewModel */,
 				C5826C602E16F8A200BD0022 /* Coordinators */,
 				C58BC0422DC44BD400C6FFD5 /* Models */,
 				C59B3F432CBDD1CF00E0C532 /* LoginViewModel */,
@@ -293,6 +295,7 @@
 				C5740BBD2D4A982500F6D687 /* PlaceViewModel */,
 				C57814272D08F746004A42C9 /* HomeViewModel */,
 				C5826C602E16F8A200BD0022 /* Coordinators */,
+				C5826C792E274D2D00BD0022 /* FavoriteViewModel */,
 				C58BAEED2D70B59100AD9559 /* PlacesListViewModel */,
 				C58BAEF92D71129D00AD9559 /* Service */,
 				C58BC0422DC44BD400C6FFD5 /* Models */,

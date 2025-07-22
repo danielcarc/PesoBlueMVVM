@@ -14,6 +14,7 @@ class MainTabCoordinator: Coordinator {
     private var homeCoordinator: HomeCoordinator!
     private var changeCoordinator: ChangeCoordinator!
     private var profileCoordinator: ProfileCoordinator!
+    private var favoriteCoordinator: FavoriteCoordinator!
 
     init(window: UIWindow, appCoordinator: AppCoordinator? = nil) {
         self.window = window
@@ -31,11 +32,15 @@ class MainTabCoordinator: Coordinator {
         profileCoordinator = ProfileCoordinator(navigationController: UINavigationController(), userService: UserService())
         profileCoordinator.parentCoordinator = self
         profileCoordinator.start()
+        
+        favoriteCoordinator = FavoriteCoordinator(navigationController: UINavigationController())
+        favoriteCoordinator.start()
 
         let tabBar = PesoBlueTabBarController(
             viewControllers: [
                 homeCoordinator.navigationController,
                 changeCoordinator.navigationController,
+                favoriteCoordinator.navigationController,
                 profileCoordinator.navigationController
             ]
         )

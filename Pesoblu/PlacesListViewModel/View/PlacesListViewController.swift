@@ -5,9 +5,6 @@
 //  Created by Daniel Carcacha on 08/01/2025.
 //
 
-//agregar favoritos
-// boton de back personalizado y boton de favoritos en el otro costado
-//tal vez agregar un recomendado a los mejores lugar en el json
 import UIKit
 import Foundation
 import CoreData
@@ -86,6 +83,8 @@ class PlacesListViewController: UIViewController {
 extension PlacesListViewController{
     
     func setup(){
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.title = "Lista de Lugares"
         addsubviews()
         setupConstraints()
         setCollectionViews()
