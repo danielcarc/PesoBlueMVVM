@@ -37,7 +37,7 @@ class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     @Published var didSignOut: Bool = false
     
     private let userService: UserServiceProtocol
-    var onSignOutCallback: (() -> Void)?
+    //var onSignOutCallback: (() -> Void)?
     
     init(userService: UserServiceProtocol) {
         //self.delegate = delegate

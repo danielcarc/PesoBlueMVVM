@@ -11,7 +11,10 @@ import UIKit
 protocol CoreDataServiceProtocol {
     func loadFavoriteStatus(placeId: String) async throws -> Bool
     func saveFavoriteStatus(placeId: String, isFavorite: Bool) async throws
+    func fetchAllFavoritesPlaceIds() throws -> [String]
 }
+
+
 
 class CoreDataService: CoreDataServiceProtocol{
     
@@ -54,5 +57,16 @@ class CoreDataService: CoreDataServiceProtocol{
             throw error
         }
         return results.first?.isFavorite ?? false
+    }
+}
+
+extension CoreDataService{
+    
+    func fetchAllFavoritesPlaceIds() throws -> [String] {
+        let fetchRequest : NSFetchRequest<FavoritePlace> = FavoritePlace.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "isFavorite = %@", NSNumber(value: true))
+        
+        let results = try context.fetch(fetchRequest)
+        return results.map {$0.placeId ?? ""}.filter{ !$0.isEmpty }
     }
 }

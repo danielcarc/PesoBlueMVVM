@@ -12,15 +12,17 @@ import CoreData
 class PlaceViewController: UIViewController {
     
     private var placeView: PlaceView
-        private let placeViewModel: PlaceViewModelProtocol
-        var placeItem: PlaceItem?
+    private let placeViewModel: PlaceViewModelProtocol
+    var place: PlaceItem
+    
+    init(placeView: PlaceView, placeViewModel: PlaceViewModelProtocol, place: PlaceItem) {
         
-        init(placeView: PlaceView, placeViewModel: PlaceViewModelProtocol) {
-            self.placeView = placeView
-            self.placeViewModel = placeViewModel
-            super.init(nibName: nil, bundle: nil)
-            setupDependencies()
-        }
+        self.placeViewModel = placeViewModel
+        self.placeView = placeView
+        self.place = place
+        super.init(nibName: nil, bundle: nil)
+        setupDependencies()
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -87,10 +89,12 @@ extension PlaceViewController{
         setupViews()
         
         setupConstraints()
-        if let placeItem = placeItem {
-            placeView.setData(item: placeItem)
-            loadFavoriteStatus()
-        }
+        placeView.setData(item: place)
+        loadFavoriteStatus()
+//        if let placeItem = place {
+//            placeView.setData(item: placeItem)
+//            loadFavoriteStatus()
+//        }
     }
     
     func setupViews(){
@@ -169,11 +173,11 @@ extension PlaceViewController{
     }
     
     func loadFavoriteStatus() {
-        guard let id = placeItem?.id else {
-            print("Error: placeId is nil")
-            return
-        }
-        let placeId = String(id)
+//        guard let id = place.id else {
+//            print("Error: placeId is nil")
+//            return
+//        }
+        let placeId = String(place.id)
         
         Task{
             do{
@@ -186,11 +190,11 @@ extension PlaceViewController{
     }
     
     func saveFavoriteStatus(){
-        guard let id = placeItem?.id else {
-            print("Error: placeId is nil")
-            return
-        }
-        let placeId = String(id)
+//        guard let id = placeItem?.id else {
+//            print("Error: placeId is nil")
+//            return
+//        }
+        let placeId = String(place.id)
         
         Task{
             do{

@@ -163,12 +163,13 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
             print("Error: No hay un NavigationController disponible")
             return
         }
-        let placeView = PlaceView()
+        
+        
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let coreDataService = CoreDataService(context: context)
-        let placeviewmodel = PlaceViewModel(coreDataService: coreDataService)
-        let placeVC = PlaceViewController(placeView: placeView, placeViewModel: placeviewmodel)
-        placeVC.placeItem = item
+        let placeviewmodel = PlaceViewModel(coreDataService: coreDataService, place: item)
+        let placeView = PlaceView(viewModel: placeviewmodel)
+        let placeVC = PlaceViewController(placeView: placeView, placeViewModel: placeviewmodel, place: item)
         navigationController.pushViewController(placeVC, animated: true)
     }
     

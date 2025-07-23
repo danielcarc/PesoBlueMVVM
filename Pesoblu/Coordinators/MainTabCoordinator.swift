@@ -5,6 +5,7 @@
 //  Created by Daniel Carcacha on 03/07/2025.
 //
 import UIKit
+import CoreData
 
 class MainTabCoordinator: Coordinator {
     var window: UIWindow
@@ -15,6 +16,7 @@ class MainTabCoordinator: Coordinator {
     private var changeCoordinator: ChangeCoordinator!
     private var profileCoordinator: ProfileCoordinator!
     private var favoriteCoordinator: FavoriteCoordinator!
+    
 
     init(window: UIWindow, appCoordinator: AppCoordinator? = nil) {
         self.window = window
@@ -33,7 +35,8 @@ class MainTabCoordinator: Coordinator {
         profileCoordinator.parentCoordinator = self
         profileCoordinator.start()
         
-        favoriteCoordinator = FavoriteCoordinator(navigationController: UINavigationController())
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        favoriteCoordinator = FavoriteCoordinator(navigationController: UINavigationController(), coreDataService: CoreDataService(context: context), placeService: PlaceService())
         favoriteCoordinator.start()
 
         let tabBar = PesoBlueTabBarController(

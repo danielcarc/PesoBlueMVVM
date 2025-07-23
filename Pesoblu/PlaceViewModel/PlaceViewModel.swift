@@ -18,9 +18,11 @@ protocol PlaceViewModelProtocol{
 class PlaceViewModel: PlaceViewModelProtocol{
     
     private var coreDataService: CoreDataServiceProtocol
+    private var place: PlaceItem
     
-    init(coreDataService: CoreDataServiceProtocol){
+    init(coreDataService: CoreDataServiceProtocol, place: PlaceItem){
         self.coreDataService = coreDataService
+        self.place = place
     }
     
     func saveFavoriteStatus(placeId: String, isFavorite: Bool) async throws{

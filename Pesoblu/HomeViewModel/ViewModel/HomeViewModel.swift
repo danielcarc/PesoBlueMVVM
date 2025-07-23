@@ -20,13 +20,13 @@ protocol HomeViewModelProtocol {
 class HomeViewModel: HomeViewModelProtocol{
     private let currencyService: CurrencyServiceProtocol
     private let locationService: LocationServiceProtocol
-    private let placesService: PlacesServiceProtocol
+    private let placesService: PlaceServiceProtocol
     private let discoverDataService: DiscoverDataServiceProtocol
     private let cityDataService: CityDataServiceProtocol
     
     init(currencyService: CurrencyServiceProtocol,
          locationService: LocationServiceProtocol,
-         placesService: PlacesServiceProtocol,
+         placesService: PlaceServiceProtocol,
          discoverDataService: DiscoverDataServiceProtocol,
          cityDataService : CityDataServiceProtocol) {
         self.currencyService = currencyService

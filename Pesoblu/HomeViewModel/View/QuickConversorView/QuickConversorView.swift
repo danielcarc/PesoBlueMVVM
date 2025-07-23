@@ -173,7 +173,7 @@ extension QuickConversorView{
             usdContainerView.heightAnchor.constraint(equalToConstant: 50),
             arsContainerView.heightAnchor.constraint(equalToConstant: 50),
             
-            usdLabelsStackView.leadingAnchor.constraint(equalTo: usdContainerView.leadingAnchor, constant: 0),
+            usdLabelsStackView.leadingAnchor.constraint(equalTo: usdContainerView.leadingAnchor, constant: 8),
             usdLabelsStackView.centerYAnchor.constraint(equalTo: usdContainerView.centerYAnchor),
             
             usdValueLabel.trailingAnchor.constraint(equalTo: usdContainerView.trailingAnchor, constant: -16),
@@ -181,7 +181,7 @@ extension QuickConversorView{
             
             usdValueLabel.widthAnchor.constraint(equalToConstant: 80),
             
-            arsLabelsStackView.leadingAnchor.constraint(equalTo: arsContainerView.leadingAnchor, constant: 0),
+            arsLabelsStackView.leadingAnchor.constraint(equalTo: arsContainerView.leadingAnchor, constant: 8),
             arsLabelsStackView.centerYAnchor.constraint(equalTo: arsContainerView.centerYAnchor),
             
             arsValueLabel.trailingAnchor.constraint(equalTo: arsContainerView.trailingAnchor, constant: -16),

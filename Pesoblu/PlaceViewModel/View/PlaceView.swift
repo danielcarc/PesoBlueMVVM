@@ -18,12 +18,18 @@ protocol PlaceViewDelegate: AnyObject{
 }
 
 final class PlaceView: UIView{
+    private let viewModel: PlaceViewModelProtocol
     
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: PlaceViewModelProtocol){
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setup()
     }
+    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setup()
+//    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
