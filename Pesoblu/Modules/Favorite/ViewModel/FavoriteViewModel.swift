@@ -12,12 +12,16 @@ import SwiftUI
 class FavoriteViewModel: ObservableObject{
     private let coreDataService : CoreDataServiceProtocol
     private let placeService : PlaceServiceProtocol
+    private let distanceService: DistanceServiceProtocol
     
     @Published var places : [PlaceItem] = []
     
-    init(coreDataService: CoreDataServiceProtocol, placeService: PlaceServiceProtocol) {
+    init(coreDataService: CoreDataServiceProtocol,
+         placeService: PlaceServiceProtocol,
+         distanceService: DistanceServiceProtocol) {
         self.coreDataService = coreDataService
         self.placeService = placeService
+        self.distanceService = distanceService
     }
     
     func fetchAllFavoritesIds() async throws -> [String] {
@@ -44,6 +48,9 @@ class FavoriteViewModel: ObservableObject{
                 let favoriteIds = try await fetchAllFavoritesIds()
                 let allPlaces = try await fetchAllPlaces()
                 self.places = allPlaces.filter { favoriteIds.contains(String($0.id)) }
+                for place in places {
+                    place.distance = distanceService.getDistanceForPlace(place)
+                }
             } catch {
                 print("Error al cargar favoritos: \(error)")
             }

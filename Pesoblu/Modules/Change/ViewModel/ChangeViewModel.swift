@@ -60,6 +60,8 @@ class ChangeViewModel: ChangeViewModelProtocol{
                 currencies.append(getUyuValue(currency: mep.venta))
                 currencies.append(getBrlValue(currency: mep.venta))
                 currencies.append(getClpValue(currency: mep.venta))
+                currencies.append(getEurValue(currency: mep.venta))
+                currencies.append(getMxnValue(currency: mep.venta))
                 currencies.append(getCopValue(currency: mep.venta))
                 currencies.append(getGbpValue(currency: mep.venta))
                 currencies.append(getJpyValue(currency: mep.venta))
@@ -126,6 +128,21 @@ extension ChangeViewModel{
         clp.currencyTitle = "CLP - Peso Chileno"
         clp.currencyLabel = "Chile"
         return clp
+    }
+    
+    func getEurValue(currency: Double) -> Eur {
+        var eur: Eur
+        if let eu = rates.EUR {
+            eur = eu
+        } else {
+            eur = Eur(rawRate: "0.0")
+        }
+        let rateValue = Double(eur.rate ?? "0.0") ?? 0.0
+        let result = rateValue != 0 ? currency / rateValue : 0.0
+        eur.rawRate = String(result)
+        eur.currencyTitle = "EUR - Euro"
+        eur.currencyLabel = "Unión Europea"
+        return eur
     }
     
     func getCopValue(currency: Double) -> Cop {

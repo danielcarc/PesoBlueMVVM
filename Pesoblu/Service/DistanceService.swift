@@ -14,7 +14,11 @@ protocol DistanceServiceProtocol{
 }
 class DistanceService: DistanceServiceProtocol{
     
-    private let locationManager = LocationManager()
+    private let locationProvider: LocationProvider
+    
+    init(locationProvider: LocationProvider){
+        self.locationProvider = locationProvider
+    }
     
     func calculateDistance(from userLocation: CLLocation, to place: PlaceItem) -> String {
         // Verifica si latitud y longitud tienen valores
@@ -35,7 +39,7 @@ class DistanceService: DistanceServiceProtocol{
     }
     
     func getDistanceForPlace(_ place: PlaceItem) -> String {
-        guard let userLocation = locationManager.userLocation else {
+        guard let userLocation = locationProvider.userLocation else {
             return "Calculando..." // Si la ubicación aún no está lista
         }
         return calculateDistance(from: userLocation, to: place)

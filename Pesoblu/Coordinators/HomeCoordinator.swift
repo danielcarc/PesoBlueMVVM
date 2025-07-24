@@ -35,21 +35,12 @@ class HomeCoordinator: Coordinator {
     
     func showPlaceListWithCity(selectedPlaces: [PlaceItem], selectedCity: String, placeType: String){
         
-        
-        
-        
-        let viewModel = PlaceListViewModel(distanceService: DistanceService(), filterDataService: FilterDataService())
+        let viewModel = PlaceListViewModel(distanceService: DistanceService(locationProvider: LocationManager()), filterDataService: FilterDataService())
         let coordinator = PlaceListCoordinator(navigationController: navigationController, placeListViewModel: viewModel, selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
         
         placeListCoordinator = coordinator
         coordinator.start()
         
-//        let placeListVC = PlacesListViewController(placeListViewModel: viewModel,
-//                                                   selectedPlaces: selectedPlaces,
-//                                                   selectedCity: selectedCity,
-//                                                   placeType: placeType)
-//        
-//        navigationController.pushViewController(placeListVC, animated: true)
     }
     
 }

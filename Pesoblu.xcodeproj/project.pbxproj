@@ -61,6 +61,7 @@
 		C5C0EE5C2E32C069005729DF /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
 		C5C0EE5E2E32C0BA005729DF /* CoreData */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C5C0EE5F2E32C0C2005729DF /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CoreData; sourceTree = "<group>"; };
 		C5C0EE602E32C0D0005729DF /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
+		C5C0EE612E32C611005729DF /* Protocols */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Protocols; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +116,7 @@
 		C58674092AC71FD3000FCD5B /* Pesoblu */ = {
 			isa = PBXGroup;
 			children = (
+				C5C0EE612E32C611005729DF /* Protocols */,
 				C5C0EE602E32C0D0005729DF /* Resources */,
 				C5C0EE5E2E32C0BA005729DF /* CoreData */,
 				C5C0EE5C2E32C069005729DF /* Extensions */,
@@ -164,6 +166,7 @@
 				C5C0EE5C2E32C069005729DF /* Extensions */,
 				C5C0EE5E2E32C0BA005729DF /* CoreData */,
 				C5C0EE602E32C0D0005729DF /* Resources */,
+				C5C0EE612E32C611005729DF /* Protocols */,
 			);
 			name = Pesoblu;
 			productName = Pesoblu;

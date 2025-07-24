@@ -9,8 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct FavoritesItemView: View {
-    
-    
+
     ///numero de denuncia N` 252664
     
     let place : PlaceItem
@@ -51,7 +50,7 @@ struct FavoritesItemView: View {
                     .foregroundColor(.gray)
                     .font(.subheadline)
                   //  .frame(maxWidth: .infinity, alignment: .leading)
-                Text("0.0km")
+                Text(place.distance ?? "0.0km")
                     .foregroundStyle(Color.gray)
                     .font(.subheadline)
                    // .frame(maxWidth: .infinity, alignment: .leading)

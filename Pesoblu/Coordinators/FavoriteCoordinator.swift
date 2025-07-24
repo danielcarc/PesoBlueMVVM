@@ -14,6 +14,7 @@ class FavoriteCoordinator: Coordinator{
     var navigationController: UINavigationController
     private let coreDataService: CoreDataServiceProtocol
     private let placeService: PlaceServiceProtocol
+    private let distanceService: DistanceServiceProtocol
     weak var appCoordinator: AppCoordinator?
     
     // Guardamos referencia al child para mantenerlo vivo
@@ -22,16 +23,18 @@ class FavoriteCoordinator: Coordinator{
     init(navigationController: UINavigationController,
          coreDataService: CoreDataServiceProtocol,
          placeService: PlaceServiceProtocol,
+         distanceService: DistanceServiceProtocol,
          appCoordinator: AppCoordinator? = nil) {
         self.navigationController = navigationController
         self.coreDataService = coreDataService
         self.placeService = placeService
+        self.distanceService = distanceService
         self.appCoordinator = appCoordinator
     }
     
     func start() {
         
-        let viewModel = FavoriteViewModel(coreDataService: coreDataService, placeService: placeService)
+        let viewModel = FavoriteViewModel(coreDataService: coreDataService, placeService: placeService, distanceService: distanceService)
         let favoriteView = FavoritesView(viewModel: viewModel) { [weak self] place in
             self?.showPlaceDetail(place)
         }

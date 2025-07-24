@@ -8,7 +8,11 @@
 import Foundation
 import CoreLocation
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
+protocol LocationProvider {
+    var userLocation: CLLocation? { get }
+}
+
+class LocationManager: NSObject, CLLocationManagerDelegate, LocationProvider {
     private let locationManager = CLLocationManager()
     var userLocation: CLLocation?
     var onLocationUpdate: (() -> Void)? // Closure para notificar actualizaciones

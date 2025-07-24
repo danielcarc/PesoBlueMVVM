@@ -37,9 +37,6 @@ class ChangeViewController: UIViewController {
         return vw
     }()
     
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

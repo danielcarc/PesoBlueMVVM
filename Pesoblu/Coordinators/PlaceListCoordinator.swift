@@ -42,9 +42,9 @@ class PlaceListCoordinator: Coordinator{
     func showPlaceDetail(for item: PlaceItem) {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let coreDataService = CoreDataService(context: context)
-        let viewModel = PlaceViewModel(coreDataService: coreDataService, place: item)
-        let placeView = PlaceView(viewModel: viewModel)
-        let placeVC = PlaceViewController(placeView: placeView, placeViewModel: viewModel, place: item)
+       // let viewModel = PlaceViewModel(coreDataService: coreDataService, place: item)
+       // let placeView = PlaceView(viewModel: viewModel)
+        //let placeVC = PlaceViewController(placeView: placeView, placeViewModel: viewModel, place: item)
         
         let coordinator = PlaceCoordinator(navigationController: navigationController,
                                            place: item,
@@ -52,11 +52,6 @@ class PlaceListCoordinator: Coordinator{
         
         placeCoordinator = coordinator
         coordinator.start()
-        
-        
-        ///navigationController.pushViewController(placeVC, animated: true)
     }
-    
-    /// crear el metodo para ir a la vista del placelistview con el selectedcity y el selectedplaces
     
 }

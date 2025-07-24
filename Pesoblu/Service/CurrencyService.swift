@@ -98,6 +98,8 @@ class CurrencyService: CurrencyServiceProtocol {
         case "CL":
             guard let rate = Double(rates?.CLP?.rawRate ?? "0.00") else { return "N/A CLP" }
             value /= rate
+        case "AR":
+            value = Double(dolarMep) ?? 0.0
         default:
             return "Código de país no reconocido"
         }
@@ -119,8 +121,6 @@ class CurrencyService: CurrencyServiceProtocol {
 
         let jsonDecoder = JSONDecoder()
         let dlp: Rates = try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
-        //print (dlp)
-        //return try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
         return dlp
     }
 }

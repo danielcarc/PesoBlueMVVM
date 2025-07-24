@@ -93,5 +93,7 @@ class PlaceItem: NSObject, Decodable, MKAnnotation{
             return ""
         }
     }
+    
+    var distance: String?
 
 }

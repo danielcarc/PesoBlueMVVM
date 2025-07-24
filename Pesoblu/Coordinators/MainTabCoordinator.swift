@@ -38,7 +38,7 @@ class MainTabCoordinator: Coordinator {
         profileCoordinator.start()
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        favoriteCoordinator = FavoriteCoordinator(navigationController: UINavigationController(), coreDataService: CoreDataService(context: context), placeService: PlaceService())
+        favoriteCoordinator = FavoriteCoordinator(navigationController: UINavigationController(), coreDataService: CoreDataService(context: context), placeService: PlaceService(), distanceService: DistanceService(locationProvider: LocationManager()))
         favoriteCoordinator.start()
 
         let tabBar = PesoBlueTabBarController(
