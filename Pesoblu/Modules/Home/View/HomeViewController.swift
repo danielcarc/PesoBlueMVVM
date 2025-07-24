@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import Kingfisher
 
 class HomeViewController: UIViewController {
     
@@ -14,6 +13,7 @@ class HomeViewController: UIViewController {
     var discoverBaCView : DiscoverBaCollectionView
     var citysCView : CitysCollectionView
     var alertMessage: String?
+    var onSelect : (([PlaceItem], String, String) -> Void)?
     
     var collectionViewHeightConstraint: NSLayoutConstraint!
     
@@ -218,20 +218,8 @@ extension HomeViewController: CollectionViewSelectionDelegate{
             if selectedPlaces.isEmpty {
                 showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
             } else {
-                let placeListViewModel = PlaceListViewModel(
-                    distanceService: DistanceService(),
-                    filterDataService: FilterDataService())
-                let placesListVC = PlacesListViewController(placeListViewModel: placeListViewModel)
-                placesListVC.selectedPlaces = selectedPlaces
-                placesListVC.selectedCity = selectedCity
-                placesListVC.placeType = placeType
-                
-                if let navigationController = navigationController {
-                    navigationController.pushViewController(placesListVC, animated: true)
-                } else {
-                    print("Error: HomeViewController no está dentro de un UINavigationController.")
-                    present(placesListVC, animated: true)
-                }
+                onSelect?(selectedPlaces, selectedCity, placeType)
+                ///agregar el onSelect y modificar la logica
             }
         } catch PlaceError.noPlacesAvailable {
             showAlert(message: "No se encontraron lugares disponibles.")
@@ -259,22 +247,11 @@ extension HomeViewController: CitysViewDelegate{
         
         do{
             let selectedPlaces = try homeViewModel.fetchPlaces(city: selectedCity)
+            let placeType = "All"
             if selectedPlaces.isEmpty {
                 showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
             } else {
-                let placeListViewModel = PlaceListViewModel(
-                    distanceService: DistanceService(),
-                    filterDataService: FilterDataService())
-                let placesListVC = PlacesListViewController(placeListViewModel: placeListViewModel)
-                placesListVC.selectedPlaces = selectedPlaces
-                placesListVC.selectedCity = selectedCity
-
-                if let navigationController = navigationController {
-                    navigationController.pushViewController(placesListVC, animated: true)
-                } else {
-                    print("Error: HomeViewController no está dentro de un UINavigationController.")
-                    present(placesListVC, animated: true)
-                }
+                onSelect?(selectedPlaces, selectedCity, placeType)
             }
         }
         catch PlaceError.noPlacesAvailable {

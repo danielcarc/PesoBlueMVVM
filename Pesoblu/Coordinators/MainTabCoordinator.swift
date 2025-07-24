@@ -12,16 +12,18 @@ class MainTabCoordinator: Coordinator {
     var navigationController: UINavigationController
     weak var appCoordinator: AppCoordinator?
 
-    private var homeCoordinator: HomeCoordinator!
+    private var homeCoordinator: HomeCoordinator
     private var changeCoordinator: ChangeCoordinator!
     private var profileCoordinator: ProfileCoordinator!
     private var favoriteCoordinator: FavoriteCoordinator!
     
 
-    init(window: UIWindow, appCoordinator: AppCoordinator? = nil) {
+    init(window: UIWindow, appCoordinator: AppCoordinator? = nil,
+         homeCoordinator: HomeCoordinator) {
         self.window = window
         self.navigationController = UINavigationController()
         self.appCoordinator = appCoordinator
+        self.homeCoordinator = homeCoordinator
     }
 
     func start() {

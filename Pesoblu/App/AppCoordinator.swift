@@ -59,7 +59,7 @@ class AppCoordinator: Coordinator{
     }
     
     func showMainApp() {
-        let tabCoordinator = MainTabCoordinator(window: window, appCoordinator: self)
+        let tabCoordinator = MainTabCoordinator(window: window, appCoordinator: self, homeCoordinator: HomeCoordinator())
         mainTabCoordinator = tabCoordinator
         childCoordinator = tabCoordinator
         tabCoordinator.start()

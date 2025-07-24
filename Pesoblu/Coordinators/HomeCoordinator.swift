@@ -8,6 +8,7 @@ import UIKit
 
 class HomeCoordinator: Coordinator {
     var navigationController: UINavigationController
+    private var placeListCoordinator: PlaceListCoordinator?
 
     init() {
         self.navigationController = UINavigationController()
@@ -22,8 +23,33 @@ class HomeCoordinator: Coordinator {
             cityDataService: CityDataService()
         )
         let vc = HomeViewController(homeViewModel: viewModel)
+        
+        vc.onSelect = { [weak self] selectedPlaces, selectedCity, placeType in
+            self?.showPlaceListWithCity(selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
+        }
+        
         vc.title = "Home"
         vc.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home-01"), tag: 0)
         navigationController.setViewControllers([vc], animated: false)
     }
+    
+    func showPlaceListWithCity(selectedPlaces: [PlaceItem], selectedCity: String, placeType: String){
+        
+        
+        
+        
+        let viewModel = PlaceListViewModel(distanceService: DistanceService(), filterDataService: FilterDataService())
+        let coordinator = PlaceListCoordinator(navigationController: navigationController, placeListViewModel: viewModel, selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
+        
+        placeListCoordinator = coordinator
+        coordinator.start()
+        
+//        let placeListVC = PlacesListViewController(placeListViewModel: viewModel,
+//                                                   selectedPlaces: selectedPlaces,
+//                                                   selectedCity: selectedCity,
+//                                                   placeType: placeType)
+//        
+//        navigationController.pushViewController(placeListVC, animated: true)
+    }
+    
 }

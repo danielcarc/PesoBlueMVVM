@@ -11,15 +11,26 @@ import CoreData
 
 class PlacesListViewController: UIViewController {
     
+    var onSelect: ((PlaceItem) -> Void)?
     var filterCView : FilterCollectionView
     var placeListCView : PlaceListCollectionView
     var placeListViewModel : PlaceListViewModelProtocol
+    var selectedPlaces: [PlaceItem]
+    var selectedCity: String
+    var placeType: String
+    
     init(placeListViewModel: PlaceListViewModelProtocol,
          filterCView : FilterCollectionView? = nil,
-         placeListCView : PlaceListCollectionView? =  nil){
+         placeListCView : PlaceListCollectionView? =  nil,
+         selectedPlaces: [PlaceItem],
+         selectedCity: String,
+         placeType: String){
         self.placeListViewModel = placeListViewModel
         self.filterCView = filterCView ?? FilterCollectionView(viewModel : placeListViewModel)
         self.placeListCView = placeListCView ?? PlaceListCollectionView(viewModel : placeListViewModel)
+        self.selectedPlaces = selectedPlaces
+        self.selectedCity = selectedCity
+        self.placeType = placeType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,9 +38,7 @@ class PlacesListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var selectedPlaces: [PlaceItem]?
-    var selectedCity: String?
-    var placeType: String?
+    
     var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private var mainScrollView: UIScrollView = {
@@ -91,13 +100,8 @@ extension PlacesListViewController{
     }
     
     func setCollectionViews(){
-        filterCView.updateData(type: placeType ?? "All")
-        if let selectedPlaces = selectedPlaces {
-            placeListCView.updateData(for: selectedPlaces, by: placeType ?? "All")
-        } else {
-            print("selectedPlaces es nil")
-            placeListCView.updateData(for: [], by: placeType ?? "All")
-        }
+        filterCView.updateData(type: placeType)
+        placeListCView.updateData(for: selectedPlaces, by: placeType)
     }
     
     func addsubviews() {
@@ -159,18 +163,7 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
     }
     
     func didSelectItem(_ item: PlaceItem) {
-        guard let navigationController = navigationController else {
-            print("Error: No hay un NavigationController disponible")
-            return
-        }
-        
-        
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let coreDataService = CoreDataService(context: context)
-        let placeviewmodel = PlaceViewModel(coreDataService: coreDataService, place: item)
-        let placeView = PlaceView(viewModel: placeviewmodel)
-        let placeVC = PlaceViewController(placeView: placeView, placeViewModel: placeviewmodel, place: item)
-        navigationController.pushViewController(placeVC, animated: true)
+        onSelect?(item)
     }
     
     func didUpdateItemCount(_ count: Int) {
@@ -192,13 +185,8 @@ extension PlacesListViewController: PlaceListCollectionViewDelegate {
 extension PlacesListViewController: FilterCollectionViewDelegate {
     func didSelectFilter(_ filter: DiscoverItem) {
         self.placeType = filter.name
-        filterCView.updateData(type: placeType ?? "All")
-        if let selectedPlaces = selectedPlaces {
-            placeListCView.updateData(for: selectedPlaces, by: placeType ?? "All")
-        } else {
-            print("selectedPlaces es nil")
-            placeListCView.updateData(for: [], by: placeType ?? "All")
-        }
+        filterCView.updateData(type: placeType)
+        placeListCView.updateData(for: selectedPlaces, by: placeType)
     }
     
 }
