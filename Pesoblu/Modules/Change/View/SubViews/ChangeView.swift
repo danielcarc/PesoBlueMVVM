@@ -7,11 +7,8 @@
 
 import UIKit
 
-//hacer un una vista como la que me muestra Galileo AI
-// ex : Ars - Peso Argentino               1000
-//      Argentina
 
-class ChangeView: UIView {
+class ChangeView: UICollectionViewCell {
 
     private lazy var viewDolar: UIView = {
         var view = UIView()
@@ -95,7 +92,7 @@ class ChangeView: UIView {
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: .zero)
+        super.init(frame: frame)
         setup()
     }
     
@@ -103,9 +100,10 @@ class ChangeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(currencyTitle: String, currencyLabel: String, valueBuy: Double){
+    func set(currencyTitle: String, currencyLabel: String, valueBuy: String){
         currencyTitleLabel.text = currencyTitle
-        let text = String(format: "%.2f", valueBuy)
+        //let text = String(format: "%.2f", valueBuy)
+        let text = String(valueBuy)
         currencyValueLabel.text =  "$ \(text)"// este es el qie muestra el valor
         currencySubtitleLabel.text = currencyLabel
     }
@@ -121,7 +119,7 @@ private extension ChangeView {
     private func addsubviews(){
         self.backgroundColor = .clear
         self.layer.cornerRadius = 10
-        self.translatesAutoresizingMaskIntoConstraints = false
+       // self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(viewDolar)
         
         viewDolar.addSubview(stackHorizontal)
@@ -141,7 +139,7 @@ private extension ChangeView {
         NSLayoutConstraint.activate([
             
             viewDolar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            viewDolar.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor),
+            viewDolar.topAnchor.constraint(equalTo: self.topAnchor),
             viewDolar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             viewDolar.heightAnchor.constraint(equalToConstant: 80),
             

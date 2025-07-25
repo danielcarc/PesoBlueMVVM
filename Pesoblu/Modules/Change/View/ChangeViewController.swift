@@ -10,11 +10,13 @@ import UIKit
 class ChangeViewController: UIViewController {
     
     private var viewModel : ChangeViewModelProtocol
+    private var changeCView: ChangeCollectionView
+    private var changeHeightConstraint: NSLayoutConstraint?
     
-    private lazy var rightButtonBar = UIButton()
     
-    init(viewModel: ChangeViewModelProtocol) {
+    init(viewModel: ChangeViewModelProtocol, changeCView: ChangeCollectionView) {
         self.viewModel = viewModel
+        self.changeCView = changeCView
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,39 +25,30 @@ class ChangeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var collectionView : UICollectionView = {
-       
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: UIScreen.main.bounds.width, height: 80)
+    private var mainScrollView: UIScrollView = {
+        var scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.bounces = true
         
-        let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        //registramos la celda
-        vw.register(ChangeCollectionViewCell.self, forCellWithReuseIdentifier: "ChangeCollectionViewCell")
-        vw.backgroundColor = .clear
-        vw.dataSource = self
-        vw.translatesAutoresizingMaskIntoConstraints = false
-        return vw
+        return scrollView
+    }()
+    
+    private var contentView: UIView = {
+        var view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
-        setupBtn()
         viewModel.getChangeOfCurrencies()
         setTitle()
-        setDelegate()
         
-    }
-}
-
-//MARK: - Setup Button and CollectionView
-extension ChangeViewController{
-    func setupBtn(){
-        rightButtonBar.setImage(UIImage(named: "calculator"), for: .normal)
-        rightButtonBar.addTarget(self, action: #selector(goToCurrencyVC), for: .touchUpInside)
-        rightButtonBar.setTitleColor(UIColor(red: 87/255, green: 147/255, blue: 215/255, alpha: 1), for:.normal)
-        rightButtonBar.translatesAutoresizingMaskIntoConstraints = false
     }
 }
 
@@ -65,70 +58,60 @@ private extension ChangeViewController{
     func setup(){
         
         self.view.backgroundColor = UIColor(hex: "F0F8FF")
-        self.view.addSubview(collectionView)
-        let barButtonItem = UIBarButtonItem(customView: rightButtonBar)
-        self.navigationItem.rightBarButtonItem = barButtonItem
+        
+        view.addSubview(mainScrollView)
+        mainScrollView.addSubview(contentView)
+        contentView.addSubview(changeCView)
+        
+        changeCView.translatesAutoresizingMaskIntoConstraints = false
+        changeHeightConstraint = changeCView.heightAnchor.constraint(equalToConstant: 0)
+        
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            
+            mainScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mainScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            contentView.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.leadingAnchor, constant: 10),
+            contentView.trailingAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.trailingAnchor, constant: -10),
+            contentView.widthAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.widthAnchor, constant: -20),
+            contentView.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor),
+            
+            changeCView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            changeCView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            changeCView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            changeCView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            changeHeightConstraint!
+
         ])
+        changeCView.onHeightChange = { [weak self] height in
+            self?.changeHeightConstraint?.constant = height
+            self?.view.layoutIfNeeded()
+        }
     }
 }
 
 extension ChangeViewController{
-    func setDelegate(){
-        viewModel.delegate = self
-    }
     func setTitle(){
         title = "Cotización"
         navigationController?.navigationBar.prefersLargeTitles = false
     }
+    
+    
 }
 
-//MARK: - Button Method
-
-extension ChangeViewController{
-    
-    @objc func goToCurrencyVC(){
-        let currencyConverterViewModel = CurrencyConverterViewModel(currencyService: CurrencyService(), notificationService: NotificationService())
-        let nextScreen = CurrencyConverterViewController( currencyConverterViewModel: currencyConverterViewModel)
-        self.navigationController?.pushViewController(nextScreen, animated: true)
-    }
-}
-
-//MARK: - ChangeViewModelDelegate Methods
-
-extension ChangeViewController: ChangeViewModelDelegate{
-    func didFinish() {
-        collectionView.reloadData()
-    }
-    
-    func didFail(error: Error) {
-        print(error)
-    }
-}
-
-//MARK: - CollectionView DataSource Methods
-
-extension ChangeViewController: UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.currencies.count
-    
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = viewModel.currencies[indexPath.item]
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChangeCollectionViewCell", for: indexPath) as! ChangeCollectionViewCell
-
-        cell.item = item
-        
-        return cell
-    }
-}
-
-//#Preview("ChangeViewController", traits: .defaultLayout, body: { ChangeViewController()})
-
+////MARK: - Button Method
+//
+//extension ChangeViewController{
+//    
+//    ///modificar esta logica a coordinadores
+//    @objc func goToCurrencyVC(){
+//        let currencyConverterViewModel = CurrencyConverterViewModel(currencyService: CurrencyService(), notificationService: NotificationService())
+//        let nextScreen = CurrencyConverterViewController( currencyConverterViewModel: currencyConverterViewModel)
+//        self.navigationController?.pushViewController(nextScreen, animated: true)
+//    }
+//}

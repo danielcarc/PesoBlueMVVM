@@ -36,8 +36,6 @@ class ChangeViewModel: ChangeViewModelProtocol{
         self.rates = rates
     }
     
-    
-    
     var changeArray = ["Oficial", "Blue", "Euro Blue"]
     
     @MainActor
@@ -48,6 +46,7 @@ class ChangeViewModel: ChangeViewModelProtocol{
         }
     }
     
+    @MainActor
     private func fetchCurrencies() async {
         do{
             
@@ -77,7 +76,6 @@ class ChangeViewModel: ChangeViewModelProtocol{
         catch{
             delegate?.didFail(error: error)
         }
-        
     }
 }
 
@@ -94,7 +92,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(uyu.rawRate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        uyu.rawRate = String(result)
+        uyu.rawRate = String(format: "%.2f", result)
         uyu.currencyTitle = "UYU - Peso Uruguayo"
         uyu.currencyLabel = "Uruguay"
         return uyu
@@ -109,7 +107,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(brl.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        brl.rawRate = String(result)
+        brl.rawRate = String(format: "%.2f", result)
         brl.currencyTitle = "BRL - Real Brasil"
         brl.currencyLabel = "Brasil"
         return brl
@@ -124,7 +122,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(clp.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        clp.rawRate = String(result)
+        clp.rawRate = String(format: "%.2f", result)
         clp.currencyTitle = "CLP - Peso Chileno"
         clp.currencyLabel = "Chile"
         return clp
@@ -139,7 +137,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(eur.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        eur.rawRate = String(result)
+        eur.rawRate = String(format: "%.2f", result)
         eur.currencyTitle = "EUR - Euro"
         eur.currencyLabel = "Unión Europea"
         return eur
@@ -154,7 +152,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(cop.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        cop.rawRate = String(result)
+        cop.rawRate = String(format: "%.2f", result)
         cop.currencyTitle = "COP - Peso Colombiano"
         cop.currencyLabel = "Colombia"
         return cop
@@ -169,7 +167,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(gbp.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        gbp.rawRate = String(result)
+        gbp.rawRate = String(format: "%.2f", result)
         gbp.currencyTitle = "GBP - Libra Esterlina Britanica"
         gbp.currencyLabel = "Reino Unido"
         return gbp
@@ -184,7 +182,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(jpy.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        jpy.rawRate = String(result)
+        jpy.rawRate = String(format: "%.2f", result)
         jpy.currencyTitle = "JPY - Yen Japonés"
         jpy.currencyLabel = "Japón"
         return jpy
@@ -199,7 +197,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(ils.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        ils.rawRate = String(result)
+        ils.rawRate = String(format: "%.2f", result)
         ils.currencyTitle = "ILS - Shequel Israelí"
         ils.currencyLabel = "Israel"
         return ils
@@ -214,7 +212,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(mxn.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        mxn.rawRate = String(result)
+        mxn.rawRate = String(format: "%.2f", result)
         mxn.currencyTitle = "MXN - Peso Mexicano"
         mxn.currencyLabel = "México"
         return mxn
@@ -229,7 +227,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(pyg.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        pyg.rawRate = String(result)
+        pyg.rawRate = String(format: "%.2f", result)
         pyg.currencyTitle = "PYG - Guaraní Paraguayo"
         pyg.currencyLabel = "Paraguay"
         return pyg
@@ -244,7 +242,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(pen.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        pen.rawRate = String(result)
+        pen.rawRate = String(format: "%.2f", result)
         pen.currencyTitle = "PEN - Sol Peruano"
         pen.currencyLabel = "Perú"
         return pen
@@ -259,7 +257,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(rub.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        rub.rawRate = String(result)
+        rub.rawRate = String(format: "%.2f", result)
         rub.currencyTitle = "RUB - Rublo Ruso"
         rub.currencyLabel = "Rusia"
         return rub
@@ -274,7 +272,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(cad.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        cad.rawRate = String(result)
+        cad.rawRate = String(format: "%.2f", result)
         cad.currencyTitle = "CAD - Dólar Canadiense"
         cad.currencyLabel = "Canadá"
         return cad
@@ -289,7 +287,7 @@ extension ChangeViewModel{
         }
         let rateValue = Double(bob.rate ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        bob.rawRate = String(result)
+        bob.rawRate = String(format: "%.2f", result)
         bob.currencyTitle = "BOB - Boliviano"
         bob.currencyLabel = "Bolivia"
         return bob

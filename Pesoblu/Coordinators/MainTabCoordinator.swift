@@ -30,6 +30,7 @@ class MainTabCoordinator: Coordinator {
         homeCoordinator = HomeCoordinator()
         homeCoordinator.start()
 
+        
         changeCoordinator = ChangeCoordinator()
         changeCoordinator.start()
 
