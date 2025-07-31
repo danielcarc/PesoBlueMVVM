@@ -12,7 +12,7 @@ protocol CitysViewDelegate: AnyObject{
     
 }
 
-class CitysCollectionView: UIView{
+final class CitysCollectionView: UIView{
     
     private var data: [CitysItem] = []
     private let homeViewModel: HomeViewModelProtocol  // Usamos el protocolo en lugar de la clase concreta

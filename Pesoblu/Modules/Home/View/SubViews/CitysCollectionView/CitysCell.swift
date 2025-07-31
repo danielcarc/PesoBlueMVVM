@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CitysCell: UICollectionViewCell {
+final class CitysCell: UICollectionViewCell {
     
     // MARK: - Public Properties
     private lazy var imageView : UIImageView = {

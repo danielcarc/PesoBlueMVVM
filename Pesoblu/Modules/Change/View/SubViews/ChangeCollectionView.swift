@@ -7,10 +7,15 @@
 import Foundation
 import UIKit
 
-class ChangeCollectionView: UIView, UICollectionViewDelegate {
+protocol ChangeCollectionViewDelegate: AnyObject{
+    func didSelectCurrency(for currencyItem: CurrencyItem)
+}
+
+class ChangeCollectionView: UIView {
     
     private var collectionView: UICollectionView
     private var viewModel: ChangeViewModelProtocol
+    weak var delegate: ChangeCollectionViewDelegate?
     
     var onHeightChange: ((CGFloat) -> Void)?
     
@@ -93,6 +98,12 @@ extension ChangeCollectionView: UICollectionViewDataSource{
         
         return cell
     }
-    
+}
+
+extension ChangeCollectionView: UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let currencyItem = viewModel.currencies[indexPath.item]
+        delegate?.didSelectCurrency(for: currencyItem)
+    }
 }
 

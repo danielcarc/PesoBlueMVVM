@@ -12,6 +12,8 @@ class ChangeViewController: UIViewController {
     private var viewModel : ChangeViewModelProtocol
     private var changeCView: ChangeCollectionView
     private var changeHeightConstraint: NSLayoutConstraint?
+    var onSelectCurrency: ((CurrencyItem) -> Void)?
+    //weak var delegate: ChangeCollectionViewDelegate?
     
     
     init(viewModel: ChangeViewModelProtocol, changeCView: ChangeCollectionView) {
@@ -59,6 +61,7 @@ private extension ChangeViewController{
         
         self.view.backgroundColor = UIColor(hex: "F0F8FF")
         
+        changeCView.delegate = self
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
         contentView.addSubview(changeCView)
@@ -100,18 +103,12 @@ extension ChangeViewController{
         title = "Cotización"
         navigationController?.navigationBar.prefersLargeTitles = false
     }
-    
-    
 }
+//MARK: - ChangeCollectionViewDelegate Methods
 
-////MARK: - Button Method
-//
-//extension ChangeViewController{
-//    
-//    ///modificar esta logica a coordinadores
-//    @objc func goToCurrencyVC(){
-//        let currencyConverterViewModel = CurrencyConverterViewModel(currencyService: CurrencyService(), notificationService: NotificationService())
-//        let nextScreen = CurrencyConverterViewController( currencyConverterViewModel: currencyConverterViewModel)
-//        self.navigationController?.pushViewController(nextScreen, animated: true)
-//    }
-//}
+extension ChangeViewController: ChangeCollectionViewDelegate{
+    func didSelectCurrency(for currencyItem: CurrencyItem) {
+        print("didSelectCurrency \(currencyItem)")
+        onSelectCurrency?(currencyItem)
+    }
+}

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class QuickConversorView: UIView{
+final class QuickConversorView: UIView{
     
     private lazy var titleLabel : UILabel = {
         var label = UILabel()

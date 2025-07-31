@@ -188,16 +188,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CD26FCA4-69DB-45A4-9C33-E9C8FEEACEEB"
+            uuid = "4E46B8F9-F81F-46B2-9467-165107FC5763"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pesoblu/Modules/Change/View/ChangeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "didSelectCurrency(for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

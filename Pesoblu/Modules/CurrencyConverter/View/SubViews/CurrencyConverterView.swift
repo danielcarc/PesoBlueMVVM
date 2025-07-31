@@ -8,25 +8,28 @@
 import UIKit
 import Combine
 
-class CurrencyConverterView: UIView {
-    
-    
+
+///colocar los 4 valores de la moneda
+///borrar sombras y manejarlas de distinta manera o sacarlas
+///modificar el Combine para que no se pueda elegir moneda y quede la de la vista
+///en el pickerview se actualiza la moneda que va al viewmodel esta el metodo que debemos usar
+///hacer que cuando se setea la moneda en esta vista ya vaya colocando los labels como corresponde
+
+
+final class CurrencyConverterView: UIView {
+        
     private var cancellables = Set<AnyCancellable>()
-    weak var delegate: CurrencyConverterViewModel?
     
-    private var currencyConverterViewModel: CurrencyConverterViewModelProtocol
+    private var viewModel: CurrencyConverterViewModelProtocol
+    private var selectedCurrency: String = ""
     
     
     init(frame: CGRect = .zero, currencyConverterViewModel: CurrencyConverterViewModelProtocol) {
-        self.currencyConverterViewModel = currencyConverterViewModel
+        self.viewModel = currencyConverterViewModel
         super.init(frame: frame)
         
         setup()
-        currencypickerview.delegate = self
-        currencypickerview.dataSource = self
-        //currencyConverterViewModel.delegate = self
         quantitytextfield.delegate = self
-        currencytextfield.delegate = self
         setupBindings()
         hideKeyboardWhenTappedAround()
     }
@@ -51,7 +54,7 @@ class CurrencyConverterView: UIView {
         var text = UITextField()
         text.placeholder = "Ingrese la cantidad de dinero a convertir"
         text.textAlignment = .center
-        text.textColor = .systemRed
+        text.textColor = .black
         text.textAlignment = .center
         text.backgroundColor = .white
         text.layer.cornerRadius = 7
@@ -63,49 +66,31 @@ class CurrencyConverterView: UIView {
         return text
     }()
     
-    private lazy var segcontrol: UISegmentedControl = {
-        var control = UISegmentedControl()
-        control.insertSegment(withTitle: "$ -> Moneda", at: 0, animated: false)
-        control.insertSegment(withTitle: "Moneda -> $", at: 1, animated: false)
-        control.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
-        control.isMultipleTouchEnabled = false
-        control.isEnabled = false
-        control.translatesAutoresizingMaskIntoConstraints = false
-        
-        return control
-    }()
     
     private lazy var viewpick: UIView = {
         var view = UIView()
         view.backgroundColor = UIColor(red: 213/255.00, green: 229/255.00, blue: 252/255.00, alpha: 1)
         view.layer.cornerRadius = 10
-        view.layer.shadowRadius = 3
-        view.layer.shadowOpacity = 0.3
+//        view.layer.shadowRadius = 3
+//        view.layer.shadowOpacity = 0.3
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var currencypickerview: UIPickerView = {
-        var picker = UIPickerView()
-        
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        return picker
-    }()
-    
-    private lazy var currencytextfield: UITextField = {
-        var text = UITextField()
-        text.placeholder = "Seleccione una moneda para convertir"
+    private lazy var currencyLabel: UILabel = {
+        var text = UILabel()
+        //text.placeholder = "Seleccione una moneda para convertir"
         text.font = .systemFont(ofSize: 14)
-        text.textColor = .red
+        text.textColor = .black
         text.textAlignment = .center
         text.backgroundColor = .white
         text.layer.cornerRadius = 5
-        text.layer.shadowRadius = 3
-        text.layer.shadowOpacity = 0.3
-        text.inputView = currencypickerview
-        text.isEnabled = false
+//        text.layer.shadowRadius = 3
+//        text.layer.shadowOpacity = 0.3
+        //text.inputView = currencypickerview
+        text.isEnabled = true
         text.translatesAutoresizingMaskIntoConstraints = false
         
         return text
@@ -264,45 +249,14 @@ class CurrencyConverterView: UIView {
         self.endEditing(true)
     }
 
-    func setEnableControl(){
-        currencytextfield.isEnabled = true
-        if currencytextfield.text?.isEmpty ?? true {
-            currencytextfield.text = "Seleccione una moneda para convertir"
-            currencytextfield.textColor = .systemRed
-        }
-        currencytextfield.textColor = .systemRed // Añadimos el color aquí también para consistencia
-        segcontrol.isEnabled = true
-        segcontrol.selectedSegmentIndex = 0
-    }
+    
     
     func getTextForCurrency() -> String{
-        if let text = currencytextfield.text {
+        if let text = currencyLabel.text {
             return text
         } else {
             return ""
         }
-    }
-    
-    func setTextForSegControl(segmentControl: String){
-        switch segmentControl {
-        case "Real Brasil":
-            segcontrol.setTitle("$ -> Reales", forSegmentAt: 0)
-            segcontrol.setTitle("Reales -> $", forSegmentAt: 1)
-            buylabel.text = "En Reales"
-            
-        case "Peso Chile":
-            segcontrol.setTitle("$ -> Peso Chile", forSegmentAt: 0)
-            segcontrol.setTitle("Peso Chile -> $", forSegmentAt: 1)
-            buylabel.text = "Pesos Chile"
-        case "Peso Uruguay":
-            segcontrol.setTitle("$ -> Peso Uruguay", forSegmentAt: 0)
-            segcontrol.setTitle("Peso Uruguay -> $", forSegmentAt: 1)
-            buylabel.text = "Pesos Uruguay"
-        default:
-            segcontrol.setTitle("error", forSegmentAt: 0)
-            segcontrol.setTitle("error", forSegmentAt: 1)
-        }
-        
     }
     
     func setTextForConvertValues(currencyValueFromPeso: String, currencyValueToPeso: String,  dolarValue: String, currencyToDolar: String){
@@ -317,7 +271,7 @@ class CurrencyConverterView: UIView {
     
     
     func resigncurrencytext(){
-        currencytextfield.resignFirstResponder()
+        currencyLabel.resignFirstResponder()
     }
     
     func resignQuantityText(){
@@ -349,11 +303,10 @@ private extension CurrencyConverterView{
         self.addSubview(viewtextseg)
         
         viewtextseg.addSubview(quantitytextfield)
-        viewtextseg.addSubview(segcontrol)
         
         self.addSubview(viewpick)
         
-        viewpick.addSubview(currencytextfield)
+        viewpick.addSubview(currencyLabel)
         
         self.addSubview(valueview)
         
@@ -384,20 +337,15 @@ private extension CurrencyConverterView{
             quantitytextfield.trailingAnchor.constraint(equalTo: viewtextseg.trailingAnchor, constant: -8),
             quantitytextfield.heightAnchor.constraint(equalToConstant: 34),
             
-            segcontrol.topAnchor.constraint(equalTo: quantitytextfield.bottomAnchor, constant: 8),
-            segcontrol.leadingAnchor.constraint(equalTo: viewtextseg.leadingAnchor, constant: 8),
-            segcontrol.trailingAnchor.constraint(equalTo: viewtextseg.trailingAnchor, constant: -8),
-            segcontrol.bottomAnchor.constraint(equalTo: viewtextseg.bottomAnchor, constant: -8),
-            
             viewpick.topAnchor.constraint(equalTo: viewtextseg.bottomAnchor, constant: 16),
             viewpick.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             viewpick.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             viewpick.heightAnchor.constraint(equalToConstant: 50),
             
-            currencytextfield.topAnchor.constraint(equalTo: viewpick.topAnchor, constant: 8),
-            currencytextfield.leadingAnchor.constraint(equalTo: viewpick.leadingAnchor, constant: 8),
-            currencytextfield.trailingAnchor.constraint(equalTo: viewpick.trailingAnchor, constant: -8),
-            currencytextfield.heightAnchor.constraint(equalToConstant: 34),
+            currencyLabel.topAnchor.constraint(equalTo: viewpick.topAnchor, constant: 8),
+            currencyLabel.leadingAnchor.constraint(equalTo: viewpick.leadingAnchor, constant: 8),
+            currencyLabel.trailingAnchor.constraint(equalTo: viewpick.trailingAnchor, constant: -8),
+            currencyLabel.heightAnchor.constraint(equalToConstant: 34),
             
             valueview.topAnchor.constraint(equalTo: viewpick.bottomAnchor, constant: 16),
             valueview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
@@ -454,30 +402,6 @@ extension CurrencyConverterView: UITextFieldDelegate{
         return true
     }
 }
-extension CurrencyConverterView: UIPickerViewDelegate, UIPickerViewDataSource{
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        currencyConverterViewModel.getCurrencyArray().count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        currencyConverterViewModel.getTextForPicker(row: row)
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //print("moneda seleccionada: \(currencyConverterViewModel.getCurrencyArray[row]())")
-        let currencyArray = currencyConverterViewModel.getCurrencyArray()
-        currencyConverterViewModel.updateCurrency(currency: currencyArray[row])
-        currencytextfield.text = currencyConverterViewModel.getTextForPicker(row: row)
-        setTextForSegControl(segmentControl: currencytextfield.text ?? "")
-        currencytextfield.resignFirstResponder()
-        setEnableControl()
-    }
-}
 
 //MARK: - Delegate Methods
 
@@ -502,7 +426,7 @@ extension CurrencyConverterView{
                 guard let self = self else { return }
                 let amount = Double(((text)))
                 print("Monto ingresado: \(String(describing: amount))")
-                self.currencyConverterViewModel.updateAmount(amount)
+                self.viewModel.updateAmount(amount)
                 
                 if text.isEmpty || amount == nil || amount == 0 {
                     self.resetControls()
@@ -512,7 +436,7 @@ extension CurrencyConverterView{
             }
             .store(in: &cancellables)
         
-        currencyConverterViewModel.getConvertedValues()
+        viewModel.getConvertedValues()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (currencyFromPeso, currencyToPeso, pesoToDolar, currencyToDolarValue) in
                 guard let self = self else { return }
@@ -527,19 +451,32 @@ extension CurrencyConverterView{
             .store(in: &cancellables)
     }
     
+    func setEnableControl(){
+//        currencyLabel.isEnabled = true
+//        if currencyLabel.text?.isEmpty ?? true {
+//            //currencyLabel.text = "Seleccione una moneda para convertir"
+//            //currencyLabel.textColor = .systemRed
+//        }
+//        currencyLabel.textColor = .systemRed // Añadimos el color aquí también para consistencia
+//       // segcontrol.isEnabled = true
+//        //segcontrol.selectedSegmentIndex = 0
+    }
+    
     private func resetControls() {
-        currencytextfield.isEnabled = false
-        currencytextfield.text = nil
-        currencytextfield.placeholder = "Seleccione una moneda para convertir"
-        currencypickerview.selectRow(0, inComponent: 0, animated: false)
-        segcontrol.isEnabled = false
-        segcontrol.setTitle("$ -> Moneda", forSegmentAt: 0)
-        segcontrol.setTitle("Moneda -> $", forSegmentAt: 1)
         buylabel.text = "Compra"
         valuebuylabel.text = "0.00"
         sellLabel.text = "En Dolares"
         valuesellLabel.text = "0.00"
-        currencyConverterViewModel.resetCurrency()
+        //viewModel.resetCurrency()
     }
     
+}
+
+extension CurrencyConverterView{
+    
+    func setCurrency(currency: CurrencyItem){
+        currencyLabel.text = currency.currencyTitle
+        currencyLabel.textColor = .black
+        viewModel.updateCurrency(selectedCurrency: currency)
+    }
 }

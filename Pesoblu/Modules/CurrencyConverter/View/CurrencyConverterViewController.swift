@@ -13,10 +13,15 @@ final class CurrencyConverterViewController: UIViewController {
     
     var currencyView : CurrencyConverterView?
     let currencyConverterViewModel: CurrencyConverterViewModelProtocol
+    private let currency: CurrencyItem
     
-    init(currencyView: CurrencyConverterView? = nil, currencyConverterViewModel: CurrencyConverterViewModelProtocol) {
+    init(currencyView: CurrencyConverterView? = nil,
+         currencyConverterViewModel: CurrencyConverterViewModelProtocol,
+         currency: CurrencyItem) {
         self.currencyView = currencyView
         self.currencyConverterViewModel = currencyConverterViewModel
+        self.currency = currency
+        
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,8 +45,14 @@ extension CurrencyConverterViewController{
     
     func setup(){
         title = "Convertir"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
+        let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
+        backButton.tintColor = UIColor.black
+
+        self.navigationItem.leftBarButtonItem = backButton
+        self.view.backgroundColor = UIColor(hex: "F0F8FF")
         startTimer()
+        currencyView?.setCurrency(currency: currency)
     }
 }
 
@@ -61,3 +72,12 @@ extension CurrencyConverterViewController{
     }
 }
 //#Preview("CurrencyViewController", traits: .defaultLayout, body: { CurrencyViewController()})
+
+//MARK: - Button Methods
+extension CurrencyConverterViewController{
+    
+    @objc func didTapBack() {
+        // Regresar a la vista anterior
+        navigationController?.popViewController(animated: true)
+    }
+}

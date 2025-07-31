@@ -17,7 +17,7 @@ protocol HomeViewModelProtocol {
 }
 
 
-class HomeViewModel: HomeViewModelProtocol{
+final class HomeViewModel: HomeViewModelProtocol{
     private let currencyService: CurrencyServiceProtocol
     private let locationService: LocationServiceProtocol
     private let placesService: PlaceServiceProtocol

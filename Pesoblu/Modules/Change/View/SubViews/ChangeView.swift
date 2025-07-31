@@ -7,8 +7,7 @@
 
 import UIKit
 
-
-class ChangeView: UICollectionViewCell {
+class ChangeView: UIView {
 
     private lazy var viewDolar: UIView = {
         var view = UIView()

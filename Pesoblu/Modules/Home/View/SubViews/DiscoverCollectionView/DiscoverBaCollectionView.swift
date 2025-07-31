@@ -12,7 +12,7 @@ protocol CollectionViewSelectionDelegate: AnyObject {
     func didSelectItem(_ item: DiscoverItem) // Define el tipo de datos que envías
 }
 
-class DiscoverBaCollectionView: UIView {
+final class DiscoverBaCollectionView: UIView {
     
     private var data: [DiscoverItem] = []
     private var homeViewModel : HomeViewModelProtocol

@@ -78,3 +78,9 @@ struct BlueEuro: Decodable, CurrencyItem{
     let value_sell: Double
     let value_buy: Double
 }
+
+struct GenericCurrencyItem: CurrencyItem {
+    var currencyTitle: String?
+    var currencyLabel: String?
+    var rate: String?
+}

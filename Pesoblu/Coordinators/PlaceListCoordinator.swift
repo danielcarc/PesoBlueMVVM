@@ -42,9 +42,6 @@ class PlaceListCoordinator: Coordinator{
     func showPlaceDetail(for item: PlaceItem) {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let coreDataService = CoreDataService(context: context)
-       // let viewModel = PlaceViewModel(coreDataService: coreDataService, place: item)
-       // let placeView = PlaceView(viewModel: viewModel)
-        //let placeVC = PlaceViewController(placeView: placeView, placeViewModel: viewModel, place: item)
         
         let coordinator = PlaceCoordinator(navigationController: navigationController,
                                            place: item,

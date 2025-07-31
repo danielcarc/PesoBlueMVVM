@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiscoverCell: UICollectionViewCell {
+final class DiscoverCell: UICollectionViewCell {
     
     // MARK: - Public Properties
     private lazy var imageView : UIImageView = {
