@@ -9,12 +9,7 @@ import UIKit
 import Combine
 
 
-///colocar los 4 valores de la moneda
-///borrar sombras y manejarlas de distinta manera o sacarlas
-///modificar el Combine para que no se pueda elegir moneda y quede la de la vista
-///en el pickerview se actualiza la moneda que va al viewmodel esta el metodo que debemos usar
-///hacer que cuando se setea la moneda en esta vista ya vaya colocando los labels como corresponde
-
+///una vez que sea funcional subir el titilelabel arriba y el valuelabel bajarlo asi no se chocan los caracteres, y darle colores a los distintos caracteres para que no sea aburrido
 
 final class CurrencyConverterView: UIView {
         
@@ -23,10 +18,9 @@ final class CurrencyConverterView: UIView {
     private var viewModel: CurrencyConverterViewModelProtocol
     private var selectedCurrency: String = ""
     
-    
-    init(frame: CGRect = .zero, currencyConverterViewModel: CurrencyConverterViewModelProtocol) {
-        self.viewModel = currencyConverterViewModel
-        super.init(frame: frame)
+    init(viewModel: CurrencyConverterViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         
         setup()
         quantitytextfield.delegate = self
@@ -36,28 +30,16 @@ final class CurrencyConverterView: UIView {
     
     var currencyFromPeso: String = "0.0"
     var currencyToPeso: String = "0.0"
-    var pesoToDolar: String = "0.0"
+    var currencyToDolar: String = "0.0"
     var currencyToDolarValue: String = "0.0"
-    
-    private lazy var viewtextseg : UIView = {
-        var view = UIView()
-        view.backgroundColor = UIColor(red: 213/255.00, green: 229/255.00, blue: 252/255.00, alpha: 1)
-        view.layer.cornerRadius = 10
-        view.layer.shadowRadius = 3
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     private lazy var quantitytextfield : UITextField = {
         var text = UITextField()
         text.placeholder = "Ingrese la cantidad de dinero a convertir"
         text.textAlignment = .center
         text.textColor = .black
-        text.textAlignment = .center
         text.backgroundColor = .white
-        text.layer.cornerRadius = 7
+        text.layer.cornerRadius = 10
         text.keyboardType = .decimalPad
         text.font = .systemFont(ofSize: 17)
 
@@ -66,121 +48,159 @@ final class CurrencyConverterView: UIView {
         return text
     }()
     
-    
-    private lazy var viewpick: UIView = {
-        var view = UIView()
-        view.backgroundColor = UIColor(red: 213/255.00, green: 229/255.00, blue: 252/255.00, alpha: 1)
-        view.layer.cornerRadius = 10
-//        view.layer.shadowRadius = 3
-//        view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var currencyLabel: UILabel = {
         var text = UILabel()
-        //text.placeholder = "Seleccione una moneda para convertir"
         text.font = .systemFont(ofSize: 14)
         text.textColor = .black
         text.textAlignment = .center
         text.backgroundColor = .white
-        text.layer.cornerRadius = 5
-//        text.layer.shadowRadius = 3
-//        text.layer.shadowOpacity = 0.3
-        //text.inputView = currencypickerview
-        text.isEnabled = true
+        text.layer.cornerRadius = 20
         text.translatesAutoresizingMaskIntoConstraints = false
         
         return text
     }()
     
-    private lazy var valueview: UIView = {
-        var view = UIView()
-        view.backgroundColor = UIColor(red: 213/255.00, green: 229/255.00, blue: 252/255.00, alpha: 1)
-        view.layer.shadowRadius = 3
-        view.layer.cornerRadius = 10
-        view.layer.shadowOpacity = 0.3
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
-    private lazy var buyview: UIView = {
+    ///vista
+    private lazy var toPesoView: UIView = {
         var view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
-        view.layer.shadowRadius = 3
-        view.layer.shadowOpacity = 0.3
-        
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 4
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var buylabel: UILabel = {
+    private lazy var toPesoTitle: UILabel = {
         var label = UILabel()
         label.text = "Compra"
-        label.font = .systemFont(ofSize: 17)
-        label.textColor = .systemGray2
+        label.textColor = .systemBlue
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        //label.textColor = .black
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private lazy var valuebuyview: UIView = {
-        var view = UIView()
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
-    private lazy var valuebuylabel: UILabel = {
+    private lazy var toPesoValue: UILabel = {
         var label = UILabel()
         label.text = "0.00"
-        label.font = .systemFont(ofSize: 22)
+        label.textColor = .systemBlue
+        label.font = .boldSystemFont(ofSize: 22)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private lazy var sellview: UIView = {
+    ///otra vista
+    private lazy var fromPesoView: UIView = {
         var view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowRadius = 3
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 4
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-    private lazy var sellLabel: UILabel = {
+    private lazy var fromPesoTitle: UILabel = {
         var label = UILabel()
         label.text = "En Dolares"
-        label.font = .systemFont(ofSize: 17)
-        label.textColor = .systemGray2
+        label.textColor = .systemGreen
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        //label.textColor = .black
         label.textAlignment = .center
         
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var valuesellview: UIView = {
+    private lazy var fromPesoValue: UILabel = {
+        var label = UILabel()
+        label.text = "0.00"
+        label.textColor = .systemGreen
+        label.font = .boldSystemFont(ofSize: 22)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    /// otras vistas
+    ///vista
+    private lazy var toDolarView: UIView = {
         var view = UIView()
         view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 4
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var toDolarTitle: UILabel = {
+        var label = UILabel()
+        label.text = "Compra"
+        label.textColor = .systemIndigo
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        //label.textColor = .black
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private lazy var toDolarValue: UILabel = {
+        var label = UILabel()
+        label.text = "0.00"
+        label.textColor = .systemIndigo
+        label.font = .boldSystemFont(ofSize: 22)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    ///otra vista
+    private lazy var fromDolarView: UIView = {
+        var view = UIView()
+        view.backgroundColor = .white
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 4
+        view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-    private lazy var valuesellLabel: UILabel = {
+    private lazy var fromDolarTitle: UILabel = {
+        var label = UILabel()
+        label.text = "En Dolares"
+        label.textColor = .systemOrange
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        //label.textColor = .black
+        label.textAlignment = .center
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var fromDolarValue: UILabel = {
         var label = UILabel()
         label.text = "0.00"
-        label.font = .systemFont(ofSize: 22)
+        label.textColor = .systemOrange
+        label.font = .boldSystemFont(ofSize: 22)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -196,79 +216,10 @@ final class CurrencyConverterView: UIView {
         self.addGestureRecognizer(tap)
     }
     
-    @objc func segmentedControlValueChanged(sender: UISegmentedControl){
-        let selectedIndex = sender.selectedSegmentIndex
-        let textOfCurrency = getTextForCurrency()
-        textForBuyLabel(textOfCurrency: textOfCurrency, selectedIndex: selectedIndex)
-        
-    }
-    
-    func textForBuyLabel(textOfCurrency: String, selectedIndex: Int){
-        switch textOfCurrency {
-        case "Real Brasil":
-            if selectedIndex == 0 {
-                buylabel.text = "En Reales"
-                valuebuylabel.text = currencyFromPeso
-                valuesellLabel.text = pesoToDolar
-            } else if selectedIndex == 1{
-                buylabel.text = "En Pesos"
-                valuebuylabel.text = currencyToPeso
-                valuesellLabel.text = currencyToDolarValue
-            }
-        case "Peso Chile":
-            if selectedIndex == 0 {
-                buylabel.text = "Pesos Chile"
-                valuebuylabel.text = currencyFromPeso
-                valuesellLabel.text = pesoToDolar
-            } else if selectedIndex == 1{
-                buylabel.text = "En Pesos"
-                valuebuylabel.text = currencyToPeso
-                valuesellLabel.text = currencyToDolarValue
-            }
-        case "Peso Uruguay":
-            if selectedIndex == 0 {
-                buylabel.text = "Pesos Uruguay"
-                valuebuylabel.text = currencyFromPeso
-                valuesellLabel.text = pesoToDolar
-            } else if selectedIndex == 1{
-                buylabel.text = "En Pesos"
-                valuebuylabel.text = currencyToPeso
-                valuesellLabel.text = currencyToDolarValue
-            }
-        default:
-            if selectedIndex == 0 {
-                buylabel.text = "error"
-            } else if selectedIndex == 1{
-                buylabel.text = "error"
-            }
-        }
-    }
-    
     @objc func dismissKeyboard() {
         // Oculta el teclado al tocar la pantalla fuera del campo de texto
         self.endEditing(true)
     }
-
-    
-    
-    func getTextForCurrency() -> String{
-        if let text = currencyLabel.text {
-            return text
-        } else {
-            return ""
-        }
-    }
-    
-    func setTextForConvertValues(currencyValueFromPeso: String, currencyValueToPeso: String,  dolarValue: String, currencyToDolar: String){
-        valuebuylabel.text = currencyValueFromPeso
-        valuesellLabel.text = dolarValue
-        currencyFromPeso = currencyValueFromPeso
-        currencyToPeso = currencyValueToPeso
-        pesoToDolar = dolarValue
-        currencyToDolarValue = currencyToDolar
-    }
-    
-    
     
     func resigncurrencytext(){
         currencyLabel.resignFirstResponder()
@@ -282,6 +233,39 @@ final class CurrencyConverterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupGradientBackground() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1).cgColor,
+            UIColor(red: 213/255, green: 229/255, blue: 252/255, alpha: 1).cgColor
+        ]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = bounds
+        gradientLayer.cornerRadius = 0
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func applyCardShadow(to view: UIView) {
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 4
+        view.layer.cornerRadius = 12
+        view.layer.masksToBounds = false
+        view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds, cornerRadius: 12).cgPath
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setupGradientBackground()
+        applyCardShadow(to: quantitytextfield)
+        applyCardShadow(to: currencyLabel)
+        applyCardShadow(to: toPesoView)
+        applyCardShadow(to: fromPesoView)
+        applyCardShadow(to: toDolarView)
+        applyCardShadow(to: fromDolarView)
+    }
+    
 }
 
 //MARK: - Setup and Constraints Methods
@@ -289,104 +273,97 @@ final class CurrencyConverterView: UIView {
 private extension CurrencyConverterView{
     
     func setup(){
-        //self.backgroundColor = .white
         addsubviews()
         setupconstraints()
+        
     }
-    
-  
     
     private func addsubviews(){
         
         self.backgroundColor = .white
         
-        self.addSubview(viewtextseg)
+        self.addSubview(quantitytextfield)
         
-        viewtextseg.addSubview(quantitytextfield)
+        self.addSubview(currencyLabel)
         
-        self.addSubview(viewpick)
+        self.addSubview(toPesoView)
+        toPesoView.addSubview(toPesoTitle)
+        toPesoView.addSubview(toPesoValue)
         
-        viewpick.addSubview(currencyLabel)
+        self.addSubview(fromPesoView)
+        fromPesoView.addSubview(fromPesoTitle)
+        fromPesoView.addSubview(fromPesoValue)
         
-        self.addSubview(valueview)
+        self.addSubview(toDolarView)
+        toDolarView.addSubview(toDolarTitle)
+        toDolarView.addSubview(toDolarValue)
         
-        valueview.addSubview(buyview)
-        valueview.addSubview(sellview)
+        self.addSubview(fromDolarView)
+        fromDolarView.addSubview(fromDolarTitle)
+        fromDolarView.addSubview(fromDolarValue)
         
-        buyview.addSubview(buylabel)
-        buyview.addSubview(valuebuyview)
-        
-        valuebuyview.addSubview(valuebuylabel)
-        
-        sellview.addSubview(sellLabel)
-        sellview.addSubview(valuesellview)
-        
-        valuesellview.addSubview(valuesellLabel)
     }
     
     private func setupconstraints(){
         
         NSLayoutConstraint.activate([
-            viewtextseg.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor),
-            viewtextseg.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            viewtextseg.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            viewtextseg.heightAnchor.constraint(equalToConstant: 90),
             
-            quantitytextfield.topAnchor.constraint(equalTo: viewtextseg.topAnchor, constant: 8),
-            quantitytextfield.leadingAnchor.constraint(equalTo: viewtextseg.leadingAnchor, constant: 8),
-            quantitytextfield.trailingAnchor.constraint(equalTo: viewtextseg.trailingAnchor, constant: -8),
+            quantitytextfield.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor, constant: 30),
+            quantitytextfield.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            quantitytextfield.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             quantitytextfield.heightAnchor.constraint(equalToConstant: 34),
             
-            viewpick.topAnchor.constraint(equalTo: viewtextseg.bottomAnchor, constant: 16),
-            viewpick.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            viewpick.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            viewpick.heightAnchor.constraint(equalToConstant: 50),
+            currencyLabel.topAnchor.constraint(equalTo: quantitytextfield.bottomAnchor, constant: 16),
+            currencyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            currencyLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            currencyLabel.heightAnchor.constraint(equalToConstant: 50),
             
-            currencyLabel.topAnchor.constraint(equalTo: viewpick.topAnchor, constant: 8),
-            currencyLabel.leadingAnchor.constraint(equalTo: viewpick.leadingAnchor, constant: 8),
-            currencyLabel.trailingAnchor.constraint(equalTo: viewpick.trailingAnchor, constant: -8),
-            currencyLabel.heightAnchor.constraint(equalToConstant: 34),
+            toPesoView.topAnchor.constraint(equalTo: currencyLabel.bottomAnchor, constant: 16),
+            toPesoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            toPesoView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            toPesoView.heightAnchor.constraint(equalToConstant: 91),
             
-            valueview.topAnchor.constraint(equalTo: viewpick.bottomAnchor, constant: 16),
-            valueview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            valueview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            valueview.heightAnchor.constraint(equalToConstant: 107),
+            toPesoTitle.leadingAnchor.constraint(equalTo: toPesoView.leadingAnchor, constant: 16),
+            toPesoTitle.centerYAnchor.constraint(equalTo: toPesoView.centerYAnchor),
             
-            buyview.topAnchor.constraint(equalTo: valueview.topAnchor, constant: 8),
-            buyview.leadingAnchor.constraint(equalTo: valueview.leadingAnchor, constant: 8),
-            buyview.widthAnchor.constraint(equalTo: valueview.widthAnchor, multiplier: 0.5, constant: -12),
-            buyview.heightAnchor.constraint(equalToConstant: 91),
+            toPesoValue.centerYAnchor.constraint(equalTo: toPesoView.centerYAnchor),
+            toPesoValue.trailingAnchor.constraint(equalTo: toPesoView.trailingAnchor, constant: -16),
             
-            buylabel.topAnchor.constraint(equalTo: buyview.topAnchor, constant: 8),
-            buylabel.centerXAnchor.constraint(equalTo: buyview.centerXAnchor),
+            fromPesoView.topAnchor.constraint(equalTo: toPesoView.bottomAnchor, constant: 16),
+            //sellview.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -12),
+            fromPesoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            fromPesoView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            fromPesoView.heightAnchor.constraint(equalToConstant: 91),
             
-            valuebuyview.leadingAnchor.constraint(equalTo: buyview.leadingAnchor, constant: 8),
-            valuebuyview.trailingAnchor.constraint(equalTo: buyview.trailingAnchor, constant: -8),
-            valuebuyview.bottomAnchor.constraint(equalTo: buyview.bottomAnchor, constant: -8),
-            valuebuyview.heightAnchor.constraint(equalToConstant: 47),
+            fromPesoTitle.leadingAnchor.constraint(equalTo: fromPesoView.leadingAnchor, constant: 16),
+            fromPesoTitle.centerYAnchor.constraint(equalTo: fromPesoView.centerYAnchor),
             
-            valuebuylabel.topAnchor.constraint(equalTo: valuebuyview.topAnchor, constant: 8),
-            valuebuylabel.leadingAnchor.constraint(equalTo: valuebuyview.leadingAnchor, constant: 8),
-            valuebuylabel.trailingAnchor.constraint(equalTo: valuebuyview.trailingAnchor, constant: -8),
-            valuebuylabel.bottomAnchor.constraint(equalTo: valuebuyview.bottomAnchor, constant: -8),
+            fromPesoValue.centerYAnchor.constraint(equalTo: fromPesoView.centerYAnchor),
+            fromPesoValue.trailingAnchor.constraint(equalTo: fromPesoView.trailingAnchor, constant: -16),
             
-            sellview.topAnchor.constraint(equalTo: valueview.topAnchor, constant: 8),
-            sellview.widthAnchor.constraint(equalTo: valueview.widthAnchor, multiplier: 0.5, constant: -12),
-            sellview.trailingAnchor.constraint(equalTo: valueview.trailingAnchor, constant: -8),
-            sellview.bottomAnchor.constraint(equalTo: valueview.bottomAnchor, constant: -8),
+            ///vista
+            toDolarView.topAnchor.constraint(equalTo: fromPesoView.bottomAnchor, constant: 16),
+            toDolarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            toDolarView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            toDolarView.heightAnchor.constraint(equalToConstant: 91),
             
-            sellLabel.topAnchor.constraint(equalTo: sellview.topAnchor, constant: 8),
-            sellLabel.centerXAnchor.constraint(equalTo: sellview.centerXAnchor),
+            toDolarTitle.leadingAnchor.constraint(equalTo: toDolarView.leadingAnchor, constant: 16),
+            toDolarTitle.centerYAnchor.constraint(equalTo: toDolarView.centerYAnchor),
             
-            valuesellview.leadingAnchor.constraint(equalTo: sellview.leadingAnchor, constant: 8),
-            valuesellview.trailingAnchor.constraint(equalTo: sellview.trailingAnchor, constant: -8),
-            valuesellview.bottomAnchor.constraint(equalTo: sellview.bottomAnchor, constant: -8),
-            valuesellview.heightAnchor.constraint(equalToConstant: 47),
+            toDolarValue.centerYAnchor.constraint(equalTo: toDolarView.centerYAnchor),
+            toDolarValue.trailingAnchor.constraint(equalTo: toDolarView.trailingAnchor, constant: -16),
             
-            valuesellLabel.leadingAnchor.constraint(equalTo: valuesellview.leadingAnchor, constant: 8),
-            valuesellLabel.topAnchor.constraint(equalTo: valuesellview.topAnchor, constant: 8),
-            valuesellLabel.trailingAnchor.constraint(equalTo: valuesellview.trailingAnchor, constant: -8),
-            valuesellLabel.bottomAnchor.constraint(equalTo: valuesellview.bottomAnchor, constant: -8)
+            fromDolarView.topAnchor.constraint(equalTo: toDolarView.bottomAnchor, constant: 16),
+            //sellview.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -12),
+            fromDolarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            fromDolarView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            fromDolarView.heightAnchor.constraint(equalToConstant: 91),
+            
+            fromDolarTitle.leadingAnchor.constraint(equalTo: fromDolarView.leadingAnchor, constant: 16),
+            fromDolarTitle.centerYAnchor.constraint(equalTo: fromDolarView.centerYAnchor),
+            
+            fromDolarValue.centerYAnchor.constraint(equalTo: fromDolarView.centerYAnchor),
+            fromDolarValue.trailingAnchor.constraint(equalTo: fromDolarView.trailingAnchor, constant: -16),
         
         ])
     }
@@ -396,7 +373,6 @@ private extension CurrencyConverterView{
 
 extension CurrencyConverterView: UITextFieldDelegate{
     
-   
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -430,53 +406,130 @@ extension CurrencyConverterView{
                 
                 if text.isEmpty || amount == nil || amount == 0 {
                     self.resetControls()
-                } else {
-                    self.setEnableControl()
                 }
             }
             .store(in: &cancellables)
         
         viewModel.getConvertedValues()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (currencyFromPeso, currencyToPeso, pesoToDolar, currencyToDolarValue) in
+            .sink { [weak self] (currencyFromPeso, currencyToPeso, fromDolarToCurrency, currencyToDolarValue) in
                 guard let self = self else { return }
-                self.currencyFromPeso = currencyFromPeso
-                self.currencyToPeso = currencyToPeso
-                self.pesoToDolar = pesoToDolar
-                self.currencyToDolarValue = currencyToDolarValue
-                self.valuebuylabel.text = currencyFromPeso
-                self.valuesellLabel.text = pesoToDolar
+                
+                if self.selectedCurrency == "Dólar Bolsa de Valores / MEP" {
+                    self.toPesoValue.text = fromDolarToCurrency
+                    self.fromPesoValue.text = currencyToDolarValue
+                }else{
+                    self.toPesoValue.text = currencyToPeso
+                    self.fromPesoValue.text = currencyFromPeso
+                    self.toDolarValue.text = currencyToDolarValue
+                    self.fromDolarValue.text = fromDolarToCurrency
+                }
+                
                 
             }
             .store(in: &cancellables)
     }
     
-    func setEnableControl(){
-//        currencyLabel.isEnabled = true
-//        if currencyLabel.text?.isEmpty ?? true {
-//            //currencyLabel.text = "Seleccione una moneda para convertir"
-//            //currencyLabel.textColor = .systemRed
-//        }
-//        currencyLabel.textColor = .systemRed // Añadimos el color aquí también para consistencia
-//       // segcontrol.isEnabled = true
-//        //segcontrol.selectedSegmentIndex = 0
-    }
-    
     private func resetControls() {
-        buylabel.text = "Compra"
-        valuebuylabel.text = "0.00"
-        sellLabel.text = "En Dolares"
-        valuesellLabel.text = "0.00"
-        //viewModel.resetCurrency()
+        toPesoValue.text = "0.00"
+        fromPesoValue.text = "0.00"
+        toDolarValue.text = "0.00"
+        fromDolarValue.text = "0.00"
     }
     
 }
+
+//MARK: - Set Currency Methods
 
 extension CurrencyConverterView{
     
     func setCurrency(currency: CurrencyItem){
         currencyLabel.text = currency.currencyTitle
         currencyLabel.textColor = .black
+        currencyLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        setTitleLabels(currency: currency)
         viewModel.updateCurrency(selectedCurrency: currency)
+    }
+    
+    func setTitleLabels(currency: CurrencyItem){
+        selectedCurrency = currency.currencyLabel ?? ""
+        switch currency.currencyLabel {
+        case "Uruguay":
+            toPesoTitle.text = "Peso Uruguayo   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Peso Uruguayo"
+            toDolarTitle.text = "Peso Uruguayo   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Peso Uruguayo"
+        case "Brasil":
+            toPesoTitle.text = "Real Brasil   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Real Brasil"
+            toDolarTitle.text = "Real Brasil   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Real Brasil"
+        case "Chile":
+            toPesoTitle.text = "Peso Chileno   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Peso Chileno"
+            toDolarTitle.text = "Peso Chileno   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Peso Chileno"
+        case "Unión Europea":
+            toPesoTitle.text = "Euro   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Euro"
+            toDolarTitle.text = "Euro   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Euro"
+        case "México":
+            toPesoTitle.text = "Peso Mexicano  ⮕  Peso"
+            fromPesoTitle.text = "Peso   ⮕   Peso Mexicano"
+            toDolarTitle.text = "Peso Mexicano   ⮕ Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Peso Mexicano"
+        case "Colombia":
+            toPesoTitle.text = "Peso Colombiano   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Peso Colombiano"
+            toDolarTitle.text = "Peso Colombiano   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Peso Colombiano"
+        case "Reino Unido":
+            toPesoTitle.text = "Libra Esterlina   ⮕  Peso"
+            fromPesoTitle.text = "Peso   ⮕   Libra Esterlina"
+            toDolarTitle.text = "Libra Esterlina   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Libra Esterlina"
+        case "Japón":
+            toPesoTitle.text = "Yen Japonés   ⮕  Peso"
+            fromPesoTitle.text = "Peso   ⮕   Yen Japonés"
+            toDolarTitle.text = "Yen Japonés   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Yen Japonés"
+        case "Israel":
+            toPesoTitle.text = "Shequel Israelí   ⮕  Peso"
+            fromPesoTitle.text = "Peso   ⮕   Shequel Israelí"
+            toDolarTitle.text = "Shequel Israelí   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Shequel Israelí"
+        case "Paraguay":
+            toPesoTitle.text = "Guaraní Paraguayo   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Guaraní Paraguayo"
+            toDolarTitle.text = "Guaraní Paraguayo   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Guaraní Paraguayo"
+        case "Perú":
+            toPesoTitle.text = "Sol Peruano   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Sol Peruano"
+            toDolarTitle.text = "Sol Peruano   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Sol Peruano"
+        case "Rusia":
+            toPesoTitle.text = "Rublo Ruso   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Rublo Ruso"
+            toDolarTitle.text = "Rublo Ruso   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Rublo Ruso"
+        case "Canadá":
+            toPesoTitle.text = "Dólar Canadiense   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Dólar Canadiense"
+            toDolarTitle.text = "Dólar Canadiense   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Dólar Canadiense"
+        case "Bolivia":
+            toPesoTitle.text = "Boliviano   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Boliviano"
+            toDolarTitle.text = "Boliviano   ⮕   Dólar"
+            fromDolarTitle.text = "Dólar   ⮕   Boliviano"
+        default:
+            toPesoTitle.text = "Dólar   ⮕   Peso"
+            fromPesoTitle.text = "Peso   ⮕   Dólar"
+            toDolarView.isHidden = true
+            fromDolarView.isHidden = true
+        }
+        
     }
 }

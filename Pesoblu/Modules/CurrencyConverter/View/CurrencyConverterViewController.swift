@@ -11,16 +11,20 @@ import UserNotifications
 
 final class CurrencyConverterViewController: UIViewController {
     
-    var currencyView : CurrencyConverterView?
-    let currencyConverterViewModel: CurrencyConverterViewModelProtocol
-    private let currency: CurrencyItem
+   
+    let viewModel: CurrencyConverterViewModelProtocol
+    private let selectedCurrency: CurrencyItem
     
-    init(currencyView: CurrencyConverterView? = nil,
-         currencyConverterViewModel: CurrencyConverterViewModelProtocol,
+    private lazy var converterView: CurrencyConverterView = {
+        let view = CurrencyConverterView(viewModel: viewModel)
+        //view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    init(viewModel: CurrencyConverterViewModelProtocol,
          currency: CurrencyItem) {
-        self.currencyView = currencyView
-        self.currencyConverterViewModel = currencyConverterViewModel
-        self.currency = currency
+        self.viewModel = viewModel
+        self.selectedCurrency = currency
         
         
         super.init(nibName: nil, bundle: nil)
@@ -31,14 +35,25 @@ final class CurrencyConverterViewController: UIViewController {
     }
     
     override func loadView() {
-        currencyView = CurrencyConverterView(frame: .zero, currencyConverterViewModel: currencyConverterViewModel)
-        self.view = currencyView
+        self.view = converterView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        converterView.alpha = 0
+        converterView.transform = CGAffineTransform(translationX: 0, y: 30)
+        
+        UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseOut]) {
+            self.converterView.alpha = 1
+            self.converterView.transform = .identity
+        }
     }
 }
 extension CurrencyConverterViewController{
@@ -52,7 +67,7 @@ extension CurrencyConverterViewController{
         self.navigationItem.leftBarButtonItem = backButton
         self.view.backgroundColor = UIColor(hex: "F0F8FF")
         startTimer()
-        currencyView?.setCurrency(currency: currency)
+        converterView.setCurrency(currency: selectedCurrency)
     }
 }
 
@@ -63,9 +78,9 @@ extension CurrencyConverterViewController{
     func startTimer(){
         Timer.scheduledTimer(withTimeInterval: 6000, repeats: true) { timer in
             Task{
-                if let dolar = try await self.currencyConverterViewModel.getDolarBlue() {
+                if let dolar = try await self.viewModel.getDolarBlue() {
                     let dolarNow = String(format: "%.2f", dolar.venta)
-                    await self.currencyConverterViewModel.checkPermission(dolar: dolarNow)
+                    await self.viewModel.checkPermission(dolar: dolarNow)
                 }
             }
         }

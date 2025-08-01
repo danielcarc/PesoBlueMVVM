@@ -16,7 +16,7 @@ final class CurrencyConverterCoordinator: Coordinator{
     }
     func start() {
         let viewModel = CurrencyConverterViewModel(currencyService: CurrencyService(), notificationService: NotificationService(), selectedCurrency: currency)
-        let vc = CurrencyConverterViewController(currencyConverterViewModel: viewModel, currency: currency)
+        let vc = CurrencyConverterViewController(viewModel: viewModel, currency: currency)
         
         navigationController.pushViewController(vc, animated: true)
     }

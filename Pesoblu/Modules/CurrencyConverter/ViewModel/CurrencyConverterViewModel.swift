@@ -25,8 +25,6 @@ import Combine
 protocol CurrencyConverterViewModelProtocol {
     func getDolarBlue() async throws -> DolarBlue?
     func checkPermission(dolar: String)
-    //func getTextForPicker(row: Int) -> String
-    //func resetCurrency()
     func getCurrencyArray() -> [String]
     func updateCurrency(selectedCurrency: CurrencyItem)
     func updateAmount(_ amount: Double?)
@@ -82,7 +80,6 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
 
     @MainActor
     func fetchExchangeRates() async throws{
-       // return currencyService.fetchExchangeRates() modificar esto que tiene que venir desde currencyservice
         guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP,EUR,GBP,COP,JPY,ILS,MXN,PYG,PEN,RUB,CAD,BOB&format=json")
         else {throw APIError.invalidURL}
         
@@ -95,8 +92,6 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
         let jsonDecoder = JSONDecoder()
         
         self.currency = try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
-        //await self.delegate?.didFinish()
-       
     }
     
     @MainActor
@@ -113,15 +108,6 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
         return notificationService.checkPermission(dolar: dolar)
     }
     
-//    func getTextForPicker(row: Int) -> String {
-//        switch row {
-//        case 0: return "Real Brasil"
-//        case 1: return "Peso Chile"
-//        case 2: return "Peso Uruguay"
-//        default: return "error"
-//        }
-//    }
-    
     //MARK: - Private Methods
 
     func updateAmount(_ amount: Double?){
@@ -131,7 +117,6 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
         self.selectedCurrency = selectedCurrency
         currencySubject.send(selectedCurrency.currencyTitle)
     }
-    
     
     func getConvertedValues() -> AnyPublisher<(String, String, String, String), Never> {
         return convertedValues
@@ -169,56 +154,39 @@ extension CurrencyConverterViewModel {
                 promise(.success(("", "", "", "")))
                 return
             }
-            Task {
-                do {
-                    let dolar = try await self.getDolarBlue()
-                    let dolarValue = dolar?.venta ?? 0.0
-                    let currencyValue = Double(self.valueForCurrency(currencyText: self.selectedCurrency.currencyLabel ?? "0.0")) ?? 0.0
-                    
-                    let pesoToDolar = try await self.convertDolar(quantity: amount)
-                    let currencyFromPeso = String(format: "%.2f", (amount / dolarValue) * currencyValue)
-                    let currencyToPeso = String(format: "%.2f", (amount / currencyValue) * dolarValue)
-                    let currencyToDolarValue = String(format: "%.2f", amount / currencyValue)
-                    
-                    promise(.success((currencyFromPeso, currencyToPeso, pesoToDolar, currencyToDolarValue)))
-                } catch {
-                    print("Error en conversión: \(error)")
-                    promise(.success(("", "", "", ""))) // Valor por defecto en caso de error
-                }
-            }
+            let dolar = self.dolarMep
+            let dolarValue = dolar?.venta ?? 0.0
+            let currencyValue = Double(self.valueForCurrency(currencyText: self.selectedCurrency.currencyLabel ?? "0.0")) ?? 0.0
+            
+            let fromDolarCurrency = String(format: "%.2f", amount * currencyValue)
+            let currencyFromPeso = String(format: "%.2f", (amount / dolarValue) * currencyValue)
+            let currencyToPeso = String(format: "%.2f", (amount / currencyValue) * dolarValue)
+            let currencyToDolarValue = String(format: "%.2f", amount / currencyValue)
+            promise(.success((currencyFromPeso, currencyToPeso, fromDolarCurrency, currencyToDolarValue)))
+//            Task {
+//                do {
+//                    //let dolar = try await self.getDolarBlue()
+//                    let dolar = self.dolarMep
+//                    let dolarValue = dolar?.venta ?? 0.0
+//                    let currencyValue = Double(self.valueForCurrency(currencyText: self.selectedCurrency.currencyLabel ?? "0.0")) ?? 0.0
+//                    
+//                    let fromDolarCurrency = String(format: "%.2f", amount * currencyValue)
+//                    let currencyFromPeso = String(format: "%.2f", (amount / dolarValue) * currencyValue)
+//                    let currencyToPeso = String(format: "%.2f", (amount / currencyValue) * dolarValue)
+//                    let currencyToDolarValue = String(format: "%.2f", amount / currencyValue)
+//                    
+//                    promise(.success((currencyFromPeso, currencyToPeso, fromDolarCurrency, currencyToDolarValue)))
+//                } catch {
+//                    print("Error en conversión: \(error)")
+//                    promise(.success(("", "", "", ""))) // Valor por defecto en caso de error
+//                }
+//            }
         }
         .eraseToAnyPublisher()
     }
     
-    private func convertDolar(quantity: Double) async throws -> String {
-        let maxRetries = 3
-        var retries = 0
-        var dolarValue: Double = 0.0
-        
-        while retries < maxRetries {
-            if let exchangeRate = try await getDolarBlue() {
-                dolarValue = exchangeRate.venta
-                if dolarValue > 0 {
-                    let dolarConvert = quantity / dolarValue
-                    return String(format: "%.2f", dolarConvert)
-                }
-                // Si dolarValue es 0 o negativo, seguimos reintentando
-            }
-            
-            retries += 1
-            if retries < maxRetries {
-                try await Task.sleep(for: .milliseconds(100)) // Espera 100 ms antes de reintentar
-            }
-        }
-        
-        // Si llegamos aquí, no se obtuvo un valor válido después de los reintentos
-        throw dolarValue == 0.0 ? ConversionError.invalidDollarRate : ConversionError.failedToFetchDollarRate
-    }
-    
     private func valueForCurrency(currencyText: String) -> String {
         switch currencyText {
-            
-            /// modificar este metodo y agregar todas las demas monedas
         case "Brasil": return currency.BRL?.rawRate ?? "0.0"
         case "Chile": return currency.CLP?.rawRate ?? "0.0"
         case "Uruguay": return currency.UYU?.rawRate ?? "0.0"
