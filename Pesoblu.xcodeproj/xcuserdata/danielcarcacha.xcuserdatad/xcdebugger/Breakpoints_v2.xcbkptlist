@@ -210,5 +210,83 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "928EE82E-F636-48B7-8735-C468822FA95A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pesoblu/Modules/CurrencyConverter/View/CurrencyConverterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "setupBindings()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9A3FB72C-6D36-417E-8537-00D40B6ED05B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pesoblu/Modules/CurrencyConverter/ViewModel/CurrencyConverterViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "convertedValues"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "9A3FB72C-6D36-417E-8537-00D40B6ED05B - fc8c62ad84461579"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; Combine.AnyPublisher&lt;(Swift.String, Swift.String, Swift.String, Swift.String), Swift.Never&gt; in Pesoblu.CurrencyConverterViewModel.convertedValues.getter : Combine.AnyPublisher&lt;(Swift.String, Swift.String, Swift.String, Swift.String), Swift.Never&gt;"
+                  moduleName = "Pesoblu.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielcarcacha/Desktop/Portfolio/Pesoblu/Pesoblu/Modules/CurrencyConverter/ViewModel/CurrencyConverterViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127">
+               </Location>
+               <Location
+                  uuid = "9A3FB72C-6D36-417E-8537-00D40B6ED05B - 50121534074ecf0e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;) -&gt; Swift.Bool in closure #1 () -&gt; Combine.AnyPublisher&lt;(Swift.String, Swift.String, Swift.String, Swift.String), Swift.Never&gt; in Pesoblu.CurrencyConverterViewModel.convertedValues.getter : Combine.AnyPublisher&lt;(Swift.String, Swift.String, Swift.String, Swift.String), Swift.Never&gt;"
+                  moduleName = "Pesoblu.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danielcarcacha/Desktop/Portfolio/Pesoblu/Pesoblu/Modules/CurrencyConverter/ViewModel/CurrencyConverterViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4EA28945-9FF1-4CF1-92A8-4763A0E05AAE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pesoblu/Modules/CurrencyConverter/View/CurrencyConverterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "setupAmountTextFieldBinding()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

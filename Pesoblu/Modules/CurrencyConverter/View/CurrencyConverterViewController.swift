@@ -11,12 +11,12 @@ import UserNotifications
 
 final class CurrencyConverterViewController: UIViewController {
     
-   
+    private var cancellables = Set<AnyCancellable>()
     let viewModel: CurrencyConverterViewModelProtocol
     private let selectedCurrency: CurrencyItem
     
     private lazy var converterView: CurrencyConverterView = {
-        let view = CurrencyConverterView(viewModel: viewModel)
+        let view = CurrencyConverterView(/*viewModel: viewModel*/)
         //view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -67,7 +67,10 @@ extension CurrencyConverterViewController{
         self.navigationItem.leftBarButtonItem = backButton
         self.view.backgroundColor = UIColor(hex: "F0F8FF")
         startTimer()
+        viewModel.updateCurrency(selectedCurrency: selectedCurrency)
         converterView.setCurrency(currency: selectedCurrency)
+        setupBindings()
+        setupAmountTextFieldBinding()
     }
 }
 
@@ -94,5 +97,47 @@ extension CurrencyConverterViewController{
     @objc func didTapBack() {
         // Regresar a la vista anterior
         navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - Bindings
+extension CurrencyConverterViewController {
+    func setupBindings() {
+        viewModel.getConvertedValues()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (currencyFromPeso, currencyToPeso, fromDolarToCurrency, currencyToDolarValue) in
+                guard let self = self else { return }
+
+                if self.selectedCurrency.currencyLabel == "Dólar Bolsa de Valores / MEP" {
+                    self.converterView.updateValues(
+                        fromPeso: currencyToDolarValue,
+                        toPeso: fromDolarToCurrency,
+                        fromDolar: fromDolarToCurrency,
+                        toDolar: currencyToDolarValue
+                    )
+                } else {
+                    self.converterView.updateValues(
+                        fromPeso: currencyFromPeso,
+                        toPeso: currencyToPeso,
+                        fromDolar: fromDolarToCurrency,
+                        toDolar: currencyToDolarValue
+                    )
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    func setupAmountTextFieldBinding() {
+        converterView.onAmountChanged = { [weak self] amount in
+            guard let self = self else { return }
+            self.viewModel.updateAmount(amount)
+            if amount == nil || amount == 0 {
+                self.resetControls()
+            }
+        }
+    }
+
+    private func resetControls() {
+        converterView.resetControls()
     }
 }

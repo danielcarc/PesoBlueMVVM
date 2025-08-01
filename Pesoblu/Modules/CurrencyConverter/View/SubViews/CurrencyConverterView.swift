@@ -13,18 +13,15 @@ import Combine
 
 final class CurrencyConverterView: UIView {
         
-    private var cancellables = Set<AnyCancellable>()
-    
-    private var viewModel: CurrencyConverterViewModelProtocol
+    var onAmountChanged: ((Double?) -> Void)?
     private var selectedCurrency: String = ""
     
-    init(viewModel: CurrencyConverterViewModelProtocol) {
-        self.viewModel = viewModel
+    init() {
+        
         super.init(frame: .zero)
         
         setup()
         quantitytextfield.delegate = self
-        setupBindings()
         hideKeyboardWhenTappedAround()
     }
     
@@ -48,13 +45,21 @@ final class CurrencyConverterView: UIView {
         return text
     }()
     
+    private lazy var currencyViewLabel: UIView = {
+        var view = UIView()
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var currencyLabel: UILabel = {
         var text = UILabel()
         text.font = .systemFont(ofSize: 14)
         text.textColor = .black
         text.textAlignment = .center
         text.backgroundColor = .white
-        text.layer.cornerRadius = 20
+        
         text.translatesAutoresizingMaskIntoConstraints = false
         
         return text
@@ -78,7 +83,6 @@ final class CurrencyConverterView: UIView {
         label.text = "Compra"
         label.textColor = .systemBlue
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        //label.textColor = .black
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -115,7 +119,6 @@ final class CurrencyConverterView: UIView {
         label.text = "En Dolares"
         label.textColor = .systemGreen
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        //label.textColor = .black
         label.textAlignment = .center
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -152,7 +155,6 @@ final class CurrencyConverterView: UIView {
         label.text = "Compra"
         label.textColor = .systemIndigo
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        //label.textColor = .black
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -189,7 +191,6 @@ final class CurrencyConverterView: UIView {
         label.text = "En Dolares"
         label.textColor = .systemOrange
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        //label.textColor = .black
         label.textAlignment = .center
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -229,6 +230,13 @@ final class CurrencyConverterView: UIView {
         quantitytextfield.resignFirstResponder()
     }
     
+    func updateValues(fromPeso: String, toPeso: String, fromDolar: String, toDolar: String) {
+        fromPesoValue.text = fromPeso
+        toPesoValue.text = toPeso
+        fromDolarValue.text = fromDolar
+        toDolarValue.text = toDolar
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -259,7 +267,7 @@ final class CurrencyConverterView: UIView {
         super.layoutSubviews()
         setupGradientBackground()
         applyCardShadow(to: quantitytextfield)
-        applyCardShadow(to: currencyLabel)
+        applyCardShadow(to: currencyViewLabel)
         applyCardShadow(to: toPesoView)
         applyCardShadow(to: fromPesoView)
         applyCardShadow(to: toDolarView)
@@ -275,6 +283,7 @@ private extension CurrencyConverterView{
     func setup(){
         addsubviews()
         setupconstraints()
+        setupAmountBinding()
         
     }
     
@@ -284,7 +293,8 @@ private extension CurrencyConverterView{
         
         self.addSubview(quantitytextfield)
         
-        self.addSubview(currencyLabel)
+        self.addSubview(currencyViewLabel)
+        currencyViewLabel.addSubview(currencyLabel)
         
         self.addSubview(toPesoView)
         toPesoView.addSubview(toPesoTitle)
@@ -304,6 +314,10 @@ private extension CurrencyConverterView{
         
     }
     
+    private func setupAmountBinding() {
+        quantitytextfield.addTarget(self, action: #selector(amountTextChanged), for: .editingChanged)
+    }
+    
     private func setupconstraints(){
         
         NSLayoutConstraint.activate([
@@ -313,12 +327,17 @@ private extension CurrencyConverterView{
             quantitytextfield.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             quantitytextfield.heightAnchor.constraint(equalToConstant: 34),
             
-            currencyLabel.topAnchor.constraint(equalTo: quantitytextfield.bottomAnchor, constant: 16),
-            currencyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            currencyLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            currencyLabel.heightAnchor.constraint(equalToConstant: 50),
+            currencyViewLabel.topAnchor.constraint(equalTo: quantitytextfield.bottomAnchor, constant: 16),
+            currencyViewLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            currencyViewLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            currencyViewLabel.heightAnchor.constraint(equalToConstant: 50),
             
-            toPesoView.topAnchor.constraint(equalTo: currencyLabel.bottomAnchor, constant: 16),
+            currencyLabel.topAnchor.constraint(equalTo: currencyViewLabel.topAnchor),
+            currencyLabel.leadingAnchor.constraint(equalTo: currencyViewLabel.leadingAnchor),
+            currencyLabel.trailingAnchor.constraint(equalTo: currencyViewLabel.trailingAnchor),
+            currencyLabel.bottomAnchor.constraint(equalTo: currencyViewLabel.bottomAnchor),
+            
+            toPesoView.topAnchor.constraint(equalTo: currencyViewLabel.bottomAnchor, constant: 16),
             toPesoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             toPesoView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             toPesoView.heightAnchor.constraint(equalToConstant: 91),
@@ -367,6 +386,11 @@ private extension CurrencyConverterView{
         
         ])
     }
+    
+    @objc private func amountTextChanged(_ sender: UITextField) {
+        let amount = Double(sender.text ?? "")
+        onAmountChanged?(amount)
+    }
 }
 
 //MARK: - TextField & PickerView Methods
@@ -379,58 +403,12 @@ extension CurrencyConverterView: UITextFieldDelegate{
     }
 }
 
-//MARK: - Delegate Methods
 
-extension CurrencyConverterView: CurrencyViewModelDelegate{
-    func didFail(error: Error) {
-        print(error.localizedDescription)
-        //aca colocar un showalert en realidad va en el view controller
-    }
-    
-    func didFinish() async {
-        
-    }
-}
-
-//MARK: - Binding Methods
+//MARK: - Reset Controls
 
 extension CurrencyConverterView{
-    func setupBindings(){
-        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: quantitytextfield)
-            .map { ($0.object as? UITextField)?.text ?? "" }
-            .sink { [weak self] text in
-                guard let self = self else { return }
-                let amount = Double(((text)))
-                print("Monto ingresado: \(String(describing: amount))")
-                self.viewModel.updateAmount(amount)
-                
-                if text.isEmpty || amount == nil || amount == 0 {
-                    self.resetControls()
-                }
-            }
-            .store(in: &cancellables)
-        
-        viewModel.getConvertedValues()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (currencyFromPeso, currencyToPeso, fromDolarToCurrency, currencyToDolarValue) in
-                guard let self = self else { return }
-                
-                if self.selectedCurrency == "Dólar Bolsa de Valores / MEP" {
-                    self.toPesoValue.text = fromDolarToCurrency
-                    self.fromPesoValue.text = currencyToDolarValue
-                }else{
-                    self.toPesoValue.text = currencyToPeso
-                    self.fromPesoValue.text = currencyFromPeso
-                    self.toDolarValue.text = currencyToDolarValue
-                    self.fromDolarValue.text = fromDolarToCurrency
-                }
-                
-                
-            }
-            .store(in: &cancellables)
-    }
     
-    private func resetControls() {
+    func resetControls(){
         toPesoValue.text = "0.00"
         fromPesoValue.text = "0.00"
         toDolarValue.text = "0.00"
@@ -447,8 +425,9 @@ extension CurrencyConverterView{
         currencyLabel.text = currency.currencyTitle
         currencyLabel.textColor = .black
         currencyLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        currencyLabel.layer.cornerRadius = 10
+        currencyLabel.clipsToBounds = true
         setTitleLabels(currency: currency)
-        viewModel.updateCurrency(selectedCurrency: currency)
     }
     
     func setTitleLabels(currency: CurrencyItem){
