@@ -16,7 +16,7 @@ final class DiscoverCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = 6
         
         return view
     }()
@@ -24,8 +24,9 @@ final class DiscoverCell: UICollectionViewCell {
     private lazy var titleLabel : UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = UIColor(named: "primaryTextColor") ?? .black
+        label.textAlignment = .center
         return label
     }()
     
@@ -55,7 +56,7 @@ private extension DiscoverCell {
     
     func addsubviews() {
         self.backgroundColor = .white
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = 6
 
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
@@ -69,7 +70,7 @@ private extension DiscoverCell {
             imageView.heightAnchor.constraint(equalToConstant: 90),
             imageView.widthAnchor.constraint(equalToConstant: 160),
 
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])

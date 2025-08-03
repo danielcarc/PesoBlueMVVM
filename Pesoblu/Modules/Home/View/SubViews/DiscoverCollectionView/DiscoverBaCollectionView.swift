@@ -60,7 +60,7 @@ final class DiscoverBaCollectionView: UIView {
         vw.register(DiscoverCell.self, forCellWithReuseIdentifier: "DiscoverCell")
         vw.showsHorizontalScrollIndicator = false
         vw.isScrollEnabled = true
-        vw.backgroundColor = UIColor(hex: "F0F8FF")
+        vw.backgroundColor = .clear
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.delegate = self
         vw.dataSource = self
@@ -101,6 +101,7 @@ extension DiscoverBaCollectionView: UICollectionViewDelegate {
 private extension DiscoverBaCollectionView {
     
     func setup() {
+        self.backgroundColor = .clear
         addSubview(discoverArgentinaLabel)
         addSubview(discoverCollectionView)
         

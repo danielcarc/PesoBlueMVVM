@@ -15,21 +15,16 @@ protocol PlaceViewDelegate: AnyObject{
     func didFailToLoadImage(_ view: PlaceView, error: Error)
     func didFailToCall()
     func didFailToOpenInstagram(title: String, message: String)
+    func didFailToOpenMaps()
 }
 
 final class PlaceView: UIView{
-    private let viewModel: PlaceViewModelProtocol
     
-    init(viewModel: PlaceViewModelProtocol){
-        self.viewModel = viewModel
+    init(){
         super.init(frame: .zero)
         setup()
     }
     
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        setup()
-//    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -173,7 +168,7 @@ extension PlaceView{
     }
     
     func addViews(){
-        
+        self.backgroundColor = .clear
         self.addSubview(stackView)
         stackView.addArrangedSubview(placeImageView)
         stackView.addArrangedSubview(nameLabel)
@@ -259,70 +254,70 @@ extension PlaceView{
               let url = URL(string: "telprompt://\(phoneNumber)"),
               UIApplication.shared.canOpenURL(url) else {
             delegate?.didFailToCall()
-            print("No se puede abrir la app de llamadas o el número es inválido.")
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     @objc private func openInstagram(sender: UIButton) {
-        //obtengo la URL web del accessibilityLabel
         guard let instagramWebURL = sender.accessibilityLabel?.trimmingCharacters(in: .whitespacesAndNewlines),
               !instagramWebURL.isEmpty,
-              let urlComponents = URLComponents(string: instagramWebURL),
-              urlComponents.scheme == "https",
-              urlComponents.host == "www.instagram.com",
-              let username = urlComponents.path.split(separator: "/").first else {
+              let url = URL(string: instagramWebURL),
+              url.host?.contains("instagram.com") == true else {
             delegate?.didFailToOpenInstagram(title: "Error al abrir Instagram", message: "URL de Instagram inválida.")
             return
         }
-        
-        //construir la URL para la app de Instagram
-        let appURLString = "instagram://user?username=\(username)"
-        guard let appURL = URL(string: appURLString),
-              UIApplication.shared.canOpenURL(appURL) else {
-            //fallback al navegador con la URL web original
-            guard let webURL = URL(string: instagramWebURL),
-                  UIApplication.shared.canOpenURL(webURL) else {
-                delegate?.didFailToOpenInstagram(title: "Error al abrir Instagram", message: "No se puede abrir Instagram. Verifica la URL o instala la app.")
-                return
-            }
-            UIApplication.shared.open(webURL, options: [:], completionHandler: nil)
+
+        // Obtener el nombre de usuario del path
+        let pathComponents = url.pathComponents
+        guard pathComponents.count > 1 else {
+            delegate?.didFailToOpenInstagram(title: "Error", message: "No se encontró nombre de usuario.")
             return
         }
-        //abrir la app de instagram directamente
-        UIApplication.shared.open(appURL, options: [:], completionHandler: nil)
-    }
-    
-    @objc private func openInMaps() {
-        if let place = self.place {
-            let latitude = place.lat ?? 0.0
-            let longitude = place.long ?? 0.0
-            
-            let encodedPlaceName = place.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            let urlString = "maps://?q=\(encodedPlaceName)&ll=\(latitude),\(longitude)"
-            print("URL generada: \(urlString)")
-            
-            if let url = URL(string: urlString) {
-                print("URL válida: \(url)")
-                let canOpen = UIApplication.shared.canOpenURL(url)
-                print("¿Puede abrir Apple Maps?: \(canOpen)")
-                if canOpen {
-                    UIApplication.shared.open(url)
-                } else {
-                    let googleMapsURL = "https://www.google.com/maps/search/?api=1&query=\(latitude),\(longitude)"
-                    print("Intentando Google Maps: \(googleMapsURL)")
-                    if let url = URL(string: googleMapsURL) {
-                        UIApplication.shared.open(url)
-                    }
-                }
-            } else {
-                print("URL inválida para Apple Maps")
+
+        let username = pathComponents[1] // /username → ["", "username"]
+
+        // Intentar abrir en Instagram app
+        let appURLString = "instagram://user?username=\(username)"
+        if let appURL = URL(string: appURLString),
+           UIApplication.shared.canOpenURL(appURL) {
+            DispatchQueue.main.async {
+                UIApplication.shared.open(appURL, options: [:], completionHandler: nil)
             }
         } else {
-            print("No hay lugar definido")
-            return
+            // Fallback al navegador
+            if UIApplication.shared.canOpenURL(url) {
+                DispatchQueue.main.async {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            } else {
+                delegate?.didFailToOpenInstagram(title: "Error", message: "No se puede abrir Instagram ni Safari.")
+            }
         }
     }
+
+    @objc private func openInMaps() {
+        guard let place = self.place else {
+            delegate?.didFailToOpenMaps()
+            return
+        }
+
+        let latitude = place.lat ?? 0.0
+        let longitude = place.long ?? 0.0
+        let encodedPlaceName = place.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let urlString = "maps://?q=\(encodedPlaceName)&ll=\(latitude),\(longitude)"
+
+        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            let fallbackURLString = "https://www.google.com/maps/search/?api=1&query=\(latitude),\(longitude)"
+            if let fallbackURL = URL(string: fallbackURLString) {
+                UIApplication.shared.open(fallbackURL)
+            } else {
+                delegate?.didFailToOpenMaps()
+            }
+        }
+    }
+
 
 }

@@ -13,8 +13,6 @@ class ChangeViewController: UIViewController {
     private var changeCView: ChangeCollectionView
     private var changeHeightConstraint: NSLayoutConstraint?
     var onSelectCurrency: ((CurrencyItem) -> Void)?
-    //weak var delegate: ChangeCollectionViewDelegate?
-    
     
     init(viewModel: ChangeViewModelProtocol, changeCView: ChangeCollectionView) {
         self.viewModel = viewModel
@@ -50,7 +48,14 @@ class ChangeViewController: UIViewController {
         setup()
         viewModel.getChangeOfCurrencies()
         setTitle()
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.view.applyVerticalGradientBackground(colors: [
+            UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1),
+            UIColor(red: 213/255, green: 229/255, blue: 252/255, alpha: 1)
+        ])
     }
 }
 

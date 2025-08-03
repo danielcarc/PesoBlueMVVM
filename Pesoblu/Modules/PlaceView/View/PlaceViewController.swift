@@ -11,14 +11,17 @@ import CoreData
 
 class PlaceViewController: UIViewController {
     
-    private var placeView: PlaceView
+    private lazy var placeView = PlaceView()
     private let placeViewModel: PlaceViewModelProtocol
     var place: PlaceItem
     
-    init(placeView: PlaceView, placeViewModel: PlaceViewModelProtocol, place: PlaceItem) {
+#if DEBUG
+    var test_isFavorite: Bool { isFavorite }
+#endif
+    
+    init(placeViewModel: PlaceViewModelProtocol, place: PlaceItem) {
         
         self.placeViewModel = placeViewModel
-        self.placeView = placeView
         self.place = place
         super.init(nibName: nil, bundle: nil)
         setupDependencies()
@@ -26,10 +29,6 @@ class PlaceViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private var context: NSManagedObjectContext {
-        (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext ?? NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     }
     
     private var isFavorite: Bool = false {
@@ -67,6 +66,20 @@ class PlaceViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
+    
+    override func viewDidLayoutSubviews(){
+        super.viewDidLayoutSubviews()
+        view.applyVerticalGradientBackground(colors: [
+            UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1),
+            UIColor(red: 213/255, green: 229/255, blue: 252/255, alpha: 1)
+        ])
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 //MARK: - Setup Constraints
@@ -78,23 +91,17 @@ extension PlaceViewController{
     }
     
     private func setupUI() {
-        view.backgroundColor = UIColor(hex: "F0F8FF")
         
         let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
         backButton.tintColor = UIColor.black
         self.navigationItem.leftBarButtonItem = backButton
         setupNavigationButton()
         
-        
         setupViews()
         
         setupConstraints()
         placeView.setData(item: place)
         loadFavoriteStatus()
-//        if let placeItem = place {
-//            placeView.setData(item: placeItem)
-//            loadFavoriteStatus()
-//        }
     }
     
     func setupViews(){
@@ -135,6 +142,10 @@ extension PlaceViewController{
 //MARK: - Error Alerts
 
 extension PlaceViewController: PlaceViewDelegate{
+    func didFailToOpenMaps() {
+        showAlert(title: "ERROR", message: "No se pudo abrir maps.")
+    }
+    
     func didFailToOpenInstagram(title: String, message: String) {
         showAlert(title: title, message: message)
     }
@@ -147,11 +158,7 @@ extension PlaceViewController: PlaceViewDelegate{
         showAlert(title: "Error de Imagen", message: "Error al cargar imagen. Intente nuevamente mas tarde.")
     }
     
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
+    
 }
 
 //MARK: - Navigation and Methods Buttons
@@ -159,7 +166,7 @@ extension PlaceViewController: PlaceViewDelegate{
 
 extension PlaceViewController{
     
-    func setupNavigationButton(){
+    private func setupNavigationButton(){
         // Asignar el botón como customView del UIBarButtonItem
         let barButtonItem = UIBarButtonItem(customView: favoriteButton)
         navigationItem.rightBarButtonItem = barButtonItem
@@ -173,15 +180,10 @@ extension PlaceViewController{
     }
     
     func loadFavoriteStatus() {
-//        guard let id = place.id else {
-//            print("Error: placeId is nil")
-//            return
-//        }
-        let placeId = String(place.id)
         
         Task{
             do{
-                self.isFavorite = try await self.placeViewModel.loadFavoriteStatus(placeId: placeId)
+                self.isFavorite = try await self.placeViewModel.loadFavoriteStatus()
             }
             catch{
                 self.showAlert(title: "Error", message: "\(error.localizedDescription)")
@@ -190,15 +192,10 @@ extension PlaceViewController{
     }
     
     func saveFavoriteStatus(){
-//        guard let id = placeItem?.id else {
-//            print("Error: placeId is nil")
-//            return
-//        }
-        let placeId = String(place.id)
         
         Task{
             do{
-                try await placeViewModel.saveFavoriteStatus(placeId: placeId, isFavorite: isFavorite)
+                try await placeViewModel.saveFavoriteStatus(isFavorite: isFavorite)
             }
             catch{
                 showAlert(title: "Error", message: "Error saving favorite status: \(error.localizedDescription)")
@@ -211,7 +208,7 @@ extension PlaceViewController{
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func toggleFavorite() {
+    @objc func toggleFavorite() {
         isFavorite.toggle()
         saveFavoriteStatus()
         

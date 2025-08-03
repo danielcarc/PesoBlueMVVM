@@ -44,7 +44,7 @@ private extension ChangeCollectionView{
     func setup(){
         
         collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: "ChangeCell")
-        collectionView.backgroundColor = UIColor(hex: "F0F8FF")
+        collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
         collectionView.dataSource = self
         collectionView.delegate = self

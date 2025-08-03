@@ -78,7 +78,7 @@ class PlaceListCollectionView: UIView{
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vw.register(PlaceCell.self, forCellWithReuseIdentifier: "PlaceCell")
         vw.showsHorizontalScrollIndicator = false
-        vw.backgroundColor = UIColor(hex: "F0F8FF")
+        vw.backgroundColor = .clear 
         vw.isScrollEnabled = false
         vw.dataSource = self
         vw.delegate = self
@@ -137,7 +137,7 @@ extension PlaceListCollectionView: UICollectionViewDelegate{
 extension PlaceListCollectionView{
     
     func setup(){
-        
+        self.backgroundColor = .clear
         addSubview(quantityLabel)
         addSubview(placeCollectionView)
         

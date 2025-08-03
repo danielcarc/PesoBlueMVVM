@@ -8,7 +8,6 @@
 import UIKit
 import Combine
 
-
 ///una vez que sea funcional subir el titilelabel arriba y el valuelabel bajarlo asi no se chocan los caracteres, y darle colores a los distintos caracteres para que no sea aburrido
 
 final class CurrencyConverterView: UIView {
@@ -259,7 +258,7 @@ final class CurrencyConverterView: UIView {
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowRadius = 4
         view.layer.cornerRadius = 12
-        view.layer.masksToBounds = false
+        view.layer.masksToBounds = false 
         view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds, cornerRadius: 12).cgPath
     }
     
@@ -343,9 +342,9 @@ private extension CurrencyConverterView{
             toPesoView.heightAnchor.constraint(equalToConstant: 91),
             
             toPesoTitle.leadingAnchor.constraint(equalTo: toPesoView.leadingAnchor, constant: 16),
-            toPesoTitle.centerYAnchor.constraint(equalTo: toPesoView.centerYAnchor),
+            toPesoTitle.topAnchor.constraint(equalTo: toPesoView.topAnchor, constant: 16),
             
-            toPesoValue.centerYAnchor.constraint(equalTo: toPesoView.centerYAnchor),
+            toPesoValue.bottomAnchor.constraint(equalTo: toPesoView.bottomAnchor, constant: -16),
             toPesoValue.trailingAnchor.constraint(equalTo: toPesoView.trailingAnchor, constant: -16),
             
             fromPesoView.topAnchor.constraint(equalTo: toPesoView.bottomAnchor, constant: 16),
@@ -355,9 +354,9 @@ private extension CurrencyConverterView{
             fromPesoView.heightAnchor.constraint(equalToConstant: 91),
             
             fromPesoTitle.leadingAnchor.constraint(equalTo: fromPesoView.leadingAnchor, constant: 16),
-            fromPesoTitle.centerYAnchor.constraint(equalTo: fromPesoView.centerYAnchor),
+            fromPesoTitle.topAnchor.constraint(equalTo: fromPesoView.topAnchor, constant: 16),
             
-            fromPesoValue.centerYAnchor.constraint(equalTo: fromPesoView.centerYAnchor),
+            fromPesoValue.bottomAnchor.constraint(equalTo: fromPesoView.bottomAnchor, constant: -16),
             fromPesoValue.trailingAnchor.constraint(equalTo: fromPesoView.trailingAnchor, constant: -16),
             
             ///vista
@@ -367,9 +366,9 @@ private extension CurrencyConverterView{
             toDolarView.heightAnchor.constraint(equalToConstant: 91),
             
             toDolarTitle.leadingAnchor.constraint(equalTo: toDolarView.leadingAnchor, constant: 16),
-            toDolarTitle.centerYAnchor.constraint(equalTo: toDolarView.centerYAnchor),
+            toDolarTitle.topAnchor.constraint(equalTo: toDolarView.topAnchor, constant: 16),
             
-            toDolarValue.centerYAnchor.constraint(equalTo: toDolarView.centerYAnchor),
+            toDolarValue.bottomAnchor.constraint(equalTo: toDolarView.bottomAnchor, constant: -16),
             toDolarValue.trailingAnchor.constraint(equalTo: toDolarView.trailingAnchor, constant: -16),
             
             fromDolarView.topAnchor.constraint(equalTo: toDolarView.bottomAnchor, constant: 16),
@@ -379,9 +378,9 @@ private extension CurrencyConverterView{
             fromDolarView.heightAnchor.constraint(equalToConstant: 91),
             
             fromDolarTitle.leadingAnchor.constraint(equalTo: fromDolarView.leadingAnchor, constant: 16),
-            fromDolarTitle.centerYAnchor.constraint(equalTo: fromDolarView.centerYAnchor),
+            fromDolarTitle.topAnchor.constraint(equalTo: fromDolarView.topAnchor, constant: 16),
             
-            fromDolarValue.centerYAnchor.constraint(equalTo: fromDolarView.centerYAnchor),
+            fromDolarValue.bottomAnchor.constraint(equalTo: fromDolarView.bottomAnchor, constant: -16),
             fromDolarValue.trailingAnchor.constraint(equalTo: fromDolarView.trailingAnchor, constant: -16),
         
         ])
@@ -399,6 +398,33 @@ extension CurrencyConverterView: UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxCharacters = 10
+
+        // Si el usuario escribe una coma, la reemplazamos por punto
+        if string == "," {
+            if let currentText = textField.text as NSString? {
+                let updatedText = currentText.replacingCharacters(in: range, with: ".")
+                textField.text = updatedText
+            }
+            return false
+        }
+
+        // Validar que el string ingresado contenga solo números o un punto
+        let allowedCharacters = CharacterSet(charactersIn: "0123456789.")
+        let characterSet = CharacterSet(charactersIn: string)
+        let isValidInput = allowedCharacters.isSuperset(of: characterSet)
+
+        // Validar que no haya más de un punto decimal
+        if let currentText = textField.text as NSString? {
+            let updatedText = currentText.replacingCharacters(in: range, with: string)
+            let containsMultipleDots = updatedText.components(separatedBy: ".").count > 2
+            return updatedText.count <= maxCharacters && isValidInput && !containsMultipleDots
+        }
+
         return true
     }
 }

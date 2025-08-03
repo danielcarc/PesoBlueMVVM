@@ -10,12 +10,12 @@ import UIKit
 import CoreData
 
 protocol PlaceViewModelProtocol{
-    func saveFavoriteStatus(placeId: String, isFavorite: Bool) async throws
-    func loadFavoriteStatus(placeId: String) async throws -> Bool
+    func saveFavoriteStatus(isFavorite: Bool) async throws
+    func loadFavoriteStatus() async throws -> Bool
     
 }
 
-class PlaceViewModel: PlaceViewModelProtocol{
+final class PlaceViewModel: PlaceViewModelProtocol{
     
     private var coreDataService: CoreDataServiceProtocol
     private var place: PlaceItem
@@ -25,14 +25,11 @@ class PlaceViewModel: PlaceViewModelProtocol{
         self.place = place
     }
     
-    func saveFavoriteStatus(placeId: String, isFavorite: Bool) async throws{
-        return try await coreDataService.saveFavoriteStatus(placeId: placeId, isFavorite: isFavorite)
+    func saveFavoriteStatus(isFavorite: Bool) async throws{
+        return try await coreDataService.saveFavoriteStatus(placeId: String(place.id), isFavorite: isFavorite)
     }
     
-    func loadFavoriteStatus(placeId: String) async throws -> Bool{
-        //var isFavorite: Bool = false
-        return try await coreDataService.loadFavoriteStatus(placeId: placeId)
+    func loadFavoriteStatus() async throws -> Bool{
+        return try await coreDataService.loadFavoriteStatus(placeId: String(place.id))
     }
-    
-
 }

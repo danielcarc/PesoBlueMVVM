@@ -6,7 +6,6 @@
 //
 import CoreData
 import Foundation
-import UIKit
 
 protocol CoreDataServiceProtocol {
     func loadFavoriteStatus(placeId: String) async throws -> Bool
@@ -14,59 +13,50 @@ protocol CoreDataServiceProtocol {
     func fetchAllFavoritesPlaceIds() throws -> [String]
 }
 
+final class CoreDataService: CoreDataServiceProtocol {
 
-
-class CoreDataService: CoreDataServiceProtocol{
-    
     private let context: NSManagedObjectContext
-    
+
     init(context: NSManagedObjectContext) {
         self.context = context
     }
-    
+
     func saveFavoriteStatus(placeId: String, isFavorite: Bool) async throws {
-        let fetchRequest: NSFetchRequest<FavoritePlace> = FavoritePlace.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "placeId == %@", placeId)
-        
-        do {
+        try await context.perform {
+            let fetchRequest: NSFetchRequest<FavoritePlace> = FavoritePlace.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "placeId == %@", placeId)
+
             let results = try self.context.fetch(fetchRequest)
-            if let favorite = results.first {
-                favorite.isFavorite = isFavorite
+
+            if let existing = results.first {
+                existing.isFavorite = isFavorite
             } else {
                 let newFavorite = FavoritePlace(context: self.context)
                 newFavorite.placeId = placeId
                 newFavorite.isFavorite = isFavorite
             }
-            try self.context.save()
-        }
-        catch{
-            throw error
-        }
-    }
-    
-    func loadFavoriteStatus(placeId: String) async throws -> Bool {
-        var results: [FavoritePlace] = []
-        do{
-            try await context.perform {
-                let fetchRequest: NSFetchRequest<FavoritePlace> = FavoritePlace.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "placeId == %@", placeId)
-                results = try self.context.fetch(fetchRequest)
+
+            if self.context.hasChanges {
+                try self.context.save()
             }
         }
-        catch{
-            throw error
-        }
-        return results.first?.isFavorite ?? false
     }
-}
 
-extension CoreDataService{
-    
+    func loadFavoriteStatus(placeId: String) async throws -> Bool {
+        return try await context.perform {
+            let fetchRequest: NSFetchRequest<FavoritePlace> = FavoritePlace.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "placeId == %@", placeId)
+
+            let results = try self.context.fetch(fetchRequest)
+            return results.first?.isFavorite ?? false
+        }
+    }
+
     func fetchAllFavoritesPlaceIds() throws -> [String] {
-        let fetchRequest : NSFetchRequest<FavoritePlace> = FavoritePlace.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "isFavorite = %@", NSNumber(value: true))
-        
+        let fetchRequest: NSFetchRequest<FavoritePlace> = FavoritePlace.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "isFavorite == YES")
+
         let results = try context.fetch(fetchRequest)
-        return results.map {$0.placeId ?? ""}.filter{ !$0.isEmpty }
+        return results.compactMap { $0.placeId }
     }
 }

@@ -60,7 +60,7 @@ class FilterCollectionView: UIView{
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vw.register(FilterCell.self, forCellWithReuseIdentifier: "FilterCell")
         vw.showsHorizontalScrollIndicator = false
-        vw.backgroundColor = UIColor(hex: "F0F8FF")
+        vw.backgroundColor = .clear
         vw.dataSource = self
         vw.delegate = self
         vw.translatesAutoresizingMaskIntoConstraints = false
@@ -138,6 +138,7 @@ extension FilterCollectionView : UICollectionViewDelegate{
 extension FilterCollectionView{
     
     func setup(){
+        self.backgroundColor = .clear
         addSubview(filterLabel)
         addSubview(filterCollectionView)
         

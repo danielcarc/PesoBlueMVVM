@@ -84,6 +84,10 @@ class PlacesListViewController: UIViewController {
         if mainScrollView.superview == nil {
             setup()
         }
+        view.applyVerticalGradientBackground(colors: [
+            UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1),
+            UIColor(red: 213/255, green: 229/255, blue: 252/255, alpha: 1)
+        ])
     }
 }
 
@@ -105,7 +109,9 @@ extension PlacesListViewController{
     }
     
     func addsubviews() {
-        self.view.backgroundColor  = UIColor(hex: "F0F8FF")
+        //self.view.backgroundColor  = UIColor(hex: "F0F8FF")
+        filterCView.backgroundColor = .clear
+        placeListCView.backgroundColor = .clear
         let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
         backButton.tintColor = UIColor.black
 

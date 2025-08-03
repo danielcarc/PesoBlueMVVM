@@ -24,9 +24,7 @@ class PlaceCoordinator: Coordinator{
     func start() {
         
         let viewModel = PlaceViewModel(coreDataService: coreDataService, place: place)
-        let vc = PlaceViewController(placeView: PlaceView(viewModel: viewModel), placeViewModel: viewModel, place: place)
+        let vc = PlaceViewController(placeViewModel: viewModel, place: place)
         navigationController.pushViewController(vc, animated: true)
     }
-    
-    
 }

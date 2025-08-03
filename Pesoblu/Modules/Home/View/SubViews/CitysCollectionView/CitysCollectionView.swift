@@ -59,7 +59,7 @@ final class CitysCollectionView: UIView{
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = UIColor(hex: "F0F8FF")
+        collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -74,6 +74,7 @@ final class CitysCollectionView: UIView{
 extension CitysCollectionView{
     
     func setup() {
+        self.backgroundColor = .clear
         addSubview(discoverArgentinaLabel)
         addSubview(citysCollectionView)
         

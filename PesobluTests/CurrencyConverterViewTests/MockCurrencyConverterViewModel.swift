@@ -9,6 +9,10 @@ import Combine
 @testable import Pesoblu
 
 class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
+    func updateCurrency(selectedCurrency: any Pesoblu.CurrencyItem) {
+        ""
+    }
+    
     
     private let currencyService: CurrencyServiceProtocol
     private let notificationService: NotificationServiceProtocol

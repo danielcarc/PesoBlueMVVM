@@ -60,7 +60,7 @@ class ChangeView: UIView {
     
     private lazy var currencyTitleLabel: UILabel = {
         var label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         label.textColor = .black
         label.text = "Dolar Oficial"
         label.textAlignment = .left
@@ -83,7 +83,7 @@ class ChangeView: UIView {
         var label = UILabel()
         
         label.textColor = .black
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.text = "174"
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -101,7 +101,6 @@ class ChangeView: UIView {
     
     func set(currencyTitle: String, currencyLabel: String, valueBuy: String){
         currencyTitleLabel.text = currencyTitle
-        //let text = String(format: "%.2f", valueBuy)
         let text = String(valueBuy)
         currencyValueLabel.text =  "$ \(text)"// este es el qie muestra el valor
         currencySubtitleLabel.text = currencyLabel
@@ -118,7 +117,6 @@ private extension ChangeView {
     private func addsubviews(){
         self.backgroundColor = .clear
         self.layer.cornerRadius = 10
-       // self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(viewDolar)
         
         viewDolar.addSubview(stackHorizontal)

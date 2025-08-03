@@ -19,7 +19,7 @@ class PlaceCell: UICollectionViewCell {
     private lazy var placeImage: UIImageView = {
         var image = UIImageView()
         image.contentMode = .scaleToFill
-        image.layer.cornerRadius = 8
+        image.layer.cornerRadius = 4
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
@@ -111,7 +111,7 @@ extension PlaceCell {
     
     func addsubViews(){
         self.backgroundColor = .white
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 10
         contentView.addSubview(placeImage)
         contentView.addSubview(placeName)
         contentView.addSubview(typeLabel)
@@ -146,6 +146,4 @@ extension PlaceCell {
             distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
     }
-    
 }
-    
