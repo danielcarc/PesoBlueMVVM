@@ -8,7 +8,7 @@ import UIKit
 
 class HomeCoordinator: Coordinator {
     var navigationController: UINavigationController
-    private var placeListCoordinator: PlaceListCoordinator?
+    private var placesListCoordinator: PlacesListCoordinator?
 
     init() {
         self.navigationController = UINavigationController()
@@ -25,7 +25,7 @@ class HomeCoordinator: Coordinator {
         let vc = HomeViewController(homeViewModel: viewModel)
         
         vc.onSelect = { [weak self] selectedPlaces, selectedCity, placeType in
-            self?.showPlaceListWithCity(selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
+            self?.showPlacesListWithCity(selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
         }
         
         vc.title = "Home"
@@ -33,12 +33,12 @@ class HomeCoordinator: Coordinator {
         navigationController.setViewControllers([vc], animated: false)
     }
     
-    func showPlaceListWithCity(selectedPlaces: [PlaceItem], selectedCity: String, placeType: String){
+    func showPlacesListWithCity(selectedPlaces: [PlaceItem], selectedCity: String, placeType: String){
         
-        let viewModel = PlaceListViewModel(distanceService: DistanceService(locationProvider: LocationManager()), filterDataService: FilterDataService())
-        let coordinator = PlaceListCoordinator(navigationController: navigationController, placeListViewModel: viewModel, selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
-        
-        placeListCoordinator = coordinator
+        let viewModel = PlacesListViewModel(distanceService: DistanceService(locationProvider: LocationManager()), filterDataService: FilterDataService())
+        let coordinator = PlacesListCoordinator(navigationController: navigationController, placesListViewModel: viewModel, selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
+
+        placesListCoordinator = coordinator
         coordinator.start()
         
     }

@@ -1,33 +1,33 @@
 //
-//  PlaceListCoordinator.swift
+//  PlacesListCoordinator.swift
 //  Pesoblu
 //
 //  Created by Daniel Carcacha on 23/07/2025.
 //
 import UIKit
 
-class PlaceListCoordinator: Coordinator{
+class PlacesListCoordinator: Coordinator {
     var navigationController: UINavigationController
-    private let placeListViewModel: PlaceListViewModelProtocol
+    private let placesListViewModel: PlacesListViewModelProtocol
     private let selectedPlaces: [PlaceItem]
     private let selectedCity: String
     private let placeType: String
     private var placeCoordinator: PlaceCoordinator?
-    
+
     init(navigationController: UINavigationController,
-         placeListViewModel: PlaceListViewModelProtocol,
+         placesListViewModel: PlacesListViewModelProtocol,
          selectedPlaces: [PlaceItem],
          selectedCity: String,
          placeType: String) {
         self.navigationController = navigationController
-        self.placeListViewModel = placeListViewModel
+        self.placesListViewModel = placesListViewModel
         self.selectedPlaces = selectedPlaces
         self.selectedCity = selectedCity
         self.placeType = placeType
     }
     
     func start() {
-        let listVC = PlacesListViewController(placeListViewModel: placeListViewModel,
+        let listVC = PlacesListViewController(placesListViewModel: placesListViewModel,
                                               selectedPlaces: selectedPlaces,
                                               selectedCity: selectedCity,
                                               placeType: placeType)

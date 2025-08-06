@@ -1,5 +1,5 @@
 //
-//  PlaceListViewModel.swift
+//  PlacesListViewModel.swift
 //  PesoBlueMVVM
 //
 //  Created by Daniel Carcacha on 20/01/2025.
@@ -8,13 +8,13 @@ import Foundation
 import UIKit
 import CoreLocation
 
-protocol PlaceListViewModelProtocol{
+protocol PlacesListViewModelProtocol {
     func getDistanceForPlace(_ place: PlaceItem) -> String
     func calculateDistance(from userLocation: CLLocation, to place: PlaceItem) -> String
     func filterData(places: [PlaceItem], filter: String) -> [PlaceItem]
     func fetchFilterItems() -> [DiscoverItem]
 }
-class PlaceListViewModel: PlaceListViewModelProtocol{
+class PlacesListViewModel: PlacesListViewModelProtocol {
     
     private let distanceService: DistanceServiceProtocol
     private let filterDataService: FilterDataServiceProtocol

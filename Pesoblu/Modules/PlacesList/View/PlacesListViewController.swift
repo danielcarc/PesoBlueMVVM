@@ -12,22 +12,22 @@ import CoreData
 class PlacesListViewController: UIViewController {
     
     var onSelect: ((PlaceItem) -> Void)?
-    var filterCView : FilterCollectionView
-    var placeListCView : PlaceListCollectionView
-    var placeListViewModel : PlaceListViewModelProtocol
+    var filterCView: FilterCollectionView
+    var placesListCView: PlacesListCollectionView
+    var placesListViewModel: PlacesListViewModelProtocol
     var selectedPlaces: [PlaceItem]
     var selectedCity: String
     var placeType: String
     
-    init(placeListViewModel: PlaceListViewModelProtocol,
-         filterCView : FilterCollectionView? = nil,
-         placeListCView : PlaceListCollectionView? =  nil,
+    init(placesListViewModel: PlacesListViewModelProtocol,
+         filterCView: FilterCollectionView? = nil,
+         placesListCView: PlacesListCollectionView? = nil,
          selectedPlaces: [PlaceItem],
          selectedCity: String,
          placeType: String){
-        self.placeListViewModel = placeListViewModel
-        self.filterCView = filterCView ?? FilterCollectionView(viewModel : placeListViewModel)
-        self.placeListCView = placeListCView ?? PlaceListCollectionView(viewModel : placeListViewModel)
+        self.placesListViewModel = placesListViewModel
+        self.filterCView = filterCView ?? FilterCollectionView(viewModel: placesListViewModel)
+        self.placesListCView = placesListCView ?? PlacesListCollectionView(viewModel: placesListViewModel)
         self.selectedPlaces = selectedPlaces
         self.selectedCity = selectedCity
         self.placeType = placeType
@@ -75,7 +75,7 @@ class PlacesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        placeListCView.delegate = self
+        placesListCView.delegate = self
         filterCView.delegate = self
         //setup()
     }
@@ -105,13 +105,13 @@ extension PlacesListViewController{
     
     func setCollectionViews(){
         filterCView.updateData(type: placeType)
-        placeListCView.updateData(for: selectedPlaces, by: placeType)
+        placesListCView.updateData(for: selectedPlaces, by: placeType)
     }
     
     func addsubviews() {
         //self.view.backgroundColor  = UIColor(hex: "F0F8FF")
         filterCView.backgroundColor = .clear
-        placeListCView.backgroundColor = .clear
+        placesListCView.backgroundColor = .clear
         let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
         backButton.tintColor = UIColor.black
 
@@ -125,15 +125,15 @@ extension PlacesListViewController{
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.addArrangedSubview(filterCView)
-        stackView.addArrangedSubview(placeListCView)
-        
+        stackView.addArrangedSubview(placesListCView)
+
         filterCView.translatesAutoresizingMaskIntoConstraints = false
-        placeListCView.translatesAutoresizingMaskIntoConstraints = false
+        placesListCView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupConstraints() {
         
-        collectionViewHeightConstraint = placeListCView.heightAnchor.constraint(equalToConstant: 200)
+        collectionViewHeightConstraint = placesListCView.heightAnchor.constraint(equalToConstant: 200)
         NSLayoutConstraint.activate([
             mainScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -163,8 +163,8 @@ extension PlacesListViewController{
 }
 
 //MARK: - UICollectionViewDelegate Methods
-extension PlacesListViewController: PlaceListCollectionViewDelegate {
-    func placeListCViewDidFailToLoadImage(_ collectionView: PlaceListCollectionView, error: any Error) {
+extension PlacesListViewController: PlacesListCollectionViewDelegate {
+    func placesListCollectionViewDidFailToLoadImage(_ collectionView: PlacesListCollectionView, error: any Error) {
         showAlert(title: "Error de Imagen", message: "No se pudo cargar la imagen. Intente nuevamente mas tarde")
     }
     
@@ -192,7 +192,7 @@ extension PlacesListViewController: FilterCollectionViewDelegate {
     func didSelectFilter(_ filter: DiscoverItem) {
         self.placeType = filter.name
         filterCView.updateData(type: placeType)
-        placeListCView.updateData(for: selectedPlaces, by: placeType)
+        placesListCView.updateData(for: selectedPlaces, by: placeType)
     }
     
 }
