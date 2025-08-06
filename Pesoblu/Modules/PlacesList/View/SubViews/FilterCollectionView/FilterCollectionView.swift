@@ -13,10 +13,10 @@ protocol FilterCollectionViewDelegate: AnyObject {
 
 class FilterCollectionView: UIView{
     
-    private var viewModel: PlaceListViewModelProtocol
+    private var viewModel: PlacesListViewModelProtocol
     weak var delegate: FilterCollectionViewDelegate?
     
-    init(viewModel: PlaceListViewModelProtocol, frame: CGRect = .zero) {
+    init(viewModel: PlacesListViewModelProtocol, frame: CGRect = .zero) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setup()

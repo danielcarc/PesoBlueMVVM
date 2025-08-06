@@ -1,5 +1,5 @@
 //
-//  PlaceListCollectionView.swift
+//  PlacesListCollectionView.swift
 //  PesoBlueMVVM
 //
 //  Created by Daniel Carcacha on 21/01/2025.
@@ -9,17 +9,17 @@ import Foundation
 import UIKit
 import CoreLocation
 
-protocol PlaceListCollectionViewDelegate: AnyObject {
+protocol PlacesListCollectionViewDelegate: AnyObject {
     func didUpdateItemCount(_ count: Int)
     func didSelectItem(_ item: PlaceItem)
-    func placeListCViewDidFailToLoadImage(_ collectionView: PlaceListCollectionView, error: Error)
+    func placesListCollectionViewDidFailToLoadImage(_ collectionView: PlacesListCollectionView, error: Error)
 }
 
-class PlaceListCollectionView: UIView{
-    
-    var viewModel : PlaceListViewModelProtocol
-    
-    init(viewModel: PlaceListViewModelProtocol, frame: CGRect = .zero) {
+class PlacesListCollectionView: UIView {
+
+    var viewModel: PlacesListViewModelProtocol
+
+    init(viewModel: PlacesListViewModelProtocol, frame: CGRect = .zero) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setup()
@@ -36,7 +36,7 @@ class PlaceListCollectionView: UIView{
     
     var placeData: [PlaceItem] = []
     private let locationManager = LocationManager()
-    weak var delegate: PlaceListCollectionViewDelegate?
+    weak var delegate: PlacesListCollectionViewDelegate?
     var selectedIndex: IndexPath?
     
     
@@ -91,7 +91,7 @@ class PlaceListCollectionView: UIView{
 
 //MARK: - UICollectionViewDataSource Methods
 
-extension PlaceListCollectionView: UICollectionViewDataSource{
+extension PlacesListCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         placeData.count
     }
@@ -124,7 +124,7 @@ extension PlaceListCollectionView: UICollectionViewDataSource{
 //MARK: - UICOllectionViewDelegate Methods
 
 
-extension PlaceListCollectionView: UICollectionViewDelegate{
+extension PlacesListCollectionView: UICollectionViewDelegate {
    
    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        let item: PlaceItem = placeData[indexPath.item]
@@ -134,7 +134,7 @@ extension PlaceListCollectionView: UICollectionViewDelegate{
 
 //MARK: - Setup and Constraints
 
-extension PlaceListCollectionView{
+extension PlacesListCollectionView {
     
     func setup(){
         self.backgroundColor = .clear
@@ -161,9 +161,9 @@ extension PlaceListCollectionView{
     }
 }
 
-extension PlaceListCollectionView: PlaceCellDelegate{
+extension PlacesListCollectionView: PlaceCellDelegate {
     func placeCellDidFailToLoadImage(_ cell: PlaceCell, error: any Error) {
-        delegate?.placeListCViewDidFailToLoadImage(self, error: error)
+        delegate?.placesListCollectionViewDidFailToLoadImage(self, error: error)
     }
     
     

@@ -43,7 +43,7 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PesoBlueMVVM/PlacesListViewModel/FilterCollectionView/FilterCollectionView.swift"
+            filePath = "Pesoblu/Modules/PlacesList/View/SubViews/FilterCollectionView/FilterCollectionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
@@ -185,12 +185,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pesoblu/PlacesListViewModel/View/PlacesListViewController.swift"
+             filePath = "Pesoblu/Modules/PlacesList/View/PlacesListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
             endingLineNumber = "166"
-            landmarkName = "placeListCViewDidFailToLoadImage(_:error:)"
+            landmarkName = "placesListCollectionViewDidFailToLoadImage(_:error:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
