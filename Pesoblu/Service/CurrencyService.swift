@@ -5,7 +5,6 @@
 //  Created by Daniel Carcacha on 12/02/2025.
 //
 import Foundation
-import Alamofire
 
 protocol CurrencyServiceProtocol{
     func getDolarBlue() async throws -> DolarBlue?
@@ -17,17 +16,13 @@ protocol CurrencyServiceProtocol{
 
 
 class CurrencyService: CurrencyServiceProtocol {
-    private let currencyUrl = "https://api.getgeoapi.com/v2/currency/convert?api_key="
-    private let apiKey = "99f81f10b5b6b92679b9051bdce40b7647f150e0"
-    
     //private var dolarBlue: DolarBlue?
     private var rates: Rates?
     private var currencies: [CurrencyItem] = []
     
     
-    @MainActor
     func getDolarBlue() async throws -> DolarBlue? {
-        guard let url = URL(string: "https://dolarapi.com/v1/dolares/blue") else {
+        guard let url = URL(string: APIConfig.dolarBlueURL) else {
             throw APIError.invalidURL
         }
 
@@ -38,12 +33,11 @@ class CurrencyService: CurrencyServiceProtocol {
 
         let jsonDecoder = JSONDecoder()
         let dolarBlue = try jsonDecoder.decode(DolarBlue.self, from: data)
-        return dolarBlue
+        return await MainActor.run { dolarBlue }
     }
-    
-    @MainActor
+
     func getDolarOficial() async throws -> DolarOficial? {
-        guard let url = URL(string: "https://dolarapi.com/v1/dolares/oficial")else {
+        guard let url = URL(string: APIConfig.dolarOficialURL) else {
             throw APIError.invalidURL
         }
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -52,37 +46,24 @@ class CurrencyService: CurrencyServiceProtocol {
         }
         let jsonDecoder = JSONDecoder()
         let dolarOficial = try jsonDecoder.decode(DolarOficial.self, from: data)
-        return dolarOficial
+        return await MainActor.run { dolarOficial }
     }
-    
-    @MainActor
+
     func getDolarMep() async throws -> DolarMEP? {
-        let url = "https://dolarapi.com/v1/dolares/bolsa"
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            AF.request(url)
-                .validate(statusCode: 200..<300)
-                .responseDecodable(of: DolarMEP.self) { response in
-                    switch response.result {
-                    case .success(let dolarMep):
-                        //self.dolarMep = dolarMep
-                        continuation.resume(returning: dolarMep)
-                    case .failure(let error):
-                        if let afError = error.asAFError {
-                            if afError.responseCode == nil {
-                                continuation.resume(throwing: APIError.invalidURL)
-                            } else {
-                                continuation.resume(throwing: APIError.invalidResponse)
-                            }
-                        } else {
-                            continuation.resume(throwing: error)
-                        }
-                    }
-                }
+        guard let url = URL(string: APIConfig.dolarMepURL) else {
+            throw APIError.invalidURL
         }
+
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw APIError.invalidResponse
+        }
+
+        let jsonDecoder = JSONDecoder()
+        let dolarMep = try jsonDecoder.decode(DolarMEP.self, from: data)
+        return await MainActor.run { dolarMep }
     }
-    
-    @MainActor
+
     func getValueForCountry(countryCode: String) async throws -> String {
         rates = try await fetchExchangeRates()
         let dolarMep = try await getDolarMep()?.rate ?? "0.0"
@@ -104,13 +85,13 @@ class CurrencyService: CurrencyServiceProtocol {
             return "Código de país no reconocido"
         }
         
-        return String(format: "%.2f", value)
+        return await MainActor.run { String(format: "%.2f", value) }
     }
     
     
     //redefinir los metodos para devolver el valor de la divisa individualmente y append al array que los maneja que este array sea de tipo protocolo que acepte los dos tipos de datos
     private func fetchExchangeRates() async throws -> Rates {
-        guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP,EUR,GBP,COP,JPY,ILS,MXN,PYG,PEN,RUB,CAD,BOB&format=json") else {
+        guard let url = URL(string: "\(APIConfig.currencyBaseURL)?api_key=\(APIConfig.apiKey)&from=USD&to=BRL,UYU,CLP,EUR,GBP,COP,JPY,ILS,MXN,PYG,PEN,RUB,CAD,BOB&format=json") else {
             throw APIError.invalidURL
         }
 
@@ -128,9 +109,8 @@ class CurrencyService: CurrencyServiceProtocol {
 extension CurrencyService{
     func getChangeOfCurrencies() async throws -> Rates {
 
-        var currencies : Rates
-        currencies = try await fetchExchangeRates()
-        return currencies
+        let currencies: Rates = try await fetchExchangeRates()
+        return await MainActor.run { currencies }
     }
 }
 
