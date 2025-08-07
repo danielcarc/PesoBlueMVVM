@@ -83,7 +83,11 @@ extension PlacesListCollectionView: UICollectionViewDataSource {
         let item = placeData[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceCell", for: indexPath) as! PlaceCell
 
-        cell.set(image: nil, title: item.title, price: item.price, distance: item.distance, type: item.type)
+        cell.set(image: nil,
+                 title: item.title,
+                 price: item.price,
+                 formattedDistance: item.formattedDistance,
+                 type: item.type)
         cell.updateImage(url: item.imageUrl)
         return cell
     }

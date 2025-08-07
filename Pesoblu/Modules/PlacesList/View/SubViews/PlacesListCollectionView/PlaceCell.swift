@@ -58,16 +58,14 @@ class PlaceCell: UICollectionViewCell {
     }()
     
     //MARK: - Set Methods
-    func set(image: UIImage?, title: String, price: String, distance: String, type: String){
+    /// Configures the cell with the provided data. `formattedDistance` should
+    /// already contain the distance string ready for display (e.g. "1.2 km").
+    func set(image: UIImage?, title: String, price: String, formattedDistance: String, type: String){
         placeImage.image = image
         placeName.text = title
         priceLabel.text = price
         typeLabel.text = type
-        distanceLabel.text = distance
-    }
-    
-    func updateDistance(_ distance: String) {
-        distanceLabel.text = distance
+        distanceLabel.text = formattedDistance
     }
     
     func updateImage(url: String) {

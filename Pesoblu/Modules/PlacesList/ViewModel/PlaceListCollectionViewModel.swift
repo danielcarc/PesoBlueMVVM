@@ -4,7 +4,8 @@ struct PlaceItemViewModel {
     let place: PlaceItem
     let title: String
     let price: String
-    let distance: String
+    /// Distance string already formatted for presentation.
+    let formattedDistance: String
     let type: String
     let imageUrl: String
 }
@@ -30,7 +31,7 @@ final class PlaceListCollectionViewModel {
                 place: place,
                 title: place.name,
                 price: place.price ?? "N/A",
-                distance: placesListViewModel.getDistanceForPlace(place),
+                formattedDistance: placesListViewModel.getDistanceForPlace(place),
                 type: place.subtitle ?? "N/A",
                 imageUrl: place.imageUrl
             )
