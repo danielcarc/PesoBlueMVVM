@@ -30,7 +30,7 @@ final class PlaceView: UIView{
     }
     
     weak var delegate: PlaceViewDelegate?
-    var place: PlaceItem?
+    private var place: PlaceItem?
     
     private lazy var stackView: UIStackView = {
         var sv = UIStackView()
@@ -158,16 +158,13 @@ final class PlaceView: UIView{
             }
         }
     }
-}
 
-extension PlaceView{
-    
-    func setup(){
+    private func setup() {
         addViews()
         addConstraints()
     }
-    
-    func addViews(){
+
+    private func addViews() {
         self.backgroundColor = .clear
         self.addSubview(stackView)
         stackView.addArrangedSubview(placeImageView)
@@ -175,26 +172,27 @@ extension PlaceView{
         stackView.addArrangedSubview(categoriesLabel)
         stackView.addArrangedSubview(addressLabel)
         stackView.addArrangedSubview(contactStackView)
-        
+
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(mapView)
-        
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(expandImage))
         placeImageView.addGestureRecognizer(tapGesture)
     }
-    
-    func addConstraints(){
+
+    private func addConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
+
             placeImageView.heightAnchor.constraint(equalToConstant: 200),
             mapView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
 }
+
 
 //MARK: - TapGesture Methods
 
