@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import UIKit
 @testable import Pesoblu
 
 final class PlaceViewControllerTests: XCTestCase {
@@ -29,13 +30,13 @@ final class PlaceViewControllerTests: XCTestCase {
         }
     }
 
-    final class SpyPlaceViewController: PlaceViewController {
+    final class MockAlertPresenter: AlertPresenter {
         var didShowAlert = false
         var alertTitle: String?
         var alertMessage: String?
         var onAlertShown: (() -> Void)?
 
-        override func showAlert(title: String, message: String) {
+        func present(on viewController: UIViewController, title: String, message: String) {
             didShowAlert = true
             alertTitle = title
             alertMessage = message
@@ -43,14 +44,16 @@ final class PlaceViewControllerTests: XCTestCase {
         }
     }
 
-    private var sut: SpyPlaceViewController!
+    private var sut: PlaceViewController!
     private var mockViewModel: MockPlaceViewModel!
+    private var mockAlertPresenter: MockAlertPresenter!
 
     override func setUp() {
         super.setUp()
         mockViewModel = MockPlaceViewModel()
-        sut = SpyPlaceViewController(placeViewModel: mockViewModel,
-                                     place: PlaceItem(
+        mockAlertPresenter = MockAlertPresenter()
+        sut = PlaceViewController(placeViewModel: mockViewModel,
+                                  place: PlaceItem(
                                         id: 1,
                                         name: "Test Place",
                                         address: "Calle Falsa 123",
@@ -68,13 +71,15 @@ final class PlaceViewControllerTests: XCTestCase {
                                         instagram: "https://www.instagram.com/test/",
                                         imageUrl: "",
                                         placeType: .resto,
-                                        placeDescription: ""))
+                                        placeDescription: ""),
+                                  alertPresenter: mockAlertPresenter)
         _ = sut.view  // Trigger view load
     }
-    
+
     override func tearDown() {
         sut = nil
         mockViewModel = nil
+        mockAlertPresenter = nil
         super.tearDown()
     }
     
@@ -122,7 +127,7 @@ final class PlaceViewControllerTests: XCTestCase {
         mockViewModel.shouldThrow = true
         let expectation = expectation(description: "Esperando que se llame showAlert")
         
-        sut.onAlertShown = {
+        mockAlertPresenter.onAlertShown = {
             expectation.fulfill()
         }
         
@@ -131,7 +136,7 @@ final class PlaceViewControllerTests: XCTestCase {
         
         // Then
         wait(for: [expectation], timeout: 1.0)
-        XCTAssertTrue(sut.didShowAlert)
-        XCTAssertEqual(sut.alertTitle, "Error")
+        XCTAssertTrue(mockAlertPresenter.didShowAlert)
+        XCTAssertEqual(mockAlertPresenter.alertTitle, "Error")
     }
 }
