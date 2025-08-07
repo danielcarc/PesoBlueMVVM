@@ -17,8 +17,8 @@ protocol PlaceViewModelProtocol{
 
 final class PlaceViewModel: PlaceViewModelProtocol{
     
-    private var coreDataService: CoreDataServiceProtocol
-    private var place: PlaceItem
+    private let coreDataService: CoreDataServiceProtocol
+    private let place: PlaceItem
     
     init(coreDataService: CoreDataServiceProtocol, place: PlaceItem){
         self.coreDataService = coreDataService
