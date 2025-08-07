@@ -1,0 +1,40 @@
+import Foundation
+
+struct PlaceItemViewModel {
+    let place: PlaceItem
+    let title: String
+    let price: String
+    let distance: String
+    let type: String
+    let imageUrl: String
+}
+
+final class PlaceListCollectionViewModel {
+
+    private let placesListViewModel: PlacesListViewModelProtocol
+
+    init(placesListViewModel: PlacesListViewModelProtocol) {
+        self.placesListViewModel = placesListViewModel
+    }
+
+    func makeItems(from places: [PlaceItem], filter: String) -> [PlaceItemViewModel] {
+        let filtered: [PlaceItem]
+        if filter != "All" {
+            filtered = placesListViewModel.filterData(places: places, filter: filter)
+        } else {
+            filtered = places
+        }
+
+        return filtered.map { place in
+            PlaceItemViewModel(
+                place: place,
+                title: place.name,
+                price: place.price ?? "N/A",
+                distance: placesListViewModel.getDistanceForPlace(place),
+                type: place.subtitle ?? "N/A",
+                imageUrl: place.imageUrl
+            )
+        }
+    }
+}
+
