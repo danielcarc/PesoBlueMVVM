@@ -11,7 +11,7 @@ protocol PlaceCellDelegate: AnyObject {
     func placeCellDidFailToLoadImage(_ cell: PlaceCell, error: Error)
 }
 
-class PlaceCell: UICollectionViewCell {
+final class PlaceCell: UICollectionViewCell {
     
     weak var delegate: PlaceCellDelegate?
     //MARK: - Properties

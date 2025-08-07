@@ -9,14 +9,14 @@ import UIKit
 import Foundation
 import CoreData
 
-class PlacesListViewController: UIViewController {
+final class PlacesListViewController: UIViewController {
 
     var onSelect: ((PlaceItem) -> Void)?
     var placesListViewModel: PlacesListViewModelProtocol
     private let placeListCollectionViewModel: PlaceListCollectionViewModel
     private let selectedPlaces: [PlaceItem]
     private let selectedCity: String
-    private(set) var placeType: String
+    private(set) var placeType: PlaceType
     private var filters: [DiscoverItem] = []
 
     private var placesListView: PlacesListView {
@@ -26,7 +26,7 @@ class PlacesListViewController: UIViewController {
     init(placesListViewModel: PlacesListViewModelProtocol,
          selectedPlaces: [PlaceItem],
          selectedCity: String,
-         placeType: String) {
+         placeType: PlaceType) {
         self.placesListViewModel = placesListViewModel
         self.placeListCollectionViewModel = PlaceListCollectionViewModel(placesListViewModel: placesListViewModel)
         self.selectedPlaces = selectedPlaces
@@ -103,7 +103,8 @@ extension PlacesListViewController: PlacesListCollectionViewDelegate {
 //MARK: - FilterCollectionViewDelegate
 extension PlacesListViewController: FilterCollectionViewDelegate {
     func didSelectFilter(_ filter: DiscoverItem) {
-        self.placeType = filter.name
+        guard let type = PlaceType(rawValue: filter.name) else { return }
+        placeType = type
         placesListView.filterCView.update(with: filters, selectedType: placeType)
         let items = placeListCollectionViewModel.makeItems(from: selectedPlaces, filter: placeType)
         placesListView.placesListCView.updateData(with: items)

@@ -50,7 +50,7 @@ final class PlaceIntegrationTests: XCTestCase {
                                   cuisines: ["Comida"],
                                   instagram: "https://www.instagram.com/test/",
                                   imageUrl: "",
-                                  placeType: "",
+                                  placeType: .resto,
                                   placeDescription: "")
         
         viewModel = PlaceViewModel(coreDataService: service, place: fakePlace)

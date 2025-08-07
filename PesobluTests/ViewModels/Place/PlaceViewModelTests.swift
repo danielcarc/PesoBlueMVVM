@@ -36,7 +36,7 @@ final class PlaceViewModelTests: XCTestCase {
     func test_saveFavoriteStatus_callsServiceWithCorrectValues() async {
         // Given
         let mockService = MockCoreDataService()
-        let place = PlaceItem(id: 123, name: "Siamo", address: "Palermo", city: "CABA", state: "", area: "", postalCode: "", country: "", phone: "", lat: 54.000, long: 27.000, price: "", categories: [""], cuisines: [""], instagram: "", imageUrl: "", placeType: "", placeDescription: "")
+        let place = PlaceItem(id: 123, name: "Siamo", address: "Palermo", city: "CABA", state: "", area: "", postalCode: "", country: "", phone: "", lat: 54.000, long: 27.000, price: "", categories: [""], cuisines: [""], instagram: "", imageUrl: "", placeType: .resto, placeDescription: "")
         let viewModel = PlaceViewModel(coreDataService: mockService, place: place)
         let placeId = String(place.id)
         let isFavorite = true
@@ -60,7 +60,7 @@ final class PlaceViewModelTests: XCTestCase {
         let mockService = MockCoreDataService()
         mockService.loadResult = true
         
-        let place = PlaceItem(id: 456, name: "otro", address: "Palermo", city: "CABA", state: "", area: "", postalCode: "", country: "", phone: "", lat: 54.000, long: 27.000, price: "", categories: [""], cuisines: [""], instagram: "", imageUrl: "", placeType: "", placeDescription: "")
+        let place = PlaceItem(id: 456, name: "otro", address: "Palermo", city: "CABA", state: "", area: "", postalCode: "", country: "", phone: "", lat: 54.000, long: 27.000, price: "", categories: [""], cuisines: [""], instagram: "", imageUrl: "", placeType: .resto, placeDescription: "")
         let viewModel = PlaceViewModel(coreDataService: mockService, place: place)
         
         // When

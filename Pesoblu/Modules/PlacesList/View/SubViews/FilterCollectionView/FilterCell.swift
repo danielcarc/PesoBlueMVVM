@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class FilterCell: UICollectionViewCell{
+final class FilterCell: UICollectionViewCell{
     
     // MARK: - Properties
     private lazy var imageView : UIImageView = {

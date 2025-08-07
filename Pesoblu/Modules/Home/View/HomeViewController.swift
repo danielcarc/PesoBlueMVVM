@@ -13,7 +13,7 @@ final class HomeViewController: UIViewController {
     var discoverBaCView : DiscoverBaCollectionView
     var citysCView : CitysCollectionView
     var alertMessage: String?
-    var onSelect : (([PlaceItem], String, String) -> Void)?
+    var onSelect : (([PlaceItem], String, PlaceType) -> Void)?
     
     var collectionViewHeightConstraint: NSLayoutConstraint!
     
@@ -217,13 +217,11 @@ extension HomeViewController: CollectionViewSelectionDelegate{
         do {
             let selectedCity = "CABA"
             let selectedPlaces = try homeViewModel.fetchPlaces(city: selectedCity)
-            let placeType = item.name
-            
+            guard let placeType = PlaceType(rawValue: item.name) else { return }
             if selectedPlaces.isEmpty {
                 showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
             } else {
                 onSelect?(selectedPlaces, selectedCity, placeType)
-                ///agregar el onSelect y modificar la logica
             }
         } catch PlaceError.noPlacesAvailable {
             showAlert(message: "No se encontraron lugares disponibles.")
@@ -251,7 +249,7 @@ extension HomeViewController: CitysViewDelegate{
         
         do{
             let selectedPlaces = try homeViewModel.fetchPlaces(city: selectedCity)
-            let placeType = "All"
+            let placeType: PlaceType = .all
             if selectedPlaces.isEmpty {
                 showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
             } else {

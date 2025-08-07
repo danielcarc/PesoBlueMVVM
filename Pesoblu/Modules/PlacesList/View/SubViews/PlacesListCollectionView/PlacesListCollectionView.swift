@@ -14,7 +14,7 @@ protocol PlacesListCollectionViewDelegate: AnyObject {
     func placesListCollectionViewDidFailToLoadImage(_ collectionView: PlacesListCollectionView, error: Error)
 }
 
-class PlacesListCollectionView: UIView {
+final class PlacesListCollectionView: UIView {
 
     var placeData: [PlaceItemViewModel] = []
     weak var delegate: PlacesListCollectionViewDelegate?
