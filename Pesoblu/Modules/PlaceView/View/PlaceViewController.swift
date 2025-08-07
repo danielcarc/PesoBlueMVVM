@@ -9,20 +9,36 @@ import UIKit
 import MapKit
 import CoreData
 
-class PlaceViewController: UIViewController {
-    
+protocol AlertPresenter {
+    func present(on viewController: UIViewController, title: String, message: String)
+}
+
+struct DefaultAlertPresenter: AlertPresenter {
+    func present(on viewController: UIViewController, title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        viewController.present(alert, animated: true)
+    }
+}
+
+final class PlaceViewController: UIViewController {
+
     private lazy var placeView = PlaceView()
     private let placeViewModel: PlaceViewModelProtocol
-    var place: PlaceItem
+    private let place: PlaceItem
+    private let alertPresenter: AlertPresenter
     
 #if DEBUG
     var test_isFavorite: Bool { isFavorite }
 #endif
     
-    init(placeViewModel: PlaceViewModelProtocol, place: PlaceItem) {
-        
+    init(placeViewModel: PlaceViewModelProtocol,
+         place: PlaceItem,
+         alertPresenter: AlertPresenter = DefaultAlertPresenter()) {
+
         self.placeViewModel = placeViewModel
         self.place = place
+        self.alertPresenter = alertPresenter
         super.init(nibName: nil, bundle: nil)
         setupDependencies()
     }
@@ -75,10 +91,8 @@ class PlaceViewController: UIViewController {
         ])
     }
     
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+    private func showAlert(title: String, message: String) {
+        alertPresenter.present(on: self, title: title, message: message)
     }
 }
 
