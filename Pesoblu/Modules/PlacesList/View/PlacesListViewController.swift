@@ -13,6 +13,7 @@ class PlacesListViewController: UIViewController {
 
     var onSelect: ((PlaceItem) -> Void)?
     var placesListViewModel: PlacesListViewModelProtocol
+    private let placeListCollectionViewModel: PlaceListCollectionViewModel
     private let selectedPlaces: [PlaceItem]
     private let selectedCity: String
     private(set) var placeType: String
@@ -27,6 +28,7 @@ class PlacesListViewController: UIViewController {
          selectedCity: String,
          placeType: String) {
         self.placesListViewModel = placesListViewModel
+        self.placeListCollectionViewModel = PlaceListCollectionViewModel(placesListViewModel: placesListViewModel)
         self.selectedPlaces = selectedPlaces
         self.selectedCity = selectedCity
         self.placeType = placeType
@@ -39,7 +41,7 @@ class PlacesListViewController: UIViewController {
 
     override func loadView() {
         let filterView = FilterCollectionView()
-        let placesView = PlacesListCollectionView(viewModel: placesListViewModel)
+        let placesView = PlacesListCollectionView()
         self.view = PlacesListView(filterCView: filterView, placesListCView: placesView)
     }
 
@@ -69,7 +71,8 @@ extension PlacesListViewController {
     func setCollectionViews() {
         filters = placesListViewModel.fetchFilterItems()
         placesListView.filterCView.update(with: filters, selectedType: placeType)
-        placesListView.placesListCView.updateData(for: selectedPlaces, by: placeType)
+        let items = placeListCollectionViewModel.makeItems(from: selectedPlaces, filter: placeType)
+        placesListView.placesListCView.updateData(with: items)
     }
 }
 
@@ -102,7 +105,8 @@ extension PlacesListViewController: FilterCollectionViewDelegate {
     func didSelectFilter(_ filter: DiscoverItem) {
         self.placeType = filter.name
         placesListView.filterCView.update(with: filters, selectedType: placeType)
-        placesListView.placesListCView.updateData(for: selectedPlaces, by: placeType)
+        let items = placeListCollectionViewModel.makeItems(from: selectedPlaces, filter: placeType)
+        placesListView.placesListCView.updateData(with: items)
     }
 }
 

@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import CoreLocation
 
 protocol PlacesListCollectionViewDelegate: AnyObject {
     func didUpdateItemCount(_ count: Int)
@@ -17,37 +16,21 @@ protocol PlacesListCollectionViewDelegate: AnyObject {
 
 class PlacesListCollectionView: UIView {
 
-    var viewModel: PlacesListViewModelProtocol
+    var placeData: [PlaceItemViewModel] = []
+    weak var delegate: PlacesListCollectionViewDelegate?
+    var selectedIndex: IndexPath?
 
-    init(viewModel: PlacesListViewModelProtocol, frame: CGRect = .zero) {
-        self.viewModel = viewModel
+    init(frame: CGRect = .zero) {
         super.init(frame: frame)
         setup()
-        locationManager.onLocationUpdate = { [weak self] in
-            DispatchQueue.main.async {
-                self?.placeCollectionView.reloadData()
-            }
-        }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    var placeData: [PlaceItem] = []
-    private let locationManager = LocationManager()
-    weak var delegate: PlacesListCollectionViewDelegate?
-    var selectedIndex: IndexPath?
-    
-    
-    func updateData(for places: [PlaceItem], by filter: String){
-        var filteredPlaces: [PlaceItem] = []
-        if filter != "All" {
-            filteredPlaces = viewModel.filterData(places: places, filter: filter)
-        }else{
-            filteredPlaces = places
-        }
-        placeData = filteredPlaces
+
+    func updateData(with items: [PlaceItemViewModel]) {
+        placeData = items
         quantityLabel.text = "\(placeData.count) lugares"
         delegate?.didUpdateItemCount(placeData.count)
         placeCollectionView.reloadData()
@@ -95,26 +78,12 @@ extension PlacesListCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         placeData.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = placeData[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceCell", for: indexPath) as! PlaceCell
 
-        // Configura los datos básicos
-        cell.set(image: nil, title: item.name, price: item.price ?? "N/A", distance: "Cargando...", type: item.subtitle ?? "N/A")
-
-        // Actualiza la distancia de forma independiente
-        if let userLocation = locationManager.userLocation {
-            Task {
-                let distance = viewModel.calculateDistance(from: userLocation, to: item)
-                await MainActor.run {
-                    if collectionView.indexPath(for: cell) == indexPath { // Verifica la reutilización
-                        cell.updateDistance(distance)
-                    }
-                }
-            }
-        }
-        //usamos ahora kingfisher para la descarga
+        cell.set(image: nil, title: item.title, price: item.price, distance: item.distance, type: item.type)
         cell.updateImage(url: item.imageUrl)
         return cell
     }
@@ -125,9 +94,9 @@ extension PlacesListCollectionView: UICollectionViewDataSource {
 
 
 extension PlacesListCollectionView: UICollectionViewDelegate {
-   
+
    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       let item: PlaceItem = placeData[indexPath.item]
+       let item: PlaceItem = placeData[indexPath.item].place
        delegate?.didSelectItem(item)
     }
 }
