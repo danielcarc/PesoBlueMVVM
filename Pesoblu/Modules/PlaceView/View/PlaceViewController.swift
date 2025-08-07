@@ -194,25 +194,27 @@ extension PlaceViewController{
     }
     
     func loadFavoriteStatus() {
-        
-        Task{
-            do{
+
+        Task { [weak self] in
+            guard let self = self else { return }
+            do {
                 self.isFavorite = try await self.placeViewModel.loadFavoriteStatus()
             }
-            catch{
+            catch {
                 self.showAlert(title: "Error", message: "\(error.localizedDescription)")
             }
         }
     }
-    
+
     func saveFavoriteStatus(){
-        
-        Task{
-            do{
-                try await placeViewModel.saveFavoriteStatus(isFavorite: isFavorite)
+
+        Task { [weak self] in
+            guard let self = self else { return }
+            do {
+                try await self.placeViewModel.saveFavoriteStatus(isFavorite: self.isFavorite)
             }
-            catch{
-                showAlert(title: "Error", message: "Error saving favorite status: \(error.localizedDescription)")
+            catch {
+                self.showAlert(title: "Error", message: "Error saving favorite status: \(error.localizedDescription)")
             }
         }
     }
