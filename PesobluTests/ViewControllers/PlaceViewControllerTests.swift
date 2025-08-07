@@ -67,7 +67,7 @@ final class PlaceViewControllerTests: XCTestCase {
                                         cuisines: ["Comida"],
                                         instagram: "https://www.instagram.com/test/",
                                         imageUrl: "",
-                                        placeType: "",
+                                        placeType: .resto,
                                         placeDescription: ""))
         _ = sut.view  // Trigger view load
     }

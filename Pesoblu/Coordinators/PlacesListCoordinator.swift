@@ -6,19 +6,19 @@
 //
 import UIKit
 
-class PlacesListCoordinator: Coordinator {
+final class PlacesListCoordinator: Coordinator {
     var navigationController: UINavigationController
     private let placesListViewModel: PlacesListViewModelProtocol
     private let selectedPlaces: [PlaceItem]
     private let selectedCity: String
-    private let placeType: String
+    private let placeType: PlaceType
     private var placeCoordinator: PlaceCoordinator?
 
     init(navigationController: UINavigationController,
          placesListViewModel: PlacesListViewModelProtocol,
          selectedPlaces: [PlaceItem],
          selectedCity: String,
-         placeType: String) {
+         placeType: PlaceType) {
         self.navigationController = navigationController
         self.placesListViewModel = placesListViewModel
         self.selectedPlaces = selectedPlaces

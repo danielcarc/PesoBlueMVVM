@@ -11,7 +11,7 @@ protocol FilterCollectionViewDelegate: AnyObject {
     func didSelectFilter(_ filter: DiscoverItem)
 }
 
-class FilterCollectionView: UIView{
+final class FilterCollectionView: UIView{
 
     weak var delegate: FilterCollectionViewDelegate?
 
@@ -25,10 +25,10 @@ class FilterCollectionView: UIView{
     }
 
     private var data: [DiscoverItem] = []
-    private var placeType: String?
+    private var placeType: PlaceType?
     private var selectedIndexPath: IndexPath?
 
-    func update(with items: [DiscoverItem], selectedType: String){
+    func update(with items: [DiscoverItem], selectedType: PlaceType){
         data = items
         placeType = selectedType
         selectedIndexPath = nil
@@ -82,7 +82,7 @@ extension FilterCollectionView: UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! FilterCell
         cell.set(image: item.image, title: item.name)
         
-        if item.name == placeType {
+        if let type = PlaceType(rawValue: item.name), type == placeType {
             selectedIndexPath = indexPath
         }
         

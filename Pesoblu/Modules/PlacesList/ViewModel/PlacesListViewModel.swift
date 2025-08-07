@@ -11,10 +11,10 @@ import CoreLocation
 protocol PlacesListViewModelProtocol {
     func getDistanceForPlace(_ place: PlaceItem) -> String
     func calculateDistance(from userLocation: CLLocation, to place: PlaceItem) -> String
-    func filterData(places: [PlaceItem], filter: String) -> [PlaceItem]
+    func filterData(places: [PlaceItem], filter: PlaceType) -> [PlaceItem]
     func fetchFilterItems() -> [DiscoverItem]
 }
-class PlacesListViewModel: PlacesListViewModelProtocol {
+final class PlacesListViewModel: PlacesListViewModelProtocol {
     
     private let distanceService: DistanceServiceProtocol
     private let filterDataService: FilterDataServiceProtocol
@@ -37,11 +37,8 @@ class PlacesListViewModel: PlacesListViewModelProtocol {
         distanceService.getDistanceForPlace(place)
     }
     
-    func filterData(places: [PlaceItem], filter: String) -> [PlaceItem]{
-        let place = places
-        let type = filter
-        let filteredPlaces = place.filter { $0.placeType.lowercased() == type.lowercased() }
-        return filteredPlaces
+    func filterData(places: [PlaceItem], filter: PlaceType) -> [PlaceItem] {
+        places.filter { $0.placeType == filter }
     }
     
 }

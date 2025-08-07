@@ -141,7 +141,7 @@ class MockHomeViewModel: HomeViewModelProtocol {
                 cuisines: nil,
                 instagram: "@casa_cambio_a",
                 imageUrl: "casa_a.jpg",
-                placeType: "exchange",
+                placeType: .exchange,
                 placeDescription: "Casa de cambio en el centro"
             ),
             Pesoblu.PlaceItem(
@@ -161,7 +161,7 @@ class MockHomeViewModel: HomeViewModelProtocol {
                 cuisines: nil,
                 instagram: "@casa_cambio_b",
                 imageUrl: "casa_b.jpg",
-                placeType: "exchange",
+                placeType: .exchange,
                 placeDescription: "Otra casa de cambio"
             )
         ]

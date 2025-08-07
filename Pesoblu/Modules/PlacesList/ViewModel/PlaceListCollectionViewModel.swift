@@ -18,9 +18,9 @@ final class PlaceListCollectionViewModel {
         self.placesListViewModel = placesListViewModel
     }
 
-    func makeItems(from places: [PlaceItem], filter: String) -> [PlaceItemViewModel] {
+    func makeItems(from places: [PlaceItem], filter: PlaceType) -> [PlaceItemViewModel] {
         let filtered: [PlaceItem]
-        if filter != "All" {
+        if filter != .all {
             filtered = placesListViewModel.filterData(places: places, filter: filter)
         } else {
             filtered = places

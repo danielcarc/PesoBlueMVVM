@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class HomeCoordinator: Coordinator {
+final class HomeCoordinator: Coordinator {
     var navigationController: UINavigationController
     private var placesListCoordinator: PlacesListCoordinator?
 
@@ -33,7 +33,7 @@ class HomeCoordinator: Coordinator {
         navigationController.setViewControllers([vc], animated: false)
     }
     
-    func showPlacesListWithCity(selectedPlaces: [PlaceItem], selectedCity: String, placeType: String){
+    func showPlacesListWithCity(selectedPlaces: [PlaceItem], selectedCity: String, placeType: PlaceType){
         
         let viewModel = PlacesListViewModel(distanceService: DistanceService(locationProvider: LocationManager()), filterDataService: FilterDataService())
         let coordinator = PlacesListCoordinator(navigationController: navigationController, placesListViewModel: viewModel, selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
