@@ -12,12 +12,12 @@ import CoreData
 class PlacesListViewController: UIViewController {
     
     var onSelect: ((PlaceItem) -> Void)?
-    var filterCView: FilterCollectionView
-    var placesListCView: PlacesListCollectionView
+    private let filterCView: FilterCollectionView
+    private let placesListCView: PlacesListCollectionView
     var placesListViewModel: PlacesListViewModelProtocol
-    var selectedPlaces: [PlaceItem]
-    var selectedCity: String
-    var placeType: String
+    private let selectedPlaces: [PlaceItem]
+    private let selectedCity: String
+    private(set) var placeType: String
     
     init(placesListViewModel: PlacesListViewModelProtocol,
          filterCView: FilterCollectionView? = nil,
@@ -39,7 +39,7 @@ class PlacesListViewController: UIViewController {
     }
     
     
-    var collectionViewHeightConstraint: NSLayoutConstraint!
+    private var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private var mainScrollView: UIScrollView = {
         var scrollView = UIScrollView()
