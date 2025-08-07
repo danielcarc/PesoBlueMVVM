@@ -16,6 +16,7 @@ class PlacesListViewController: UIViewController {
     private let selectedPlaces: [PlaceItem]
     private let selectedCity: String
     private(set) var placeType: String
+    private var filters: [DiscoverItem] = []
 
     private var placesListView: PlacesListView {
         return view as! PlacesListView
@@ -37,7 +38,7 @@ class PlacesListViewController: UIViewController {
     }
 
     override func loadView() {
-        let filterView = FilterCollectionView(viewModel: placesListViewModel)
+        let filterView = FilterCollectionView()
         let placesView = PlacesListCollectionView(viewModel: placesListViewModel)
         self.view = PlacesListView(filterCView: filterView, placesListCView: placesView)
     }
@@ -66,7 +67,8 @@ class PlacesListViewController: UIViewController {
 
 extension PlacesListViewController {
     func setCollectionViews() {
-        placesListView.filterCView.updateData(type: placeType)
+        filters = placesListViewModel.fetchFilterItems()
+        placesListView.filterCView.update(with: filters, selectedType: placeType)
         placesListView.placesListCView.updateData(for: selectedPlaces, by: placeType)
     }
 }
@@ -99,7 +101,7 @@ extension PlacesListViewController: PlacesListCollectionViewDelegate {
 extension PlacesListViewController: FilterCollectionViewDelegate {
     func didSelectFilter(_ filter: DiscoverItem) {
         self.placeType = filter.name
-        placesListView.filterCView.updateData(type: placeType)
+        placesListView.filterCView.update(with: filters, selectedType: placeType)
         placesListView.placesListCView.updateData(for: selectedPlaces, by: placeType)
     }
 }
