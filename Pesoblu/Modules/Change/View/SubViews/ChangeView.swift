@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChangeView: UIView {
+class ChangeView: UIView  {
 
     private lazy var viewDolar: UIView = {
         var view = UIView()
@@ -95,11 +95,13 @@ class ChangeView: UIView {
         setup()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
-    func set(currencyTitle: String, currencyLabel: String, valueBuy: String){
+    func set(currencyTitle: String, currencyLabel: String, valueBuy: String) {
         currencyTitleLabel.text = currencyTitle
         let text = String(valueBuy)
         currencyValueLabel.text =  "$ \(text)"// este es el qie muestra el valor
@@ -107,14 +109,14 @@ class ChangeView: UIView {
     }
 }
 
-private extension ChangeView {
-    func setup(){
+private extension ChangeView  {
+    func setup() {
         
         addsubviews()
         setupConstraints()
     }
     
-    private func addsubviews(){
+    private func addsubviews() {
         self.backgroundColor = .clear
         self.layer.cornerRadius = 10
         self.addSubview(viewDolar)

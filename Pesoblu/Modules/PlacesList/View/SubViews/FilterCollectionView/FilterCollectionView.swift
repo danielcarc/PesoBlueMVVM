@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol FilterCollectionViewDelegate: AnyObject {
+protocol FilterCollectionViewDelegate: AnyObject  {
     func didSelectFilter(_ filter: DiscoverItem)
 }
 
-final class FilterCollectionView: UIView{
+final class FilterCollectionView: UIView {
 
     weak var delegate: FilterCollectionViewDelegate?
 
@@ -20,15 +20,17 @@ final class FilterCollectionView: UIView{
         setup()
     }
 
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 
     private var data: [DiscoverItem] = []
     private var placeType: PlaceType?
     private var selectedIndexPath: IndexPath?
 
-    func update(with items: [DiscoverItem], selectedType: PlaceType){
+    func update(with items: [DiscoverItem], selectedType: PlaceType) {
         data = items
         placeType = selectedType
         selectedIndexPath = nil
@@ -70,7 +72,7 @@ final class FilterCollectionView: UIView{
 
 //MARK: - UICollectionViewDataSource Methods
 
-extension FilterCollectionView: UICollectionViewDataSource{
+extension FilterCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         data.count
@@ -100,13 +102,13 @@ extension FilterCollectionView: UICollectionViewDataSource{
     
 }
 
-extension FilterCollectionView: UICollectionViewDelegateFlowLayout {
+extension FilterCollectionView: UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 110)
     }
 }
 
-extension FilterCollectionView : UICollectionViewDelegate{
+extension FilterCollectionView : UICollectionViewDelegate {
    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        let previousIndexPath = selectedIndexPath
        
@@ -133,9 +135,9 @@ extension FilterCollectionView : UICollectionViewDelegate{
 
 //MARK: - Setup CollectionView Constraints
 
-extension FilterCollectionView{
+extension FilterCollectionView {
     
-    func setup(){
+    func setup() {
         self.backgroundColor = .clear
         addSubview(filterLabel)
         addSubview(filterCollectionView)

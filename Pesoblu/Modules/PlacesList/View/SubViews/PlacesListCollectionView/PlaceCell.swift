@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol PlaceCellDelegate: AnyObject {
+protocol PlaceCellDelegate: AnyObject  {
     func placeCellDidFailToLoadImage(_ cell: PlaceCell, error: Error)
 }
 
-final class PlaceCell: UICollectionViewCell {
+final class PlaceCell: UICollectionViewCell  {
     
     weak var delegate: PlaceCellDelegate?
     //MARK: - Properties
@@ -60,7 +60,7 @@ final class PlaceCell: UICollectionViewCell {
     //MARK: - Set Methods
     /// Configures the cell with the provided data. `formattedDistance` should
     /// already contain the distance string ready for display (e.g. "1.2 km").
-    func set(image: UIImage?, title: String, price: String, formattedDistance: String, type: String){
+    func set(image: UIImage?, title: String, price: String, formattedDistance: String, type: String) {
         placeImage.image = image
         placeName.text = title
         priceLabel.text = price
@@ -93,21 +93,23 @@ final class PlaceCell: UICollectionViewCell {
         setupViews()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 }
 
 //MARK: - Setup SubViews and Constraints Methods
 
-extension PlaceCell {
+extension PlaceCell  {
  
-    func setupViews(){
+    func setupViews() {
         addsubViews()
         setupConstraints()
     }
     
-    func addsubViews(){
+    func addsubViews() {
         self.backgroundColor = .white
         self.layer.cornerRadius = 10
         contentView.addSubview(placeImage)
@@ -117,7 +119,7 @@ extension PlaceCell {
         contentView.addSubview(distanceLabel)
     }
     
-    func setupConstraints(){
+    func setupConstraints() {
         
         NSLayoutConstraint.activate([
             placeImage.topAnchor.constraint(equalTo: contentView.topAnchor),

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController  {
     
     var quickConversorView : QuickConversorView
     var discoverBaCView : DiscoverBaCollectionView
@@ -32,8 +32,10 @@ final class HomeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    /// This view controller is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-            fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
+        return nil
     }
     
     private var mainScrollView: UIScrollView = {
@@ -93,7 +95,7 @@ final class HomeViewController: UIViewController {
 
 //MARK: - Setting the View
 @MainActor
-extension HomeViewController {
+extension HomeViewController  {
     func setup() {
         setupUI()
         citysCView.delegate = self
@@ -105,9 +107,9 @@ extension HomeViewController {
 
 //MARK: - Setup SubViews and Constraints
 @MainActor
-extension HomeViewController{
+extension HomeViewController {
     
-    func setupUI(){
+    func setupUI() {
         title = NSLocalizedString("home_title", comment: "")
         self.navigationController?.navigationBar.prefersLargeTitles = true
         extendedLayoutIncludesOpaqueBars = true
@@ -119,7 +121,7 @@ extension HomeViewController{
         
     }
     
-    func addSubViews(){
+    func addSubViews() {
         self.view.backgroundColor = UIColor(hex: "F0F8FF")
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
@@ -129,7 +131,7 @@ extension HomeViewController{
         stackView.addArrangedSubview(quickConversorView)
     }
     
-    func addConstraints(){
+    func addConstraints() {
         //collectionViewHeightConstraint = citysCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
         NSLayoutConstraint.activate([
             
@@ -178,8 +180,8 @@ extension HomeViewController{
 
 //MARK: - SetUp QuickConversor
 @MainActor
-extension HomeViewController{
-    func setupQuickConversor(){
+extension HomeViewController {
+    func setupQuickConversor() {
         
         Task { @MainActor in
             do{
@@ -214,7 +216,7 @@ extension HomeViewController{
 }
 
 //MARK: - DiscoverCollectionViewDelegate Methods
-extension HomeViewController: CollectionViewSelectionDelegate{
+extension HomeViewController: CollectionViewSelectionDelegate {
     
     func didSelectItem(_ item: DiscoverItem) {
         do {
@@ -246,7 +248,7 @@ extension HomeViewController: CollectionViewSelectionDelegate{
 }
 
 //MARK: - CitysViewDelegate Methods
-extension HomeViewController: CitysViewDelegate{
+extension HomeViewController: CitysViewDelegate {
     func didSelectItem(_ city: CitysItem) {
         let selectedCity = String(city.name)
         

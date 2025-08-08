@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import UserNotifications
 
-final class CurrencyConverterViewController: UIViewController {
+final class CurrencyConverterViewController: UIViewController  {
     
     private var cancellables = Set<AnyCancellable>()
     let viewModel: CurrencyConverterViewModelProtocol
@@ -30,8 +30,10 @@ final class CurrencyConverterViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// This view controller is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
     override func loadView() {
@@ -56,9 +58,9 @@ final class CurrencyConverterViewController: UIViewController {
         }
     }
 }
-extension CurrencyConverterViewController{
+extension CurrencyConverterViewController {
     
-    func setup(){
+    func setup() {
         title = "Convertir"
         navigationController?.navigationBar.prefersLargeTitles = false
         let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
@@ -76,9 +78,9 @@ extension CurrencyConverterViewController{
 
 //MARK: - Local Notifications
 
-extension CurrencyConverterViewController{
+extension CurrencyConverterViewController {
     
-    func startTimer(){
+    func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 6000, repeats: true) { timer in
             Task{
                 if let dolar = try await self.viewModel.getDolarBlue() {
@@ -92,7 +94,7 @@ extension CurrencyConverterViewController{
 //#Preview("CurrencyViewController", traits: .defaultLayout, body: { CurrencyViewController()})
 
 //MARK: - Button Methods
-extension CurrencyConverterViewController{
+extension CurrencyConverterViewController {
     
     @objc func didTapBack() {
         // Regresar a la vista anterior
@@ -101,7 +103,7 @@ extension CurrencyConverterViewController{
 }
 
 // MARK: - Bindings
-extension CurrencyConverterViewController {
+extension CurrencyConverterViewController  {
     func setupBindings() {
         viewModel.getConvertedValues()
             .receive(on: DispatchQueue.main)

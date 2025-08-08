@@ -9,11 +9,11 @@ import UIKit
 import MapKit
 import CoreData
 
-protocol AlertPresenter {
+protocol AlertPresenter  {
     func present(on viewController: UIViewController, title: String, message: String)
 }
 
-struct DefaultAlertPresenter: AlertPresenter {
+struct DefaultAlertPresenter: AlertPresenter  {
     func present(on viewController: UIViewController, title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -21,7 +21,7 @@ struct DefaultAlertPresenter: AlertPresenter {
     }
 }
 
-final class PlaceViewController: UIViewController {
+final class PlaceViewController: UIViewController  {
 
     private lazy var placeView = PlaceView()
     private let placeViewModel: PlaceViewModelProtocol
@@ -43,8 +43,10 @@ final class PlaceViewController: UIViewController {
         setupDependencies()
     }
     
+    /// This view controller is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
     private var isFavorite: Bool = false {
@@ -83,7 +85,7 @@ final class PlaceViewController: UIViewController {
         setupUI()
     }
     
-    override func viewDidLayoutSubviews(){
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         view.applyVerticalGradientBackground(colors: [
             UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1),
@@ -98,9 +100,9 @@ final class PlaceViewController: UIViewController {
 
 //MARK: - Setup Constraints
 
-extension PlaceViewController{
+extension PlaceViewController {
     
-    func setupDependencies(){
+    func setupDependencies() {
         placeView.delegate = self
     }
     
@@ -118,7 +120,7 @@ extension PlaceViewController{
         loadFavoriteStatus()
     }
     
-    func setupViews(){
+    func setupViews() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -155,7 +157,7 @@ extension PlaceViewController{
 
 //MARK: - Error Alerts
 
-extension PlaceViewController: PlaceViewDelegate{
+extension PlaceViewController: PlaceViewDelegate {
     func didFailToOpenMaps() {
         showAlert(title: "ERROR", message: "No se pudo abrir maps.")
     }
@@ -178,9 +180,9 @@ extension PlaceViewController: PlaceViewDelegate{
 //MARK: - Navigation and Methods Buttons
 
 
-extension PlaceViewController{
+extension PlaceViewController {
     
-    private func setupNavigationButton(){
+    private func setupNavigationButton() {
         // Asignar el botón como customView del UIBarButtonItem
         let barButtonItem = UIBarButtonItem(customView: favoriteButton)
         navigationItem.rightBarButtonItem = barButtonItem
@@ -206,7 +208,7 @@ extension PlaceViewController{
         }
     }
 
-    func saveFavoriteStatus(){
+    func saveFavoriteStatus() {
 
         Task { [weak self] in
             guard let self = self else { return }

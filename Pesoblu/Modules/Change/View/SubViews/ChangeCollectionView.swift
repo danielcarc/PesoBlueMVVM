@@ -7,11 +7,11 @@
 import Foundation
 import UIKit
 
-protocol ChangeCollectionViewDelegate: AnyObject{
+protocol ChangeCollectionViewDelegate: AnyObject {
     func didSelectCurrency(for currencyItem: CurrencyItem)
 }
 
-class ChangeCollectionView: UIView {
+class ChangeCollectionView: UIView  {
     
     private var collectionView: UICollectionView
     private var viewModel: ChangeViewModelProtocol
@@ -19,7 +19,7 @@ class ChangeCollectionView: UIView {
     
     var onHeightChange: ((CGFloat) -> Void)?
     
-    init(viewModel: ChangeViewModelProtocol){
+    init(viewModel: ChangeViewModelProtocol) {
         self.viewModel = viewModel
         
         let layout = UICollectionViewFlowLayout()
@@ -32,16 +32,18 @@ class ChangeCollectionView: UIView {
         setup()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
 }
-extension ChangeCollectionView{
+extension ChangeCollectionView {
 
 }
-private extension ChangeCollectionView{
-    func setup(){
+private extension ChangeCollectionView {
+    func setup() {
         
         collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: "ChangeCell")
         collectionView.backgroundColor = .clear
@@ -65,7 +67,7 @@ private extension ChangeCollectionView{
     }
 }
 
-extension ChangeCollectionView: ChangeViewModelDelegate{
+extension ChangeCollectionView: ChangeViewModelDelegate {
     func didFinish() {
         collectionView.reloadData()
         DispatchQueue.main.async{
@@ -81,7 +83,7 @@ extension ChangeCollectionView: ChangeViewModelDelegate{
 
 //MARK: - UICollectionView DataSource
 
-extension ChangeCollectionView: UICollectionViewDataSource{
+extension ChangeCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.currencies.count
@@ -100,7 +102,7 @@ extension ChangeCollectionView: UICollectionViewDataSource{
     }
 }
 
-extension ChangeCollectionView: UICollectionViewDelegate{
+extension ChangeCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let currencyItem = viewModel.currencies[indexPath.item]
         delegate?.didSelectCurrency(for: currencyItem)

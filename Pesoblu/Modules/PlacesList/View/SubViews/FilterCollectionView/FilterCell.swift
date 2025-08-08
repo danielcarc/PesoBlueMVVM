@@ -6,7 +6,7 @@
 //
 import UIKit
 
-final class FilterCell: UICollectionViewCell{
+final class FilterCell: UICollectionViewCell {
     
     // MARK: - Properties
     private lazy var imageView : UIImageView = {
@@ -27,7 +27,7 @@ final class FilterCell: UICollectionViewCell{
         return label
     }()
     
-    func set(image: String, title: String){
+    func set(image: String, title: String) {
         imageView.image = UIImage(named: image)
         titleLabel.text = title
     }
@@ -37,20 +37,22 @@ final class FilterCell: UICollectionViewCell{
         setupViews()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
 }
 
-extension FilterCell{
+extension FilterCell {
     
-    func setupViews(){
+    func setupViews() {
         addSubViews()
         setupConstraints()
     }
     
-    func addSubViews(){
+    func addSubViews() {
         self.backgroundColor = .white
         self.layer.cornerRadius = 8.0
         self.layer.borderWidth = 1.0

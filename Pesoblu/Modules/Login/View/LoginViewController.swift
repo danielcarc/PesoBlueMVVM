@@ -9,12 +9,12 @@ import UIKit
 import FirebaseAnalytics
 import Combine
 
-protocol LoginViewProtocol: AnyObject {
+protocol LoginViewProtocol: AnyObject  {
     func didTapSignUpGoogle() async
     func didTapSignUpApple()
 }
 
-class LoginViewController: UIViewController, LoginViewProtocol {
+class LoginViewController: UIViewController, LoginViewProtocol  {
     
     var authVM : AuthenticationViewModelProtocol
     let userService : UserService
@@ -31,8 +31,10 @@ class LoginViewController: UIViewController, LoginViewProtocol {
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// This view controller is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
     override func loadView() {
@@ -103,7 +105,7 @@ class LoginViewController: UIViewController, LoginViewProtocol {
 
 //MARK: - Sign in Methods
 
-extension LoginViewController {
+extension LoginViewController  {
     
     func didTapSignUpGoogle() async {
         do {
@@ -127,7 +129,7 @@ extension LoginViewController {
     }
 }
 
-extension LoginViewController: AuthenticationDelegate{
+extension LoginViewController: AuthenticationDelegate {
     private func showErrorAlert(_ error: AuthenticationViewModel.AuthError) {
         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -144,7 +146,7 @@ extension LoginViewController: AuthenticationDelegate{
 
 }
 
-extension LoginViewController {
+extension LoginViewController  {
     static func create(authVM: AuthenticationViewModel,
                        userService: UserService,
                        coordinator: LoginNavigationDelegate) -> LoginViewController {

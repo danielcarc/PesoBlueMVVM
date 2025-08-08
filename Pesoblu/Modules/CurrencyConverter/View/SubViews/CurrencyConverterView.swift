@@ -10,7 +10,7 @@ import Combine
 
 ///una vez que sea funcional subir el titilelabel arriba y el valuelabel bajarlo asi no se chocan los caracteres, y darle colores a los distintos caracteres para que no sea aburrido
 
-final class CurrencyConverterView: UIView {
+final class CurrencyConverterView: UIView  {
         
     var onAmountChanged: ((Double?) -> Void)?
     private var selectedCurrency: String = ""
@@ -221,11 +221,11 @@ final class CurrencyConverterView: UIView {
         self.endEditing(true)
     }
     
-    func resigncurrencytext(){
+    func resigncurrencytext() {
         currencyLabel.resignFirstResponder()
     }
     
-    func resignQuantityText(){
+    func resignQuantityText() {
         quantitytextfield.resignFirstResponder()
     }
     
@@ -236,8 +236,10 @@ final class CurrencyConverterView: UIView {
         toDolarValue.text = toDolar
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
     private func setupGradientBackground() {
@@ -277,16 +279,16 @@ final class CurrencyConverterView: UIView {
 
 //MARK: - Setup and Constraints Methods
 
-private extension CurrencyConverterView{
+private extension CurrencyConverterView {
     
-    func setup(){
+    func setup() {
         addsubviews()
         setupconstraints()
         setupAmountBinding()
         
     }
     
-    private func addsubviews(){
+    private func addsubviews() {
         
         self.backgroundColor = .white
         
@@ -317,7 +319,7 @@ private extension CurrencyConverterView{
         quantitytextfield.addTarget(self, action: #selector(amountTextChanged), for: .editingChanged)
     }
     
-    private func setupconstraints(){
+    private func setupconstraints() {
         
         NSLayoutConstraint.activate([
             
@@ -394,7 +396,7 @@ private extension CurrencyConverterView{
 
 //MARK: - TextField & PickerView Methods
 
-extension CurrencyConverterView: UITextFieldDelegate{
+extension CurrencyConverterView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -432,9 +434,9 @@ extension CurrencyConverterView: UITextFieldDelegate{
 
 //MARK: - Reset Controls
 
-extension CurrencyConverterView{
+extension CurrencyConverterView {
     
-    func resetControls(){
+    func resetControls() {
         toPesoValue.text = "0.00"
         fromPesoValue.text = "0.00"
         toDolarValue.text = "0.00"
@@ -445,9 +447,9 @@ extension CurrencyConverterView{
 
 //MARK: - Set Currency Methods
 
-extension CurrencyConverterView{
+extension CurrencyConverterView {
     
-    func setCurrency(currency: CurrencyItem){
+    func setCurrency(currency: CurrencyItem) {
         currencyLabel.text = currency.currencyTitle
         currencyLabel.textColor = .black
         currencyLabel.font = .systemFont(ofSize: 18, weight: .semibold)
@@ -456,7 +458,7 @@ extension CurrencyConverterView{
         setTitleLabels(currency: currency)
     }
     
-    func setTitleLabels(currency: CurrencyItem){
+    func setTitleLabels(currency: CurrencyItem) {
         selectedCurrency = currency.currencyLabel ?? ""
         switch currency.currencyLabel {
         case "Uruguay":
