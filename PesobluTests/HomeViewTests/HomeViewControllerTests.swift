@@ -35,21 +35,21 @@ final class HomeViewControllerTests: XCTestCase {
     }
     
     func test_whenViewLoads_citysCollectionViewsIsNotNil() {
-        XCTAssertNotNil(sut.citysCView)
+        XCTAssertNotNil(sut.citysCViewForTesting)
     }
     
     func test_whenViewLoads_discoverCollectionViewsIsNotNil() {
-        XCTAssertNotNil(sut.discoverBaCView)
+        XCTAssertNotNil(sut.discoverBaCViewForTesting)
     }
     
     func test_whenViewLoads_quickConversionViewsIsNotNil() {
-        XCTAssertNotNil(sut.quickConversorView)
+        XCTAssertNotNil(sut.quickConversorViewForTesting)
     }
     
     @MainActor
     func test_HomeViewController_shouldBeCitysCviewDelegate() {
         sut.setup() //tuve que cargar primero este metodo que asignaba el delegate
-        XCTAssertTrue(sut.citysCView.delegate === sut)
+        XCTAssertTrue(sut.citysCViewForTesting.delegate === sut)
     }
     
     
@@ -60,8 +60,8 @@ final class HomeViewControllerTests: XCTestCase {
         }
         try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 segundos
         await MainActor.run {
-            XCTAssertEqual(sut.quickConversorView.usdLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "1000.00"))
-            XCTAssertEqual(sut.quickConversorView.arsvalueLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "5000.0"))
+            XCTAssertEqual(sut.quickConversorViewForTesting.usdLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "1000.00"))
+            XCTAssertEqual(sut.quickConversorViewForTesting.arsvalueLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "5000.0"))
         }
     }
     
@@ -73,20 +73,20 @@ final class HomeViewControllerTests: XCTestCase {
         }
         try? await Task.sleep(nanoseconds: 500_000_000)
         await MainActor.run {
-            XCTAssertEqual(sut.alertMessage, NSLocalizedString("invalid_url_error", comment: ""))
+            XCTAssertEqual(sut.alertMessageForTesting, NSLocalizedString("invalid_url_error", comment: ""))
         }
     }
     
     @MainActor
     func testSetupCitysCollectionView_LoadsItems() {
         sut.setupCitysCollectionView()
-        XCTAssertEqual(sut.citysCView.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ciudades ficticias
+        XCTAssertEqual(sut.citysCViewForTesting.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ciudades ficticias
     }
     
     @MainActor
     func testSetupDiscoverCollectionView_LoadsItems() {
         sut.setupDiscoverCollectionView()
-        XCTAssertEqual(sut.discoverBaCView.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ítems ficticios
+        XCTAssertEqual(sut.discoverBaCViewForTesting.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ítems ficticios
     }
 }
 

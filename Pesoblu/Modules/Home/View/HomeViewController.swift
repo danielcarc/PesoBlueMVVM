@@ -9,13 +9,13 @@ import UIKit
 
 final class HomeViewController: UIViewController  {
     
-    var quickConversorView : QuickConversorView
-    var discoverBaCView : DiscoverBaCollectionView
-    var citysCView : CitysCollectionView
-    var alertMessage: String?
-    var onSelect : (([PlaceItem], String, PlaceType) -> Void)?
+    private var quickConversorView : QuickConversorView
+    private var discoverBaCView : DiscoverBaCollectionView
+    private var citysCView : CitysCollectionView
+    private var alertMessage: String?
+    private var onSelect : (([PlaceItem], String, PlaceType) -> Void)?
     
-    var collectionViewHeightConstraint: NSLayoutConstraint!
+    private var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private let homeViewModel: HomeViewModelProtocol
     
@@ -36,6 +36,10 @@ final class HomeViewController: UIViewController  {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         return nil
+    }
+    
+    func setOnSelect(_ completion: @escaping ([PlaceItem], String, PlaceType) -> Void) {
+        onSelect = completion
     }
     
     private var mainScrollView: UIScrollView = {
@@ -280,11 +284,21 @@ extension HomeViewController: CitysViewDelegate {
         
         let totalHeight = rows * itemHeight + (rows - 1) * spacing + labelSpace
         collectionViewHeightConstraint.constant = totalHeight
-    
+        
         view.layoutIfNeeded()
     }
-    
 }
+    
+#if DEBUG
+extension HomeViewController {
+    var quickConversorViewForTesting: QuickConversorView { quickConversorView }
+    var discoverBaCViewForTesting: DiscoverBaCollectionView { discoverBaCView }
+    var citysCViewForTesting: CitysCollectionView { citysCView }
+    var alertMessageForTesting: String? { alertMessage }
+}
+#endif
+    
+
 
 
 

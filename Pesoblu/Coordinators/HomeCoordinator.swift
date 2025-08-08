@@ -24,7 +24,7 @@ final class HomeCoordinator: Coordinator {
         )
         let vc = HomeViewController(homeViewModel: viewModel)
         
-        vc.onSelect = { [weak self] selectedPlaces, selectedCity, placeType in
+        vc.setOnSelect { [weak self] selectedPlaces, selectedCity, placeType in
             self?.showPlacesListWithCity(selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
         }
         
