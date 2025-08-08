@@ -33,7 +33,7 @@ final class HomeViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
+            fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
     }
     
     private var mainScrollView: UIScrollView = {
@@ -106,7 +106,7 @@ extension HomeViewController {
 extension HomeViewController{
     
     func setupUI(){
-        title = "Home"
+        title = NSLocalizedString("home_title", comment: "")
         self.navigationController?.navigationBar.prefersLargeTitles = true
         extendedLayoutIncludesOpaqueBars = true
         edgesForExtendedLayout = .all
@@ -183,15 +183,15 @@ extension HomeViewController{
                 if let dolarBlue = try await homeViewModel.getDolarBlue() {
                     quickConversorView.setDolar(dolar: dolarBlue.venta)
                 } else {
-                    print("No se pudo obtener el valor del dólar")
+                    print(NSLocalizedString("no_dollar_value", comment: ""))
                 }
-                let countryCode = homeViewModel.getUserCountry() ?? "AR"
+                let countryCode = homeViewModel.getUserCountry() ?? NSLocalizedString("default_country_code", comment: "")
                 let value = try await homeViewModel.getValueForCountry(countryCode: countryCode)
                 quickConversorView.setValue(value: value)
             } catch let error as APIError {
                 handleAPIError(error)
             } catch {
-                showAlert(message: "Error desconocido: \(error.localizedDescription)")
+                showAlert(message: String(format: NSLocalizedString("unknown_error", comment: ""), error.localizedDescription))
             }
         }
     }
@@ -199,13 +199,13 @@ extension HomeViewController{
     private func handleAPIError(_ error: APIError) {
         switch error {
             case .invalidURL:
-                showAlert(message: "URL mal formada")
+                showAlert(message: NSLocalizedString("invalid_url_error", comment: ""))
             case .requestFailed(let statusCode):
-                showAlert(message: "Error en la API, código: \(statusCode)")
+                showAlert(message: String(format: NSLocalizedString("api_error_code", comment: ""), statusCode))
             case .invalidResponse:
-                showAlert(message: "Respuesta no válida del servidor")
+                showAlert(message: NSLocalizedString("invalid_server_response", comment: ""))
             case .decodingError:
-                showAlert(message: "Error al decodificar los datos")
+                showAlert(message: NSLocalizedString("decoding_error", comment: ""))
         }
     }
 }
@@ -215,29 +215,29 @@ extension HomeViewController: CollectionViewSelectionDelegate{
     
     func didSelectItem(_ item: DiscoverItem) {
         do {
-            let selectedCity = "CABA"
+            let selectedCity = NSLocalizedString("city_caba", comment: "")
             let selectedPlaces = try homeViewModel.fetchPlaces(city: selectedCity)
             guard let placeType = PlaceType(rawValue: item.name) else { return }
             if selectedPlaces.isEmpty {
-                showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
+                showAlert(message: NSLocalizedString("no_places_available_for_selected_item", comment: ""))
             } else {
                 onSelect?(selectedPlaces, selectedCity, placeType)
             }
         } catch PlaceError.noPlacesAvailable {
-            showAlert(message: "No se encontraron lugares disponibles.")
+            showAlert(message: NSLocalizedString("no_places_found", comment: ""))
         } catch PlaceError.fileNotFound {
-            showAlert(message: "No se encontró el archivo de datos.")
+            showAlert(message: NSLocalizedString("file_not_found", comment: ""))
         } catch PlaceError.failedToParseData {
-            showAlert(message: "Hubo un problema al procesar los datos.")
+            showAlert(message: NSLocalizedString("data_processing_error", comment: ""))
         } catch {
-            showAlert(message: "Ha ocurrido un error inesperado: \(error.localizedDescription).")
+            showAlert(message: String(format: NSLocalizedString("unexpected_error", comment: ""), error.localizedDescription))
         }
     }
 
     func showAlert(message: String) {
         self.alertMessage = message
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(title: NSLocalizedString("error_title", comment: ""), message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok_action", comment: ""), style: .default))
         present(alert, animated: true, completion: nil)
     }
 }
@@ -251,19 +251,19 @@ extension HomeViewController: CitysViewDelegate{
             let selectedPlaces = try homeViewModel.fetchPlaces(city: selectedCity)
             let placeType: PlaceType = .all
             if selectedPlaces.isEmpty {
-                showAlert(message: "No hay lugares disponibles para el ítem seleccionado.")
+                showAlert(message: NSLocalizedString("no_places_available_for_selected_item", comment: ""))
             } else {
                 onSelect?(selectedPlaces, selectedCity, placeType)
             }
         }
         catch PlaceError.noPlacesAvailable {
-            showAlert(message: "No se encontraron lugares disponibles.")
+            showAlert(message: NSLocalizedString("no_places_found", comment: ""))
         } catch PlaceError.fileNotFound {
-            showAlert(message: "No se encontró el archivo de datos.")
+            showAlert(message: NSLocalizedString("file_not_found", comment: ""))
         } catch PlaceError.failedToParseData {
-            showAlert(message: "Hubo un problema al procesar los datos.")
+            showAlert(message: NSLocalizedString("data_processing_error", comment: ""))
         } catch {
-            showAlert(message: "Ha ocurrido un error inesperado: \(error.localizedDescription).")
+            showAlert(message: String(format: NSLocalizedString("unexpected_error", comment: ""), error.localizedDescription))
         }
     }
     

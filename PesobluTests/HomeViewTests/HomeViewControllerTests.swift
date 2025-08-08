@@ -7,6 +7,7 @@
 
 import XCTest
 import UIKit
+import Foundation
 @testable import Pesoblu
 
 final class HomeViewControllerTests: XCTestCase {
@@ -54,8 +55,8 @@ final class HomeViewControllerTests: XCTestCase {
     func testSetupQuickConversor_Success() async {
         sut.setupQuickConversor()
         try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 segundos
-        XCTAssertEqual(sut.quickConversorView.usdLabelTesting.text, "$ 1000.00")
-        XCTAssertEqual(sut.quickConversorView.arsvalueLabelTesting.text, "$ 5000.0")
+        XCTAssertEqual(sut.quickConversorView.usdLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "1000.00"))
+        XCTAssertEqual(sut.quickConversorView.arsvalueLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "5000.0"))
     }
     
     @MainActor
@@ -64,7 +65,7 @@ final class HomeViewControllerTests: XCTestCase {
         mockViewModel.apiError = .invalidURL
         sut.setupQuickConversor()
         try? await Task.sleep(nanoseconds: 500_000_000)
-        XCTAssertEqual(sut.alertMessage, "URL mal formada")
+        XCTAssertEqual(sut.alertMessage, NSLocalizedString("invalid_url_error", comment: ""))
     }
     
     @MainActor
@@ -79,9 +80,6 @@ final class HomeViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.discoverBaCView.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ítems ficticios
     }
 }
-
-import Foundation
-@testable import Pesoblu
 
 class MockHomeViewModel: HomeViewModelProtocol {
     var shouldFail = false

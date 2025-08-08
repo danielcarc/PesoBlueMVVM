@@ -11,7 +11,7 @@ final class QuickConversorView: UIView{
     
     private lazy var titleLabel : UILabel = {
         var label = UILabel()
-        label.text = "Conversor rápido"
+        label.text = NSLocalizedString("quick_converter_title", comment: "")
         label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = UIColor(named: "primaryText") ?? UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ final class QuickConversorView: UIView{
     
     private lazy var usdCodeLabel : UILabel = {
         var codeLabel = UILabel()
-        codeLabel.text = "USD"
+        codeLabel.text = NSLocalizedString("usd_code", comment: "")
         codeLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         codeLabel.textColor = UIColor(named: "primaryText") ?? UIColor.black
         codeLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +38,7 @@ final class QuickConversorView: UIView{
     
     private lazy var usdDescriptionLabel : UILabel = {
         var descriptionLabel = UILabel()
-        descriptionLabel.text = "Dolar Americano"
+        descriptionLabel.text = NSLocalizedString("usd_description", comment: "")
         descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         descriptionLabel.textColor = UIColor(named: "secondaryText") ?? UIColor.gray
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ final class QuickConversorView: UIView{
     
     private lazy var usdValueLabel : UILabel = {
         var valueLabel = UILabel()
-        valueLabel.text = "99.00"
+        valueLabel.text = NSLocalizedString("default_usd_value", comment: "")
         valueLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         valueLabel.textColor = UIColor(named: "primaryText") ?? UIColor.black
         valueLabel.textAlignment = .right
@@ -76,7 +76,7 @@ final class QuickConversorView: UIView{
     
     private lazy var arsCodeLabel : UILabel = {
         var codeLabel = UILabel()
-        codeLabel.text = "ARS"
+        codeLabel.text = NSLocalizedString("ars_code", comment: "")
         codeLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         codeLabel.textColor = UIColor(named: "primaryText") ?? UIColor.black
         codeLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -85,7 +85,7 @@ final class QuickConversorView: UIView{
     
     private lazy var arsDescriptionLabel : UILabel = {
         var descriptionLabel = UILabel()
-        descriptionLabel.text = "Peso Argentino"
+        descriptionLabel.text = NSLocalizedString("ars_description", comment: "")
         descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         descriptionLabel.textColor = UIColor(named: "secondaryText") ?? UIColor.gray
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -94,7 +94,7 @@ final class QuickConversorView: UIView{
     
     private lazy var arsValueLabel : UILabel = {
         var valueLabel = UILabel()
-        valueLabel.text = "1000.00"
+        valueLabel.text = NSLocalizedString("default_ars_value", comment: "")
         valueLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         valueLabel.textColor = UIColor(named: "primaryText") ?? UIColor.black
         valueLabel.textAlignment = .right
@@ -132,11 +132,11 @@ final class QuickConversorView: UIView{
     
     func setDolar(dolar: Double){
         let dolarBlue = String(format: "%.2f", dolar)
-        usdValueLabel.text = "$ \(dolarBlue)"
+        usdValueLabel.text = String(format: NSLocalizedString("currency_format", comment: ""), dolarBlue)
     }
     
     func setValue(value: String){
-        arsValueLabel.text = "$ \(value)"
+        arsValueLabel.text = String(format: NSLocalizedString("currency_format", comment: ""), value)
     }
     
 }
