@@ -6,13 +6,13 @@
 //
 import UIKit
 
-protocol CitysViewDelegate: AnyObject{
+protocol CitysViewDelegate: AnyObject {
     func didUpdateItemCount(_ count: Int)
     func didSelectItem(_ city: CitysItem)
     
 }
 
-final class CitysCollectionView: UIView{
+final class CitysCollectionView: UIView {
     
     private var data: [CitysItem] = []
     private let homeViewModel: HomeViewModelProtocol  // Usamos el protocolo en lugar de la clase concreta
@@ -24,8 +24,10 @@ final class CitysCollectionView: UIView{
         setup()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
+        return nil
     }
     
     func updateData() {
@@ -71,7 +73,7 @@ final class CitysCollectionView: UIView{
 
 //MARK: - Setup Methods and Constraints
 
-extension CitysCollectionView{
+extension CitysCollectionView {
     
     func setup() {
         self.backgroundColor = .clear
@@ -94,7 +96,7 @@ extension CitysCollectionView{
 
 //MARK: - UICollectionViewDataSource Methods
 
-extension CitysCollectionView: UICollectionViewDataSource {
+extension CitysCollectionView: UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
     }
@@ -107,7 +109,7 @@ extension CitysCollectionView: UICollectionViewDataSource {
     }
 }
 
-extension CitysCollectionView: UICollectionViewDelegate{
+extension CitysCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCity = data[indexPath.item]
         delegate?.didSelectItem(selectedCity)
@@ -115,7 +117,7 @@ extension CitysCollectionView: UICollectionViewDelegate{
 }
 
 
-extension CitysCollectionView {
+extension CitysCollectionView  {
     var collectionViewForTesting: UICollectionView {
         return citysCollectionView
     }

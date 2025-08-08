@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 import CoreData
 
-final class PlacesListViewController: UIViewController {
+final class PlacesListViewController: UIViewController  {
 
     var onSelect: ((PlaceItem) -> Void)?
     var placesListViewModel: PlacesListViewModelProtocol
@@ -35,8 +35,10 @@ final class PlacesListViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    /// This view controller is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 
     override func loadView() {
@@ -67,7 +69,7 @@ final class PlacesListViewController: UIViewController {
     }
 }
 
-extension PlacesListViewController {
+extension PlacesListViewController  {
     func setCollectionViews() {
         filters = placesListViewModel.fetchFilterItems()
         placesListView.filterCView.update(with: filters, selectedType: placeType)
@@ -77,7 +79,7 @@ extension PlacesListViewController {
 }
 
 //MARK: - PlacesListCollectionViewDelegate
-extension PlacesListViewController: PlacesListCollectionViewDelegate {
+extension PlacesListViewController: PlacesListCollectionViewDelegate  {
     func placesListCollectionViewDidFailToLoadImage(_ collectionView: PlacesListCollectionView, error: any Error) {
         showAlert(title: "Error de Imagen", message: "No se pudo cargar la imagen. Intente nuevamente mas tarde")
     }
@@ -101,7 +103,7 @@ extension PlacesListViewController: PlacesListCollectionViewDelegate {
 }
 
 //MARK: - FilterCollectionViewDelegate
-extension PlacesListViewController: FilterCollectionViewDelegate {
+extension PlacesListViewController: FilterCollectionViewDelegate  {
     func didSelectFilter(_ filter: DiscoverItem) {
         guard let type = PlaceType(rawValue: filter.name) else { return }
         placeType = type
@@ -112,7 +114,7 @@ extension PlacesListViewController: FilterCollectionViewDelegate {
 }
 
 //MARK: - Alert Methods
-extension PlacesListViewController {
+extension PlacesListViewController  {
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -121,7 +123,7 @@ extension PlacesListViewController {
 }
 
 //MARK: - Button Methods
-extension PlacesListViewController {
+extension PlacesListViewController  {
     @objc func didTapBack() {
         navigationController?.popViewController(animated: true)
     }

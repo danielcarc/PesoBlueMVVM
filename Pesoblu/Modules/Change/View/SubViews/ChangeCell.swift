@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class ChangeCell: UICollectionViewCell{
+class ChangeCell: UICollectionViewCell {
     
     private lazy var changeView = ChangeView()
     
@@ -15,17 +15,19 @@ class ChangeCell: UICollectionViewCell{
         setup()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
-    func set(currencyTitle: String, currencyLabel: String, valueBuy: String){
+    func set(currencyTitle: String, currencyLabel: String, valueBuy: String) {
         changeView.set(currencyTitle: currencyTitle,
                        currencyLabel: currencyLabel,
                        valueBuy: valueBuy)
     }
     
-    private func setup(){
+    private func setup() {
         contentView.backgroundColor = .clear
         changeView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(changeView)

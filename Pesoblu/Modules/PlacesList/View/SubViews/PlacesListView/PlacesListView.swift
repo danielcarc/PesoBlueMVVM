@@ -1,6 +1,6 @@
 import UIKit
 
-class PlacesListView: UIView {
+class PlacesListView: UIView  {
 
     let filterCView: FilterCollectionView
     let placesListCView: PlacesListCollectionView
@@ -39,8 +39,10 @@ class PlacesListView: UIView {
         setup()
     }
 
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 
     private func setup() {

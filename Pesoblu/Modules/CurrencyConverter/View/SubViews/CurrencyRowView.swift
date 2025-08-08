@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ConversionRowView: UIView {
+final class ConversionRowView: UIView  {
     
     private lazy var buyview: UIView = {
         var view = UIView()
@@ -45,8 +45,10 @@ final class ConversionRowView: UIView {
         configure(title: title, value: value)
     }
 
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 
     private func setupUI() {

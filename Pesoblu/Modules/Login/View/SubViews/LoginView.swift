@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginView: UIView {
+class LoginView: UIView  {
     
     private lazy var scrollView: UIScrollView = {
         var sview = UIScrollView()
@@ -214,13 +214,15 @@ class LoginView: UIView {
         setupUI()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
         
 }
 
-private extension LoginView{
+private extension LoginView {
      func setupUI() {
         self.backgroundColor = UIColor(red: 0.95, green: 0.97, blue: 0.98, alpha: 1.0)
         

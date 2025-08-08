@@ -8,13 +8,13 @@
 import Foundation
 import UIKit
 
-protocol PlacesListCollectionViewDelegate: AnyObject {
+protocol PlacesListCollectionViewDelegate: AnyObject  {
     func didUpdateItemCount(_ count: Int)
     func didSelectItem(_ item: PlaceItem)
     func placesListCollectionViewDidFailToLoadImage(_ collectionView: PlacesListCollectionView, error: Error)
 }
 
-final class PlacesListCollectionView: UIView {
+final class PlacesListCollectionView: UIView  {
 
     var placeData: [PlaceItemViewModel] = []
     weak var delegate: PlacesListCollectionViewDelegate?
@@ -25,8 +25,10 @@ final class PlacesListCollectionView: UIView {
         setup()
     }
 
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 
     func updateData(with items: [PlaceItemViewModel]) {
@@ -74,7 +76,7 @@ final class PlacesListCollectionView: UIView {
 
 //MARK: - UICollectionViewDataSource Methods
 
-extension PlacesListCollectionView: UICollectionViewDataSource {
+extension PlacesListCollectionView: UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         placeData.count
     }
@@ -97,7 +99,7 @@ extension PlacesListCollectionView: UICollectionViewDataSource {
 //MARK: - UICOllectionViewDelegate Methods
 
 
-extension PlacesListCollectionView: UICollectionViewDelegate {
+extension PlacesListCollectionView: UICollectionViewDelegate  {
 
    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        let item: PlaceItem = placeData[indexPath.item].place
@@ -107,9 +109,9 @@ extension PlacesListCollectionView: UICollectionViewDelegate {
 
 //MARK: - Setup and Constraints
 
-extension PlacesListCollectionView {
+extension PlacesListCollectionView  {
     
-    func setup(){
+    func setup() {
         self.backgroundColor = .clear
         addSubview(quantityLabel)
         addSubview(placeCollectionView)
@@ -134,7 +136,7 @@ extension PlacesListCollectionView {
     }
 }
 
-extension PlacesListCollectionView: PlaceCellDelegate {
+extension PlacesListCollectionView: PlaceCellDelegate  {
     func placeCellDidFailToLoadImage(_ cell: PlaceCell, error: any Error) {
         delegate?.placesListCollectionViewDidFailToLoadImage(self, error: error)
     }

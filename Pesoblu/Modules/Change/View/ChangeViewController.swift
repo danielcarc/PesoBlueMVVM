@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChangeViewController: UIViewController {
+class ChangeViewController: UIViewController  {
     
     private var viewModel : ChangeViewModelProtocol
     private var changeCView: ChangeCollectionView
@@ -21,8 +21,10 @@ class ChangeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// This view controller is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
     private var mainScrollView: UIScrollView = {
@@ -61,8 +63,8 @@ class ChangeViewController: UIViewController {
 
 //MARK: - Setup CollectionView
 
-private extension ChangeViewController{
-    func setup(){
+private extension ChangeViewController {
+    func setup() {
         
         self.view.backgroundColor = UIColor(hex: "F0F8FF")
         
@@ -103,15 +105,15 @@ private extension ChangeViewController{
     }
 }
 
-extension ChangeViewController{
-    func setTitle(){
+extension ChangeViewController {
+    func setTitle() {
         title = "Cotización"
         navigationController?.navigationBar.prefersLargeTitles = false
     }
 }
 //MARK: - ChangeCollectionViewDelegate Methods
 
-extension ChangeViewController: ChangeCollectionViewDelegate{
+extension ChangeViewController: ChangeCollectionViewDelegate {
     func didSelectCurrency(for currencyItem: CurrencyItem) {
         print("didSelectCurrency \(currencyItem)")
         onSelectCurrency?(currencyItem)

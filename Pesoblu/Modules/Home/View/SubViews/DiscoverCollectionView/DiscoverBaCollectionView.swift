@@ -8,11 +8,11 @@
 import UIKit
 import Kingfisher
 
-protocol CollectionViewSelectionDelegate: AnyObject {
+protocol CollectionViewSelectionDelegate: AnyObject  {
     func didSelectItem(_ item: DiscoverItem) // Define el tipo de datos que envías
 }
 
-final class DiscoverBaCollectionView: UIView {
+final class DiscoverBaCollectionView: UIView  {
     
     private var data: [DiscoverItem] = []
     private var homeViewModel : HomeViewModelProtocol
@@ -26,8 +26,10 @@ final class DiscoverBaCollectionView: UIView {
         setup()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
+        return nil
     }
     
     func setData() {
@@ -71,7 +73,7 @@ final class DiscoverBaCollectionView: UIView {
 
 //MARK: - UICollectionViewDataSource
 
-extension DiscoverBaCollectionView: UICollectionViewDataSource {
+extension DiscoverBaCollectionView: UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         data.count
     }
@@ -87,7 +89,7 @@ extension DiscoverBaCollectionView: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegate Methods
 
-extension DiscoverBaCollectionView: UICollectionViewDelegate {
+extension DiscoverBaCollectionView: UICollectionViewDelegate  {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -98,7 +100,7 @@ extension DiscoverBaCollectionView: UICollectionViewDelegate {
     
 }
 
-private extension DiscoverBaCollectionView {
+private extension DiscoverBaCollectionView  {
     
     func setup() {
         self.backgroundColor = .clear
@@ -119,7 +121,7 @@ private extension DiscoverBaCollectionView {
     }
 }
 
-extension DiscoverBaCollectionView {
+extension DiscoverBaCollectionView  {
     var collectionViewForTesting: UICollectionView {
         return discoverCollectionView
     }

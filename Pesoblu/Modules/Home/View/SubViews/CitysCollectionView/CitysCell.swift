@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CitysCell: UICollectionViewCell {
+final class CitysCell: UICollectionViewCell  {
     
     // MARK: - Public Properties
     private lazy var imageView : UIImageView = {
@@ -30,7 +30,7 @@ final class CitysCell: UICollectionViewCell {
         return label
     }()
     
-    func set(image: String, title: String){
+    func set(image: String, title: String) {
         imageView.image = UIImage(named: image)
         titleLabel.text = title
     }
@@ -41,11 +41,13 @@ final class CitysCell: UICollectionViewCell {
         setupViews()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
+        return nil
     }
 }
-private extension CitysCell {
+private extension CitysCell  {
     
     private func setupViews() {
         addsubviews()
@@ -59,7 +61,7 @@ private extension CitysCell {
         contentView.addSubview(titleLabel)
     }
     
-    func setupConstraints(){
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

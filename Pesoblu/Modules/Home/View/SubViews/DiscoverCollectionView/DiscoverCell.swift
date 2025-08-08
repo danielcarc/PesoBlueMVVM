@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class DiscoverCell: UICollectionViewCell {
+final class DiscoverCell: UICollectionViewCell  {
     
     // MARK: - Public Properties
     private lazy var imageView : UIImageView = {
@@ -30,7 +30,7 @@ final class DiscoverCell: UICollectionViewCell {
         return label
     }()
     
-    func set(image: String, title: String){
+    func set(image: String, title: String) {
         imageView.image = UIImage(named: image)
         titleLabel.text = title
     }
@@ -41,11 +41,13 @@ final class DiscoverCell: UICollectionViewCell {
         setupViews()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
+        return nil
     }
 }
-private extension DiscoverCell {
+private extension DiscoverCell  {
     
     private func setupViews() {
         
@@ -62,7 +64,7 @@ private extension DiscoverCell {
         contentView.addSubview(titleLabel)
     }
     
-    func setupConstraints(){
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

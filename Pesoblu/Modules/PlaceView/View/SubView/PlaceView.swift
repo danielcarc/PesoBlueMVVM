@@ -11,22 +11,24 @@ import MapKit
 import Kingfisher
 import CoreData
 
-protocol PlaceViewDelegate: AnyObject{
+protocol PlaceViewDelegate: AnyObject {
     func didFailToLoadImage(_ view: PlaceView, error: Error)
     func didFailToCall()
     func didFailToOpenInstagram(title: String, message: String)
     func didFailToOpenMaps()
 }
 
-final class PlaceView: UIView{
+final class PlaceView: UIView {
     
-    init(){
+    init() {
         super.init(frame: .zero)
         setup()
     }
     
+    /// This view is intended to be instantiated programmatically.
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
     weak var delegate: PlaceViewDelegate?
@@ -121,7 +123,7 @@ final class PlaceView: UIView{
         return mapView
     }()
     
-    func setData(item: PlaceItem){
+    func setData(item: PlaceItem) {
         place = item
         nameLabel.text = item.name
         categoriesLabel.text = item.categories?.joined(separator: " · ")
@@ -196,7 +198,7 @@ final class PlaceView: UIView{
 
 //MARK: - TapGesture Methods
 
-extension PlaceView{
+extension PlaceView {
     
     @objc private func expandImage() {
         guard let superview = self.superview else { return }
