@@ -27,7 +27,7 @@ final class DiscoverBaCollectionView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
     }
     
     func setData() {
@@ -45,7 +45,7 @@ final class DiscoverBaCollectionView: UIView {
         label.textColor = .black
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textAlignment = .left
-        label.text = "Descubre Buenos Aires"
+        label.text = NSLocalizedString("discover_buenos_aires", comment: "")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

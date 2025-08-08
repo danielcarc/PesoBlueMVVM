@@ -25,7 +25,7 @@ final class CitysCollectionView: UIView{
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
     }
     
     func updateData() {
@@ -40,7 +40,7 @@ final class CitysCollectionView: UIView{
         label.textColor = .black
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textAlignment = .left
-        label.text = "Top ciudades para visitar"
+        label.text = NSLocalizedString("top_cities_to_visit", comment: "")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

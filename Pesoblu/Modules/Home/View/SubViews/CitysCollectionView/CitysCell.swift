@@ -42,7 +42,7 @@ final class CitysCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(NSLocalizedString("init_coder_not_implemented", comment: ""))
     }
 }
 private extension CitysCell {
