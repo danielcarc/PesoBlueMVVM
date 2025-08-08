@@ -20,7 +20,7 @@ final class PlacesListCollectionView: UIView {
     weak var delegate: PlacesListCollectionViewDelegate?
     var selectedIndex: IndexPath?
 
-    init(frame: CGRect = .zero) {
+    override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         setup()
     }

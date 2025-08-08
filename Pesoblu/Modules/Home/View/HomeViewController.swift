@@ -92,6 +92,7 @@ final class HomeViewController: UIViewController {
 }
 
 //MARK: - Setting the View
+@MainActor
 extension HomeViewController {
     func setup() {
         setupUI()
@@ -103,6 +104,7 @@ extension HomeViewController {
 }
 
 //MARK: - Setup SubViews and Constraints
+@MainActor
 extension HomeViewController{
     
     func setupUI(){
@@ -175,10 +177,11 @@ extension HomeViewController{
 }
 
 //MARK: - SetUp QuickConversor
+@MainActor
 extension HomeViewController{
     func setupQuickConversor(){
         
-        Task {
+        Task { @MainActor in
             do{
                 if let dolarBlue = try await homeViewModel.getDolarBlue() {
                     quickConversorView.setDolar(dolar: dolarBlue.venta)

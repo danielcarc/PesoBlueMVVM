@@ -46,26 +46,35 @@ final class HomeViewControllerTests: XCTestCase {
         XCTAssertNotNil(sut.quickConversorView)
     }
     
+    @MainActor
     func test_HomeViewController_shouldBeCitysCviewDelegate() {
         sut.setup() //tuve que cargar primero este metodo que asignaba el delegate
         XCTAssertTrue(sut.citysCView.delegate === sut)
     }
     
-    @MainActor
+    
     func testSetupQuickConversor_Success() async {
-        sut.setupQuickConversor()
+        
+        await MainActor.run {
+            sut.setupQuickConversor()
+        }
         try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 segundos
-        XCTAssertEqual(sut.quickConversorView.usdLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "1000.00"))
-        XCTAssertEqual(sut.quickConversorView.arsvalueLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "5000.0"))
+        await MainActor.run {
+            XCTAssertEqual(sut.quickConversorView.usdLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "1000.00"))
+            XCTAssertEqual(sut.quickConversorView.arsvalueLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "5000.0"))
+        }
     }
     
-    @MainActor
     func testSetupQuickConversor_InvalidURL() async {
         mockViewModel.shouldFail = true
         mockViewModel.apiError = .invalidURL
-        sut.setupQuickConversor()
+        await MainActor.run {
+            sut.setupQuickConversor()
+        }
         try? await Task.sleep(nanoseconds: 500_000_000)
-        XCTAssertEqual(sut.alertMessage, NSLocalizedString("invalid_url_error", comment: ""))
+        await MainActor.run {
+            XCTAssertEqual(sut.alertMessage, NSLocalizedString("invalid_url_error", comment: ""))
+        }
     }
     
     @MainActor
