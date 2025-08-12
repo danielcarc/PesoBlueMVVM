@@ -25,3 +25,15 @@
 "city_caba" = "CABA";
 "default_country_code" = "AR";
 "currency_format" = "$ %@";
+/* Title for the places list screen */
+"places_list_title" = "Lista de Lugares";
+/* Title for the image loading error alert */
+"image_error_title" = "Error de Imagen";
+/* Message for the image loading error alert */
+"image_error_message" = "No se pudo cargar la imagen. Intente nuevamente mas tarde";
+/* Title for the filters section */
+"filters_title" = "Filtros";
+/* Label shown above the places list */
+"quantity_restaurants_label" = "Cantidad de restaurantes";
+/* Format string for displaying the number of places */
+"places_count_format" = "%d lugares";

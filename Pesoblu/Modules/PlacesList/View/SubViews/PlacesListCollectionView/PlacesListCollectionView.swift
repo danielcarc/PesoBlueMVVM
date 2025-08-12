@@ -33,7 +33,8 @@ final class PlacesListCollectionView: UIView  {
 
     func updateData(with items: [PlaceItemViewModel]) {
         placeData = items
-        quantityLabel.text = "\(placeData.count) lugares"
+        quantityLabel.text = String(format: NSLocalizedString("places_count_format", comment: "Format string for places count"),
+                                   placeData.count)
         delegate?.didUpdateItemCount(placeData.count)
         placeCollectionView.reloadData()
     }
@@ -42,7 +43,7 @@ final class PlacesListCollectionView: UIView  {
         var label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        label.text = "Cantidad de restaurantes"
+        label.text = NSLocalizedString("quantity_restaurants_label", comment: "Quantity of restaurants label")
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
