@@ -16,15 +16,15 @@ final class DiscoverCell: UICollectionViewCell  {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.layer.cornerRadius = 6
-        
+        view.layer.cornerRadius = LayoutConstants.discoverCellCornerRadius
+
         return view
     }()
     
     private lazy var titleLabel : UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: LayoutConstants.discoverCellTitleFontSize, weight: .medium)
         label.textColor = UIColor(named: "primaryTextColor") ?? .black
         label.textAlignment = .center
         return label
@@ -58,7 +58,7 @@ private extension DiscoverCell  {
     
     func addsubviews() {
         self.backgroundColor = .white
-        self.layer.cornerRadius = 6
+        self.layer.cornerRadius = LayoutConstants.discoverCellCornerRadius
 
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
@@ -69,10 +69,10 @@ private extension DiscoverCell  {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 90),
-            imageView.widthAnchor.constraint(equalToConstant: 160),
+            imageView.heightAnchor.constraint(equalToConstant: LayoutConstants.discoverImageHeight),
+            imageView.widthAnchor.constraint(equalToConstant: LayoutConstants.discoverItemWidth),
 
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: LayoutConstants.smallPadding),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])

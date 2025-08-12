@@ -15,7 +15,7 @@ final class CitysCell: UICollectionViewCell  {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = LayoutConstants.containerCornerRadius
         view.clipsToBounds = true
         return view
     }()
@@ -23,7 +23,7 @@ final class CitysCell: UICollectionViewCell  {
     private lazy var titleLabel : UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: LayoutConstants.cityCellTitleFontSize, weight: .bold)
         label.numberOfLines = 0
         label.textColor = UIColor(named: "primaryTextColor") ?? .black
         label.textAlignment = .center
@@ -56,7 +56,7 @@ private extension CitysCell  {
     
     func addsubviews() {
         self.backgroundColor = .white
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = LayoutConstants.cityCellCornerRadius
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
     }
@@ -66,12 +66,12 @@ private extension CitysCell  {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 100),
+            imageView.heightAnchor.constraint(equalToConstant: LayoutConstants.cityImageHeight),
 
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: LayoutConstants.extraSmallPadding),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutConstants.edgePadding),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -LayoutConstants.edgePadding),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -LayoutConstants.extraSmallPadding)
         ])
     }
 }

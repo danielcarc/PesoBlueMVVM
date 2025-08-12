@@ -45,7 +45,7 @@ final class DiscoverBaCollectionView: UIView  {
     private lazy var discoverArgentinaLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.font = .systemFont(ofSize: LayoutConstants.sectionHeaderFontSize, weight: .semibold)
         label.textAlignment = .left
         label.text = NSLocalizedString("discover_buenos_aires", comment: "")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,9 +54,9 @@ final class DiscoverBaCollectionView: UIView  {
 
     private lazy var discoverCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: 160, height: 120)
+        layout.itemSize = .init(width: LayoutConstants.discoverItemWidth, height: LayoutConstants.discoverItemHeight)
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = LayoutConstants.itemSpacing
 
         let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vw.register(DiscoverCell.self, forCellWithReuseIdentifier: "DiscoverCell")
@@ -109,14 +109,14 @@ private extension DiscoverBaCollectionView  {
         
         NSLayoutConstraint.activate([
             discoverArgentinaLabel.topAnchor.constraint(equalTo: topAnchor),
-            discoverArgentinaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            discoverArgentinaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutConstants.edgePadding),
             discoverArgentinaLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            discoverCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
-            discoverCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            discoverCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+
+            discoverCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: LayoutConstants.largeSpacing),
+            discoverCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutConstants.edgePadding),
+            discoverCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -LayoutConstants.edgePadding),
             discoverCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-            
+
         ])
     }
 }

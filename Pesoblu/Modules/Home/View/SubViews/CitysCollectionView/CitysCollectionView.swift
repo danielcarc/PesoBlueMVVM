@@ -40,7 +40,7 @@ final class CitysCollectionView: UIView {
     private lazy var discoverArgentinaLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.font = .systemFont(ofSize: LayoutConstants.sectionHeaderFontSize, weight: .semibold)
         label.textAlignment = .left
         label.text = NSLocalizedString("top_cities_to_visit", comment: "")
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -50,14 +50,13 @@ final class CitysCollectionView: UIView {
     private lazy var citysCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
-        let totalHorizontalPadding: CGFloat = 40
+        layout.minimumInteritemSpacing = LayoutConstants.itemSpacing
+        layout.minimumLineSpacing = LayoutConstants.itemSpacing
+        let totalHorizontalPadding: CGFloat = LayoutConstants.totalHorizontalPadding
         let totalSpacing = layout.minimumInteritemSpacing * 1 // Espacio entre dos celdas
         let availableWidth = UIScreen.main.bounds.width - totalHorizontalPadding - layout.minimumInteritemSpacing
         let itemWidth = availableWidth / 2
-        //layout.itemSize = .init(width: cellWidth, height: 130)
-        layout.itemSize = CGSize(width: itemWidth, height: 130)
+        layout.itemSize = CGSize(width: itemWidth, height: LayoutConstants.cityItemHeight)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false
@@ -82,12 +81,12 @@ extension CitysCollectionView {
         
         NSLayoutConstraint.activate([
             discoverArgentinaLabel.topAnchor.constraint(equalTo: topAnchor),
-            discoverArgentinaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            discoverArgentinaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutConstants.edgePadding),
             discoverArgentinaLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            citysCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
-            citysCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            citysCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+
+            citysCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: LayoutConstants.largeSpacing),
+            citysCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutConstants.edgePadding),
+            citysCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -LayoutConstants.edgePadding),
             citysCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
         ])
