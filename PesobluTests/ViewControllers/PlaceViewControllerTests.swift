@@ -31,7 +31,7 @@ final class PlaceViewControllerTests: XCTestCase {
     }
 
 
-    final class MockAlertPresenter: AlertPresenter {
+    final class MockAlertPresenter: AlertPresenterProtocol {
         var didShowAlert = false
         var alertTitle: String?
         var alertMessage: String?

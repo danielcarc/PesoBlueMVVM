@@ -9,11 +9,11 @@ import UIKit
 import MapKit
 import CoreData
 
-protocol AlertPresenter  {
+protocol AlertPresenterProtocol  {
     func present(on viewController: UIViewController, title: String, message: String)
 }
 
-struct DefaultAlertPresenter: AlertPresenter  {
+struct DefaultAlertPresenter: AlertPresenterProtocol  {
     func present(on viewController: UIViewController, title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -26,7 +26,7 @@ final class PlaceViewController: UIViewController  {
     private lazy var placeView = PlaceView()
     private let placeViewModel: PlaceViewModelProtocol
     private let place: PlaceItem
-    private let alertPresenter: AlertPresenter
+    private let alertPresenter: AlertPresenterProtocol
     
 #if DEBUG
     var test_isFavorite: Bool { isFavorite }
@@ -44,7 +44,7 @@ final class PlaceViewController: UIViewController  {
     
     init(placeViewModel: PlaceViewModelProtocol,
          place: PlaceItem,
-         alertPresenter: AlertPresenter = DefaultAlertPresenter()) {
+         alertPresenter: AlertPresenterProtocol = DefaultAlertPresenter()) {
 
         self.placeViewModel = placeViewModel
         self.place = place

@@ -16,13 +16,18 @@ final class HomeViewControllerTests: XCTestCase {
     private var citiesCView: CitiesCollectionView!
     private var discoverBaCView: DiscoverBaCollectionView!
     private var quickConversorView: QuickConversorView!
+    private var mockAlertPresenter: MockAlertPresenter!
     
     override func setUp() {
         super.setUp()
         citiesCView = CitiesCollectionView(homeViewModel: mockViewModel)
         discoverBaCView = DiscoverBaCollectionView(homeViewModel: mockViewModel)
         quickConversorView = QuickConversorView()
-        sut = HomeViewController(homeViewModel: mockViewModel, quickConversorView: quickConversorView, discoverBaCView: discoverBaCView)
+        mockAlertPresenter = MockAlertPresenter()
+        sut = HomeViewController(homeViewModel: mockViewModel,
+                                 quickConversorView: quickConversorView,
+                                 discoverBaCView: discoverBaCView,
+                                 alertPresenter: mockAlertPresenter)
         _ = sut.view // Carga la vista
     }
     
@@ -31,6 +36,7 @@ final class HomeViewControllerTests: XCTestCase {
         citiesCView = nil
         discoverBaCView = nil
         quickConversorView = nil
+        mockAlertPresenter = nil
         super.tearDown()
     }
     
@@ -74,7 +80,7 @@ final class HomeViewControllerTests: XCTestCase {
         
         mockViewModel.onGetDolarBlueCalled = {
             DispatchQueue.main.async {
-                XCTAssertEqual(self.sut.alertMessageForTesting, NSLocalizedString("invalid_url_error", comment: ""))
+                XCTAssertEqual(self.mockAlertPresenter.lastMessage, NSLocalizedString("invalid_url_error", comment: ""))
                 expectation.fulfill()
             }
         }
@@ -93,6 +99,14 @@ final class HomeViewControllerTests: XCTestCase {
     func testDiscoverCollectionView_LoadDataLoadsItems() {
         sut.discoverBaCViewForTesting.loadData()
         XCTAssertEqual(sut.discoverBaCViewForTesting.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ítems ficticios
+    }
+}
+
+final class MockAlertPresenter: AlertPresentable {
+    var lastMessage: String?
+
+    func show(message: String, on viewController: UIViewController) {
+        lastMessage = message
     }
 }
 
