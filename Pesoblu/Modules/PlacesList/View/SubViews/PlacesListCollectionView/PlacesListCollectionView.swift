@@ -33,7 +33,9 @@ final class PlacesListCollectionView: UIView  {
 
     func updateData(with items: [PlaceItemViewModel]) {
         placeData = items
-        quantityLabel.text = "\(placeData.count) lugares"
+        let text = "\(placeData.count) lugares"
+        quantityLabel.text = text
+        quantityLabel.accessibilityLabel = text
         delegate?.didUpdateItemCount(placeData.count)
         placeCollectionView.reloadData()
     }
@@ -45,7 +47,9 @@ final class PlacesListCollectionView: UIView  {
         label.text = "Cantidad de restaurantes"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+        label.isAccessibilityElement = true
+        label.accessibilityIdentifier = "quantity_label"
+        label.accessibilityLabel = label.text
         return label
     }()
     
