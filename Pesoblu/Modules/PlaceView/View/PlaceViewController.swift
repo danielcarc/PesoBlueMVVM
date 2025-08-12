@@ -207,7 +207,7 @@ extension PlaceViewController {
     
     func loadFavoriteStatus() {
 
-        Task { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self = self else { return }
             do {
                 self.isFavorite = try await self.placeViewModel.loadFavoriteStatus()
@@ -220,7 +220,7 @@ extension PlaceViewController {
 
     func saveFavoriteStatus() {
 
-        Task { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self = self else { return }
             do {
                 try await self.placeViewModel.saveFavoriteStatus(isFavorite: self.isFavorite)
