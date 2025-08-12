@@ -15,6 +15,7 @@ final class FilterCell: UICollectionViewCell {
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.layer.cornerRadius = 8
+        view.isAccessibilityElement = false
         return view
     }()
     
@@ -24,17 +25,21 @@ final class FilterCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.textColor = UIColor(named: "primaryTextColor") ?? .black
         label.textAlignment = .center
+        label.isAccessibilityElement = false
         return label
     }()
-    
+
     func set(image: String, title: String) {
         imageView.image = UIImage(named: image)
         titleLabel.text = title
+        accessibilityLabel = title
+        accessibilityIdentifier = "filterCell_\(title.replacingOccurrences(of: " ", with: "_"))"
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        isAccessibilityElement = true
     }
     
     /// This view is intended to be instantiated programmatically.

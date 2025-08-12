@@ -43,9 +43,10 @@ final class FilterCollectionView: UIView {
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.text = NSLocalizedString("filters_title", comment: "Filters header title")
         label.textAlignment = .center
-        
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+        label.isAccessibilityElement = true
+        label.accessibilityLabel = label.text
+        label.accessibilityIdentifier = "filter_label"
         return label
     }()
     

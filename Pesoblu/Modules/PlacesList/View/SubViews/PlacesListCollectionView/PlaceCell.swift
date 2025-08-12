@@ -22,6 +22,7 @@ final class PlaceCell: UICollectionViewCell  {
         image.layer.cornerRadius = 4
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.isAccessibilityElement = false
         return image
     }()
     
@@ -30,6 +31,7 @@ final class PlaceCell: UICollectionViewCell  {
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -38,6 +40,7 @@ final class PlaceCell: UICollectionViewCell  {
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -46,6 +49,7 @@ final class PlaceCell: UICollectionViewCell  {
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -54,6 +58,7 @@ final class PlaceCell: UICollectionViewCell  {
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -66,6 +71,8 @@ final class PlaceCell: UICollectionViewCell  {
         priceLabel.text = price
         typeLabel.text = type
         distanceLabel.text = formattedDistance
+        accessibilityLabel = "\(title), \(type), \(price), \(formattedDistance)"
+        accessibilityIdentifier = "placeCell_\(title.replacingOccurrences(of: " ", with: "_"))"
     }
     
     func updateImage(url: String) {
@@ -91,6 +98,7 @@ final class PlaceCell: UICollectionViewCell  {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        isAccessibilityElement = true
     }
     
     /// This view is intended to be instantiated programmatically.
