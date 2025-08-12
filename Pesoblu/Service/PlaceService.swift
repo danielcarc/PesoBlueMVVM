@@ -13,8 +13,14 @@ protocol PlaceServiceProtocol {
 
 class PlaceService: PlaceServiceProtocol{
     
+    private let bundle: Bundle
+    
+    init(bundle: Bundle = .main) {
+        self.bundle = bundle
+    }
+    
     func fetchPlaces(city: String) throws -> [PlaceItem] {
-        guard let url = Bundle.main.url(forResource: city, withExtension: "json") else {
+        guard let url = bundle.url(forResource: city, withExtension: "json") else {
             
             print("No se encontró el archivo CABA.json")
             throw PlaceError.fileNotFound
@@ -44,13 +50,4 @@ class PlaceService: PlaceServiceProtocol{
         return places
         
     }
-    
-//    func filterPlaces(by type: String) throws -> [PlaceItem] {
-//        let places = try fetchPlaces()
-//        let filteredPlaces = places.filter { $0.placeType.lowercased() == type.lowercased() }
-//        
-//        return filteredPlaces
-//    }
-    
-    
 }

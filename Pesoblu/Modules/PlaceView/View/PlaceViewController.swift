@@ -30,7 +30,17 @@ final class PlaceViewController: UIViewController  {
     
 #if DEBUG
     var test_isFavorite: Bool { isFavorite }
+    var onFavoriteUpdated: ((Bool) -> Void)?   // <-- hook para tests
 #endif
+    
+    private var isFavorite: Bool = false {
+        didSet {
+            updateFavoriteButton()
+#if DEBUG
+            onFavoriteUpdated?(isFavorite)     // <-- notificamos al test
+#endif
+        }
+    }
     
     init(placeViewModel: PlaceViewModelProtocol,
          place: PlaceItem,
@@ -49,11 +59,11 @@ final class PlaceViewController: UIViewController  {
         return nil
     }
     
-    private var isFavorite: Bool = false {
-        didSet {
-            updateFavoriteButton()
-        }
-    }
+//    private var isFavorite: Bool = false {
+//        didSet {
+//            updateFavoriteButton()
+//        }
+//    }
     
     private lazy var favoriteButton: UIButton = {
         let button = UIButton(type: .system)

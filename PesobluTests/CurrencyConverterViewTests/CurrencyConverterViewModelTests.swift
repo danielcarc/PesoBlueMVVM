@@ -55,7 +55,7 @@ class CurrencyConverterViewModelTests: XCTestCase {
         XCTAssertEqual(sut.getTextForPicker(row: 999), "error")
     }
     
-    func testConvertedValuesPublishesCorrectly() async {
+    func testConvertedValuesPublishesCorrectly() {
         // Given
         mockCurrencyService.mockDolarMep = DolarMEP(moneda: "Moneda", casa: "casa", nombre: "moneda", compra: 900.0, venta: 900.0, fechaActualizacion: "fecha")
         sut.updateAmount(450.0)
@@ -75,6 +75,6 @@ class CurrencyConverterViewModelTests: XCTestCase {
             }
             .store(in: &cancellables)
         
-        await fulfillment(of: [expectation], timeout: 1.0)
+        wait(for: [expectation], timeout: 1.0)
     }
 }

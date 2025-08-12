@@ -13,13 +13,13 @@ import Foundation
 final class HomeViewControllerTests: XCTestCase {
     private var sut: HomeViewController!
     private let mockViewModel = MockHomeViewModel()
-    private var citysCView: CitysCollectionView!
+    private var citiesCView: CitiesCollectionView!
     private var discoverBaCView: DiscoverBaCollectionView!
     private var quickConversorView: QuickConversorView!
     
     override func setUp() {
         super.setUp()
-        citysCView = CitysCollectionView(homeViewModel: mockViewModel)
+        citiesCView = CitiesCollectionView(homeViewModel: mockViewModel)
         discoverBaCView = DiscoverBaCollectionView(homeViewModel: mockViewModel)
         quickConversorView = QuickConversorView()
         sut = HomeViewController(homeViewModel: mockViewModel, quickConversorView: quickConversorView, discoverBaCView: discoverBaCView)
@@ -28,14 +28,14 @@ final class HomeViewControllerTests: XCTestCase {
     
     override func tearDown() {
         sut = nil
-        citysCView = nil
+        citiesCView = nil
         discoverBaCView = nil
         quickConversorView = nil
         super.tearDown()
     }
     
-    func test_whenViewLoads_citysCollectionViewsIsNotNil() {
-        XCTAssertNotNil(sut.citysCViewForTesting)
+    func test_whenViewLoads_citiesCollectionViewsIsNotNil() {
+        XCTAssertNotNil(sut.citiesCViewForTesting)
     }
     
     func test_whenViewLoads_discoverCollectionViewsIsNotNil() {
@@ -47,45 +47,51 @@ final class HomeViewControllerTests: XCTestCase {
     }
     
     @MainActor
-    func test_HomeViewController_shouldBeCitysCviewDelegate() {
+    func test_HomeViewController_shouldBeCitiesCviewDelegate() {
         sut.setup() //tuve que cargar primero este metodo que asignaba el delegate
-        XCTAssertTrue(sut.citysCViewForTesting.delegate === sut)
+        XCTAssertTrue(sut.citiesCViewForTesting.delegate === sut)
     }
     
     
-    func testSetupQuickConversor_Success() async {
+    @MainActor func testSetupQuickConversor_Success() {
+        let expectation = expectation(description: "Quick conversor updates labels")
         
-        await MainActor.run {
+        mockViewModel.onGetValueForCountryCalled = { [self] in
+            DispatchQueue.main.async {
+                XCTAssertEqual(self.sut.quickConversorViewForTesting.usdLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "1000.00"))
+                XCTAssertEqual(self.sut.quickConversorViewForTesting.arsvalueLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "5000.0"))
+                expectation.fulfill()
+            }
             sut.setupQuickConversor()
-        }
-        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 segundos
-        await MainActor.run {
-            XCTAssertEqual(sut.quickConversorViewForTesting.usdLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "1000.00"))
-            XCTAssertEqual(sut.quickConversorViewForTesting.arsvalueLabelTesting.text, String(format: NSLocalizedString("currency_format", comment: ""), "5000.0"))
+            wait(for: [expectation], timeout: 1.0)
         }
     }
     
-    func testSetupQuickConversor_InvalidURL() async {
+    @MainActor func testSetupQuickConversor_InvalidURL() {
         mockViewModel.shouldFail = true
         mockViewModel.apiError = .invalidURL
-        await MainActor.run {
-            sut.setupQuickConversor()
+        let expectation = expectation(description: "Invalid URL shows alert")
+        
+        mockViewModel.onGetDolarBlueCalled = {
+            DispatchQueue.main.async {
+                XCTAssertEqual(self.sut.alertMessageForTesting, NSLocalizedString("invalid_url_error", comment: ""))
+                expectation.fulfill()
+            }
         }
-        try? await Task.sleep(nanoseconds: 500_000_000)
-        await MainActor.run {
-            XCTAssertEqual(sut.alertMessageForTesting, NSLocalizedString("invalid_url_error", comment: ""))
-        }
+        
+        sut.setupQuickConversor()
+        wait(for: [expectation], timeout: 1.0)
     }
     
     @MainActor
-    func testSetupCitysCollectionView_LoadsItems() {
-        sut.setupCitysCollectionView()
-        XCTAssertEqual(sut.citysCViewForTesting.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ciudades ficticias
+    func testCitiesCollectionView_LoadDataLoadsItems() {
+        sut.citiesCViewForTesting.loadData()
+        XCTAssertEqual(sut.citiesCViewForTesting.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ciudades ficticias
     }
     
     @MainActor
-    func testSetupDiscoverCollectionView_LoadsItems() {
-        sut.setupDiscoverCollectionView()
+    func testDiscoverCollectionView_LoadDataLoadsItems() {
+        sut.discoverBaCViewForTesting.loadData()
         XCTAssertEqual(sut.discoverBaCViewForTesting.collectionViewForTesting.numberOfItems(inSection: 0), 2) // 2 ítems ficticios
     }
 }
@@ -93,29 +99,36 @@ final class HomeViewControllerTests: XCTestCase {
 class MockHomeViewModel: HomeViewModelProtocol {
     var shouldFail = false
     var apiError: APIError?
+    var onGetValueForCountryCalled: (() -> Void)?
+    var onGetDolarBlueCalled: (() -> Void)?
     
     func getValueForCountry(countryCode: String) async throws -> String {
         if shouldFail, let error = apiError {
             throw error
         }
+        let value: String
         switch countryCode {
-        case "AR": return "5000.0" // Ejemplo: 5000 ARS por 1 USD
-        case "BR": return "5.0"   // Ejemplo: 5 BRL por 1 USD
-        default: return "0.0"
+        case "AR": value = "5000.0" // Ejemplo: 5000 ARS por 1 USD
+        case "BR": value = "5.0"   // Ejemplo: 5 BRL por 1 USD
+        default: value = "0.0"
         }
+        onGetValueForCountryCalled?()
+        return value
     }
     
     func getDolarBlue() async throws -> Pesoblu.DolarBlue? {
         if shouldFail, let error = apiError {
+            onGetDolarBlueCalled?()
             throw error
         }
+        onGetDolarBlueCalled?()
         return Pesoblu.DolarBlue(moneda: "Moneda", casa: "Casa", nombre: "Nombre", compra: 990.0, venta: 1000.0, fechaActualizacion: "") // Dólar blue ficticio
     }
     
-    func fetchCitysItems() -> [Pesoblu.CitysItem] {
+    func fetchCitiesItems() -> [Pesoblu.CitiesItem] {
         return [
-            Pesoblu.CitysItem(dict: ["name": "Buenos Aires", "image": "buenos_aires.jpg"]),
-            Pesoblu.CitysItem(dict: ["name": "São Paulo", "image": "sao_paulo.jpg"])
+            Pesoblu.CitiesItem(dict: ["name": "Buenos Aires", "image": "buenos_aires.jpg"]),
+            Pesoblu.CitiesItem(dict: ["name": "São Paulo", "image": "sao_paulo.jpg"])
         ]
     }
     

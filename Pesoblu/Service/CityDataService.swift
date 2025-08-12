@@ -8,17 +8,22 @@
 import Foundation
 
 protocol CityDataServiceProtocol{
-    func fetch() -> [CitysItem]
+    func fetch() -> [CitiesItem]
 }
 
 class CityDataService: DataManager, CityDataServiceProtocol{
     
-    private var cityItems: [CitysItem] = []
+    private var cityItems: [CitiesItem] = []
     
-    func fetch() -> [CitysItem] {
+    func fetch() -> [CitiesItem] {
         cityItems = []
-        for data in loadPlist(file: "CitysAr") {
-            cityItems.append(CitysItem(dict: data as! [String: String]))
+        switch loadPlist(file: "CitysAr") {
+        case .success(let dataArray):
+            for data in dataArray {
+                cityItems.append(CitiesItem(dict: data as! [String: String]))
+            }
+        case .failure(let error):
+            print("Error loading CitysAr: \(error)")
         }
         return cityItems
     }
@@ -27,7 +32,7 @@ class CityDataService: DataManager, CityDataServiceProtocol{
         cityItems.count
     }
     
-    func exploreItem(at index: Int) -> CitysItem {
+    func exploreItem(at index: Int) -> CitiesItem {
         cityItems[index]
     }
     

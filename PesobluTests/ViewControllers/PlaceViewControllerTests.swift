@@ -26,9 +26,10 @@ final class PlaceViewControllerTests: XCTestCase {
 
         func loadFavoriteStatus() async throws -> Bool {
             if shouldThrow { throw NSError(domain: "TestError", code: 1) }
-            return favoriteResult
+            return favoriteResult   // <- sin DispatchQueue ni capturas
         }
     }
+
 
     final class MockAlertPresenter: AlertPresenter {
         var didShowAlert = false
@@ -73,7 +74,7 @@ final class PlaceViewControllerTests: XCTestCase {
                                         placeType: .resto,
                                         placeDescription: ""),
                                   alertPresenter: mockAlertPresenter)
-        _ = sut.view  // Trigger view load
+        //_ = sut.view  // Trigger view load
     }
 
     override func tearDown() {
@@ -104,22 +105,18 @@ final class PlaceViewControllerTests: XCTestCase {
     }
     
     func test_loadFavoriteStatus_setsIsFavoriteTrue() {
-        // Given
         mockViewModel.favoriteResult = true
-        _ = sut.view  // fuerza la carga de la vista
+        _ = sut.view
+        let exp = expectation(description: "isFavorite actualizado a true")
 
-        // When
-        sut.loadFavoriteStatus()
-
-        // Then
-        let expectation = expectation(description: "Esperando que isFavorite se actualice a true")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            XCTAssertTrue(self.sut.test_isFavorite, "La propiedad isFavorite debe ser true si el ViewModel lo devuelve.")
-            expectation.fulfill()
+        sut.onFavoriteUpdated = { isFav in
+            if isFav { exp.fulfill() }
         }
 
-        wait(for: [expectation], timeout: 1.0)
+        sut.loadFavoriteStatus()
+
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertTrue(sut.test_isFavorite)
     }
     
     func test_loadFavoriteStatus_whenFails_showsAlert() {

@@ -18,8 +18,13 @@ class DiscoverDataService: DataManager, DiscoverDataServiceProtocol{
     
     func fetch() -> [DiscoverItem] {
         discoverItems = []
-        for data in loadPlist(file: "PlacesBa") {
-            discoverItems.append(DiscoverItem(dict: data as! [String: String]))
+        switch loadPlist(file: "PlacesBa") {
+        case .success(let dataArray):
+            for data in dataArray {
+                discoverItems.append(DiscoverItem(dict: data as! [String: String]))
+            }
+        case .failure(let error):
+            print("Error loading PlacesBa: \(error)")
         }
         return discoverItems
     }

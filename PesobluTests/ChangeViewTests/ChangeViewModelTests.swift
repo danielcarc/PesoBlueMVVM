@@ -34,7 +34,7 @@ final class ChangeViewModelTests: XCTestCase {
     
     // Prueba de éxito en fetchCurrencies
     @MainActor
-    func testFetchCurrenciesSuccess() async {
+    func testFetchCurrenciesSuccess() {
         // Configurar el mock
         mockCurrencyService.mockDolarMep = DolarMEP(currencyTitle: "title", currencyLabel: "label", moneda: "USD", casa: "Banco Central de Argentina", nombre: "Dolar Argentino MP", compra: 800.0, venta: 950.0, fechaActualizacion: "2025-05-26T00:00:00Z")
         mockCurrencyService.mockRates = Rates()
@@ -46,8 +46,8 @@ final class ChangeViewModelTests: XCTestCase {
         viewModel.getChangeOfCurrencies()
         
         // Esperar a que la tarea asíncrona termine
-        await fulfillment(of: [expectation!], timeout: 1.0)
-        
+        wait(for: [expectation!], timeout: 1.0)
+
         // Verificar resultados
         XCTAssertFalse(viewModel.currencies.isEmpty, "Currencies should not be empty")
         XCTAssertNotNil(viewModel.rates, "Rates should be set")
@@ -56,7 +56,7 @@ final class ChangeViewModelTests: XCTestCase {
     
     // Prueba de fallo en fetchCurrencies
     @MainActor
-    func testFetchCurrenciesFailure() async {
+    func testFetchCurrenciesFailure() {
         // Configurar el mock para fallar
         mockCurrencyService.shouldFail = true
         
@@ -68,8 +68,8 @@ final class ChangeViewModelTests: XCTestCase {
         viewModel.getChangeOfCurrencies()
         
         // Esperar a que la tarea asíncrona termine
-        await fulfillment(of: [expectation!], timeout: 1.0)
-        
+        wait(for: [expectation!], timeout: 1.0)
+
         XCTAssertTrue(didFailCalled, "didFail should be called on failure")
     }
     

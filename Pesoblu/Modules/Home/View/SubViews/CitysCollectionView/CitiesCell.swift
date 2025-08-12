@@ -1,5 +1,5 @@
 //
-//  CitysCell.swift
+//  CitiesCell.swift
 //  PesoBlueMVVM
 //
 //  Created by Daniel Carcacha on 12/01/2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CitysCell: UICollectionViewCell  {
+final class CitiesCell: UICollectionViewCell  {
     
     // MARK: - Public Properties
     private lazy var imageView : UIImageView = {
@@ -47,7 +47,7 @@ final class CitysCell: UICollectionViewCell  {
         return nil
     }
 }
-private extension CitysCell  {
+private extension CitiesCell  {
     
     private func setupViews() {
         addsubviews()

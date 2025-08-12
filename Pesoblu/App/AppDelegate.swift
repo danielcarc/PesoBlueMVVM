@@ -24,8 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var gidSignIn: GIDSignIn?
     var userService: UserService?
     
+    // Helper para saber si estamos corriendo tests
+    private var isRunningTests: Bool {
+        return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        if isRunningTests {
+            // Evitamos inicializar toda la app en modo test
+            return true
+        }
+        
         FirebaseApp.configure()
         firebaseApp = FirebaseApp.app()
         gidSignIn = GIDSignIn.sharedInstance

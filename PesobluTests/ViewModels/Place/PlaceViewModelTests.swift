@@ -33,7 +33,7 @@ final class PlaceViewModelTests: XCTestCase {
 
     // MARK: - Test
     
-    func test_saveFavoriteStatus_callsServiceWithCorrectValues() async {
+    func test_saveFavoriteStatus_callsServiceWithCorrectValues() {
         // Given
         let mockService = MockCoreDataService()
         let place = PlaceItem(id: 123, name: "Siamo", address: "Palermo", city: "CABA", state: "", area: "", postalCode: "", country: "", phone: "", lat: 54.000, long: 27.000, price: "", categories: [""], cuisines: [""], instagram: "", imageUrl: "", placeType: .resto, placeDescription: "")
@@ -47,15 +47,14 @@ final class PlaceViewModelTests: XCTestCase {
             try await viewModel.saveFavoriteStatus(isFavorite: isFavorite)
             expectation.fulfill()
         }
-        await fulfillment(of: [expectation], timeout: 1)
-        
+        wait(for: [expectation], timeout: 1)
         // Then
         XCTAssertTrue(mockService.saveCalled)
         XCTAssertEqual(mockService.savedPlaceId, placeId)
         XCTAssertEqual(mockService.savedIsFavorite, isFavorite)
     }
     
-    func test_loadFavoriteStatus_returnsCorrectValue() async {
+    func test_loadFavoriteStatus_returnsCorrectValue() {
         // Given
         let mockService = MockCoreDataService()
         mockService.loadResult = true
@@ -70,7 +69,7 @@ final class PlaceViewModelTests: XCTestCase {
             result = try await viewModel.loadFavoriteStatus()
             expectation.fulfill()
         }
-        await fulfillment(of: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 1)
         
         // Then
         XCTAssertTrue(mockService.loadCalled)

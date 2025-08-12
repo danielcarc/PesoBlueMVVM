@@ -6,17 +6,17 @@
 //
 import UIKit
 
-protocol CitysViewDelegate: AnyObject {
+protocol CitiesViewDelegate: AnyObject {
     func didUpdateItemCount(_ count: Int)
-    func didSelectItem(_ city: CitysItem)
+    func didSelectItem(_ city: CitiesItem)
     
 }
 
-final class CitysCollectionView: UIView {
+final class CitiesCollectionView: UIView {
     
-    private var data: [CitysItem] = []
+    private var data: [CitiesItem] = []
     private let homeViewModel: HomeViewModelProtocol  // Usamos el protocolo en lugar de la clase concreta
-    weak var delegate: CitysViewDelegate?
+    weak var delegate: CitiesViewDelegate?
     
     init(homeViewModel: HomeViewModelProtocol, frame: CGRect = .zero) {
         self.homeViewModel = homeViewModel
@@ -30,10 +30,10 @@ final class CitysCollectionView: UIView {
         return nil
     }
     
-    func updateData() {
-        self.data = homeViewModel.fetchCitysItems()
-        citysCollectionView.reloadData()
-        citysCollectionView.collectionViewLayout.invalidateLayout()
+    func loadData() {
+        self.data = homeViewModel.fetchCitiesItems()
+        citiesCollectionView.reloadData()
+        citiesCollectionView.collectionViewLayout.invalidateLayout()
         delegate?.didUpdateItemCount(data.count)
     }
     
@@ -47,7 +47,7 @@ final class CitysCollectionView: UIView {
         return label
     }()
     
-    private lazy var citysCollectionView: UICollectionView = {
+    private lazy var citiesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
@@ -65,7 +65,7 @@ final class CitysCollectionView: UIView {
         collectionView.isScrollEnabled = false
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(CitysCell.self, forCellWithReuseIdentifier: "CitysCell")
+        collectionView.register(CitiesCell.self, forCellWithReuseIdentifier: "CitysCell")
         return collectionView
     }()
     
@@ -73,22 +73,22 @@ final class CitysCollectionView: UIView {
 
 //MARK: - Setup Methods and Constraints
 
-extension CitysCollectionView {
+extension CitiesCollectionView {
     
     func setup() {
         self.backgroundColor = .clear
         addSubview(discoverArgentinaLabel)
-        addSubview(citysCollectionView)
+        addSubview(citiesCollectionView)
         
         NSLayoutConstraint.activate([
             discoverArgentinaLabel.topAnchor.constraint(equalTo: topAnchor),
             discoverArgentinaLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             discoverArgentinaLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            citysCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
-            citysCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            citysCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            citysCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            citiesCollectionView.topAnchor.constraint(equalTo: discoverArgentinaLabel.bottomAnchor, constant: 16),
+            citiesCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            citiesCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            citiesCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
         ])
     }
@@ -96,20 +96,20 @@ extension CitysCollectionView {
 
 //MARK: - UICollectionViewDataSource Methods
 
-extension CitysCollectionView: UICollectionViewDataSource  {
+extension CitiesCollectionView: UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = data[indexPath.item]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CitysCell", for: indexPath) as! CitysCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CitysCell", for: indexPath) as! CitiesCell
         cell.set(image: item.image, title: item.name)
         return cell
     }
 }
 
-extension CitysCollectionView: UICollectionViewDelegate {
+extension CitiesCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCity = data[indexPath.item]
         delegate?.didSelectItem(selectedCity)
@@ -117,8 +117,8 @@ extension CitysCollectionView: UICollectionViewDelegate {
 }
 
 
-extension CitysCollectionView  {
+extension CitiesCollectionView  {
     var collectionViewForTesting: UICollectionView {
-        return citysCollectionView
+        return citiesCollectionView
     }
 }

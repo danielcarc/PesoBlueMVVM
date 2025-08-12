@@ -17,13 +17,16 @@ class FilterDataService: DataManager, FilterDataServiceProtocol{
     
     func fetch() -> [DiscoverItem] {
         discoverItems.removeAll()
-        for data in loadPlist(file: "PlacesBa") {
-            
-            discoverItems.append(DiscoverItem(dict: data as! [String: String]))
+        switch loadPlist(file: "PlacesBa") {
+        case .success(let dataArray):
+            for data in dataArray {
+                discoverItems.append(DiscoverItem(dict: data as! [String: String]))
+            }
+        case .failure(let error):
+            print("Error loading PlacesBa: \(error)")
         }
         return discoverItems
     }
-    
     func numberOfExploreItems() -> Int {
         discoverItems.count
     }

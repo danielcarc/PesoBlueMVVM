@@ -11,7 +11,7 @@ final class HomeViewController: UIViewController  {
     
     private var quickConversorView : QuickConversorView
     private var discoverBaCView : DiscoverBaCollectionView
-    private var citysCView : CitysCollectionView
+    private var citiesCView : CitiesCollectionView
     private var alertMessage: String?
     private var onSelect : (([PlaceItem], String, PlaceType) -> Void)?
     
@@ -22,12 +22,12 @@ final class HomeViewController: UIViewController  {
     init(homeViewModel: HomeViewModelProtocol,
          quickConversorView: QuickConversorView = QuickConversorView(),
          discoverBaCView: DiscoverBaCollectionView? = nil,
-         citysCView: CitysCollectionView? = nil) {
+         citiesCView: CitiesCollectionView? = nil) {
         
         self.homeViewModel = homeViewModel
         self.quickConversorView = quickConversorView
         self.discoverBaCView = discoverBaCView ?? DiscoverBaCollectionView(homeViewModel: homeViewModel)
-        self.citysCView = citysCView ?? CitysCollectionView(homeViewModel: homeViewModel)
+        self.citiesCView = citiesCView ?? CitiesCollectionView(homeViewModel: homeViewModel)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -102,9 +102,9 @@ final class HomeViewController: UIViewController  {
 extension HomeViewController  {
     func setup() {
         setupUI()
-        citysCView.delegate = self
-        discoverBaCView.updateData()
-        citysCView.updateData() // Asegurar que los datos se carguen cuando la vista esté lista
+        citiesCView.delegate = self
+        discoverBaCView.loadData()
+        citiesCView.loadData() // Asegurar que los datos se carguen cuando la vista esté lista
         discoverBaCView.delegate = self
     }
 }
@@ -121,7 +121,7 @@ extension HomeViewController {
         addSubViews()
         addConstraints()
         setupDiscoverCollectionView()
-        setupCitysCollectionView()
+        setupCitiesCollectionView()
         
     }
     
@@ -168,17 +168,17 @@ extension HomeViewController {
             discoverBaCView.heightAnchor.constraint(equalToConstant: 158)
         ])
         discoverBaCView.collectionViewForTesting.reloadData()
-        discoverBaCView.updateData()
+        discoverBaCView.loadData()
     }
-    func setupCitysCollectionView() {
-        stackView.addArrangedSubview(citysCView)
-        citysCView.translatesAutoresizingMaskIntoConstraints = false
-        collectionViewHeightConstraint = citysCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
+    func setupCitiesCollectionView() {
+        stackView.addArrangedSubview(citiesCView)
+        citiesCView.translatesAutoresizingMaskIntoConstraints = false
+        collectionViewHeightConstraint = citiesCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
         NSLayoutConstraint.activate([
             collectionViewHeightConstraint
         ])
-        citysCView.collectionViewForTesting.reloadData()
-        citysCView.updateData()
+        citiesCView.collectionViewForTesting.reloadData()
+        citiesCView.loadData()
     }
 }
 
@@ -251,9 +251,9 @@ extension HomeViewController: CollectionViewSelectionDelegate {
     }
 }
 
-//MARK: - CitysViewDelegate Methods
-extension HomeViewController: CitysViewDelegate {
-    func didSelectItem(_ city: CitysItem) {
+//MARK: - CitiesViewDelegate Methods
+extension HomeViewController: CitiesViewDelegate {
+    func didSelectItem(_ city: CitiesItem) {
         let selectedCity = String(city.name)
         
         do{
@@ -293,7 +293,7 @@ extension HomeViewController: CitysViewDelegate {
 extension HomeViewController {
     var quickConversorViewForTesting: QuickConversorView { quickConversorView }
     var discoverBaCViewForTesting: DiscoverBaCollectionView { discoverBaCView }
-    var citysCViewForTesting: CitysCollectionView { citysCView }
+    var citiesCViewForTesting: CitiesCollectionView { citiesCView }
     var alertMessageForTesting: String? { alertMessage }
 }
 #endif

@@ -32,12 +32,8 @@ final class DiscoverBaCollectionView: UIView  {
         return nil
     }
     
-    func setData() {
-        self.data = homeViewModel.fetchDiscoverItems()
-        discoverCollectionView.reloadData()
-    }
     
-    func updateData() {
+    func loadData() {
         self.data = homeViewModel.fetchDiscoverItems()
         discoverCollectionView.reloadData()
     }

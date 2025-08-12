@@ -415,6 +415,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pesoblu/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Pesoblu;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Necesitamos tu ubicación para mostrar distancias precisas.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Usaremos tu ubicación para calcular distancias a los lugares cercanos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
@@ -444,6 +446,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pesoblu/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Pesoblu;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Necesitamos tu ubicación para mostrar distancias precisas.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Usaremos tu ubicación para calcular distancias a los lugares cercanos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";

@@ -12,7 +12,7 @@ protocol HomeViewModelProtocol {
     func getUserCountry() -> String?
     func getValueForCountry(countryCode: String) async throws -> String
     func fetchPlaces(city: String) throws -> [PlaceItem]
-    func fetchCitysItems() -> [CitysItem]
+    func fetchCitiesItems() -> [CitiesItem]
     func fetchDiscoverItems() -> [DiscoverItem]
 }
 
@@ -37,11 +37,11 @@ final class HomeViewModel: HomeViewModelProtocol{
     }
     
     private var discoverItems: [DiscoverItem] = []
-    private var citysItem: [CitysItem] = []
+    private var citysItem: [CitiesItem] = []
     private var dolarBlue: DolarBlue?
     //private var currency : Rates = Rates(BRL: Brl(rate: nil), CLP: Clp(rate: nil), UYU: Uyu(rate: nil))
     
-    func fetchCitysItems() -> [CitysItem]{
+    func fetchCitiesItems() -> [CitiesItem]{
         return cityDataService.fetch()
     }
     
