@@ -8,11 +8,11 @@
 import UIKit
 
 final class HomeViewController: UIViewController  {
-    
-    private var quickConversorView : QuickConversorView
-    private var discoverBaCView : DiscoverBaCollectionView
-    private var citiesCView : CitiesCollectionView
-    private var alertMessage: String?
+
+    internal private(set) var quickConversorView : QuickConversorView
+    internal private(set) var discoverBaCView : DiscoverBaCollectionView
+    internal private(set) var citiesCView : CitiesCollectionView
+    internal private(set) var alertMessage: String?
     private var onSelect : (([PlaceItem], String, PlaceType) -> Void)?
     
     private var collectionViewHeightConstraint: NSLayoutConstraint!
@@ -289,14 +289,6 @@ extension HomeViewController: CitiesViewDelegate {
     }
 }
     
-#if DEBUG
-extension HomeViewController {
-    var quickConversorViewForTesting: QuickConversorView { quickConversorView }
-    var discoverBaCViewForTesting: DiscoverBaCollectionView { discoverBaCView }
-    var citiesCViewForTesting: CitiesCollectionView { citiesCView }
-    var alertMessageForTesting: String? { alertMessage }
-}
-#endif
     
 
 
