@@ -41,7 +41,7 @@ final class FilterCollectionView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        label.text = "Filtros"
+        label.text = NSLocalizedString("filters_title", comment: "Filters header title")
         label.textAlignment = .center
         
         label.translatesAutoresizingMaskIntoConstraints = false
