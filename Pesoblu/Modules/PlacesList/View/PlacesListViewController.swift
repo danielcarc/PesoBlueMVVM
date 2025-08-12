@@ -20,7 +20,10 @@ final class PlacesListViewController: UIViewController  {
     private var filters: [DiscoverItem] = []
 
     private var placesListView: PlacesListView {
-        return view as! PlacesListView
+        guard let placesListView = view as? PlacesListView else {
+            fatalError("Expected view to be of type PlacesListView")
+        }
+        return placesListView
     }
 
     init(placesListViewModel: PlacesListViewModelProtocol,
@@ -50,7 +53,7 @@ final class PlacesListViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = "Lista de Lugares"
+        navigationItem.title = "Lugares en \(selectedCity)"
         let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
         backButton.tintColor = .black
         navigationItem.leftBarButtonItem = backButton
