@@ -84,8 +84,9 @@ extension PlacesListCollectionView: UICollectionViewDataSource  {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = placeData[indexPath.item]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceCell", for: indexPath) as! PlaceCell
-
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceCell", for: indexPath) as? PlaceCell else {
+            return UICollectionViewCell()
+        }
         cell.set(image: nil,
                  title: item.title,
                  price: item.price,

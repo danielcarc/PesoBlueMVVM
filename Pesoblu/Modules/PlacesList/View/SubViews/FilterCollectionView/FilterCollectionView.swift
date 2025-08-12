@@ -81,7 +81,9 @@ extension FilterCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = data[indexPath.item]
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! FilterCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell else {
+            return UICollectionViewCell()
+        }
         cell.set(image: item.image, title: item.name)
         
         if let type = PlaceType(rawValue: item.name), type == placeType {
