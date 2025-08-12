@@ -33,6 +33,7 @@ final class PlacesListCollectionView: UIView  {
 
     func updateData(with items: [PlaceItemViewModel]) {
         placeData = items
+
         let text = "\(placeData.count) lugares"
         quantityLabel.text = text
         quantityLabel.accessibilityLabel = text
@@ -44,7 +45,7 @@ final class PlacesListCollectionView: UIView  {
         var label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        label.text = "Cantidad de restaurantes"
+        label.text = NSLocalizedString("quantity_restaurants_label", comment: "Quantity of restaurants label")
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isAccessibilityElement = true
@@ -87,8 +88,9 @@ extension PlacesListCollectionView: UICollectionViewDataSource  {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = placeData[indexPath.item]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceCell", for: indexPath) as! PlaceCell
-
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaceCell", for: indexPath) as? PlaceCell else {
+            return UICollectionViewCell()
+        }
         cell.set(image: nil,
                  title: item.title,
                  price: item.price,

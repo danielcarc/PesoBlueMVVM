@@ -41,7 +41,7 @@ final class FilterCollectionView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        label.text = "Filtros"
+        label.text = NSLocalizedString("filters_title", comment: "Filters header title")
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isAccessibilityElement = true
@@ -82,7 +82,9 @@ extension FilterCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = data[indexPath.item]
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! FilterCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell else {
+            return UICollectionViewCell()
+        }
         cell.set(image: item.image, title: item.name)
         
         if let type = PlaceType(rawValue: item.name), type == placeType {

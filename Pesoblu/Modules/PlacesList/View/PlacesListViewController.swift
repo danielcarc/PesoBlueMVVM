@@ -20,7 +20,10 @@ final class PlacesListViewController: UIViewController  {
     private var filters: [DiscoverItem] = []
 
     private var placesListView: PlacesListView {
-        return view as! PlacesListView
+        guard let placesListView = view as? PlacesListView else {
+            fatalError("Expected view to be of type PlacesListView")
+        }
+        return placesListView
     }
 
     init(placesListViewModel: PlacesListViewModelProtocol,
@@ -50,7 +53,9 @@ final class PlacesListViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = "Lista de Lugares"
+
+        navigationItem.title = "Lugares en \(selectedCity)"
+      
         let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
         backButton.tintColor = .black
         navigationItem.leftBarButtonItem = backButton
@@ -81,7 +86,8 @@ extension PlacesListViewController  {
 //MARK: - PlacesListCollectionViewDelegate
 extension PlacesListViewController: PlacesListCollectionViewDelegate  {
     func placesListCollectionViewDidFailToLoadImage(_ collectionView: PlacesListCollectionView, error: any Error) {
-        showAlert(title: "Error de Imagen", message: "No se pudo cargar la imagen. Intente nuevamente mas tarde")
+        showAlert(title: NSLocalizedString("image_error_title", comment: "Image loading error title"),
+                  message: NSLocalizedString("image_error_message", comment: "Image loading error message"))
     }
 
     func didSelectItem(_ item: PlaceItem) {
@@ -117,7 +123,8 @@ extension PlacesListViewController: FilterCollectionViewDelegate  {
 extension PlacesListViewController  {
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok_action", comment: "Dismiss alert action"),
+                                      style: .default))
         present(alert, animated: true)
     }
 }

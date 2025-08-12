@@ -85,12 +85,12 @@ final class PlaceCell: UICollectionViewCell  {
             with: imageUrl,
             placeholder: UIImage(systemName: "photo"),
             options: [.transition(.fade(0.3)), .cacheOriginalImage]
-        ) { result in
+        ) { [weak self] result in
             switch result {
             case .success:
                 break  // Imagen cargada correctamente
             case .failure(let error):
-                self.delegate?.placeCellDidFailToLoadImage(self, error: error)  // Notificar el error
+                self?.delegate?.placeCellDidFailToLoadImage(self!, error: error)  // Notificar el error
             }
         }
     }
@@ -105,6 +105,12 @@ final class PlaceCell: UICollectionViewCell  {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         return nil
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        placeImage.kf.cancelDownloadTask()
+        placeImage.image = nil
     }
 }
 
