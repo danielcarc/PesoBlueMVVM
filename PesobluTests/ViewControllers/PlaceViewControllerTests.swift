@@ -95,7 +95,7 @@ final class PlaceViewControllerTests: XCTestCase {
             }
             
         }
-        _ = sut.view
+        sut.loadViewIfNeeded()
         // When
         sut.toggleFavorite()
         
@@ -106,14 +106,13 @@ final class PlaceViewControllerTests: XCTestCase {
     
     func test_loadFavoriteStatus_setsIsFavoriteTrue() {
         mockViewModel.favoriteResult = true
-        _ = sut.view
         let exp = expectation(description: "isFavorite actualizado a true")
 
         sut.onFavoriteUpdated = { isFav in
             if isFav { exp.fulfill() }
         }
 
-        sut.loadFavoriteStatus()
+        sut.loadViewIfNeeded()
 
         wait(for: [exp], timeout: 1.0)
         XCTAssertTrue(sut.test_isFavorite)
