@@ -12,23 +12,25 @@ final class HomeViewController: UIViewController  {
     internal private(set) var quickConversorView : QuickConversorView
     internal private(set) var discoverBaCView : DiscoverBaCollectionView
     internal private(set) var citiesCView : CitiesCollectionView
-    internal private(set) var alertMessage: String?
     private var onSelect : (([PlaceItem], String, PlaceType) -> Void)?
     
     private var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private let homeViewModel: HomeViewModelProtocol
+    private let alertPresenter: AlertPresentable
     
     init(homeViewModel: HomeViewModelProtocol,
          quickConversorView: QuickConversorView = QuickConversorView(),
          discoverBaCView: DiscoverBaCollectionView? = nil,
-         citiesCView: CitiesCollectionView? = nil) {
-        
+         citiesCView: CitiesCollectionView? = nil,
+         alertPresenter: AlertPresentable = AlertPresenter()) {
+
         self.homeViewModel = homeViewModel
         self.quickConversorView = quickConversorView
         self.discoverBaCView = discoverBaCView ?? DiscoverBaCollectionView(homeViewModel: homeViewModel)
         self.citiesCView = citiesCView ?? CitiesCollectionView(homeViewModel: homeViewModel)
-        
+        self.alertPresenter = alertPresenter
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -244,10 +246,7 @@ extension HomeViewController: CollectionViewSelectionDelegate {
     }
 
     func showAlert(message: String) {
-        self.alertMessage = message
-        let alert = UIAlertController(title: NSLocalizedString("error_title", comment: ""), message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("ok_action", comment: ""), style: .default))
-        present(alert, animated: true, completion: nil)
+        alertPresenter.show(message: message, on: self)
     }
 }
 
