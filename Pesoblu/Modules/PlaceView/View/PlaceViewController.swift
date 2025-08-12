@@ -59,12 +59,6 @@ final class PlaceViewController: UIViewController  {
         return nil
     }
     
-//    private var isFavorite: Bool = false {
-//        didSet {
-//            updateFavoriteButton()
-//        }
-//    }
-    
     private lazy var favoriteButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "heart"), for: .normal)
