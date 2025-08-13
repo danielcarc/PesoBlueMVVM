@@ -70,8 +70,9 @@ private extension ChangeCollectionView {
 extension ChangeCollectionView: ChangeViewModelDelegate {
     func didFinish() {
         collectionView.reloadData()
-        DispatchQueue.main.async{
-            let totalHeight = CGFloat(self.viewModel.currencies.count) * 90
+        DispatchQueue.main.async {
+            self.collectionView.layoutIfNeeded()
+            let totalHeight = self.collectionView.collectionViewLayout.collectionViewContentSize.height
             self.onHeightChange?(totalHeight)
         }
     }
