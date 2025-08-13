@@ -51,7 +51,7 @@ final class ChangeViewModelTests: XCTestCase {
         // Verificar resultados
         XCTAssertFalse(viewModel.currencies.isEmpty, "Currencies should not be empty")
         XCTAssertNotNil(viewModel.rates, "Rates should be set")
-        XCTAssertEqual(viewModel.currencies.count, 13, "Should have 13 currencies after conversion")
+        XCTAssertEqual(viewModel.currencies.count, 1 + CurrencyCode.allCases.count, "Should have \(1 + CurrencyCode.allCases.count) currencies after conversion")
     }
     
     // Prueba de fallo en fetchCurrencies
@@ -73,30 +73,15 @@ final class ChangeViewModelTests: XCTestCase {
         XCTAssertTrue(didFailCalled, "didFail should be called on failure")
     }
     
-    
     @MainActor
-    func testGetUyuValue() {
-        _ = getUyuValue(currency: 950.0) // Usando el valor de DolarMEP
-        XCTAssertEqual(mockRates?.UYU?.rawRate, "23.75", "Conversion should be 950 / 40")
-        XCTAssertEqual(mockRates?.UYU?.currencyTitle, "UYU - Peso Uruguayo")
-        XCTAssertEqual(mockRates?.UYU?.currencyLabel, "Uruguay")
+    func testGetCurrencyValue() {
+        viewModel.rates = mockRates ?? Rates()
+        let item = viewModel.getCurrencyValue(for: .UYU, currency: 950.0)
+        XCTAssertEqual(item.rate, "23.75", "Conversion should be 950 / 40")
+        XCTAssertEqual(item.currencyTitle, "UYU - Peso Uruguayo")
+        XCTAssertEqual(item.currencyLabel, "Uruguay")
     }
-    
-    func getUyuValue(currency: Double) -> Uyu {
-        var uyu: Uyu
-        if let uy = mockRates?.UYU {
-            uyu = uy
-        } else {
-            uyu = Uyu(rawRate: "0.0")
-        }
-        let rateValue = Double(uyu.rawRate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        mockRates?.UYU?.rawRate = String(result)
-        mockRates?.UYU?.currencyTitle = "UYU - Peso Uruguayo"
-        mockRates?.UYU?.currencyLabel = "Uruguay"
-        return (mockRates?.UYU!)!
-    }
-    
+
 }
 
 extension ChangeViewModelTests: ChangeViewModelDelegate {

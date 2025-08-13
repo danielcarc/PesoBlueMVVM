@@ -7,6 +7,67 @@
 
 import Foundation
 
+enum CurrencyCode: String, CaseIterable {
+    case UYU, BRL, CLP, EUR, MXN, COP, GBP, JPY, ILS, PYG, PEN, RUB, CAD, BOB
+
+    var title: String {
+        switch self {
+        case .UYU: return "UYU - Peso Uruguayo"
+        case .BRL: return "BRL - Real Brasil"
+        case .CLP: return "CLP - Peso Chileno"
+        case .EUR: return "EUR - Euro"
+        case .MXN: return "MXN - Peso Mexicano"
+        case .COP: return "COP - Peso Colombiano"
+        case .GBP: return "GBP - Libra Esterlina Britanica"
+        case .JPY: return "JPY - Yen Japonés"
+        case .ILS: return "ILS - Shequel Israelí"
+        case .PYG: return "PYG - Guaraní Paraguayo"
+        case .PEN: return "PEN - Sol Peruano"
+        case .RUB: return "RUB - Rublo Ruso"
+        case .CAD: return "CAD - Dólar Canadiense"
+        case .BOB: return "BOB - Boliviano"
+        }
+    }
+
+    var label: String {
+        switch self {
+        case .UYU: return "Uruguay"
+        case .BRL: return "Brasil"
+        case .CLP: return "Chile"
+        case .EUR: return "Unión Europea"
+        case .MXN: return "México"
+        case .COP: return "Colombia"
+        case .GBP: return "Reino Unido"
+        case .JPY: return "Japón"
+        case .ILS: return "Israel"
+        case .PYG: return "Paraguay"
+        case .PEN: return "Perú"
+        case .RUB: return "Rusia"
+        case .CAD: return "Canadá"
+        case .BOB: return "Bolivia"
+        }
+    }
+
+    func rate(from rates: Rates) -> String? {
+        switch self {
+        case .UYU: return rates.UYU?.rate
+        case .BRL: return rates.BRL?.rate
+        case .CLP: return rates.CLP?.rate
+        case .EUR: return rates.EUR?.rate
+        case .MXN: return rates.MXN?.rate
+        case .COP: return rates.COP?.rate
+        case .GBP: return rates.GBP?.rate
+        case .JPY: return rates.JPY?.rate
+        case .ILS: return rates.ILS?.rate
+        case .PYG: return rates.PYG?.rate
+        case .PEN: return rates.PEN?.rate
+        case .RUB: return rates.RUB?.rate
+        case .CAD: return rates.CAD?.rate
+        case .BOB: return rates.BOB?.rate
+        }
+    }
+}
+
 protocol ChangeViewModelDelegate: AnyObject{
     func didFinish()
     func didFail(error: Error)
@@ -56,20 +117,9 @@ class ChangeViewModel: ChangeViewModelProtocol{
                 mep.currencyLabel = "Dólar Bolsa de Valores / MEP"
                 currencies.append(mep)
                 rates = try await currencyService.getChangeOfCurrencies()
-                currencies.append(getUyuValue(currency: mep.venta))
-                currencies.append(getBrlValue(currency: mep.venta))
-                currencies.append(getClpValue(currency: mep.venta))
-                currencies.append(getEurValue(currency: mep.venta))
-                currencies.append(getMxnValue(currency: mep.venta))
-                currencies.append(getCopValue(currency: mep.venta))
-                currencies.append(getGbpValue(currency: mep.venta))
-                currencies.append(getJpyValue(currency: mep.venta))
-                currencies.append(getIlsValue(currency: mep.venta))
-                currencies.append(getPygValue(currency: mep.venta))
-                currencies.append(getPenValue(currency: mep.venta))
-                currencies.append(getRubValue(currency: mep.venta))
-                currencies.append(getCadValue(currency: mep.venta))
-                currencies.append(getBobValue(currency: mep.venta))
+                for code in CurrencyCode.allCases {
+                    currencies.append(getCurrencyValue(for: code, currency: mep.venta))
+                }
                 self.delegate?.didFinish()
             }
         }
@@ -81,215 +131,15 @@ class ChangeViewModel: ChangeViewModelProtocol{
 
 //MARK: - Currency Methods
 
-extension ChangeViewModel{
-    
-    func getUyuValue(currency: Double) -> Uyu {
-        var uyu: Uyu
-        if let uy = rates.UYU {
-            uyu = uy
-        } else {
-            uyu = Uyu(rawRate: "0.0")
-        }
-        let rateValue = Double(uyu.rawRate ?? "0.0") ?? 0.0
+extension ChangeViewModel {
+
+    func getCurrencyValue(for code: CurrencyCode, currency: Double) -> CurrencyItem {
+        let rateValue = Double(code.rate(from: rates) ?? "0.0") ?? 0.0
         let result = rateValue != 0 ? currency / rateValue : 0.0
-        uyu.rawRate = String(format: "%.2f", result)
-        uyu.currencyTitle = "UYU - Peso Uruguayo"
-        uyu.currencyLabel = "Uruguay"
-        return uyu
-    }
-    
-    func getBrlValue(currency: Double) -> Brl {
-        var brl: Brl
-        if let br = rates.BRL {
-            brl = br
-        } else {
-            brl = Brl(rawRate: "0.0")
-        }
-        let rateValue = Double(brl.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        brl.rawRate = String(format: "%.2f", result)
-        brl.currencyTitle = "BRL - Real Brasil"
-        brl.currencyLabel = "Brasil"
-        return brl
-    }
-    
-    func getClpValue(currency: Double) -> Clp {
-        var clp: Clp
-        if let cl = rates.CLP {
-            clp = cl
-        } else {
-            clp = Clp(rawRate: "0.0")
-        }
-        let rateValue = Double(clp.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        clp.rawRate = String(format: "%.2f", result)
-        clp.currencyTitle = "CLP - Peso Chileno"
-        clp.currencyLabel = "Chile"
-        return clp
-    }
-    
-    func getEurValue(currency: Double) -> Eur {
-        var eur: Eur
-        if let eu = rates.EUR {
-            eur = eu
-        } else {
-            eur = Eur(rawRate: "0.0")
-        }
-        let rateValue = Double(eur.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        eur.rawRate = String(format: "%.2f", result)
-        eur.currencyTitle = "EUR - Euro"
-        eur.currencyLabel = "Unión Europea"
-        return eur
-    }
-    
-    func getCopValue(currency: Double) -> Cop {
-        var cop: Cop
-        if let co = rates.COP {
-            cop = co
-        } else {
-            cop = Cop(rawRate: "0.0")
-        }
-        let rateValue = Double(cop.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        cop.rawRate = String(format: "%.2f", result)
-        cop.currencyTitle = "COP - Peso Colombiano"
-        cop.currencyLabel = "Colombia"
-        return cop
-    }
-    
-    func getGbpValue(currency: Double) -> Gbp {
-        var gbp: Gbp
-        if let gb = rates.GBP {
-            gbp = gb
-        } else {
-            gbp = Gbp(rawRate: "0.0")
-        }
-        let rateValue = Double(gbp.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        gbp.rawRate = String(format: "%.2f", result)
-        gbp.currencyTitle = "GBP - Libra Esterlina Britanica"
-        gbp.currencyLabel = "Reino Unido"
-        return gbp
-    }
-    
-    func getJpyValue(currency: Double) -> Jpy {
-        var jpy: Jpy
-        if let jp = rates.JPY {
-            jpy = jp
-        } else {
-            jpy = Jpy(rawRate: "0.0")
-        }
-        let rateValue = Double(jpy.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        jpy.rawRate = String(format: "%.2f", result)
-        jpy.currencyTitle = "JPY - Yen Japonés"
-        jpy.currencyLabel = "Japón"
-        return jpy
-    }
-    
-    func getIlsValue(currency: Double) -> Ils {
-        var ils: Ils
-        if let il = rates.ILS {
-            ils = il
-        } else {
-            ils = Ils(rawRate: "0.0")
-        }
-        let rateValue = Double(ils.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        ils.rawRate = String(format: "%.2f", result)
-        ils.currencyTitle = "ILS - Shequel Israelí"
-        ils.currencyLabel = "Israel"
-        return ils
-    }
-    
-    func getMxnValue(currency: Double) -> Mxn {
-        var mxn: Mxn
-        if let mx = rates.MXN {
-            mxn = mx
-        } else {
-            mxn = Mxn(rawRate: "0.0")
-        }
-        let rateValue = Double(mxn.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        mxn.rawRate = String(format: "%.2f", result)
-        mxn.currencyTitle = "MXN - Peso Mexicano"
-        mxn.currencyLabel = "México"
-        return mxn
-    }
-    
-    func getPygValue(currency: Double) -> Pyg {
-        var pyg: Pyg
-        if let py = rates.PYG {
-            pyg = py
-        } else {
-            pyg = Pyg(rawRate: "0.0")
-        }
-        let rateValue = Double(pyg.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        pyg.rawRate = String(format: "%.2f", result)
-        pyg.currencyTitle = "PYG - Guaraní Paraguayo"
-        pyg.currencyLabel = "Paraguay"
-        return pyg
-    }
-    
-    func getPenValue(currency: Double) -> Pen {
-        var pen: Pen
-        if let pe = rates.PEN {
-            pen = pe
-        } else {
-            pen = Pen(rawRate: "0.0")
-        }
-        let rateValue = Double(pen.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        pen.rawRate = String(format: "%.2f", result)
-        pen.currencyTitle = "PEN - Sol Peruano"
-        pen.currencyLabel = "Perú"
-        return pen
-    }
-    
-    func getRubValue(currency: Double) -> Rub {
-        var rub: Rub
-        if let ru = rates.RUB {
-            rub = ru
-        } else {
-            rub = Rub(rawRate: "0.0")
-        }
-        let rateValue = Double(rub.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        rub.rawRate = String(format: "%.2f", result)
-        rub.currencyTitle = "RUB - Rublo Ruso"
-        rub.currencyLabel = "Rusia"
-        return rub
-    }
-    
-    func getCadValue(currency: Double) -> Cad {
-        var cad: Cad
-        if let ca = rates.CAD {
-            cad = ca
-        } else {
-            cad = Cad(rawRate: "0.0")
-        }
-        let rateValue = Double(cad.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        cad.rawRate = String(format: "%.2f", result)
-        cad.currencyTitle = "CAD - Dólar Canadiense"
-        cad.currencyLabel = "Canadá"
-        return cad
-    }
-    
-    func getBobValue(currency: Double) -> Bob {
-        var bob: Bob
-        if let bo = rates.BOB {
-            bob = bo
-        } else {
-            bob = Bob(rawRate: "0.0")
-        }
-        let rateValue = Double(bob.rate ?? "0.0") ?? 0.0
-        let result = rateValue != 0 ? currency / rateValue : 0.0
-        bob.rawRate = String(format: "%.2f", result)
-        bob.currencyTitle = "BOB - Boliviano"
-        bob.currencyLabel = "Bolivia"
-        return bob
+        return CurrencyConversion(
+            currencyTitle: code.title,
+            currencyLabel: code.label,
+            rate: String(format: "%.2f", result)
+        )
     }
 }
