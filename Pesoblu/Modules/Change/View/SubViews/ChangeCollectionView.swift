@@ -45,7 +45,7 @@ extension ChangeCollectionView {
 private extension ChangeCollectionView {
     func setup() {
         
-        collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: "ChangeCell")
+        collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: ChangeCell.identifier)
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
         collectionView.dataSource = self
@@ -91,13 +91,18 @@ extension ChangeCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = viewModel.currencies[indexPath.item]
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChangeCell", for: indexPath) as! ChangeCell
-        
+
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: ChangeCell.identifier,
+            for: indexPath
+        ) as? ChangeCell else {
+            fatalError("Could not dequeue ChangeCell")
+        }
+
         cell.set(currencyTitle: item.currencyTitle ?? "",
                  currencyLabel: item.currencyLabel ?? "",
                  valueBuy: item.rate ?? "")
-        
+
         return cell
     }
 }

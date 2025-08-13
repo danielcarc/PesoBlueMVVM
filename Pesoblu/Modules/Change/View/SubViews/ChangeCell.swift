@@ -7,7 +7,9 @@
 import UIKit
 
 class ChangeCell: UICollectionViewCell {
-    
+
+    static let identifier = "ChangeCell"
+
     private lazy var changeView = ChangeView()
     
     override init(frame: CGRect) {
