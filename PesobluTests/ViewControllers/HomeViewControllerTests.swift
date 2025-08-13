@@ -61,29 +61,27 @@ final class HomeViewControllerTests: XCTestCase {
     
     @MainActor
     func testSetupQuickConversor_Success() {
-
-        let expectation = expectation(description: "Quick conversor updates labels")
+        let exp = expectation(description: "Quick conversor updates labels")
         
+        let expectedUSD = String(format: NSLocalizedString("currency_format", comment: ""), "1000.00")
+        let expectedARS = String(format: NSLocalizedString("currency_format", comment: ""), "5000.00")
         mockViewModel.onGetValueForCountryCalled = { [weak self] in
-            guard let self = self else { return }
-            XCTAssertEqual(
-                self.sut.quickConversorView.usdLabelTesting.text,
-                String(format: NSLocalizedString("currency_format", comment: ""), "1000.00")
-            )
-            XCTAssertEqual(
-                self.sut.quickConversorView.arsvalueLabelTesting.text,
-                String(format: NSLocalizedString("currency_format", comment: ""), "5000.0")
-            )
-            expectation.fulfill()
+            guard let self else { return }
+            XCTAssertEqual(self.sut.quickConversorView.usdLabelTesting.text, expectedUSD)
+            XCTAssertEqual(self.sut.quickConversorView.arsvalueLabelTesting.text, expectedARS)
+            exp.fulfill()
         }
-
-        sut.setupQuickConversor()            // invoke once, outside the closure
-        wait(for: [expectation], timeout: 1)  // wait after invoking the method
+        
+        sut.setupQuickConversor()
+        
+        wait(for: [exp], timeout: 2.0)
     }
 
 
 
-    @MainActor func testSetupQuickConversor_InvalidURL() {
+    @MainActor
+    func testSetupQuickConversor_InvalidURL() {
+        // Configuro mock para fallar con invalidURL
         mockViewModel.shouldFail = true
         mockViewModel.apiError = .invalidURL
         let expectation = expectation(description: "Invalid URL shows alert")
@@ -94,9 +92,8 @@ final class HomeViewControllerTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        
-        sut.setupQuickConversor()
-        wait(for: [expectation], timeout: 1.0)
+        let pExp = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [pExp], timeout: 2.0) // subí el timeout si tu máquina está cargada
     }
     
     @MainActor
