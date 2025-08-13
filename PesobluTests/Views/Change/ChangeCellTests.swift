@@ -35,5 +35,18 @@ final class ChangeCellTests: XCTestCase {
         let labelsAfter = allLabels(in: cell.contentView)
         XCTAssertTrue(labelsAfter.allSatisfy { ($0.text ?? "").isEmpty })
     }
+
+    func testDequeuesChangeCellWithIdentifier() {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(ChangeCell.self, forCellWithReuseIdentifier: ChangeCell.identifier)
+
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: ChangeCell.identifier,
+            for: IndexPath(item: 0, section: 0)
+        )
+
+        XCTAssertTrue(cell is ChangeCell)
+    }
 }
 
