@@ -62,7 +62,6 @@ class ChangeView: UIView  {
         var label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
         label.textColor = .black
-        label.text = "Dolar Oficial"
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -70,10 +69,9 @@ class ChangeView: UIView  {
     
     private lazy var currencySubtitleLabel: UILabel = {
         var label = UILabel()
-        
+
         label.textColor = .systemGray2
         label.font = .systemFont(ofSize: 14)
-        label.text = "Argentina"
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -81,10 +79,9 @@ class ChangeView: UIView  {
     
     private lazy var currencyValueLabel: UILabel = {
         var label = UILabel()
-        
+
         label.textColor = .black
         label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.text = "174"
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -100,12 +97,20 @@ class ChangeView: UIView  {
     required init?(coder: NSCoder) {
         return nil
     }
-    
+
     func set(currencyTitle: String, currencyLabel: String, valueBuy: String) {
         currencyTitleLabel.text = currencyTitle
-        let text = String(valueBuy)
-        currencyValueLabel.text =  "$ \(text)"// este es el qie muestra el valor
         currencySubtitleLabel.text = currencyLabel
+
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "es_AR")
+
+        if let value = Double(valueBuy) {
+            currencyValueLabel.text = formatter.string(from: NSNumber(value: value))
+        } else {
+            currencyValueLabel.text = valueBuy
+        }
     }
 }
 
