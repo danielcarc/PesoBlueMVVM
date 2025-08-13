@@ -28,7 +28,6 @@ final class HomeViewControllerTests: XCTestCase {
                                  quickConversorView: quickConversorView,
                                  discoverBaCView: discoverBaCView,
                                  alertPresenter: mockAlertPresenter)
-        _ = sut.view // Carga la vista
     }
     
     override func tearDown() {
@@ -66,14 +65,16 @@ final class HomeViewControllerTests: XCTestCase {
         let expectedUSD = String(format: NSLocalizedString("currency_format", comment: ""), "1000.00")
         let expectedARS = String(format: NSLocalizedString("currency_format", comment: ""), "5000.00")
         mockViewModel.onGetValueForCountryCalled = { [weak self] in
-            guard let self else { return }
-            XCTAssertEqual(self.sut.quickConversorView.usdLabelTesting.text, expectedUSD)
-            XCTAssertEqual(self.sut.quickConversorView.arsvalueLabelTesting.text, expectedARS)
-            exp.fulfill()
+            DispatchQueue.main.async {
+                guard let self else { return }
+                XCTAssertEqual(self.sut.quickConversorView.usdLabelTesting.text, expectedUSD)
+                XCTAssertEqual(self.sut.quickConversorView.arsvalueLabelTesting.text, expectedARS)
+                exp.fulfill()
+            }
         }
-        
-        sut.setupQuickConversor()
-        
+
+        sut.loadViewIfNeeded()
+
         wait(for: [exp], timeout: 2.0)
     }
 
