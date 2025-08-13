@@ -66,16 +66,14 @@ final class HomeViewControllerTests: XCTestCase {
         let expectedUSD = String(format: NSLocalizedString("currency_format", comment: ""), "1000.00")
         let expectedARS = String(format: NSLocalizedString("currency_format", comment: ""), "5000.00")
 
-        sut.onQuickConversorReady = { [weak self] in
+        mockViewModel.onGetValueForCountryCalled = { [weak self] in
             guard let self else { return }
             XCTAssertEqual(self.sut.quickConversorView.usdLabelTesting.text, expectedUSD)
             XCTAssertEqual(self.sut.quickConversorView.arsvalueLabelTesting.text, expectedARS)
             exp.fulfill()
         }
 
-        sut.loadViewIfNeeded()
         sut.setupQuickConversor()
-
         wait(for: [exp], timeout: 2.0)
     }
 
