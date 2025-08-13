@@ -86,15 +86,20 @@ final class HomeViewControllerTests: XCTestCase {
         mockViewModel.shouldFail = true
         mockViewModel.apiError = .invalidURL
         let expectation = expectation(description: "Invalid URL shows alert")
-        
-        mockViewModel.onGetDolarBlueCalled = {
+        expectation.assertForOverFulfill = true
+
+        mockViewModel.onGetDolarBlueCalled = { [weak self] in
             DispatchQueue.main.async {
+                guard let self else { return }
+                XCTAssertTrue(Thread.isMainThread)
                 XCTAssertEqual(self.mockAlertPresenter.lastMessage, NSLocalizedString("invalid_url_error", comment: ""))
                 expectation.fulfill()
             }
         }
-        let pExp = expectation(for: predicate, evaluatedWith: nil)
-        wait(for: [pExp], timeout: 2.0) // subí el timeout si tu máquina está cargada
+
+        sut.setupQuickConversor()
+
+        wait(for: [expectation], timeout: 2.0)
     }
     
     @MainActor
