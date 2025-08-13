@@ -199,9 +199,7 @@ extension HomeViewController {
                 let countryCode = homeViewModel.getUserCountry() ?? NSLocalizedString("default_country_code", comment: "")
                 let value = try await homeViewModel.getValueForCountry(countryCode: countryCode)
                 quickConversorView.setValue(value: value)
-//#if DEBUG
-//                onQuickConversorReady?()   // <-- señal clara para el test
-//#endif
+
             } catch let error as APIError {
                 handleAPIError(error)
             } catch {
@@ -290,10 +288,3 @@ extension HomeViewController: CitiesViewDelegate {
         view.layoutIfNeeded()
     }
 }
-    
-    
-
-
-
-
-
