@@ -79,7 +79,8 @@ struct BlueEuro: Decodable, CurrencyItem{
     let value_buy: Double
 }
 
-struct GenericCurrencyItem: CurrencyItem {
+/// Representa una conversión genérica de moneda.
+struct CurrencyConversion: CurrencyItem {
     var currencyTitle: String?
     var currencyLabel: String?
     var rate: String?
