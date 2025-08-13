@@ -89,7 +89,7 @@ class ChangeView: UIView  {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        configureView()
     }
     
     /// This view is intended to be instantiated programmatically.
@@ -115,13 +115,13 @@ class ChangeView: UIView  {
 }
 
 private extension ChangeView  {
-    func setup() {
-        
-        addsubviews()
+    func configureView() {
+
+        addSubviews()
         setupConstraints()
     }
-    
-    private func addsubviews() {
+
+    private func addSubviews() {
         self.backgroundColor = .clear
         self.layer.cornerRadius = 10
         self.addSubview(viewDolar)
