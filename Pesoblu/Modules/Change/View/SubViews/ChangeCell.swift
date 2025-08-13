@@ -20,7 +20,12 @@ class ChangeCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         return nil
     }
-    
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        changeView.set(currencyTitle: "", currencyLabel: "", valueBuy: "")
+    }
+
     func set(currencyTitle: String, currencyLabel: String, valueBuy: String) {
         changeView.set(currencyTitle: currencyTitle,
                        currencyLabel: currencyLabel,
