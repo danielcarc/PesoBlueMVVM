@@ -13,7 +13,10 @@ final class HomeViewController: UIViewController  {
     internal private(set) var discoverBaCView : DiscoverBaCollectionView
     internal private(set) var citiesCView : CitiesCollectionView
     private var onSelect : (([PlaceItem], String, PlaceType) -> Void)?
-    
+#if DEBUG
+    var onQuickConversorReady: (() -> Void)?
+#endif
+
     private var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private let homeViewModel: HomeViewModelProtocol
@@ -199,9 +202,9 @@ extension HomeViewController {
                 let countryCode = homeViewModel.getUserCountry() ?? NSLocalizedString("default_country_code", comment: "")
                 let value = try await homeViewModel.getValueForCountry(countryCode: countryCode)
                 quickConversorView.setValue(value: value)
-//#if DEBUG
-//                onQuickConversorReady?()   // <-- señal clara para el test
-//#endif
+#if DEBUG
+                onQuickConversorReady?()
+#endif
             } catch let error as APIError {
                 handleAPIError(error)
             } catch {
