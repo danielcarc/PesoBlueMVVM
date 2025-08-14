@@ -55,4 +55,37 @@ final class ChangeCollectionViewTests: XCTestCase {
             wait(for: [expectation], timeout: 1.0)
         }
     }
+
+    func testDidSelectCurrencyNotifiesDelegate() {
+        let item = CurrencyConversion(currencyTitle: "USD", currencyLabel: "Dollar", rate: "1")
+        let viewModel = MockViewModel(currencies: [item])
+        let sut = ChangeCollectionView(viewModel: viewModel)
+
+        final class DelegateSpy: ChangeCollectionViewDelegate {
+            var selected: CurrencyItem?
+            let expectation: XCTestExpectation
+            init(expectation: XCTestExpectation) { self.expectation = expectation }
+            func didSelectCurrency(for currencyItem: CurrencyItem) {
+                selected = currencyItem
+                expectation.fulfill()
+            }
+        }
+
+        let expectation = expectation(description: "delegate called")
+        let spy = DelegateSpy(expectation: expectation)
+        sut.delegate = spy
+
+        viewModel.sendDidFinish()
+
+        guard let collectionView = sut.subviews.compactMap({ $0 as? UICollectionView }).first else {
+            XCTFail("Missing collection view")
+            return
+        }
+
+        sut.collectionView(collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
+
+        wait(for: [expectation], timeout: 1.0)
+        XCTAssertNotNil(spy.selected)
+        XCTAssertEqual(spy.selected?.currencyTitle ?? "", "USD")
+    }
 }
