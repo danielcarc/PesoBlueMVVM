@@ -115,7 +115,7 @@ extension ChangeViewController {
 
 extension ChangeViewController: ChangeCollectionViewDelegate {
     func didSelectCurrency(for currencyItem: CurrencyItem) {
-        print("didSelectCurrency \(currencyItem)")
+        AppLogger.debug("didSelectCurrency \(currencyItem)")
         onSelectCurrency?(currencyItem)
     }
 }

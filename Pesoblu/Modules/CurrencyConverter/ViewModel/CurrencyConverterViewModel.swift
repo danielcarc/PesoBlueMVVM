@@ -65,7 +65,7 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
                 try await fetchExchangeRates()
                 try await getDolarMEP()
             } catch {
-                print("Error al obtener los datos: \(error.localizedDescription)")
+                AppLogger.error("Error al obtener los datos: \(error.localizedDescription)")
                 // Podés notificar al delegate también si querés:
                 // delegate?.didFail(error: error)
             }
@@ -169,15 +169,14 @@ extension CurrencyConverterViewModel {
 //                    let dolar = self.dolarMep
 //                    let dolarValue = dolar?.venta ?? 0.0
 //                    let currencyValue = Double(self.valueForCurrency(currencyText: self.selectedCurrency.currencyLabel ?? "0.0")) ?? 0.0
-//                    
+//
 //                    let fromDolarCurrency = String(format: "%.2f", amount * currencyValue)
 //                    let currencyFromPeso = String(format: "%.2f", (amount / dolarValue) * currencyValue)
 //                    let currencyToPeso = String(format: "%.2f", (amount / currencyValue) * dolarValue)
 //                    let currencyToDolarValue = String(format: "%.2f", amount / currencyValue)
-//                    
+//
 //                    promise(.success((currencyFromPeso, currencyToPeso, fromDolarCurrency, currencyToDolarValue)))
 //                } catch {
-//                    print("Error en conversión: \(error)")
 //                    promise(.success(("", "", "", ""))) // Valor por defecto en caso de error
 //                }
 //            }

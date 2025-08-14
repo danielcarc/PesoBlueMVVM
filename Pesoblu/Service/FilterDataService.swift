@@ -23,7 +23,7 @@ class FilterDataService: DataManager, FilterDataServiceProtocol{
                 discoverItems.append(DiscoverItem(dict: data as! [String: String]))
             }
         case .failure(let error):
-            print("Error loading PlacesBa: \(error)")
+            AppLogger.error("Error loading PlacesBa: \(error)")
         }
         return discoverItems
     }

@@ -22,7 +22,7 @@ class PlaceService: PlaceServiceProtocol{
     func fetchPlaces(city: String) throws -> [PlaceItem] {
         guard let url = bundle.url(forResource: city, withExtension: "json") else {
             
-            print("No se encontró el archivo CABA.json")
+            AppLogger.error("No se encontró el archivo CABA.json")
             throw PlaceError.fileNotFound
             
         }
@@ -40,7 +40,7 @@ class PlaceService: PlaceServiceProtocol{
             places = try decoder.decode([PlaceItem].self, from: data)
             
         } catch {
-            print(error.localizedDescription)
+            AppLogger.error(error.localizedDescription)
             throw PlaceError.failedToParseData
         }
         

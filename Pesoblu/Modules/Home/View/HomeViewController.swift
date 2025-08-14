@@ -194,7 +194,7 @@ extension HomeViewController {
                 if let dolarBlue = try await homeViewModel.getDolarBlue() {
                     quickConversorView.setDolar(dolar: dolarBlue.venta)
                 } else {
-                    print(NSLocalizedString("no_dollar_value", comment: ""))
+                    AppLogger.debug(NSLocalizedString("no_dollar_value", comment: ""))
                 }
                 let countryCode = homeViewModel.getUserCountry() ?? NSLocalizedString("default_country_code", comment: "")
                 let value = try await homeViewModel.getValueForCountry(countryCode: countryCode)

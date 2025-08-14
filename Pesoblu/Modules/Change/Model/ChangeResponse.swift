@@ -30,7 +30,6 @@ struct ChangesResponse: Decodable{
             var primerComponente = timeComponents.first
             _ = primerComponente!.removeFirst()
             let prim = primerComponente
-            //print(primerComponente!)
             let segundoComponente = timeComponents[1]
             let tercerComponente = timeComponents[2]
             let tercer = tercerComponente.split(separator: ".")

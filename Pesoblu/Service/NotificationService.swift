@@ -29,9 +29,9 @@ class NotificationService: NotificationServiceProtocol {
         //notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         notificationCenter.add(request) { error in
             if let error = error{
-                print(error.localizedDescription)
+                AppLogger.error(error.localizedDescription)
             }else{
-                print("se deberia imprimir")
+                AppLogger.debug("se deberia imprimir")
             }
         }
     }
@@ -50,7 +50,7 @@ class NotificationService: NotificationServiceProtocol {
                 return
             case .authorized:
                 self.dispatchNotificaction(dolar: dolar)
-                print("permitido \(dolar)")
+                AppLogger.debug("permitido \(dolar)")
             default:
                 return
             }

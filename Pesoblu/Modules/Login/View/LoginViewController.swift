@@ -111,10 +111,10 @@ extension LoginViewController  {
         do {
             try await authVM.singInWithGoogle()
         } catch let error as AuthenticationViewModel.AuthError {
-            print("AuthError: \(error.localizedDescription)")
+            AppLogger.error("AuthError: \(error.localizedDescription)")
             showErrorAlert(error)
         } catch {
-            print("Unexpected error: \(error.localizedDescription)")
+            AppLogger.error("Unexpected error: \(error.localizedDescription)")
             showErrorAlert(AuthenticationViewModel.AuthError.unknown)
         }
     }
@@ -125,7 +125,7 @@ extension LoginViewController  {
         Analytics.logEvent("user_logged_in", parameters: [
             "user_email": "user@example.com"
         ])
-        print("User tapped Apple Sign-In")
+        AppLogger.debug("User tapped Apple Sign-In")
     }
 }
 

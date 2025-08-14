@@ -29,7 +29,7 @@ final class UserService: UserServiceProtocol {
             let data = try encoder.encode(user)
             UserDefaults.standard.set(data, forKey: userDefaultsKey)
         } catch {
-            print("Failed to save user: \(error.localizedDescription)")
+            AppLogger.error("Failed to save user: \(error.localizedDescription)")
         }
     }
     
@@ -41,7 +41,7 @@ final class UserService: UserServiceProtocol {
             let user = try decoder.decode(AppUser.self, from: data)
             return user
         } catch {
-            print("Failed to load user: \(error.localizedDescription)")
+            AppLogger.error("Failed to load user: \(error.localizedDescription)")
             return nil
         }
     }

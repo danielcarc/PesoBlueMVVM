@@ -117,9 +117,9 @@ extension AuthenticationViewModel{
             if existingUser?.uid != appUser.uid {
                 // Guardar solo si es un usuario nuevo o si hay cambios
                 userService.saveUser(appUser)
-                print("AppUser saved to UserDefaults")
+                AppLogger.debug("AppUser saved to UserDefaults")
             } else {
-                print("User already exists in UserDefaults")
+                AppLogger.debug("User already exists in UserDefaults")
             }
             _authenticationState = .authenticated
             onAuthenticationSuccess?()

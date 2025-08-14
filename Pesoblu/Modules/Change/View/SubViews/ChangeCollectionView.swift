@@ -78,7 +78,7 @@ extension ChangeCollectionView: ChangeViewModelDelegate {
     }
     
     func didFail(error: any Error) {
-        print(error.localizedDescription)
+        AppLogger.error(error.localizedDescription)
     }
 }
 
