@@ -52,7 +52,7 @@ class FavoriteViewModel: ObservableObject{
                     place.distance = distanceService.getDistanceForPlace(place)
                 }
             } catch {
-                print("Error al cargar favoritos: \(error)")
+                AppLogger.error("Error al cargar favoritos: \(error)")
             }
         }
     }

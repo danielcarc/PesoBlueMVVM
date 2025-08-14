@@ -23,7 +23,7 @@ class CityDataService: DataManager, CityDataServiceProtocol{
                 cityItems.append(CitiesItem(dict: data as! [String: String]))
             }
         case .failure(let error):
-            print("Error loading CitysAr: \(error)")
+            AppLogger.error("Error loading CitysAr: \(error)")
         }
         return cityItems
     }

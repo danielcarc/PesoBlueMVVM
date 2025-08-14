@@ -86,12 +86,10 @@ final class ChangeViewModelTests: XCTestCase {
 
 extension ChangeViewModelTests: ChangeViewModelDelegate {
     func didFinish() {
-        print("Fetch completed successfully")
         expectation?.fulfill() // Cumplir la expectativa
     }
-    
+
     func didFail(error: Error) {
-        print("Fetch failed with error: \(error)")
         didFailCalled = true // Actualizar la variable
         expectation?.fulfill() // Cumplir la expectativa
     }

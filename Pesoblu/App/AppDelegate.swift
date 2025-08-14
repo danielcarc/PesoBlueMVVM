@@ -83,18 +83,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        print("Voy a pedir los settigs")
+        AppLogger.debug("Voy a pedir los settigs")
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler:
                                                                     {(settings: UNNotificationSettings) in
             if (settings.alertSetting == UNNotificationSetting.enabled) {
-                print("Alert enabled")
+                AppLogger.debug("Alert enabled")
             } else {
-                print("Alert not enabled")
+                AppLogger.debug("Alert not enabled")
             }
             if (settings.badgeSetting == UNNotificationSetting.enabled) {
-                print("Badge enabled")
+                AppLogger.debug("Badge enabled")
             } else {
-                print("Badge not enabled")
+                AppLogger.debug("Badge not enabled")
             }})
     }
 
