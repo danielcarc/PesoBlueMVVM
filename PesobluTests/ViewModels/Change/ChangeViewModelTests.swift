@@ -72,6 +72,35 @@ final class ChangeViewModelTests: XCTestCase {
 
         XCTAssertTrue(didFailCalled, "didFail should be called on failure")
     }
+
+    @MainActor
+    func testGetChangeOfCurrenciesAppendsRatesAndNotifiesDelegate() {
+        let mep = DolarMEP(currencyTitle: nil,
+                           currencyLabel: nil,
+                           moneda: "USD",
+                           casa: "",
+                           nombre: "",
+                           compra: 0,
+                           venta: 100,
+                           fechaActualizacion: "")
+        mockCurrencyService.mockDolarMep = mep
+
+        var rates = Rates()
+        rates.EUR = Eur(currencyTitle: nil, currencyLabel: nil, rawRate: "2")
+        mockCurrencyService.mockRates = rates
+
+        expectation = XCTestExpectation(description: "didFinish")
+
+        viewModel.getChangeOfCurrencies()
+
+        wait(for: [expectation!], timeout: 1.0)
+
+        XCTAssertEqual(viewModel.currencies.count, CurrencyCode.allCases.count + 1)
+        XCTAssertEqual(viewModel.currencies.first?.currencyTitle, "USD MEP - Dólar Americano")
+        XCTAssertEqual(viewModel.currencies.first?.currencyLabel, "Dólar Bolsa de Valores / MEP")
+        let eurItem = viewModel.currencies.first { $0.currencyTitle == CurrencyCode.EUR.title }
+        XCTAssertEqual(eurItem?.rate, "50.00")
+    }
     
     @MainActor
     func testGetCurrencyValue() {
