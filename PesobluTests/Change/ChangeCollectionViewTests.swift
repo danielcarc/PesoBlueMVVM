@@ -34,7 +34,7 @@ final class ChangeCollectionViewTests: XCTestCase {
         }
     }
 
-    func testOnHeightChangeMatchesContentHeightForVariousCounts() {
+    @MainActor func testOnHeightChangeMatchesContentHeightForVariousCounts() {
         let counts = [0, 1, 3]
         for count in counts {
             let viewModel = MockViewModel(currencies: makeCurrencies(count: count))
@@ -56,7 +56,7 @@ final class ChangeCollectionViewTests: XCTestCase {
         }
     }
 
-    func testDidSelectCurrencyNotifiesDelegate() {
+    @MainActor func testDidSelectCurrencyNotifiesDelegate() {
         let item = CurrencyConversion(currencyTitle: "USD", currencyLabel: "Dollar", rate: "1")
         let viewModel = MockViewModel(currencies: [item])
         let sut = ChangeCollectionView(viewModel: viewModel)

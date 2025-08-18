@@ -86,7 +86,7 @@ class ChangeViewModel: ChangeViewModelProtocol{
     private let currencyService: CurrencyServiceProtocol
     var currencies: [CurrencyItem]
     var rates : Rates
-    var delegate: ChangeViewModelDelegate?
+    weak var delegate: ChangeViewModelDelegate?
     
     init(delegate: ChangeViewModelDelegate? = nil, currencyService: CurrencyServiceProtocol, currencies: [CurrencyItem], rates: Rates) {
         self.delegate = delegate
@@ -96,7 +96,6 @@ class ChangeViewModel: ChangeViewModelProtocol{
         self.rates = rates
     }
     
-    var changeArray = ["Oficial", "Blue", "Euro Blue"]
     
     func getChangeOfCurrencies() async {
         await fetchCurrencies()

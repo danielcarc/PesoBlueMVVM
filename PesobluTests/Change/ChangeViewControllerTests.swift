@@ -11,7 +11,8 @@ final class ChangeViewControllerTests: XCTestCase {
         func getChangeOfCurrencies() async { getChangeCalled += 1 }
     }
 
-    func testViewDidLoadSetsUpCollectionViewAndStartsFetching() async {
+
+    @MainActor func testViewDidLoadSetsUpCollectionViewAndStartsFetching() {
         let viewModel = MockViewModel()
         let collectionView = ChangeCollectionView(viewModel: viewModel)
         let sut = ChangeViewController(viewModel: viewModel, changeCView: collectionView)
