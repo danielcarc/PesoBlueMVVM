@@ -62,29 +62,31 @@ final class CurrencyConverterViewTests: XCTestCase {
 
     func testSetCurrencyUpdatesLabels() {
         let view = CurrencyConverterView()
-        let item = CurrencyItemMock(currencyTitle: "Peso Uruguayo", currencyLabel: "Uruguay", rate: "1")
+        let code = CurrencyCode.UYU
+        let item = CurrencyItemMock(currencyTitle: "Peso Uruguayo", currencyLabel: code.label, rate: "1")
 
         view.setCurrency(currency: item)
 
         let labels = allLabels(in: view)
         XCTAssertTrue(labels.contains { $0.text == "Peso Uruguayo" })
-        XCTAssertTrue(labels.contains { $0.text == "Peso Uruguayo   ⮕   Peso" })
-        XCTAssertTrue(labels.contains { $0.text == "Peso   ⮕   Peso Uruguayo" })
-        XCTAssertTrue(labels.contains { $0.text == "Peso Uruguayo   ⮕   Dólar" })
-        XCTAssertTrue(labels.contains { $0.text == "Dólar   ⮕   Peso Uruguayo" })
+        XCTAssertTrue(labels.contains { $0.text == NSLocalizedString("currency.\(code.rawValue).toPeso", comment: "") })
+        XCTAssertTrue(labels.contains { $0.text == NSLocalizedString("currency.\(code.rawValue).fromPeso", comment: "") })
+        XCTAssertTrue(labels.contains { $0.text == NSLocalizedString("currency.\(code.rawValue).toDolar", comment: "") })
+        XCTAssertTrue(labels.contains { $0.text == NSLocalizedString("currency.\(code.rawValue).fromDolar", comment: "") })
     }
 
-    func testSetTitleLabelsUpdatesTexts() {
+    func testSetTitleLabelsUsesAllDictionaryEntries() {
         let view = CurrencyConverterView()
-        let item = CurrencyItemMock(currencyTitle: "Real Brasil", currencyLabel: "Brasil", rate: "1")
 
-        view.setTitleLabels(currency: item)
-
-        let labels = allLabels(in: view)
-        XCTAssertTrue(labels.contains { $0.text == "Real Brasil   ⮕   Peso" })
-        XCTAssertTrue(labels.contains { $0.text == "Peso   ⮕   Real Brasil" })
-        XCTAssertTrue(labels.contains { $0.text == "Real Brasil   ⮕   Dólar" })
-        XCTAssertTrue(labels.contains { $0.text == "Dólar   ⮕   Real Brasil" })
+        for code in CurrencyCode.allCases {
+            let item = CurrencyItemMock(currencyTitle: code.title, currencyLabel: code.label, rate: "1")
+            view.setTitleLabels(currency: item)
+            let labels = allLabels(in: view)
+            XCTAssertTrue(labels.contains { $0.text == NSLocalizedString("currency.\(code.rawValue).toPeso", comment: "") })
+            XCTAssertTrue(labels.contains { $0.text == NSLocalizedString("currency.\(code.rawValue).fromPeso", comment: "") })
+            XCTAssertTrue(labels.contains { $0.text == NSLocalizedString("currency.\(code.rawValue).toDolar", comment: "") })
+            XCTAssertTrue(labels.contains { $0.text == NSLocalizedString("currency.\(code.rawValue).fromDolar", comment: "") })
+        }
     }
 
     func testResetControlsRestoresZeroValues() {

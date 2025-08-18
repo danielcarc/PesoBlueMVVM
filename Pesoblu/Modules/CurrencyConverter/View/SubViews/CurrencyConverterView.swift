@@ -8,12 +8,32 @@
 import UIKit
 import Combine
 
+private struct ConversionTitles {
+    let toPeso: String
+    let fromPeso: String
+    let toDolar: String
+    let fromDolar: String
+}
+
 ///una vez que sea funcional subir el titilelabel arriba y el valuelabel bajarlo asi no se chocan los caracteres, y darle colores a los distintos caracteres para que no sea aburrido
 
 final class CurrencyConverterView: UIView  {
         
     var onAmountChanged: ((Double?) -> Void)?
     private var selectedCurrency: String = ""
+
+    private static let currencyTitles: [String: ConversionTitles] = {
+        var dict: [String: ConversionTitles] = [:]
+        for code in CurrencyCode.allCases {
+            dict[code.rawValue] = ConversionTitles(
+                toPeso: NSLocalizedString("currency.\(code.rawValue).toPeso", comment: ""),
+                fromPeso: NSLocalizedString("currency.\(code.rawValue).fromPeso", comment: ""),
+                toDolar: NSLocalizedString("currency.\(code.rawValue).toDolar", comment: ""),
+                fromDolar: NSLocalizedString("currency.\(code.rawValue).fromDolar", comment: "")
+            )
+        }
+        return dict
+    }()
     
     init() {
         
@@ -460,83 +480,29 @@ extension CurrencyConverterView {
     
     func setTitleLabels(currency: CurrencyItem) {
         selectedCurrency = currency.currencyLabel ?? ""
-        switch currency.currencyLabel {
-        case "Uruguay":
-            toPesoTitle.text = "Peso Uruguayo   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Peso Uruguayo"
-            toDolarTitle.text = "Peso Uruguayo   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Peso Uruguayo"
-        case "Brasil":
-            toPesoTitle.text = "Real Brasil   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Real Brasil"
-            toDolarTitle.text = "Real Brasil   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Real Brasil"
-        case "Chile":
-            toPesoTitle.text = "Peso Chileno   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Peso Chileno"
-            toDolarTitle.text = "Peso Chileno   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Peso Chileno"
-        case "Unión Europea":
-            toPesoTitle.text = "Euro   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Euro"
-            toDolarTitle.text = "Euro   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Euro"
-        case "México":
-            toPesoTitle.text = "Peso Mexicano  ⮕  Peso"
-            fromPesoTitle.text = "Peso   ⮕   Peso Mexicano"
-            toDolarTitle.text = "Peso Mexicano   ⮕ Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Peso Mexicano"
-        case "Colombia":
-            toPesoTitle.text = "Peso Colombiano   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Peso Colombiano"
-            toDolarTitle.text = "Peso Colombiano   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Peso Colombiano"
-        case "Reino Unido":
-            toPesoTitle.text = "Libra Esterlina   ⮕  Peso"
-            fromPesoTitle.text = "Peso   ⮕   Libra Esterlina"
-            toDolarTitle.text = "Libra Esterlina   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Libra Esterlina"
-        case "Japón":
-            toPesoTitle.text = "Yen Japonés   ⮕  Peso"
-            fromPesoTitle.text = "Peso   ⮕   Yen Japonés"
-            toDolarTitle.text = "Yen Japonés   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Yen Japonés"
-        case "Israel":
-            toPesoTitle.text = "Shequel Israelí   ⮕  Peso"
-            fromPesoTitle.text = "Peso   ⮕   Shequel Israelí"
-            toDolarTitle.text = "Shequel Israelí   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Shequel Israelí"
-        case "Paraguay":
-            toPesoTitle.text = "Guaraní Paraguayo   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Guaraní Paraguayo"
-            toDolarTitle.text = "Guaraní Paraguayo   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Guaraní Paraguayo"
-        case "Perú":
-            toPesoTitle.text = "Sol Peruano   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Sol Peruano"
-            toDolarTitle.text = "Sol Peruano   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Sol Peruano"
-        case "Rusia":
-            toPesoTitle.text = "Rublo Ruso   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Rublo Ruso"
-            toDolarTitle.text = "Rublo Ruso   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Rublo Ruso"
-        case "Canadá":
-            toPesoTitle.text = "Dólar Canadiense   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Dólar Canadiense"
-            toDolarTitle.text = "Dólar Canadiense   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Dólar Canadiense"
-        case "Bolivia":
-            toPesoTitle.text = "Boliviano   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Boliviano"
-            toDolarTitle.text = "Boliviano   ⮕   Dólar"
-            fromDolarTitle.text = "Dólar   ⮕   Boliviano"
-        default:
-            toPesoTitle.text = "Dólar   ⮕   Peso"
-            fromPesoTitle.text = "Peso   ⮕   Dólar"
-            toDolarView.isHidden = true
-            fromDolarView.isHidden = true
+        guard
+            let label = currency.currencyLabel,
+            let code = CurrencyCode.allCases.first(where: { $0.label == label })?.rawValue,
+            let titles = CurrencyConverterView.currencyTitles[code]
+        else {
+            applyDefaultTitles()
+            return
         }
-        
+
+        toPesoTitle.text = titles.toPeso
+        fromPesoTitle.text = titles.fromPeso
+        toDolarTitle.text = titles.toDolar
+        fromDolarTitle.text = titles.fromDolar
+        toDolarView.isHidden = false
+        fromDolarView.isHidden = false
+    }
+
+    private func applyDefaultTitles() {
+        toPesoTitle.text = NSLocalizedString("currency.default.toPeso", comment: "")
+        fromPesoTitle.text = NSLocalizedString("currency.default.fromPeso", comment: "")
+        toDolarTitle.text = NSLocalizedString("currency.default.toDolar", comment: "")
+        fromDolarTitle.text = NSLocalizedString("currency.default.fromDolar", comment: "")
+        toDolarView.isHidden = true
+        fromDolarView.isHidden = true
     }
 }
