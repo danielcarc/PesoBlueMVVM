@@ -8,15 +8,16 @@ final class ChangeViewControllerTests: XCTestCase {
         var delegate: ChangeViewModelDelegate?
         var currencies: [CurrencyItem] = []
         private(set) var getChangeCalled = 0
-        func getChangeOfCurrencies() { getChangeCalled += 1 }
+        func getChangeOfCurrencies() async { getChangeCalled += 1 }
     }
 
-    func testViewDidLoadSetsUpCollectionViewAndStartsFetching() {
+    func testViewDidLoadSetsUpCollectionViewAndStartsFetching() async {
         let viewModel = MockViewModel()
         let collectionView = ChangeCollectionView(viewModel: viewModel)
         let sut = ChangeViewController(viewModel: viewModel, changeCView: collectionView)
 
         sut.loadViewIfNeeded()
+        await Task.yield()
 
         XCTAssertTrue(collectionView.delegate === sut)
         XCTAssertEqual(viewModel.getChangeCalled, 1)

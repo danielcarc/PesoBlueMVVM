@@ -48,7 +48,9 @@ class ChangeViewController: UIViewController  {
         super.viewDidLoad()
         
         setup()
-        viewModel.getChangeOfCurrencies()
+        Task {
+            await viewModel.getChangeOfCurrencies()
+        }
         setTitle()
     }
     

@@ -78,30 +78,32 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
 
     //MARK: - Public - API
 
-    @MainActor
-    func fetchExchangeRates() async throws{
+    func fetchExchangeRates() async throws {
         guard let url = URL(string: "\(currencyUrl)\(apiKey)&from=USD&to=BRL,UYU,CLP,EUR,GBP,COP,JPY,ILS,MXN,PYG,PEN,RUB,CAD,BOB&format=json")
-        else {throw APIError.invalidURL}
-        
+        else { throw APIError.invalidURL }
+
         let (data, response) = try await URLSession.shared.data(from: url)
-        
+
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw APIError.invalidResponse
         }
-        
+
         let jsonDecoder = JSONDecoder()
-        
-        self.currency = try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
+        let rates = try jsonDecoder.decode(CurrencyResponse.self, from: data).rates
+        await MainActor.run {
+            self.currency = rates
+        }
     }
-    
-    @MainActor
-    func getDolarBlue() async throws -> DolarBlue?{
-        return try await currencyService.getDolarBlue()
+
+    func getDolarBlue() async throws -> DolarBlue? {
+        try await currencyService.getDolarBlue()
     }
-    
-    @MainActor
-    func getDolarMEP() async throws{
-        dolarMep = try await currencyService.getDolarMep()
+
+    func getDolarMEP() async throws {
+        let mep = try await currencyService.getDolarMep()
+        await MainActor.run {
+            self.dolarMep = mep
+        }
     }
     
     func checkPermission(dolar: String){
