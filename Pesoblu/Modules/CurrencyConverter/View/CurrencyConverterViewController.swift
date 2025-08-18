@@ -10,11 +10,12 @@ import Combine
 import UserNotifications
 
 final class CurrencyConverterViewController: UIViewController  {
-    
+
     private var cancellables = Set<AnyCancellable>()
     let viewModel: CurrencyConverterViewModelProtocol
     private let selectedCurrency: CurrencyItem
-    
+    private weak var timer: Timer?
+
     private lazy var converterView: CurrencyConverterView = {
         let view = CurrencyConverterView(/*viewModel: viewModel*/)
         //view.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +46,7 @@ final class CurrencyConverterViewController: UIViewController  {
         setup()
 
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -56,6 +57,11 @@ final class CurrencyConverterViewController: UIViewController  {
             self.converterView.alpha = 1
             self.converterView.transform = .identity
         }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopTimer()
     }
 }
 extension CurrencyConverterViewController {
@@ -79,16 +85,22 @@ extension CurrencyConverterViewController {
 //MARK: - Local Notifications
 
 extension CurrencyConverterViewController {
-    
+
     func startTimer() {
-        Timer.scheduledTimer(withTimeInterval: 6000, repeats: true) { timer in
-            Task{
+        timer = Timer.scheduledTimer(withTimeInterval: 600, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            Task {
                 if let dolar = try await self.viewModel.getDolarBlue() {
                     let dolarNow = String(format: "%.2f", dolar.venta)
                     await self.viewModel.checkPermission(dolar: dolarNow)
                 }
             }
         }
+    }
+
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 }
 //#Preview("CurrencyViewController", traits: .defaultLayout, body: { CurrencyViewController()})

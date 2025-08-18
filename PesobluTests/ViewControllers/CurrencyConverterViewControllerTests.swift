@@ -15,6 +15,7 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
     }
 
     override func tearDown() {
+        sut.stopTimer()
         sut = nil
         mockViewModel = nil
         mockCurrency = nil
@@ -29,6 +30,9 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
         XCTAssertTrue(mockViewModel.updateCurrencyCalled)
         XCTAssertTrue(mockViewModel.getConvertedValuesCalled)
         XCTAssertTrue(sut.view is CurrencyConverterView)
+        let timer = Mirror(reflecting: sut!).descendant("timer") as? Timer
+        XCTAssertNotNil(timer)
+        sut.stopTimer()
     }
 
     @MainActor
@@ -50,6 +54,14 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
         sut.didTapBack()
 
         XCTAssertTrue(nav.didPopViewController)
+    }
+
+    @MainActor
+    func test_viewWillDisappear_invalidatesTimer() {
+        sut.startTimer()
+        sut.viewWillDisappear(false)
+        let timer = Mirror(reflecting: sut!).descendant("timer") as? Timer
+        XCTAssertNil(timer)
     }
 }
 
