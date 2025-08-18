@@ -92,8 +92,8 @@ class LoginViewController: UIViewController, LoginViewProtocol  {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Registrar pantalla en Firebase Analytics
-        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-            AnalyticsParameterScreenName: "Login Screen",
+              Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+              AnalyticsParameterScreenName: NSLocalizedString("login_screen_name", comment: ""),
             AnalyticsParameterScreenClass: String(describing: type(of: self))
         ])
     }
@@ -131,8 +131,8 @@ extension LoginViewController  {
 
 extension LoginViewController: AuthenticationDelegate {
     private func showErrorAlert(_ error: AuthenticationViewModel.AuthError) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+          let alert = UIAlertController(title: NSLocalizedString("error_title", comment: ""), message: error.localizedDescription, preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: NSLocalizedString("ok_action", comment: ""), style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     

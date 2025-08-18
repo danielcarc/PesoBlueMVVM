@@ -36,7 +36,7 @@ struct UserProfileView: View {
             VStack(spacing: 0) {
                 switch state {
                 case .loading:
-                    Text("Cargando perfil...")
+                    Text(NSLocalizedString("profile_loading", comment: ""))
                         .foregroundColor(.gray)
                         .padding(.top, 32)
                     
@@ -67,16 +67,16 @@ struct UserProfileView: View {
                     // Contenedor para Nombre y Email
                     VStack(spacing: 12) {
                         HStack {
-                            Text("Nombre: ")
+                            Text(NSLocalizedString("name_label", comment: ""))
                                 .bold()
-                            Text(user.displayName ?? "Sin nombre")
+                            Text(user.displayName ?? NSLocalizedString("no_name", comment: ""))
                             Spacer()
                         }
                         
                         HStack {
-                            Text("Email: ")
+                            Text(NSLocalizedString("email_label", comment: ""))
                                 .bold()
-                            Text(user.email ?? "Sin email")
+                            Text(user.email ?? NSLocalizedString("no_email", comment: ""))
                             Spacer()
                         }
                     }
@@ -89,12 +89,12 @@ struct UserProfileView: View {
                     // Sección de Moneda preferida (editable)
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Text("Moneda preferida: ")
+                            Text(NSLocalizedString("preferred_currency_label", comment: ""))
                                 .font(.system(size: 16))
                                 .foregroundColor(.gray)
                             
                             if isEditingCurrency {
-                                Picker("Moneda", selection: $preferredCurrency) {
+                                Picker(NSLocalizedString("currency_picker_title", comment: ""), selection: $preferredCurrency) {
                                     ForEach(currencyOptions, id: \.self) { currency in
                                         Text(currency.rawValue).tag(currency.rawValue)
                                     }
@@ -129,7 +129,7 @@ struct UserProfileView: View {
                     
                     // Botón "Invítame un Cafecito"
                     Link(destination: URL(string: "https://cafecito.app/danielcarcacha")!) {
-                        Label("Invítame un Cafecito", image: "coffee")
+                        Label(NSLocalizedString("invite_coffee_button", comment: ""), image: "coffee")
                             .font(.system(size: 16, weight: .regular))
                             .foregroundColor(.white)
                             .padding()
@@ -144,7 +144,7 @@ struct UserProfileView: View {
                     Button(action: {
                         showSignOutAlert = true
                     }) {
-                        Text("Cerrar sesión")
+                        Text(NSLocalizedString("sign_out_button", comment: ""))
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.red)
                             .padding()
@@ -157,11 +157,11 @@ struct UserProfileView: View {
                     .padding(.bottom, 16)
                     .alert(isPresented: $showSignOutAlert) {
                         Alert(
-                            title: Text("¿Estás seguro que deseas cerrar sesión?"),
-                            primaryButton: .destructive(Text("Cerrar sesión")) {
+                            title: Text(NSLocalizedString("sign_out_confirm_message", comment: "")),
+                            primaryButton: .destructive(Text(NSLocalizedString("sign_out_button", comment: ""))) {
                                 signOutConfirmed()
                             },
-                            secondaryButton: .cancel(Text("Cancelar"))
+                            secondaryButton: .cancel(Text(NSLocalizedString("cancel_action", comment: "")))
                         )
                     }
                     .overlay(toastView())
@@ -171,7 +171,7 @@ struct UserProfileView: View {
             }
         }
         .background(Color(UIColor(hex: "F0F8FF")))
-        .navigationTitle("Perfil")
+        .navigationTitle(NSLocalizedString("profile_title", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.loadUserData()
@@ -211,7 +211,7 @@ extension UserProfileView{
         if showToast {
             VStack {
                 Spacer()
-                Text("Sesión cerrada correctamente")
+                Text(NSLocalizedString("sign_out_success", comment: ""))
                     .font(.subheadline)
                     .padding()
                     .background(Color.black.opacity(0.8))

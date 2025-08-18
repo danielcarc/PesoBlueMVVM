@@ -109,7 +109,7 @@ private extension ChangeViewController {
 
 extension ChangeViewController {
     func setTitle() {
-        title = "Cotización"
+        title = NSLocalizedString("exchange_rate_title", comment: "")
         navigationController?.navigationBar.prefersLargeTitles = false
     }
 }
