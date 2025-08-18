@@ -68,16 +68,15 @@ enum CurrencyCode: String, CaseIterable {
     }
 }
 
-protocol ChangeViewModelDelegate: AnyObject{
+protocol ChangeViewModelDelegate: AnyObject {
     func didFinish()
     func didFail(error: Error)
 }
 
-@MainActor
-protocol ChangeViewModelProtocol{
-    func getChangeOfCurrencies()
-    var delegate : ChangeViewModelDelegate? {get set}
-    var currencies: [CurrencyItem]{get set}
+protocol ChangeViewModelProtocol {
+    func getChangeOfCurrencies() async
+    var delegate: ChangeViewModelDelegate? { get set }
+    var currencies: [CurrencyItem] { get set }
 }
 
 
@@ -99,32 +98,29 @@ class ChangeViewModel: ChangeViewModelProtocol{
     
     var changeArray = ["Oficial", "Blue", "Euro Blue"]
     
-    @MainActor
-    func getChangeOfCurrencies() {
-        
-        Task{
-            await fetchCurrencies()
-        }
+    func getChangeOfCurrencies() async {
+        await fetchCurrencies()
     }
-    
-    @MainActor
+
     private func fetchCurrencies() async {
-        do{
-            
-            if var mep = try await currencyService.getDolarMep(){
-                
+        do {
+            if var mep = try await currencyService.getDolarMep() {
                 mep.currencyTitle = "USD MEP - Dólar Americano"
                 mep.currencyLabel = "Dólar Bolsa de Valores / MEP"
-                currencies.append(mep)
                 rates = try await currencyService.getChangeOfCurrencies()
+                var updated: [CurrencyItem] = [mep]
                 for code in CurrencyCode.allCases {
-                    currencies.append(getCurrencyValue(for: code, currency: mep.venta))
+                    updated.append(getCurrencyValue(for: code, currency: mep.venta))
                 }
-                self.delegate?.didFinish()
+                await MainActor.run {
+                    self.currencies.append(contentsOf: updated)
+                    self.delegate?.didFinish()
+                }
             }
-        }
-        catch{
-            delegate?.didFail(error: error)
+        } catch {
+            await MainActor.run {
+                self.delegate?.didFail(error: error)
+            }
         }
     }
 }

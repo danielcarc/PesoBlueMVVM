@@ -19,7 +19,7 @@ final class ChangeCollectionViewTests: XCTestCase {
             self.currencies = currencies
         }
 
-        func getChangeOfCurrencies() {
+        func getChangeOfCurrencies() async {
             delegate?.didFinish()
         }
 

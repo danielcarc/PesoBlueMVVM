@@ -8,8 +8,7 @@
 import Foundation
 import SwiftUI
 
-@MainActor
-class FavoriteViewModel: ObservableObject{
+class FavoriteViewModel: ObservableObject {
     private let coreDataService : CoreDataServiceProtocol
     private let placeService : PlaceServiceProtocol
     private let distanceService: DistanceServiceProtocol
@@ -47,9 +46,12 @@ class FavoriteViewModel: ObservableObject{
             do {
                 let favoriteIds = try await fetchAllFavoritesIds()
                 let allPlaces = try await fetchAllPlaces()
-                self.places = allPlaces.filter { favoriteIds.contains(String($0.id)) }
-                for place in places {
+                var filtered = allPlaces.filter { favoriteIds.contains(String($0.id)) }
+                for place in filtered {
                     place.distance = distanceService.getDistanceForPlace(place)
+                }
+                await MainActor.run {
+                    self.places = filtered
                 }
             } catch {
                 AppLogger.error("Error al cargar favoritos: \(error)")

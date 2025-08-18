@@ -185,29 +185,36 @@ extension HomeViewController {
 }
 
 //MARK: - SetUp QuickConversor
-@MainActor
 extension HomeViewController {
     func setupQuickConversor() {
-        
-        Task { @MainActor in
-            do{
+        Task {
+            do {
                 if let dolarBlue = try await homeViewModel.getDolarBlue() {
-                    quickConversorView.setDolar(dolar: dolarBlue.venta)
+                    await MainActor.run {
+                        quickConversorView.setDolar(dolar: dolarBlue.venta)
+                    }
                 } else {
                     AppLogger.debug(NSLocalizedString("no_dollar_value", comment: ""))
                 }
                 let countryCode = homeViewModel.getUserCountry() ?? NSLocalizedString("default_country_code", comment: "")
                 let value = try await homeViewModel.getValueForCountry(countryCode: countryCode)
-                quickConversorView.setValue(value: value)
+                await MainActor.run {
+                    quickConversorView.setValue(value: value)
+                }
 
             } catch let error as APIError {
-                handleAPIError(error)
+                await MainActor.run {
+                    handleAPIError(error)
+                }
             } catch {
-                showAlert(message: String(format: NSLocalizedString("unknown_error", comment: ""), error.localizedDescription))
+                await MainActor.run {
+                    showAlert(message: String(format: NSLocalizedString("unknown_error", comment: ""), error.localizedDescription))
+                }
             }
         }
     }
-    
+
+    @MainActor
     private func handleAPIError(_ error: APIError) {
         switch error {
             case .invalidURL:
@@ -246,6 +253,7 @@ extension HomeViewController: CollectionViewSelectionDelegate {
         }
     }
 
+    @MainActor
     func showAlert(message: String) {
         alertPresenter.show(message: message, on: self)
     }

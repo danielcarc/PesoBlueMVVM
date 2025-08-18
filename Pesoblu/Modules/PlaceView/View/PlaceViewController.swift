@@ -200,27 +200,30 @@ extension PlaceViewController {
     }
     
     func loadFavoriteStatus() {
-
-        Task { @MainActor [weak self] in
+        Task { [weak self] in
             guard let self = self else { return }
             do {
-                self.isFavorite = try await self.placeViewModel.loadFavoriteStatus()
-            }
-            catch {
-                self.showAlert(title: "Error", message: "\(error.localizedDescription)")
+                let status = try await self.placeViewModel.loadFavoriteStatus()
+                await MainActor.run {
+                    self.isFavorite = status
+                }
+            } catch {
+                await MainActor.run {
+                    self.showAlert(title: "Error", message: "\(error.localizedDescription)")
+                }
             }
         }
     }
 
     func saveFavoriteStatus() {
-
-        Task { @MainActor [weak self] in
+        Task { [weak self] in
             guard let self = self else { return }
             do {
                 try await self.placeViewModel.saveFavoriteStatus(isFavorite: self.isFavorite)
-            }
-            catch {
-                self.showAlert(title: "Error", message: "Error saving favorite status: \(error.localizedDescription)")
+            } catch {
+                await MainActor.run {
+                    self.showAlert(title: "Error", message: "Error saving favorite status: \(error.localizedDescription)")
+                }
             }
         }
     }
