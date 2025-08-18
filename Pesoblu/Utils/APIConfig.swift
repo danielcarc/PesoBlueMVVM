@@ -1,7 +1,21 @@
 import Foundation
 
 struct APIConfig {
-    static let apiKey = "99f81f10b5b6b92679b9051bdce40b7647f150e0"
+    /// Retrieves the API key from a `Secrets.plist` file bundled with the app or from
+    /// the `API_KEY` environment variable. The actual `Secrets.plist` should not be
+    /// committed to version control.
+    static var apiKey: String {
+        if let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+           let dict = NSDictionary(contentsOfFile: path) as? [String: Any],
+           let key = dict["API_KEY"] as? String {
+            return key
+        }
+        if let envKey = ProcessInfo.processInfo.environment["API_KEY"] {
+            return envKey
+        }
+        fatalError("API_KEY not found. Provide it in Secrets.plist or as an environment variable.")
+    }
+
     static let currencyBaseURL = "https://api.getgeoapi.com/v2/currency/convert"
     static let dolarAPIBaseURL = "https://dolarapi.com/v1/dolares"
     static var dolarBlueURL: String { "\(dolarAPIBaseURL)/blue" }
