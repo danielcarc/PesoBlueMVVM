@@ -61,7 +61,7 @@ final class CurrencyConverterViewController: UIViewController  {
 extension CurrencyConverterViewController {
     
     func setup() {
-        title = "Convertir"
+        title = NSLocalizedString("currency_converter_title", comment: "")
         navigationController?.navigationBar.prefersLargeTitles = false
         let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
         backButton.tintColor = UIColor.black

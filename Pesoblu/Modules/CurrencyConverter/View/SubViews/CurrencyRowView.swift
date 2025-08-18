@@ -19,7 +19,7 @@ final class ConversionRowView: UIView  {
     
     private lazy var titleLabel: UILabel = {
         var label = UILabel()
-        label.text = "Compra"
+        label.text = NSLocalizedString("buy_label", comment: "")
         label.font = .systemFont(ofSize: 17)
         label.textColor = .systemGray2
         label.textAlignment = .center

@@ -53,7 +53,7 @@ class LoginView: UIView  {
     
     private lazy var welcomeLabel: UILabel = {
         var label = UILabel()
-        label.text = "Welcome to Argentina"
+          label.text = NSLocalizedString("login_welcome", comment: "")
         label.font = .boldSystemFont(ofSize: 22)
         
         label.textAlignment = .center
@@ -67,7 +67,7 @@ class LoginView: UIView  {
     private lazy var descriptionLabel: UILabel = {
         var label = UILabel()
 
-        label.text = "Descubrí una nueva forma de explorar la Argentina con nuestra guía turística del editor y nuestro conversor de monedas en tiempo real."
+          label.text = NSLocalizedString("login_description", comment: "")
 
         label.font = .systemFont(ofSize: 16)
         label.numberOfLines = 0
@@ -116,7 +116,7 @@ class LoginView: UIView  {
     //agregar el logo de google al boton
     private lazy var googleButtonLabel: UILabel = {
         var label = UILabel()
-        label.text = "Continuar con Google"
+          label.text = NSLocalizedString("login_continue_google", comment: "")
         label.font = .boldSystemFont(ofSize: 16)
         label.textAlignment = .center
         label.textColor = .black
@@ -174,7 +174,7 @@ class LoginView: UIView  {
     
     private lazy var appleButtonLabel: UILabel = {
         var label = UILabel()
-        label.text = "Continuar con Apple"
+          label.text = NSLocalizedString("login_continue_apple", comment: "")
         label.font = .boldSystemFont(ofSize: 16)
         label.textAlignment = .center
         label.textColor = .black
