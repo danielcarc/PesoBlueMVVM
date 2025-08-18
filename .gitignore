@@ -1,0 +1,6 @@
+# Ignore sensitive configuration files
+Pesoblu/Resources/Secrets.plist
+.env
+
+# macOS files
+.DS_Store
