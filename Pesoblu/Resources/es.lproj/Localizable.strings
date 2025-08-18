@@ -59,7 +59,7 @@
 "currency.MXN.fromDolar" = "Dólar   ⮕   Peso Mexicano";
 "currency.COP.toPeso" = "Peso Colombiano   ⮕   Peso";
 "currency.COP.fromPeso" = "Peso   ⮕   Peso Colombiano";
-"currency.COP.toDolar" = "Peso Colombiano   Dólar";
+"currency.COP.toDolar" = "Peso Colombiano   ⮕   Dólar";
 "currency.COP.fromDolar" = "Dólar   ⮕   Peso Colombiano";
 "currency.GBP.toPeso" = "Libra Esterlina   ⮕  Peso";
 "currency.GBP.fromPeso" = "Peso   ⮕   Libra Esterlina";
