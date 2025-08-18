@@ -37,7 +37,7 @@ final class ChangeViewModelTests: XCTestCase {
         mockCurrencyService.mockDolarMep = DolarMEP(currencyTitle: "title", currencyLabel: "label", moneda: "USD", casa: "Banco Central de Argentina", nombre: "Dolar Argentino MP", compra: 800.0, venta: 950.0, fechaActualizacion: "2025-05-26T00:00:00Z")
         mockCurrencyService.mockRates = Rates()
 
-        try await viewModel.getChangeOfCurrencies()
+        await viewModel.getChangeOfCurrencies()
 
         XCTAssertFalse(viewModel.currencies.isEmpty, "Currencies should not be empty")
         XCTAssertNotNil(viewModel.rates, "Rates should be set")
@@ -69,7 +69,7 @@ final class ChangeViewModelTests: XCTestCase {
         rates.EUR = Eur(currencyTitle: nil, currencyLabel: nil, rawRate: "2")
         mockCurrencyService.mockRates = rates
 
-        try await viewModel.getChangeOfCurrencies()
+        await viewModel.getChangeOfCurrencies()
 
         XCTAssertEqual(viewModel.currencies.count, CurrencyCode.allCases.count + 1)
         XCTAssertEqual(viewModel.currencies.first?.currencyTitle, "USD MEP - Dólar Americano")

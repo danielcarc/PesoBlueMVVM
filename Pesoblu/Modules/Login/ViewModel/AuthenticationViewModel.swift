@@ -102,11 +102,9 @@ extension AuthenticationViewModel{
             return rootViewController
         }
 
-        do {
-            let userAuthentication = try await MainActor.run {
-                try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
-            }
-            let user = userAuthentication.user
+        do{
+            let userAuthentication = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+            let user =  userAuthentication.user
             guard let idToken = user.idToken else {
                 throw AuthenticationError.tokenError(message: "Id token missing")
             }

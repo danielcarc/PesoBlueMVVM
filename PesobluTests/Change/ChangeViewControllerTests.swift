@@ -12,7 +12,7 @@ final class ChangeViewControllerTests: XCTestCase {
     }
 
 
-    @MainActor func testViewDidLoadSetsUpCollectionViewAndStartsFetching() {
+    @MainActor func testViewDidLoadSetsUpCollectionViewAndStartsFetching() async {
         let viewModel = MockViewModel()
         let collectionView = ChangeCollectionView(viewModel: viewModel)
         let sut = ChangeViewController(viewModel: viewModel, changeCView: collectionView)
