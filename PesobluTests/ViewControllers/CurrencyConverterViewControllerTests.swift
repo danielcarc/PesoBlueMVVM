@@ -1,5 +1,6 @@
 import XCTest
 import Combine
+import UIKit
 @testable import Pesoblu
 
 final class CurrencyConverterViewControllerTests: XCTestCase {
@@ -7,6 +8,7 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
     private var mockViewModel: MockCurrencyConverterViewModel!
     private var mockCurrency: CurrencyItemMock!
 
+    @MainActor
     override func setUp() {
         super.setUp()
         mockViewModel = MockCurrencyConverterViewModel()
@@ -14,6 +16,7 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
         sut = CurrencyConverterViewController(viewModel: mockViewModel, currency: mockCurrency)
     }
 
+    @MainActor
     override func tearDown() {
         sut.stopTimer()
         sut = nil
@@ -30,7 +33,7 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
         XCTAssertTrue(mockViewModel.updateCurrencyCalled)
         XCTAssertTrue(mockViewModel.getConvertedValuesCalled)
         XCTAssertTrue(sut.view is CurrencyConverterView)
-        let timer = Mirror(reflecting: sut!).descendant("timer") as? Timer
+        let timer = sut.timerForTesting
         XCTAssertNotNil(timer)
         sut.stopTimer()
     }
@@ -40,6 +43,8 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         sut.view.alpha = 0.5
         sut.view.transform = CGAffineTransform(scaleX: 2, y: 2)
+        
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.4))
 
         sut.viewWillAppear(false)
 
@@ -60,7 +65,7 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
     func test_viewWillDisappear_invalidatesTimer() {
         sut.startTimer()
         sut.viewWillDisappear(false)
-        let timer = Mirror(reflecting: sut!).descendant("timer") as? Timer
+        let timer = sut.timerForTesting
         XCTAssertNil(timer)
     }
 }

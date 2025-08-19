@@ -155,3 +155,9 @@ extension CurrencyConverterViewController  {
         converterView.resetControls()
     }
 }
+
+#if DEBUG
+extension CurrencyConverterViewController {
+    internal var timerForTesting: Timer? { timer }
+}
+#endif
