@@ -7,9 +7,6 @@
 
 import SwiftUI
 import Kingfisher
-import GoogleSignIn
-import GoogleSignInSwift
-
 
 struct UserProfileView: View {
     

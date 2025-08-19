@@ -6,9 +6,7 @@
 //
 
 import Foundation
-import SwiftUI
 import FirebaseAuth
-import Kingfisher
 
 struct AppUser: Codable{
     

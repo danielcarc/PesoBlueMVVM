@@ -6,10 +6,6 @@
 //
 import SwiftUI
 import GoogleSignIn
-import Foundation
-import GoogleSignIn
-import UIKit
-import Firebase
 
 enum UserProfileState {
     case loading

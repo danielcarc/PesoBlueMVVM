@@ -17,8 +17,7 @@ final class CurrencyConverterViewController: UIViewController  {
     private weak var timer: Timer?
 
     private lazy var converterView: CurrencyConverterView = {
-        let view = CurrencyConverterView(/*viewModel: viewModel*/)
-        //view.translatesAutoresizingMaskIntoConstraints = false
+        let view = CurrencyConverterView()
         return view
     }()
     
@@ -45,6 +44,14 @@ final class CurrencyConverterViewController: UIViewController  {
         super.viewDidLoad()
         setup()
 
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.view.applyVerticalGradientBackground(colors: [
+            UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1),
+            UIColor(red: 213/255, green: 229/255, blue: 252/255, alpha: 1)
+        ])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -103,7 +110,6 @@ extension CurrencyConverterViewController {
         timer = nil
     }
 }
-//#Preview("CurrencyViewController", traits: .defaultLayout, body: { CurrencyViewController()})
 
 //MARK: - Button Methods
 extension CurrencyConverterViewController {
