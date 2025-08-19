@@ -12,7 +12,6 @@ struct UserProfileView: View {
     
     @StateObject private var viewModel = UserProfileViewModel(userService: UserService())
     var onSignOut: () -> Void
-    @State private var state: UserProfileState = .loading
     @State private var preferredCurrency: String
     @State private var isEditingCurrency: Bool = false
     private let currencyOptions: [CurrencyOptions] = CurrencyOptions.allCases
@@ -31,7 +30,7 @@ struct UserProfileView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                switch state {
+                switch viewModel.state {
                 case .loading:
                     Text(NSLocalizedString("profile_loading", comment: ""))
                         .foregroundColor(.gray)
@@ -97,11 +96,9 @@ struct UserProfileView: View {
                                     }
                                 }
                                 .pickerStyle(.menu)
-                                .onChange(of: preferredCurrency) {oldValue, newValue in
-                                    viewModel.savePreferredCurrency(newValue)
+                                .onChange(of: preferredCurrency) { oldValue, newValue in                                    viewModel.savePreferredCurrency(newValue)
                                     isEditingCurrency = false
                                     // Actualizamos el estado para reflejar el cambio
-                                    state = viewModel.getState()
                                 }
                             } else {
                                 Text(preferredCurrency)
@@ -172,11 +169,9 @@ struct UserProfileView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.loadUserData()
-            state = viewModel.getState()
             preferredCurrency = viewModel.preferredCurrency
         }
         .onChange(of: isEditingCurrency) {
-            state = viewModel.getState()
             preferredCurrency = viewModel.preferredCurrency //sincronizamos despues de cambios
         }
 
