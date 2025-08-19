@@ -9,11 +9,10 @@ import Combine
 @testable import Pesoblu
 
 class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
-    func updateCurrency(selectedCurrency: any Pesoblu.CurrencyItem) {
-        ""
-    }
-    
-    
+    // MARK: - Flags for testing
+    var updateCurrencyCalled = false
+    var getConvertedValuesCalled = false
+
     private let currencyService: CurrencyServiceProtocol
     private let notificationService: NotificationServiceProtocol
     private var amount: Double = 0.0
@@ -28,8 +27,17 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
         
     }
     
+    // MARK: - CurrencyConverterViewModelProtocol
+    func updateCurrency(selectedCurrency: CurrencyItem) {
+        updateCurrencyCalled = true
+        self.selectedCurrency = selectedCurrency.currencyTitle ?? ""
+        updateMockValues()
+    }
+
+    
     func getConvertedValues() -> AnyPublisher<(String, String, String, String), Never> {
-        convertedValuesSubject.eraseToAnyPublisher()
+        getConvertedValuesCalled = true
+        return convertedValuesSubject.eraseToAnyPublisher()
     }
     
     func updateAmount(_ amount: Double?) {
@@ -37,6 +45,7 @@ class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
         updateMockValues()
     }
     
+    // Métodos de apoyo para pruebas existentes
     func updateCurrency(currency: String) {
         self.selectedCurrency = currency
         updateMockValues()
