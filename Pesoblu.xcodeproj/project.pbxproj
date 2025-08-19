@@ -228,6 +228,8 @@
 				ja,
 				"pt-BR",
 				ru,
+				de,
+				it,
 			);
 			mainGroup = C58673FE2AC71FD3000FCD5B;
 			packageReferences = (
