@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C570242D2E556830007F61F9 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = C570242C2E556830007F61F9 /* ViewInspector */; };
 		C5826C302DE4124200BD0022 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5826C2F2DE4124200BD0022 /* Alamofire */; };
 		C58BAE6E2D69181200AD9559 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C58BAE6D2D69181200AD9559 /* Kingfisher */; };
 		C5AFD62E2DA7425500B3D244 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5AFD62D2DA7425500B3D244 /* GoogleService-Info.plist */; };
@@ -88,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C570242D2E556830007F61F9 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +193,7 @@
 			);
 			name = PesobluTests;
 			packageProductDependencies = (
+				C570242C2E556830007F61F9 /* ViewInspector */,
 			);
 			productName = PesobluTests;
 			productReference = C5B49F1D2D5AC965005AE2A9 /* PesobluTests.xctest */;
@@ -237,6 +240,7 @@
 				C5C47C0B2CCAE5D500238099 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				C58BAE6C2D69181200AD9559 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				C5826C2E2DE4121B00BD0022 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				C570242B2E5567C6007F61F9 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
 			productRefGroup = C58674082AC71FD3000FCD5B /* Products */;
 			projectDirPath = "";
@@ -546,6 +550,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C570242B2E5567C6007F61F9 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.2;
+			};
+		};
 		C5826C2E2DE4121B00BD0022 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -581,6 +593,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C570242C2E556830007F61F9 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C570242B2E5567C6007F61F9 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
 		C5826C2F2DE4124200BD0022 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C5826C2E2DE4121B00BD0022 /* XCRemoteSwiftPackageReference "Alamofire" */;
