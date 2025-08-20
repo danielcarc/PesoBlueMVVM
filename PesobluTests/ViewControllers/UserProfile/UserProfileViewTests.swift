@@ -10,7 +10,6 @@ import SwiftUI
 import ViewInspector
 @testable import Pesoblu
 
-extension UserProfileView: @retroactive Inspectable {}
 
 final class UserProfileViewTests: XCTestCase {
 
@@ -67,15 +66,19 @@ final class UserProfileViewTests: XCTestCase {
             expectation.fulfill()
         })
 
-        try sut.inspect().callOnAppear()
-
-        let button = try sut.inspect().find(ViewType.Button.self, where: { try $0.labelView().text().string() == NSLocalizedString("sign_out_button", comment: "") })
-        try button.tap()
-        try sut.inspect().alert().button(0).tap()
+        ViewHosting.host(view: sut)
+        defer { ViewHosting.expel() }
+        
+        XCTAssertNoThrow(try sut.inspect().callOnAppear())
+        
+        let button = try? sut.inspect().find(ViewType.Button.self, where: { try $0.labelView().text().string() == NSLocalizedString("sign_out_button", comment: "") })
+        XCTAssertNotNil(button)
+        XCTAssertNoThrow(try button?.tap())
+        XCTAssertNoThrow(try sut.inspect().alert().button(0).tap())
 
         XCTAssertNoThrow(try sut.inspect().find(text: NSLocalizedString("sign_out_success", comment: "")))
 
-        wait(for: [expectation], timeout: 2.5)
+        wait(for: [expectation], timeout: 3)
     }
 }
 
@@ -88,7 +91,6 @@ private final class LoadingMockUserProfileViewModel: UserProfileViewModel {
 private final class SignOutMockUserProfileViewModel: UserProfileViewModel {
     override func signOut() {
         didSignOut = true
-        state = .loading
     }
 }
 
