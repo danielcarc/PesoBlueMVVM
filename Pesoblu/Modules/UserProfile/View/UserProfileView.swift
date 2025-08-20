@@ -10,7 +10,7 @@ import Kingfisher
 
 struct UserProfileView: View {
     
-    @StateObject private var viewModel = UserProfileViewModel(userService: UserService())
+    @StateObject private var viewModel: UserProfileViewModel
     var onSignOut: () -> Void
     @State private var preferredCurrency: String
     @State private var isEditingCurrency: Bool = false

@@ -72,23 +72,6 @@ final class CurrencyConverterViewControllerTests: XCTestCase {
     }
 }
 
-//private final class MockCurrencyConverterViewModel: CurrencyConverterViewModelProtocol {
-//    var updateCurrencyCalled = false
-//    var getConvertedValuesCalled = false
-//
-//    func getDolarBlue() async throws -> DolarBlue? { nil }
-//    func checkPermission(dolar: String) {}
-//    func getCurrencyArray() -> [String] { [] }
-//    func updateCurrency(selectedCurrency: CurrencyItem) {
-//        updateCurrencyCalled = true
-//    }
-//    func updateAmount(_ amount: Double?) {}
-//    func getConvertedValues() -> AnyPublisher<(String, String, String, String), Never> {
-//        getConvertedValuesCalled = true
-//        return Just(("", "", "", "")).eraseToAnyPublisher()
-//    }
-//}
-
 private struct CurrencyItemMock: CurrencyItem {
     var currencyTitle: String?
     var currencyLabel: String?
