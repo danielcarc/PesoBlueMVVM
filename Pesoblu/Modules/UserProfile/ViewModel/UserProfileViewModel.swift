@@ -64,6 +64,7 @@ class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
         }
     }
     
+    @MainActor
     func signOut() {
         GIDSignIn.sharedInstance.signOut()
         userService.deleteUser()

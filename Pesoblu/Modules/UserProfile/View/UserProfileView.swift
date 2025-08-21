@@ -10,7 +10,7 @@ import Kingfisher
 
 struct UserProfileView: View {
     
-    @StateObject private var viewModel: UserProfileViewModel
+    @ObservedObject private var viewModel: UserProfileViewModel
     var onSignOut: () -> Void
     @State private var preferredCurrency: String
     @State private var isEditingCurrency: Bool = false
@@ -21,7 +21,7 @@ struct UserProfileView: View {
     
     
     init(viewModel: UserProfileViewModel, onSignOut: @escaping () -> Void) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        self.viewModel = viewModel
         self.onSignOut = onSignOut
         self._preferredCurrency = State(initialValue: viewModel.preferredCurrency)
     }
@@ -158,12 +158,14 @@ struct UserProfileView: View {
                             secondaryButton: .cancel(Text(NSLocalizedString("cancel_action", comment: "")))
                         )
                     }
-                    .overlay(toastView())
                     Spacer()
                 }
                     
             }
+
         }
+        .overlay(toastView())
+
         .background(Color(UIColor(hex: "F0F8FF")))
         .navigationTitle(NSLocalizedString("profile_title", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
@@ -189,15 +191,24 @@ struct UserProfileView: View {
 }
 
 extension UserProfileView{
-    private func signOutConfirmed() {
+#if DEBUG
+    // Para que el test pueda invocarlo con ViewInspector
+    func signOutConfirmed() {
         viewModel.signOut()
         showToast = true
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             showToast = false
         }
     }
-
+#else
+    private func signOutConfirmed() {
+        viewModel.signOut()
+        showToast = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            showToast = false
+        }
+    }
+#endif
     @ViewBuilder
     private func toastView() -> some View {
         if showToast {
@@ -210,6 +221,8 @@ extension UserProfileView{
                     .foregroundColor(.white)
                     .cornerRadius(12)
                     .padding(.bottom, 40)
+                    .id("toastLabel") // ← clave para test
+                    .accessibilityIdentifier("toastLabel") // ← alternativa
                     .transition(.move(edge: .bottom).combined(with: .opacity))
                     .animation(.easeInOut, value: showToast)
             }

@@ -66,7 +66,7 @@ final class UserProfileViewModelTests: XCTestCase {
         }
     }
 
-    func testSignOutMarksDidSignOutAndClearsData() {
+    @MainActor func testSignOutMarksDidSignOutAndClearsData() {
         let user = AppUser(uid: "123",
                            email: nil,
                            displayName: nil,
@@ -118,19 +118,3 @@ private final class MockUserService: UserServiceProtocol {
     }
 }
 
-//extension AppUser {
-//    init(uid: String,
-//         email: String? = nil,
-//         displayName: String? = nil,
-//         photoURL: URL? = nil,
-//         preferredCurrency: String? = nil,
-//         providerID: String? = nil) {
-//        self.uid = uid
-//        self.email = email
-//        self.displayName = displayName
-//        self.photoURL = photoURL
-//        self.preferredCurrency = preferredCurrency
-//        self.providerID = providerID
-//    }
-//}
-////'let' property 'uid' may not be initialized directly; use "self.init(...)" or "self = ..." instead
