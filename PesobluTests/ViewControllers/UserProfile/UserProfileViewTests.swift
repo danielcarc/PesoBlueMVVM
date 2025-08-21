@@ -21,9 +21,10 @@ final class UserProfileViewTests: XCTestCase {
         let sut = UserProfileView(viewModel: vm, onSignOut: {})
 
         ViewHosting.host(view: sut)
+        pumpRunLoop(0.05) // deja que SwiftUI pinte
+
         defer { ViewHosting.expel() }
 
-        pumpRunLoop(0.05) // deja que SwiftUI pinte
 
         XCTAssertNoThrow(
             try sut.inspect().find(text: NSLocalizedString("profile_loading", comment: ""))
@@ -38,6 +39,7 @@ final class UserProfileViewTests: XCTestCase {
         let sut = UserProfileView(viewModel: vm, onSignOut: {})
 
         ViewHosting.host(view: sut)
+        pumpRunLoop()
         defer { ViewHosting.expel() }
 
         // Disparo explícitamente el flujo que en prod corre en onAppear
@@ -64,6 +66,7 @@ final class UserProfileViewTests: XCTestCase {
         let sut = UserProfileView(viewModel: vm, onSignOut: {})
 
         ViewHosting.host(view: sut)
+        pumpRunLoop()
         defer { ViewHosting.expel() }
 
         vm.loadUserData()
@@ -94,15 +97,20 @@ final class UserProfileViewTests: XCTestCase {
         })
         
         ViewHosting.host(view: sut)
+        pumpRunLoop()
         defer { ViewHosting.expel() }
         
+        pumpRunLoop()
         XCTAssertNoThrow(try sut.inspect().find(ViewType.ScrollView.self).callOnAppear())
-
+        
+        pumpRunLoop()
         let button = try? sut.inspect().find(ViewType.Button.self, where: { try $0.labelView().text().string() == NSLocalizedString("sign_out_button", comment: "") })
         XCTAssertNotNil(button)
         XCTAssertNoThrow(try button?.tap())
-        let alert = try sut.inspect().find(ViewType.Alert.self)
-        try alert.primaryButton().tap()
+        pumpRunLoop()
+        var alert: InspectableView<ViewType.Alert>?
+        XCTAssertNoThrow(alert = try sut.inspect().find(ViewType.Alert.self))
+        XCTAssertNoThrow(try alert?.primaryButton().tap())
         
         RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1))
         
