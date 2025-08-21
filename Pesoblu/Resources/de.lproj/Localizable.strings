@@ -109,7 +109,7 @@
 "sign_out_confirm_message" = "Sind Sie sicher, dass Sie sich abmelden möchten?";
 "cancel_action" = "Abbrechen";
 "profile_title" = "Profil";
-"sign_out_success" = "Erfolgreich abgemeldet";
+"sign_out_success" = "Abmeldung läuft";
 "login_welcome" = "Willkommen in Argentinien";
 "login_description" = "Entdecke eine neue Art, Argentinien mit unserem Reiseführer des Herausgebers und unserem Echtzeit-Währungsrechner zu erkunden.";
 "login_continue_google" = "Mit Google fortfahren";

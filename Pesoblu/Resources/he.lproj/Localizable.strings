@@ -109,7 +109,7 @@
 "sign_out_confirm_message" = "האם אתה בטוח שברצונך להתנתק?";
 "cancel_action" = "ביטול";
 "profile_title" = "פרופיל";
-"sign_out_success" = "התנתקת בהצלחה";
+"sign_out_success" = "מתנתק...";
 "login_welcome" = "ברוך הבא לארגנטינה";
 "login_description" = "גלה דרך חדשה לחקור את ארגנטינה עם מדריך הטיולים של העורך וממיר המטבע בזמן אמת שלנו.";
 "login_continue_google" = "המשך עם Google";

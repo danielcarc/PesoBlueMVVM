@@ -109,7 +109,7 @@
 "sign_out_confirm_message" = "サインアウトしてもよろしいですか？";
 "cancel_action" = "キャンセル";
 "profile_title" = "プロフィール";
-"sign_out_success" = "サインアウトしました";
+"sign_out_success" = "サインアウト中";
 "login_welcome" = "アルゼンチンへようこそ";
 "login_description" = "編集者の旅行ガイドとリアルタイム通貨コンバーターで、アルゼンチンを新しい方法で探索しましょう。";
 "login_continue_google" = "Googleで続行";
