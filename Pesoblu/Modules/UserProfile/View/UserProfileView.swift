@@ -13,7 +13,7 @@ struct UserProfileView: View {
     @ObservedObject var viewModel: UserProfileViewModel
     let onSignOut: () -> Void
     @State private var isEditingCurrency = false
-    @State private var showSignOutAlert = false
+    //@State private var showSignOutAlert = false
     @State private var showToast = false
     
     var body: some View {
@@ -135,7 +135,7 @@ struct UserProfileView: View {
                         }
                         
                         Button(action: {
-                            showSignOutAlert = true
+                            viewModel.showSignOutAlert = true
                         }) {
                             Text(NSLocalizedString("sign_out_button", comment: ""))
                                 .font(.system(size: 16, weight: .medium))
@@ -162,13 +162,16 @@ struct UserProfileView: View {
             viewModel.loadUserData()
         }
         .onChange(of: viewModel.didSignOut) {
+            print("onChange triggered: \(viewModel.didSignOut)")
+            
             showToast = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                showToast = false
+                print("asyncAfter executed, calling onSignOut")
                 onSignOut()
             }
+            
         }
-        .alert(NSLocalizedString("sign_out_confirm_message", comment: ""), isPresented: $showSignOutAlert) {
+        .alert(NSLocalizedString("sign_out_confirm_message", comment: ""), isPresented: $viewModel.showSignOutAlert) {
             Button(NSLocalizedString("cancel_action", comment: ""), role: .cancel) { }
             Button(NSLocalizedString("sign_out_button", comment: ""), role: .destructive) {
                 signOutConfirmed()
@@ -186,6 +189,7 @@ extension UserProfileView {
     #else
     private func signOutConfirmed() {
         viewModel.signOut()
+        print(viewModel.didSignOut)
     }
     #endif
     
@@ -211,6 +215,7 @@ extension UserProfileView {
             }
             .frame(minWidth: 0, maxWidth: .infinity) // Ancho adaptable al contenido
             .background(Color.clear)
+            .onAppear { print("Toast appeared with text: \(NSLocalizedString("sign_out_success", comment: ""))") }
         }
     }
     
@@ -223,8 +228,6 @@ extension UserProfileView {
 }
 
 #Preview {
-    UserProfileView(
-        viewModel: UserProfileViewModel(userService: UserService()),
-        onSignOut: { print("Signed out") }
-    )
+    UserProfileView(viewModel: UserProfileViewModel(userService: UserService()), onSignOut: {})
+        .onAppear {}
 }

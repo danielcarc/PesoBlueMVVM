@@ -19,7 +19,7 @@ protocol UserProfileViewModelProtocol {
     var state: UserProfileState { get }
     func loadUserData()
     func savePreferredCurrency(_ currency: String)
-    func signOut()
+    @MainActor func signOut()
 }
 
 protocol UserProfileViewModelDelegate: AnyObject{
@@ -28,6 +28,7 @@ protocol UserProfileViewModelDelegate: AnyObject{
 
 class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     @Published private(set) var state: UserProfileState = .loading
+    @Published var showSignOutAlert = false
     var preferredCurrency: String
     weak var delegate: UserProfileViewModelDelegate?
     @Published var didSignOut: Bool = false

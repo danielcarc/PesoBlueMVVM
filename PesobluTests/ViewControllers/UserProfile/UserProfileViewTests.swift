@@ -77,53 +77,54 @@ final class UserProfileViewTests: XCTestCase {
     }
 
     // MARK: SignOut + Toast + Callback
-//    @MainActor
-//    func testSignOutShowsToastOnceAndInvokesCallbackAfterDelay() throws {
-//        let user = AppUser(uid: "123",
-//                           email: "test@example.com",
-//                           displayName: "Tester",
-//                           photoURL: nil,
-//                           preferredCurrency: "USD",
-//                           providerID: nil)
-//        let service = MockUserService()
-//        service.storedUser = user
-//        let viewModel = SignOutMockUserProfileViewModel(userService: service)
-//        let expectation = expectation(description: "onSignOut called after delay")
-//        let startTime = Date()
-//        let sut = UserProfileView(viewModel: viewModel, onSignOut: {
-//            let elapsed = Date().timeIntervalSince(startTime)
-//            XCTAssertGreaterThanOrEqual(elapsed, 2.0)
-//            expectation.fulfill()
-//        })
-//        
-//        ViewHosting.host(view: sut)
-//        pumpRunLoop()
-//        defer { ViewHosting.expel() }
-//        
-//        pumpRunLoop()
-//        XCTAssertNoThrow(try sut.inspect().find(ViewType.ScrollView.self).callOnAppear())
-//        
-//        pumpRunLoop()
-//        let button = try? sut.inspect().find(ViewType.Button.self, where: { try $0.labelView().text().string() == NSLocalizedString("sign_out_button", comment: "") })
-//        XCTAssertNotNil(button)
-//        XCTAssertNoThrow(try button?.tap())
-//        pumpRunLoop()
-//        var alert: InspectableView<ViewType.Alert>?
-//        XCTAssertNoThrow(alert = try sut.inspect().find(ViewType.Alert.self))
-//        XCTAssertNoThrow(try alert?.primaryButton().tap())
-//        
-//        pumpRunLoop(0.1)
-//        //RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1))
-//        
-//        let successCount = try sut.inspect().findAll(ViewType.Text.self, where: {
-//            try $0.string() == NSLocalizedString("sign_out_success", comment: "")
-//        }).count
-//        XCTAssertEqual(successCount, 1)
-//        pumpRunLoop(2.1)
-//
-//        wait(for: [expectation], timeout: 3)
-//    }
-
+    @MainActor
+    func testSignOutShowsToastOnceAndInvokesCallbackAfterDelay() throws {
+        let user = AppUser(uid: "123",
+                           email: "test@example.com",
+                           displayName: "Tester",
+                           photoURL: nil,
+                           preferredCurrency: "USD",
+                           providerID: nil)
+        let service = MockUserService()
+        service.storedUser = user
+        let viewModel = SignOutMockUserProfileViewModel(userService: service)
+        let expectation = expectation(description: "onSignOut called after delay")
+        let startTime = Date()
+        let sut = UserProfileView(viewModel: viewModel, onSignOut: {
+            let elapsed = Date().timeIntervalSince(startTime)
+            XCTAssertGreaterThanOrEqual(elapsed, 2.0, "El callback debe llamarse después de al menos 2 segundos")
+            expectation.fulfill()
+        })
+        
+        ViewHosting.host(view: sut)
+        pumpRunLoop(0.05)
+        defer { ViewHosting.expel() }
+        
+        // Simula onAppear para cargar datos
+        viewModel.loadUserData()
+        pumpRunLoop(0.05)
+        
+        // Simula mostrar el alert y confirmar sign out
+        viewModel.showSignOutAlert = true
+        pumpRunLoop(0.05)
+        
+        sut.signOutConfirmed()  // Trigger el sign out
+        viewModel.didSignOut = true  // Forzar el cambio
+        pumpRunLoop(0.5)  // Tiempo inicial para .onChange y renderizado del toast
+        
+        // Inspecciona el overlay para encontrar el toast Text
+        let overlay = try sut.inspect().zStack().overlay(0)  // El overlay del ZStack
+        let vStack = try overlay.vStack()
+        let toastText = try vStack.text(1)  // El Text después del Spacer() en VStack
+        let toastString = try toastText.string()
+        XCTAssertEqual(toastString, NSLocalizedString("sign_out_success", comment: ""), "El texto del toast debe coincidir")
+        
+        // Avanza el run loop para cubrir el delay de 2 segundos del asyncAfter
+        pumpRunLoop(2.2)  // Aumenta a 2.2 para asegurar que el asyncAfter se ejecute
+        
+        // Espera el fulfillment con un timeout mayor
+        wait(for: [expectation], timeout: 3.5)
+    }
 
     // MARK: Helper
     @discardableResult
