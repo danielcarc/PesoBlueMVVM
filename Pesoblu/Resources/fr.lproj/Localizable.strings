@@ -109,7 +109,7 @@
 "sign_out_confirm_message" = "Êtes-vous sûr de vouloir vous déconnecter ?";
 "cancel_action" = "Annuler";
 "profile_title" = "Profil";
-"sign_out_success" = "Déconnexion réussie";
+"sign_out_success" = "Déconnexion en cours";
 "login_welcome" = "Bienvenue en Argentine";
 "login_description" = "Découvrez une nouvelle façon d'explorer l'Argentine avec le guide de voyage de notre éditeur et notre convertisseur de devises en temps réel.";
 "login_continue_google" = "Continuer avec Google";

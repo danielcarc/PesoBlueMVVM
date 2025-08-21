@@ -109,7 +109,7 @@
 "sign_out_confirm_message" = "¿Estás seguro que deseas cerrar sesión?";
 "cancel_action" = "Cancelar";
 "profile_title" = "Perfil";
-"sign_out_success" = "Sesión cerrada correctamente";
+"sign_out_success" = "Cerrando sesión";
 "login_welcome" = "Bienvenido a Argentina";
 "login_description" = "Descubrí una nueva forma de explorar la Argentina con nuestra guía turística del editor y nuestro conversor de monedas en tiempo real.";
 "login_continue_google" = "Continuar con Google";
