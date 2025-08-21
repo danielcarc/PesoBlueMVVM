@@ -14,6 +14,7 @@ import Combine
 
 protocol AuthenticationViewModelProtocol: AnyObject {
     var onAuthenticationSuccess: (() -> Void)? { get set }
+    @MainActor
     func singInWithGoogle() async throws
     func signOut() throws
     var delegate: AuthenticationDelegate? { get set }
@@ -83,6 +84,7 @@ class AuthenticationViewModel: AuthenticationViewModelProtocol{
 
 extension AuthenticationViewModel{
     
+    @MainActor
     func singInWithGoogle() async throws {
         await MainActor.run {
             _authenticationState = .authenticating

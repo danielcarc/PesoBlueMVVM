@@ -7,6 +7,7 @@
 
 import XCTest
 import SwiftUI
+import Foundation
 import ViewInspector
 @testable import Pesoblu
 
@@ -74,38 +75,45 @@ final class UserProfileViewTests: XCTestCase {
 
     // MARK: SignOut + Toast + Callback
     @MainActor
-    func testSignOutConfirmationTriggersCallbackAndShowsToast() throws {
-            let user = AppUser(uid: "123",
-                               email: "test@example.com",
-                               displayName: "Tester",
-                               photoURL: nil,
-                               preferredCurrency: "USD",
-                               providerID: nil)
-            let service = MockUserService()
-            service.storedUser = user
-            let viewModel = SignOutMockUserProfileViewModel(userService: service)
-            let callbackExpectation = expectation(description: "onSignOut called")
-            let sut = UserProfileView(viewModel: viewModel, onSignOut: {
-                callbackExpectation.fulfill()
-            })
+    func testSignOutShowsToastOnceAndInvokesCallbackAfterDelay() throws {
+        let user = AppUser(uid: "123",
+                           email: "test@example.com",
+                           displayName: "Tester",
+                           photoURL: nil,
+                           preferredCurrency: "USD",
+                           providerID: nil)
+        let service = MockUserService()
+        service.storedUser = user
+        let viewModel = SignOutMockUserProfileViewModel(userService: service)
+        let expectation = expectation(description: "onSignOut called after delay")
+        let startTime = Date()
+        let sut = UserProfileView(viewModel: viewModel, onSignOut: {
+            let elapsed = Date().timeIntervalSince(startTime)
+            XCTAssertGreaterThanOrEqual(elapsed, 2.0)
+            expectation.fulfill()
+        })
+        
+        ViewHosting.host(view: sut)
+        defer { ViewHosting.expel() }
+        
+        XCTAssertNoThrow(try sut.inspect().find(ViewType.ScrollView.self).callOnAppear())
 
-            ViewHosting.host(view: sut)
-            defer { ViewHosting.expel() }
+        let button = try? sut.inspect().find(ViewType.Button.self, where: { try $0.labelView().text().string() == NSLocalizedString("sign_out_button", comment: "") })
+        XCTAssertNotNil(button)
+        XCTAssertNoThrow(try button?.tap())
+        let alert = try sut.inspect().find(ViewType.Alert.self)
+        try alert.primaryButton().tap()
+        
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1))
+        
+        let successCount = try sut.inspect().findAll(ViewType.Text.self, where: {
+            try $0.string() == NSLocalizedString("sign_out_success", comment: "")
+        }).count
+        XCTAssertEqual(successCount, 1)
+        
+        wait(for: [expectation], timeout: 3)
+    }
 
-            XCTAssertNoThrow(try sut.inspect().callOnAppear())
-
-            let button = try? sut.inspect().find(ViewType.Button.self, where: { try $0.labelView().text().string() == NSLocalizedString("sign_out_button", comment: "") })
-            XCTAssertNotNil(button)
-            XCTAssertNoThrow(try button?.tap())
-           // XCTAssertNoThrow(try sut.inspect().alert().button(0).tap())
-
-            let toastPredicate = NSPredicate { _, _ in
-                (try? sut.inspect().find(text: NSLocalizedString("sign_out_success", comment: ""))) != nil
-            }
-            let toastExpectation = XCTNSPredicateExpectation(predicate: toastPredicate, object: nil)
-
-            wait(for: [toastExpectation, callbackExpectation], timeout: 3)
-        }
 
     // MARK: Helper
     @discardableResult

@@ -195,10 +195,10 @@ extension UserProfileView{
     // Para que el test pueda invocarlo con ViewInspector
     func signOutConfirmed() {
         viewModel.signOut()
-        showToast = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            showToast = false
-        }
+//        showToast = true
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            showToast = false
+//        }
     }
 #else
     private func signOutConfirmed() {

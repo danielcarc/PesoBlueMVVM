@@ -10,6 +10,7 @@ import FirebaseAnalytics
 import Combine
 
 protocol LoginViewProtocol: AnyObject  {
+    @MainActor
     func didTapSignUpGoogle() async
     func didTapSignUpApple()
 }
@@ -41,7 +42,7 @@ class LoginViewController: UIViewController, LoginViewProtocol  {
         loginView = LoginView()
         self.view = loginView
         loginView.onGoogleSignInTap = { [weak self] in
-            Task{
+            Task{ @MainActor in
                 await self?.didTapSignUpGoogle()
             }
         }
@@ -106,7 +107,7 @@ class LoginViewController: UIViewController, LoginViewProtocol  {
 //MARK: - Sign in Methods
 
 extension LoginViewController  {
-    
+    @MainActor
     func didTapSignUpGoogle() async {
         do {
             try await authVM.singInWithGoogle()
