@@ -118,3 +118,5 @@
 "exchange_rate_title" = "Taux de change";
 "buy_label" = "Achat";
 "login_screen_name" = "Écran de connexion";
+"favorites_title" = "Favoris";
+"no_favorites_yet" = "Vous n'avez pas encore de favoris";

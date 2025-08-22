@@ -118,3 +118,5 @@
 "exchange_rate_title" = "Курсы обмена";
 "buy_label" = "Покупка";
 "login_screen_name" = "Экран входа";
+"favorites_title" = "Избранное";
+"no_favorites_yet" = "У вас ещё нет избранного";

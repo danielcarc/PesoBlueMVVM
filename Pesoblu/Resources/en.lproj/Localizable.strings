@@ -118,3 +118,5 @@
 "exchange_rate_title" = "Exchange Rates";
 "buy_label" = "Buy";
 "login_screen_name" = "Login Screen";
+"favorites_title" = "Favorites";
+"no_favorites_yet" = "You don't have any favorites yet";
