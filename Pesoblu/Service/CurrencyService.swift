@@ -64,6 +64,7 @@ class CurrencyService: CurrencyServiceProtocol {
         return await MainActor.run { dolarMep }
     }
 
+    @MainActor  /// rehacer y agregar todas las demas monedas
     func getValueForCountry(countryCode: String) async throws -> String {
         rates = try await fetchExchangeRates()
         let dolarMep = try await getDolarMep()?.rate ?? "0.0"

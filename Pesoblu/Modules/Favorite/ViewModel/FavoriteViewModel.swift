@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  FavoriteViewModel.swift
 //  Pesoblu
 //
 //  Created by Daniel Carcacha on 23/07/2025.
@@ -8,7 +8,13 @@
 import Foundation
 import SwiftUI
 
-final class FavoriteViewModel: ObservableObject {
+protocol FavoriteViewModelProtocol{
+    func loadFavorites() async
+    func fetchAllFavoritesIds() async throws -> [Int]
+    func fetchAllPlaces() async throws -> [PlaceItem]
+}
+
+final class FavoriteViewModel: FavoriteViewModelProtocol, ObservableObject {
     private let coreDataService : CoreDataServiceProtocol
     private let placeService : PlaceServiceProtocol
     private let distanceService: DistanceServiceProtocol
@@ -23,7 +29,7 @@ final class FavoriteViewModel: ObservableObject {
         self.distanceService = distanceService
     }
     
-    func fetchAllFavoritesIds() async throws -> [Int] {
+    func fetchAllFavoritesIds() throws -> [Int] {
             return try coreDataService.fetchAllFavoritesPlaceIds().compactMap { Int($0) }
     }
     
@@ -49,7 +55,7 @@ final class FavoriteViewModel: ObservableObject {
     @MainActor
     func loadFavorites() async {
         do {
-            let favoriteIds = try await fetchAllFavoritesIds()
+            let favoriteIds = try fetchAllFavoritesIds()
             let allPlaces = try await fetchAllPlaces()
             let filtered = allPlaces
                 .filter { favoriteIds.contains($0.id) }
@@ -57,9 +63,6 @@ final class FavoriteViewModel: ObservableObject {
                     place.distance = distanceService.getDistanceForPlace(place)
                     return place
                 }
-            await MainActor.run {
-                self.places = filtered
-            }
             self.places = filtered
         } catch {
             AppLogger.error("Error al cargar favoritos: \(error)")
