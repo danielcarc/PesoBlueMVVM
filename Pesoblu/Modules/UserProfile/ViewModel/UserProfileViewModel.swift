@@ -34,10 +34,8 @@ class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     @Published var didSignOut: Bool = false
     
     private let userService: UserServiceProtocol
-    //var onSignOutCallback: (() -> Void)?
     
     init(userService: UserServiceProtocol) {
-        //self.delegate = delegate
         self.userService = userService
         self.preferredCurrency = userService.loadPreferredCurrency() ?? CurrencyOptions.ARS.rawValue
     }

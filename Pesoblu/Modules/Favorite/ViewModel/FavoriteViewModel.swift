@@ -8,12 +8,12 @@
 import Foundation
 import SwiftUI
 
-class FavoriteViewModel: ObservableObject {
+final class FavoriteViewModel: ObservableObject {
     private let coreDataService : CoreDataServiceProtocol
     private let placeService : PlaceServiceProtocol
     private let distanceService: DistanceServiceProtocol
     
-    @Published var places : [PlaceItem] = []
+    @Published private(set) var places : [PlaceItem] = []
     
     init(coreDataService: CoreDataServiceProtocol,
          placeService: PlaceServiceProtocol,
@@ -29,15 +29,20 @@ class FavoriteViewModel: ObservableObject {
     
     func fetchAllPlaces() async throws -> [PlaceItem] {
         var all : [PlaceItem] = []
-        all.append(contentsOf: try placeService.fetchPlaces(city: "Bariloche"))
-        all.append(contentsOf: try placeService.fetchPlaces(city: "CABA"))
-        all.append(contentsOf: try placeService.fetchPlaces(city: "Cordoba"))
-        all.append(contentsOf: try placeService.fetchPlaces(city: "El Calafate"))
-        all.append(contentsOf: try placeService.fetchPlaces(city: "Iguazu"))
-        all.append(contentsOf: try placeService.fetchPlaces(city: "Mendoza"))
-        all.append(contentsOf: try placeService.fetchPlaces(city: "Salta"))
-        all.append(contentsOf: try placeService.fetchPlaces(city: "Ushuaia"))
-        all.append(contentsOf: try placeService.fetchPlaces(city: "Villa La Angostura"))
+        let cities = [
+            "Bariloche",
+            "CABA",
+            "Cordoba",
+            "El Calafate",
+            "Iguazu",
+            "Mendoza",
+            "Salta",
+            "Ushuaia",
+            "Villa La Angostura"
+        ]
+        for city in cities {
+            all.append(contentsOf: try placeService.fetchPlaces(city: city))
+        }
         return all
     }
     
