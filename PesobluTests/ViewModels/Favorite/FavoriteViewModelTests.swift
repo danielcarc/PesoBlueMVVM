@@ -11,7 +11,7 @@ import CoreLocation
 
 final class FavoriteViewModelTests: XCTestCase {
     // MARK: - Mocks
-    final class MockCoreDataService: CoreDataServiceProtocol {
+     class MockCoreDataService: CoreDataServiceProtocol {
         var ids: [String] = []
         func loadFavoriteStatus(placeId: String) async throws -> Bool { false }
         func saveFavoriteStatus(placeId: String, isFavorite: Bool) async throws {}
@@ -19,9 +19,21 @@ final class FavoriteViewModelTests: XCTestCase {
     }
 
     final class MockPlaceService: PlaceServiceProtocol {
-        var places: [PlaceItem] = []
-        func fetchPlaces(city: String) throws -> [PlaceItem] { places }
+        // Si querés controlar por ciudad:
+        var placesByCity: [String: [PlaceItem]] = [:]
+        // Si no te importa la ciudad y querés un set global:
+        var allPlaces: [PlaceItem] = []
+
+        func fetchPlaces(city: String) throws -> [PlaceItem] {
+            if let specific = placesByCity[city] {
+                return specific
+            } else {
+                return allPlaces
+            }
+        }
     }
+
+
 
     final class MockDistanceService: DistanceServiceProtocol {
         var distance = ""
@@ -51,33 +63,67 @@ final class FavoriteViewModelTests: XCTestCase {
                          placeDescription: "")
     }
 
-    private func makeSUT(favoriteIds: [Int], allPlaces: [PlaceItem], distance: String = "1 km") -> FavoriteViewModel {
-        let core = MockCoreDataService(); core.ids = favoriteIds.map(String.init)
-        let place = MockPlaceService(); place.places = allPlaces
-        let dist = MockDistanceService(); dist.distance = distance
-        return FavoriteViewModel(coreDataService: core, placeService: place, distanceService: dist)
+    private func makeSUT(
+        favoriteIds: [Int],
+        placesByCity: [String: [PlaceItem]]? = nil,
+        allPlaces: [PlaceItem] = [],
+        distance: String = "1 km"
+    ) -> (sut: FavoriteViewModel, core: MockCoreDataService, place: MockPlaceService, dist: MockDistanceService) {
+
+        let core = MockCoreDataService()
+        core.ids = favoriteIds.map(String.init)
+
+        let place = MockPlaceService()
+        if let placesByCity {
+            place.placesByCity = placesByCity
+        } else {
+            place.allPlaces = allPlaces
+        }
+
+        let dist = MockDistanceService()
+        dist.distance = distance
+
+        let sut = FavoriteViewModel(coreDataService: core, placeService: place, distanceService: dist)
+        return (sut, core, place, dist)
     }
+
 
     // MARK: - Tests
     func testLoadFavoritesFiltersAndAssignsDistance() async {
+        // Given
         let p1 = makePlace(id: 1, name: "First")
         let p2 = makePlace(id: 2, name: "Second")
-        let sut = makeSUT(favoriteIds: [1], allPlaces: [p1, p2], distance: "5 km")
 
+        // Solo CABA devuelve datos; las demás ciudades estarán vacías
+        let (sut, _, _, _) = makeSUT(
+            favoriteIds: [1],
+            placesByCity: ["CABA": [p1, p2]],
+            distance: "5 km"
+        )
+
+        // When
         await sut.loadFavorites()
 
+        // Then
         XCTAssertEqual(sut.places.count, 1)
         XCTAssertEqual(sut.places.first?.id, 1)
         XCTAssertEqual(sut.places.first?.distance, "5 km")
     }
 
     func testLoadFavoritesFiltersOutNonFavorites() async {
+        // Given
         let p1 = makePlace(id: 1)
         let p2 = makePlace(id: 2)
-        let sut = makeSUT(favoriteIds: [2], allPlaces: [p1, p2])
 
+        let (sut, _, _, _) = makeSUT(
+            favoriteIds: [2],
+            placesByCity: ["CABA": [p1, p2]]
+        )
+
+        // When
         await sut.loadFavorites()
 
+        // Then
         XCTAssertEqual(sut.places.map { $0.id }, [2])
     }
 

@@ -8,13 +8,14 @@
 import Foundation
 import SwiftUI
 
-protocol FavoriteViewModelProtocol{
+protocol FavoriteViewModelProtocol: ObservableObject {
+    var places: [PlaceItem] { get }        // <- exposición solo lectura
     func loadFavorites() async
-    func fetchAllFavoritesIds() async throws -> [Int]
+    func fetchAllFavoritesIds() throws -> [Int]
     func fetchAllPlaces() async throws -> [PlaceItem]
 }
 
-final class FavoriteViewModel: FavoriteViewModelProtocol, ObservableObject {
+final class FavoriteViewModel: FavoriteViewModelProtocol {
     private let coreDataService : CoreDataServiceProtocol
     private let placeService : PlaceServiceProtocol
     private let distanceService: DistanceServiceProtocol

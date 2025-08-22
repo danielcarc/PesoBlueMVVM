@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-struct FavoritesView: View {
-    
-    @ObservedObject var viewModel: FavoriteViewModel
+struct FavoritesView<VM: FavoriteViewModelProtocol>: View {
+    @ObservedObject var viewModel: VM
     private let onSelect: (PlaceItem) -> Void
     
     private let columns = [GridItem(.flexible())]
     
-    init(viewModel: FavoriteViewModel, onSelect: @escaping (PlaceItem) -> Void) {
+    init(viewModel: VM, onSelect: @escaping (PlaceItem) -> Void) {
         self.viewModel = viewModel
         self.onSelect = onSelect
     }
@@ -61,6 +60,8 @@ struct FavoritesView: View {
             Text("no_favorites_yet")
                 .font(.headline)
                 .foregroundColor(.secondary)
+                .id("emptyStateText") // 👈
+                .accessibilityIdentifier("emptyStateText")
         }
         .frame(maxWidth: .infinity, minHeight: 200)
         .padding()

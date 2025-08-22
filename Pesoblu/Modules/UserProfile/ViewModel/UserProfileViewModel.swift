@@ -26,7 +26,7 @@ protocol UserProfileViewModelDelegate: AnyObject{
     func didSignOut()
 }
 
-final class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
+class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     @Published private(set) var state: UserProfileState = .loading
     @Published var showSignOutAlert = false
     var preferredCurrency: String

@@ -9,7 +9,7 @@ import XCTest
 import CoreData
 @testable import Pesoblu
 
-final class CoreDataServiceTests: XCTestCase {
+class CoreDataServiceTests: XCTestCase {
     
     var persistentContainer: NSPersistentContainer!
     var service: CoreDataService!
