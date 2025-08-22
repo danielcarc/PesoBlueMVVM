@@ -9,13 +9,13 @@ import SwiftUI
 
 struct FavoritesView: View {
     
-    @StateObject private var viewModel: FavoriteViewModel
+    @ObservedObject var viewModel: FavoriteViewModel
     private let onSelect: (PlaceItem) -> Void
     
     private let columns = [GridItem(.flexible())]
     
     init(viewModel: FavoriteViewModel, onSelect: @escaping (PlaceItem) -> Void) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        self.viewModel = viewModel
         self.onSelect = onSelect
     }
     

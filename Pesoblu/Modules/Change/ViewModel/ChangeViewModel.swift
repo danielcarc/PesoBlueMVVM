@@ -101,6 +101,7 @@ class ChangeViewModel: ChangeViewModelProtocol{
         await fetchCurrencies()
     }
 
+    @MainActor
     private func fetchCurrencies() async {
         do {
             if var mep = try await currencyService.getDolarMep() {

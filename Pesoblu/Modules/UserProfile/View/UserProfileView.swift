@@ -13,7 +13,6 @@ struct UserProfileView: View {
     @ObservedObject var viewModel: UserProfileViewModel
     let onSignOut: () -> Void
     @State private var isEditingCurrency = false
-    //@State private var showSignOutAlert = false
     @State private var showToast = false
     
     var body: some View {
