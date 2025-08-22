@@ -35,7 +35,7 @@ struct FavoritesView: View {
             }
 
         }
-        .background(Color(UIColor(hex: "F0F8FF")))
+        .background(Color(.systemBackground))
         .navigationTitle("favorites_title")
         .task{
             await viewModel.loadFavorites()
