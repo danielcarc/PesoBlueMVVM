@@ -120,3 +120,4 @@
 "login_screen_name" = "Экран входа";
 "favorites_title" = "Избранное";
 "no_favorites_yet" = "У вас ещё нет избранного";
+"image_placeholder" = "Изображение места";
