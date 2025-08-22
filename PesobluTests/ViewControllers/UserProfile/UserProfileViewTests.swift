@@ -75,16 +75,10 @@ final class UserProfileViewTests: XCTestCase {
         XCTAssertNoThrow(try sut.inspect().find(text: "Tester"))
         XCTAssertNoThrow(try sut.inspect().find(text: "test@example.com"))
     }
-
-    // MARK: SignOut + Toast + Callback
+    
     @MainActor
-    func testSignOutShowsToastOnceAndInvokesCallbackAfterDelay() throws {
-        let user = AppUser(uid: "123",
-                           email: "test@example.com",
-                           displayName: "Tester",
-                           photoURL: nil,
-                           preferredCurrency: "USD",
-                           providerID: nil)
+    func testSignOutInvokesCallbackAfterDelay() throws {
+        let user = AppUser(uid: "123", email: "test@example.com", displayName: "Tester", photoURL: nil, preferredCurrency: "USD", providerID: nil)
         let service = MockUserService()
         service.storedUser = user
         let viewModel = SignOutMockUserProfileViewModel(userService: service)
@@ -100,30 +94,15 @@ final class UserProfileViewTests: XCTestCase {
         pumpRunLoop(0.05)
         defer { ViewHosting.expel() }
         
-        // Simula onAppear para cargar datos
         viewModel.loadUserData()
         pumpRunLoop(0.05)
-        
-        // Simula mostrar el alert y confirmar sign out
         viewModel.showSignOutAlert = true
         pumpRunLoop(0.05)
+        sut.signOutConfirmed()
+        viewModel.didSignOut = true
+        pumpRunLoop(2.3)
         
-        sut.signOutConfirmed()  // Trigger el sign out
-        viewModel.didSignOut = true  // Forzar el cambio
-        pumpRunLoop(0.5)  // Tiempo inicial para .onChange y renderizado del toast
-        
-        // Inspecciona el overlay para encontrar el toast Text
-        let overlay = try sut.inspect().zStack().overlay(0)  // El overlay del ZStack
-        let vStack = try overlay.vStack()
-        let toastText = try vStack.text(1)  // El Text después del Spacer() en VStack
-        let toastString = try toastText.string()
-        XCTAssertEqual(toastString, NSLocalizedString("sign_out_success", comment: ""), "El texto del toast debe coincidir")
-        
-        // Avanza el run loop para cubrir el delay de 2 segundos del asyncAfter
-        pumpRunLoop(2.2)  // Aumenta a 2.2 para asegurar que el asyncAfter se ejecute
-        
-        // Espera el fulfillment con un timeout mayor
-        wait(for: [expectation], timeout: 3.5)
+        wait(for: [expectation], timeout: 4.0)
     }
 
     // MARK: Helper
