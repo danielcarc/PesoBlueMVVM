@@ -118,3 +118,5 @@
 "exchange_rate_title" = "為替レート";
 "buy_label" = "購入";
 "login_screen_name" = "ログイン画面";
+"favorites_title" = "お気に入り";
+"no_favorites_yet" = "お気に入りはまだありません";

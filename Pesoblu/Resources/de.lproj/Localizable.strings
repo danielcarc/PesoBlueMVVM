@@ -118,3 +118,5 @@
 "exchange_rate_title" = "Wechselkurse";
 "buy_label" = "Kauf";
 "login_screen_name" = "Anmeldebildschirm";
+"favorites_title" = "Favoriten";
+"no_favorites_yet" = "Du hast noch keine Favoriten";

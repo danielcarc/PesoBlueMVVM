@@ -118,3 +118,5 @@
 "exchange_rate_title" = "Cambio";
 "buy_label" = "Acquisto";
 "login_screen_name" = "Schermata di accesso";
+"favorites_title" = "Preferiti";
+"no_favorites_yet" = "Non hai ancora preferiti";

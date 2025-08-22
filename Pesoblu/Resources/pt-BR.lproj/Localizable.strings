@@ -118,3 +118,5 @@
 "exchange_rate_title" = "Cotações";
 "buy_label" = "Compra";
 "login_screen_name" = "Tela de login";
+"favorites_title" = "Favoritos";
+"no_favorites_yet" = "Você ainda não tem favoritos";

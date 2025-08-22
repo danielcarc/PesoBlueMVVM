@@ -118,3 +118,5 @@
 "exchange_rate_title" = "שערי חליפין";
 "buy_label" = "קנה";
 "login_screen_name" = "מסך התחברות";
+"favorites_title" = "מועדפים";
+"no_favorites_yet" = "אין לך מועדפים עדיין";

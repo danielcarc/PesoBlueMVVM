@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FavoritesView: View {
     
-    @StateObject var viewModel: FavoriteViewModel
+    @StateObject private var viewModel: FavoriteViewModel
     private let onSelect: (PlaceItem) -> Void
     
     private let columns = [GridItem(.flexible())]
@@ -25,18 +25,18 @@ struct FavoritesView: View {
                 emptyState
             } else{
                 LazyVGrid(columns: columns, spacing: 12) {
-                    ForEach(viewModel.places, id: \.id){ places in
-                        FavoritesItemView(place: places){
-                            onSelect(places)
+                    ForEach(viewModel.places, id: \.id) { place in
+                        FavoritesItemView(place: place) {
+                            onSelect(place)
                         }
                     }
                 }
                 .padding(.horizontal)
             }
-            
+
         }
         .background(Color(UIColor(hex: "F0F8FF")))
-        .navigationTitle(Text("Favoritos"))
+        .navigationTitle("favorites_title")
         .task{
             viewModel.loadFavorites()
         }
@@ -46,7 +46,7 @@ struct FavoritesView: View {
             Image(systemName: "heart")
                 .font(.system(size: 48))
                 .foregroundColor(.pink)
-            Text("No tenés favoritos aún")
+            Text("no_favorites_yet")
                 .font(.headline)
                 .foregroundColor(.secondary)
         }
