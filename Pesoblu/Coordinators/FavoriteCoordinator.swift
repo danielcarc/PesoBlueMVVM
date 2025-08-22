@@ -40,8 +40,9 @@ class FavoriteCoordinator: Coordinator{
         }
         
         let hostingVC = UIHostingController(rootView: favoriteView)
-        hostingVC.title = "Favoritos"
-        hostingVC.tabBarItem = UITabBarItem(title: "Favoritos", image: UIImage(systemName: "heart"), tag: 2)
+        let favoritesTitle = NSLocalizedString("favorites_title", comment: "")
+        hostingVC.title = favoritesTitle
+        hostingVC.tabBarItem = UITabBarItem(title: favoritesTitle, image: UIImage(systemName: "heart"), tag: 2)
         navigationController.setViewControllers([hostingVC], animated: true)
     }
     
