@@ -9,9 +9,16 @@ import SwiftUI
 import Kingfisher
 
 struct FavoritesItemView: View {
-    
+
     let place : PlaceItem
     let onTap: () -> Void
+
+    private var localizedZeroDistance: String {
+        let formatter = MeasurementFormatter()
+        formatter.locale = Locale.current
+        formatter.numberFormatter.maximumFractionDigits = 1
+        return formatter.string(from: Measurement(value: 0, unit: UnitLength.kilometers))
+    }
     
     var body: some View {
         Button(action: onTap){
@@ -36,7 +43,7 @@ struct FavoritesItemView: View {
                 .frame(maxWidth: .infinity, minHeight: 160, maxHeight: 190)
                 .cornerRadius(12)
                 .clipped()
-                .accessibilityLabel(place.title ?? "Imagen de lugar")
+                .accessibilityLabel(place.title ?? NSLocalizedString("image_placeholder", comment: ""))
             
             VStack(alignment: .leading, spacing: 4){
                 Text(place.title ?? "")
@@ -47,8 +54,9 @@ struct FavoritesItemView: View {
                 Text(place.price ?? "")
                     .foregroundColor(Color(.secondaryLabel))
                     .font(.subheadline)
-                Text(place.distance ?? "0.0km")
+                Text(place.distance ?? localizedZeroDistance)
                     .foregroundStyle(Color(.secondaryLabel))
+
                     .font(.subheadline)
             }
             .padding(.horizontal, 8)

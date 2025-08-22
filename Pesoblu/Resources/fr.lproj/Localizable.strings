@@ -120,3 +120,4 @@
 "login_screen_name" = "Écran de connexion";
 "favorites_title" = "Favoris";
 "no_favorites_yet" = "Vous n'avez pas encore de favoris";
+"image_placeholder" = "Image du lieu";
