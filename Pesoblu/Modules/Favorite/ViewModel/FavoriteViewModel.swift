@@ -23,8 +23,8 @@ final class FavoriteViewModel: ObservableObject {
         self.distanceService = distanceService
     }
     
-    func fetchAllFavoritesIds() async throws -> [String] {
-        return try coreDataService.fetchAllFavoritesPlaceIds()
+    func fetchAllFavoritesIds() async throws -> [Int] {
+            return try coreDataService.fetchAllFavoritesPlaceIds().compactMap { Int($0) }
     }
     
     func fetchAllPlaces() async throws -> [PlaceItem] {
@@ -46,21 +46,23 @@ final class FavoriteViewModel: ObservableObject {
         return all
     }
     
-    func loadFavorites() {
-        Task {
-            do {
-                let favoriteIds = try await fetchAllFavoritesIds()
-                let allPlaces = try await fetchAllPlaces()
-                var filtered = allPlaces.filter { favoriteIds.contains(String($0.id)) }
-                for place in filtered {
+    @MainActor
+    func loadFavorites() async {
+        do {
+            let favoriteIds = try await fetchAllFavoritesIds()
+            let allPlaces = try await fetchAllPlaces()
+            let filtered = allPlaces
+                .filter { favoriteIds.contains($0.id) }
+                .map { place -> PlaceItem in
                     place.distance = distanceService.getDistanceForPlace(place)
+                    return place
                 }
-                await MainActor.run {
-                    self.places = filtered
-                }
-            } catch {
-                AppLogger.error("Error al cargar favoritos: \(error)")
+            await MainActor.run {
+                self.places = filtered
             }
+            self.places = filtered
+        } catch {
+            AppLogger.error("Error al cargar favoritos: \(error)")
         }
     }
 }

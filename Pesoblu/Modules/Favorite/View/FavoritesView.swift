@@ -38,7 +38,7 @@ struct FavoritesView: View {
         .background(Color(UIColor(hex: "F0F8FF")))
         .navigationTitle("favorites_title")
         .task{
-            viewModel.loadFavorites()
+            await viewModel.loadFavorites()
         }
     }
     private var emptyState: some View {
