@@ -18,6 +18,7 @@ struct FavoritesItemView: View {
             cardContent
         }
         .buttonStyle(.plain)
+        .accessibilityAddTraits(.isButton)
     }
     
     private var cardContent: some View{
@@ -35,6 +36,7 @@ struct FavoritesItemView: View {
                 .frame(maxWidth: .infinity, minHeight: 160, maxHeight: 190)
                 .cornerRadius(12)
                 .clipped()
+                .accessibilityLabel(place.title ?? "Imagen de lugar")
             
             VStack(alignment: .leading, spacing: 4){
                 Text(place.title ?? "")
