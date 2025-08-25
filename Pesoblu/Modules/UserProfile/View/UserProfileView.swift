@@ -161,11 +161,10 @@ struct UserProfileView: View {
             viewModel.loadUserData()
         }
         .onChange(of: viewModel.didSignOut) {
-            print("onChange triggered: \(viewModel.didSignOut)")
             
             showToast = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                print("asyncAfter executed, calling onSignOut")
+                
                 onSignOut()
             }
             
@@ -188,7 +187,6 @@ extension UserProfileView {
     #else
     private func signOutConfirmed() {
         viewModel.signOut()
-        print(viewModel.didSignOut)
     }
     #endif
     
@@ -214,7 +212,6 @@ extension UserProfileView {
             }
             .frame(minWidth: 0, maxWidth: .infinity) // Ancho adaptable al contenido
             .background(Color.clear)
-            .onAppear { print("Toast appeared with text: \(NSLocalizedString("sign_out_success", comment: ""))") }
         }
     }
     

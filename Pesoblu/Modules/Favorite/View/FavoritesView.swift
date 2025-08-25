@@ -45,7 +45,6 @@ struct FavoritesView<VM: FavoriteViewModelProtocol>: View {
                 }
             }
         }
-        //.background(Color(UIColor(hex: "F0F8FF")))
         .navigationTitle("favorites_title")
         .task{
             await viewModel.loadFavorites()

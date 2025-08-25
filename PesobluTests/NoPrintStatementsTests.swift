@@ -11,7 +11,7 @@ final class NoPrintStatementsTests: XCTestCase {
         var violations: [String] = []
         for case let fileURL as URL in enumerator {
             guard fileURL.pathExtension == "swift" else { continue }
-            let contents = try String(contentsOf: fileURL)
+            let contents = try String(contentsOf: fileURL, encoding: .utf8)
             if contents.contains("print(") {
                 violations.append(fileURL.path)
             }
