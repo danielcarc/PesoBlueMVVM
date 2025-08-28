@@ -121,3 +121,7 @@
 "favorites_title" = "Favorites";
 "no_favorites_yet" = "You don't have any favorites yet";
 "image_placeholder" = "Place image";
+"network_error" = "No Internet connection.";
+"invalid_credentials" = "Invalid credentials.";
+"user_cancelled" = "User canceled login.";
+"unknown_auth_error" = "An unknown error occurred.";

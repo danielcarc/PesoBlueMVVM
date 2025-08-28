@@ -58,22 +58,22 @@ class AuthenticationViewModel: AuthenticationViewModelProtocol{
         case tokenError(message: String)
     }
     
-    enum AuthError: Error {
+    enum AuthError: LocalizedError {
         case networkError
         case invalidCredentials
         case userCancelled
         case unknown
-        
-        var localizedDescription: String {
+
+        var errorDescription: String? {
             switch self {
             case .networkError:
-                return "No hay conexión a Internet."
+                return NSLocalizedString("network_error", comment: "No internet connection")
             case .invalidCredentials:
-                return "Las credenciales son inválidas."
+                return NSLocalizedString("invalid_credentials", comment: "Invalid credentials")
             case .userCancelled:
-                return "El usuario canceló el inicio de sesión."
+                return NSLocalizedString("user_cancelled", comment: "User cancelled login")
             case .unknown:
-                return "Ocurrió un error desconocido."
+                return NSLocalizedString("unknown_auth_error", comment: "Unknown authentication error")
             }
         }
     }

@@ -121,3 +121,7 @@
 "favorites_title" = "Избранное";
 "no_favorites_yet" = "У вас ещё нет избранного";
 "image_placeholder" = "Изображение места";
+"network_error" = "Нет подключения к Интернету.";
+"invalid_credentials" = "Неверные учетные данные.";
+"user_cancelled" = "Пользователь отменил вход.";
+"unknown_auth_error" = "Произошла неизвестная ошибка.";

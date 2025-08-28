@@ -121,3 +121,7 @@
 "favorites_title" = "מועדפים";
 "no_favorites_yet" = "אין לך מועדפים עדיין";
 "image_placeholder" = "תמונת המקום";
+"network_error" = "אין חיבור לאינטרנט.";
+"invalid_credentials" = "פרטי הזדהות שגויים.";
+"user_cancelled" = "המשתמש ביטל את ההתחברות.";
+"unknown_auth_error" = "אירעה שגיאה לא ידועה.";
