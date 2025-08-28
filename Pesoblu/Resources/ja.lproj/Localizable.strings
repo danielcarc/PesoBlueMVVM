@@ -121,3 +121,7 @@
 "favorites_title" = "お気に入り";
 "no_favorites_yet" = "お気に入りはまだありません";
 "image_placeholder" = "場所の画像";
+"network_error" = "インターネットに接続されていません。";
+"invalid_credentials" = "認証情報が無効です。";
+"user_cancelled" = "ユーザーがログインをキャンセルしました。";
+"unknown_auth_error" = "不明なエラーが発生しました。";

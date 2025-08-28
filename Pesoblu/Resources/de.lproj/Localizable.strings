@@ -121,3 +121,7 @@
 "favorites_title" = "Favoriten";
 "no_favorites_yet" = "Du hast noch keine Favoriten";
 "image_placeholder" = "Bild des Ortes";
+"network_error" = "Keine Internetverbindung.";
+"invalid_credentials" = "Ungültige Anmeldedaten.";
+"user_cancelled" = "Der Benutzer hat die Anmeldung abgebrochen.";
+"unknown_auth_error" = "Ein unbekannter Fehler ist aufgetreten.";

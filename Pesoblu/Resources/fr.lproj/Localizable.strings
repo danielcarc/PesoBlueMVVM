@@ -121,3 +121,7 @@
 "favorites_title" = "Favoris";
 "no_favorites_yet" = "Vous n'avez pas encore de favoris";
 "image_placeholder" = "Image du lieu";
+"network_error" = "Pas de connexion Internet.";
+"invalid_credentials" = "Identifiants invalides.";
+"user_cancelled" = "L'utilisateur a annulé la connexion.";
+"unknown_auth_error" = "Une erreur inconnue est survenue.";

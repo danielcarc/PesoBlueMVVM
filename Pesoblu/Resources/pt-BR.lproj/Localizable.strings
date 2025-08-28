@@ -121,3 +121,7 @@
 "favorites_title" = "Favoritos";
 "no_favorites_yet" = "Você ainda não tem favoritos";
 "image_placeholder" = "Imagem do lugar";
+"network_error" = "Sem conexão com a Internet.";
+"invalid_credentials" = "Credenciais inválidas.";
+"user_cancelled" = "O usuário cancelou o login.";
+"unknown_auth_error" = "Ocorreu um erro desconhecido.";
