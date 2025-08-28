@@ -14,8 +14,9 @@ import Combine
 
 protocol AuthenticationViewModelProtocol: AnyObject {
     var onAuthenticationSuccess: (() -> Void)? { get set }
+    /// Signs in the user using Google authentication.
     @MainActor
-    func singInWithGoogle() async throws
+    func signInWithGoogle() async throws
     func signOut() throws
     var delegate: AuthenticationDelegate? { get set }
     var authenticationState: AnyPublisher<AuthenticationState, Never> { get }
@@ -85,15 +86,15 @@ class AuthenticationViewModel: AuthenticationViewModelProtocol{
 extension AuthenticationViewModel{
     
     @MainActor
-    func singInWithGoogle() async throws {
+    func signInWithGoogle() async throws {
         await MainActor.run {
             _authenticationState = .authenticating
         }
-        guard let clientID = FirebaseApp.app()?.options.clientID else {
-            fatalError("No Client ID found in Firebase Configuration")
+        guard let clientID = firebaseApp.options.clientID else {
+            throw AuthError.unknown
         }
         let config = GIDConfiguration(clientID: clientID)
-        GIDSignIn.sharedInstance.configuration = config
+        gidSignIn.configuration = config
 
         let rootViewController: UIViewController = try await MainActor.run {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -105,7 +106,7 @@ extension AuthenticationViewModel{
         }
 
         do{
-            let userAuthentication = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+            let userAuthentication = try await gidSignIn.signIn(withPresenting: rootViewController)
             let user =  userAuthentication.user
             guard let idToken = user.idToken else {
                 throw AuthenticationError.tokenError(message: "Id token missing")

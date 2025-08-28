@@ -6,22 +6,26 @@
 //
 import UIKit
 import SwiftUI
+import GoogleSignIn
 
 class ProfileCoordinator: Coordinator {
 
     var navigationController: UINavigationController
     let userService: UserServiceProtocol
+    let gidSignIn: GIDSignIn
     weak var parentCoordinator: MainTabCoordinator?
     
 
     init(navigationController: UINavigationController,
-         userService: UserServiceProtocol) {
+         userService: UserServiceProtocol,
+         gidSignIn: GIDSignIn) {
         self.navigationController = navigationController
         self.userService = userService
+        self.gidSignIn = gidSignIn
     }
     
     func start() {
-        let viewModel = UserProfileViewModel(userService: UserService())
+        let viewModel = UserProfileViewModel(gidSignIn: gidSignIn, userService: UserService())
         let profileView = UserProfileView(viewModel: viewModel) { [weak self] in
             self?.handleSignOut()
         }

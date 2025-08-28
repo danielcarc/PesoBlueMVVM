@@ -7,6 +7,7 @@
 
 import XCTest
 import Foundation
+import GoogleSignIn
 @testable import Pesoblu
 
 final class UserProfileViewModelTests: XCTestCase {
@@ -16,7 +17,7 @@ final class UserProfileViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockService = MockUserService()
-        viewModel = UserProfileViewModel(userService: mockService)
+        viewModel = UserProfileViewModel(gidSignIn: GIDSignIn.sharedInstance, userService: mockService)
     }
 
     override func tearDown() {

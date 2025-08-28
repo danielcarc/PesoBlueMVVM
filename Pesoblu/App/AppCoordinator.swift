@@ -59,7 +59,10 @@ class AppCoordinator: Coordinator{
     }
     
     func showMainApp() {
-        let tabCoordinator = MainTabCoordinator(window: window, appCoordinator: self, homeCoordinator: HomeCoordinator())
+        guard let gidSignIn = (UIApplication.shared.delegate as? AppDelegate)?.gidSignIn else {
+            fatalError("Dependencies not set")
+        }
+        let tabCoordinator = MainTabCoordinator(window: window, appCoordinator: self, homeCoordinator: HomeCoordinator(), gidSignIn: gidSignIn)
         mainTabCoordinator = tabCoordinator
         childCoordinator = tabCoordinator
         tabCoordinator.start()
@@ -75,9 +78,13 @@ extension AppCoordinator: LoginNavigationDelegate {
 extension AppCoordinator{
     func showProfile() {
         let userService = UserService()
+        guard let gidSignIn = (UIApplication.shared.delegate as? AppDelegate)?.gidSignIn else {
+            fatalError("Dependencies not set")
+        }
         let profileCoordinator = ProfileCoordinator(
             navigationController: navigationController,
-            userService: userService
+            userService: userService,
+            gidSignIn: gidSignIn
         )
         profileCoordinator.start()
         childCoordinator = profileCoordinator

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import GoogleSignIn
 
 /// A view that displays and manages the user's profile settings, including loading states, user info, and preferences.
 struct UserProfileView: View {
@@ -224,6 +225,5 @@ extension UserProfileView {
 }
 
 #Preview {
-    UserProfileView(viewModel: UserProfileViewModel(userService: UserService()), onSignOut: {})
-        .onAppear {}
+    UserProfileView(viewModel: UserProfileViewModel(gidSignIn: GIDSignIn.sharedInstance, userService: UserService()), onSignOut: {})        .onAppear {}
 }

@@ -33,9 +33,11 @@ class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     weak var delegate: UserProfileViewModelDelegate?
     @Published var didSignOut: Bool = false
     
+    private let gidSignIn: GIDSignIn
     private let userService: UserServiceProtocol
     
-    init(userService: UserServiceProtocol) {
+    init(gidSignIn: GIDSignIn, userService: UserServiceProtocol) {
+        self.gidSignIn = gidSignIn
         self.userService = userService
         self.preferredCurrency = userService.loadPreferredCurrency() ?? CurrencyOptions.ARS.rawValue
     }
@@ -65,7 +67,7 @@ class UserProfileViewModel: UserProfileViewModelProtocol, ObservableObject {
     
     @MainActor
     func signOut() {
-        GIDSignIn.sharedInstance.signOut()
+        gidSignIn.signOut()
         userService.deleteUser()
         didSignOut = true
         state = .loading

@@ -9,6 +9,7 @@ import XCTest
 import SwiftUI
 import Foundation
 import ViewInspector
+import GoogleSignIn
 @testable import Pesoblu
 
 final class UserProfileViewTests: XCTestCase {
@@ -17,7 +18,7 @@ final class UserProfileViewTests: XCTestCase {
     func testLoadingStateShowsLoadingText() throws {
         // VM que deja el estado en .loading
         let service = MockUserService()
-        let vm = LoadingMockUserProfileViewModel(userService: service)
+        let vm = LoadingMockUserProfileViewModel(gidSignIn: GIDSignIn.sharedInstance, userService: service)
         let sut = UserProfileView(viewModel: vm, onSignOut: {})
 
         ViewHosting.host(view: sut)
@@ -35,7 +36,7 @@ final class UserProfileViewTests: XCTestCase {
     func testErrorStateShowsErrorMessage() throws {
         // Sin usuario => loadUserData pone .error(...)
         let service = MockUserService()
-        let vm = UserProfileViewModel(userService: service)
+        let vm = UserProfileViewModel(gidSignIn: GIDSignIn.sharedInstance, userService: service)
         let sut = UserProfileView(viewModel: vm, onSignOut: {})
 
         ViewHosting.host(view: sut)
@@ -62,7 +63,7 @@ final class UserProfileViewTests: XCTestCase {
         let service = MockUserService()
         service.storedUser = user
 
-        let vm = UserProfileViewModel(userService: service)
+        let vm = UserProfileViewModel(gidSignIn: GIDSignIn.sharedInstance, userService: service)
         let sut = UserProfileView(viewModel: vm, onSignOut: {})
 
         ViewHosting.host(view: sut)
@@ -81,7 +82,7 @@ final class UserProfileViewTests: XCTestCase {
         let user = AppUser(uid: "123", email: "test@example.com", displayName: "Tester", photoURL: nil, preferredCurrency: "USD", providerID: nil)
         let service = MockUserService()
         service.storedUser = user
-        let viewModel = SignOutMockUserProfileViewModel(userService: service)
+        let viewModel = SignOutMockUserProfileViewModel(gidSignIn: GIDSignIn.sharedInstance, userService: service)
         let expectation = expectation(description: "onSignOut called after delay")
         let startTime = Date()
         let sut = UserProfileView(viewModel: viewModel, onSignOut: {

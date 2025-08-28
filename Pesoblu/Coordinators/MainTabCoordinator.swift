@@ -6,6 +6,7 @@
 //
 import UIKit
 import CoreData
+import GoogleSignIn
 
 class MainTabCoordinator: Coordinator {
     var window: UIWindow
@@ -17,13 +18,16 @@ class MainTabCoordinator: Coordinator {
     private var profileCoordinator: ProfileCoordinator!
     private var favoriteCoordinator: FavoriteCoordinator!
     
+    let gidSignIn: GIDSignIn
 
     init(window: UIWindow, appCoordinator: AppCoordinator? = nil,
-         homeCoordinator: HomeCoordinator) {
+         homeCoordinator: HomeCoordinator,
+         gidSignIn: GIDSignIn) {
         self.window = window
         self.navigationController = UINavigationController()
         self.appCoordinator = appCoordinator
         self.homeCoordinator = homeCoordinator
+        self.gidSignIn = gidSignIn
     }
 
     func start() {
@@ -34,7 +38,7 @@ class MainTabCoordinator: Coordinator {
         changeCoordinator = ChangeCoordinator()
         changeCoordinator.start()
 
-        profileCoordinator = ProfileCoordinator(navigationController: UINavigationController(), userService: UserService())
+        profileCoordinator = ProfileCoordinator(navigationController: UINavigationController(), userService: UserService(), gidSignIn: gidSignIn)
         profileCoordinator.parentCoordinator = self
         profileCoordinator.start()
         

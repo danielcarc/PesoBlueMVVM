@@ -10,20 +10,26 @@ import FirebaseAnalytics
 import Combine
 
 protocol LoginViewProtocol: AnyObject  {
+    /// Called when the user taps the Google sign-in button.
     @MainActor
     func didTapSignUpGoogle() async
+    /// Called when the user taps the Apple sign-in button.
     func didTapSignUpApple()
 }
 
 class LoginViewController: UIViewController, LoginViewProtocol  {
     
-    var authVM : AuthenticationViewModelProtocol
+    private let authVM : AuthenticationViewModelProtocol
     let userService : UserService
     private let coordinator: LoginNavigationDelegate
     private var cancellables = Set<AnyCancellable>()
+    private lazy var loginView = LoginView()
     
-    var loginView : LoginView!
-    private var activityIndicator: UIActivityIndicatorView!
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
     
     init(authVM: AuthenticationViewModelProtocol, userService: UserService, coordinator: LoginNavigationDelegate) {
         self.authVM = authVM
@@ -39,7 +45,7 @@ class LoginViewController: UIViewController, LoginViewProtocol  {
     }
     
     override func loadView() {
-        loginView = LoginView()
+        
         self.view = loginView
         loginView.onGoogleSignInTap = { [weak self] in
             Task{ @MainActor in
@@ -66,8 +72,7 @@ class LoginViewController: UIViewController, LoginViewProtocol  {
     }
     
     private func setupActivityIndicator() {
-        activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(activityIndicator)
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -107,10 +112,11 @@ class LoginViewController: UIViewController, LoginViewProtocol  {
 //MARK: - Sign in Methods
 
 extension LoginViewController  {
+    /// Initiates the Google sign-in process when the user taps the button.
     @MainActor
     func didTapSignUpGoogle() async {
         do {
-            try await authVM.singInWithGoogle()
+            try await authVM.signInWithGoogle()
         } catch let error as AuthenticationViewModel.AuthError {
             AppLogger.error("AuthError: \(error.localizedDescription)")
             showErrorAlert(error)
@@ -132,8 +138,16 @@ extension LoginViewController  {
 
 extension LoginViewController: AuthenticationDelegate {
     private func showErrorAlert(_ error: AuthenticationViewModel.AuthError) {
-          let alert = UIAlertController(title: NSLocalizedString("error_title", comment: ""), message: error.localizedDescription, preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: NSLocalizedString("ok_action", comment: ""), style: .default, handler: nil))
+        let message: String
+        switch error {
+        case .unknown:
+            message = "Ocurrió un problema al iniciar sesión. Por favor, inténtalo de nuevo."
+        default:
+            message = error.localizedDescription
+        }
+        
+        let alert = UIAlertController(title: NSLocalizedString("error_title", comment: ""), message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok_action", comment: ""), style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     
