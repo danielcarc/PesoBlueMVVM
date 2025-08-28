@@ -33,7 +33,7 @@ class CurrencyService: CurrencyServiceProtocol {
 
         let jsonDecoder = JSONDecoder()
         let dolarBlue = try jsonDecoder.decode(DolarBlue.self, from: data)
-        return await MainActor.run { dolarBlue }
+        return dolarBlue
     }
 
     func getDolarOficial() async throws -> DolarOficial? {
@@ -46,7 +46,7 @@ class CurrencyService: CurrencyServiceProtocol {
         }
         let jsonDecoder = JSONDecoder()
         let dolarOficial = try jsonDecoder.decode(DolarOficial.self, from: data)
-        return await MainActor.run { dolarOficial }
+        return dolarOficial
     }
 
     func getDolarMep() async throws -> DolarMEP? {
@@ -61,7 +61,7 @@ class CurrencyService: CurrencyServiceProtocol {
 
         let jsonDecoder = JSONDecoder()
         let dolarMep = try jsonDecoder.decode(DolarMEP.self, from: data)
-        return await MainActor.run { dolarMep }
+        return dolarMep
     }
 
     @MainActor  /// rehacer y agregar todas las demas monedas
@@ -86,7 +86,7 @@ class CurrencyService: CurrencyServiceProtocol {
             return "Código de país no reconocido"
         }
         
-        return await MainActor.run { String(format: "%.2f", value) }
+        return String(format: "%.2f", value)
     }
     
     
@@ -111,7 +111,7 @@ extension CurrencyService{
     func getChangeOfCurrencies() async throws -> Rates {
 
         let currencies: Rates = try await fetchExchangeRates()
-        return await MainActor.run { currencies }
+        return currencies
     }
 }
 
