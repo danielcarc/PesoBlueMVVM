@@ -31,10 +31,10 @@ class LoginView: UIView  {
         imageView.image = UIImage(named: "Obelisco")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: LayoutConstants.imageHeight)
                 ])
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
@@ -104,11 +104,10 @@ class LoginView: UIView  {
         button.addTarget(self, action: #selector (googleButtonTapped), for: .touchUpInside)
         button.layer.cornerRadius = 10
         button.titleLabel?.textAlignment = .center
-        
+        button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
                     button.heightAnchor.constraint(equalToConstant: 48)
                 ])
-        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -130,11 +129,11 @@ class LoginView: UIView  {
         var imageView = UIImageView(image: UIImage(named: "googlelogo"))
         imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: 24),
             imageView.widthAnchor.constraint(equalToConstant: 24)
         ])
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isUserInteractionEnabled = false
         
         return imageView
@@ -163,11 +162,10 @@ class LoginView: UIView  {
         button.addTarget(self, action: #selector (appleButtonTapped), for: .touchUpInside)
         button.layer.cornerRadius = 10
         button.titleLabel?.textAlignment = .center
-        
+        button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
                     button.heightAnchor.constraint(equalToConstant: 48)
                 ])
-        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -188,11 +186,11 @@ class LoginView: UIView  {
         var imageView = UIImageView(image: UIImage(systemName: "apple.logo"))
         imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: 24),
             imageView.widthAnchor.constraint(equalToConstant: 24)
         ])
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isUserInteractionEnabled = false
         
         return imageView
