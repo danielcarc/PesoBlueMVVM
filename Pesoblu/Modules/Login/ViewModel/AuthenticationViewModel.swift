@@ -19,6 +19,8 @@ protocol AuthenticationViewModelProtocol: AnyObject {
     /// Signs in the user using Google authentication.
     @MainActor
     func signInWithGoogle() async throws
+    @MainActor
+    func signInWithApple()
     func signOut() throws
     var delegate: AuthenticationDelegate? { get set }
     var authenticationState: AnyPublisher<AuthenticationState, Never> { get }
@@ -153,6 +155,7 @@ extension AuthenticationViewModel{
 
 extension AuthenticationViewModel: ASAuthorizationControllerDelegate {
 
+    @MainActor
     func signInWithApple() {
         let nonce = randomNonceString()
         currentNonce = nonce

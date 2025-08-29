@@ -107,6 +107,14 @@ class LoginViewController: UIViewController, LoginViewProtocol  {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func viewDidLayoutSubviews() {
+       super.viewDidLayoutSubviews()
+    
+        view.applyVerticalGradientBackground(colors: [
+            UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1),
+            UIColor(red: 213/255, green: 229/255, blue: 252/255, alpha: 1)
+        ])
+    }
 }
 
 //MARK: - Sign in Methods
@@ -133,6 +141,16 @@ extension LoginViewController  {
             "user_email": "user@example.com"
         ])
         AppLogger.debug("User tapped Apple Sign-In")
+        do {
+            authVM.signInWithApple()
+        }
+//        catch let error as AuthenticationViewModel.AuthError {
+//            AppLogger.error("AuthError: \(error.localizedDescription)")
+//            showErrorAlert(error)
+//        } catch {
+//            AppLogger.error("Unexpected error: \(error.localizedDescription)")
+//            showErrorAlert(AuthenticationViewModel.AuthError.unknown)
+//        }
     }
 }
 

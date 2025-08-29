@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 class LoginView: UIView  {
     
@@ -99,7 +100,7 @@ class LoginView: UIView  {
         
         // Ajusta el espacio entre imagen y texto
         //button.semanticContentAttribute = .forceRightToLeft
-        button.backgroundColor = UIColor(red: 0.91, green: 0.94, blue: 0.96, alpha: 1.0)
+        button.backgroundColor = .white//UIColor(red: 0.91, green: 0.94, blue: 0.96, alpha: 1.0)
         //button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector (googleButtonTapped), for: .touchUpInside)
         button.layer.cornerRadius = 10
@@ -152,60 +153,17 @@ class LoginView: UIView  {
     
     var onAppleSignInTap: (() -> Void)?
     
-    private lazy var appleButton: UIButton = {
-        var button = UIButton()
-        
-        // Ajusta el espacio entre imagen y texto
-        //button.semanticContentAttribute = .forceRightToLeft
-        button.backgroundColor = UIColor(red: 0.91, green: 0.94, blue: 0.96, alpha: 1.0)
-        //button.setTitleColor(UIColor.black, for: .normal)
-        button.addTarget(self, action: #selector (appleButtonTapped), for: .touchUpInside)
-        button.layer.cornerRadius = 10
-        button.titleLabel?.textAlignment = .center
+    private lazy var appleButton: ASAuthorizationAppleIDButton = {
+        let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
+        button.addTarget(self, action: #selector(appleButtonTapped), for: .touchUpInside)
+        button.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-                    button.heightAnchor.constraint(equalToConstant: 48)
-                ])
-        
+            button.heightAnchor.constraint(equalToConstant: LayoutConstants.buttonHeight)
+        ])
         return button
     }()
     
-    private lazy var appleButtonLabel: UILabel = {
-        var label = UILabel()
-          label.text = NSLocalizedString("login_continue_apple", comment: "")
-        label.font = .boldSystemFont(ofSize: 16)
-        label.textAlignment = .center
-        label.textColor = .black
-        label.isUserInteractionEnabled = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        return label
-    }()
-    
-    private lazy var appleLogoImageView: UIImageView = {
-        var imageView = UIImageView(image: UIImage(systemName: "apple.logo"))
-        imageView.tintColor = .black
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 24),
-            imageView.widthAnchor.constraint(equalToConstant: 24)
-        ])
-        imageView.isUserInteractionEnabled = false
-        
-        return imageView
-    }()
-    
-    private lazy var appleButtonStackView: UIStackView = {
-        var stackView = UIStackView(arrangedSubviews: [appleLogoImageView, appleButtonLabel])
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 10
-        stackView.isUserInteractionEnabled = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -244,7 +202,6 @@ private extension LoginView {
         buttonStack.addArrangedSubview(appleButton)
         
         googleButton.addSubview(googleButtonStackView)
-        appleButton.addSubview(appleButtonStackView)
     }
     
     private func setupConstraints() {
@@ -296,12 +253,7 @@ private extension LoginView {
             appleButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 16),
             appleButton.heightAnchor.constraint(equalToConstant: LayoutConstants.buttonHeight),
             appleButton.leadingAnchor.constraint(equalTo: buttonStack.leadingAnchor),
-            appleButton.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor),
-            
-            appleButtonStackView.leadingAnchor.constraint(equalTo: appleButton.leadingAnchor, constant: 10),
-            appleButtonStackView.trailingAnchor.constraint(equalTo: appleButton.trailingAnchor, constant: -34),
-            appleButtonStackView.topAnchor.constraint(equalTo: appleButton.topAnchor),
-            appleButtonStackView.bottomAnchor.constraint(equalTo: appleButton.bottomAnchor)
+            appleButton.trailingAnchor.constraint(equalTo: buttonStack.trailingAnchor)
             
         ])
     }
