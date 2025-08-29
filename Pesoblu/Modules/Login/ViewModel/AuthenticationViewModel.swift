@@ -11,6 +11,8 @@ import FirebaseAuth
 import GoogleSignIn
 import GoogleSignInSwift
 import Combine
+import AuthenticationServices
+import CryptoKit
 
 protocol AuthenticationViewModelProtocol: AnyObject {
     var onAuthenticationSuccess: (() -> Void)? { get set }
@@ -32,7 +34,7 @@ protocol AuthenticationDelegate: AnyObject {
     func showError(_ error: Error)
 }
 
-class AuthenticationViewModel: AuthenticationViewModelProtocol{
+class AuthenticationViewModel: NSObject, AuthenticationViewModelProtocol{
     @Published private var _authenticationState: AuthenticationState = .unauthenticated
     
     weak var delegate: AuthenticationDelegate?
@@ -41,11 +43,14 @@ class AuthenticationViewModel: AuthenticationViewModelProtocol{
     private let firebaseApp: FirebaseApp
     private let gidSignIn: GIDSignIn
     private let userService: UserService
+    private var currentNonce: String?
+
     
     init(firebaseApp: FirebaseApp, gidSignIn: GIDSignIn, userService: UserService) {
         self.firebaseApp = firebaseApp
         self.gidSignIn = gidSignIn
         self.userService = userService
+        super.init()
     }
     
     var authenticationState: AnyPublisher<AuthenticationState, Never> {
@@ -130,6 +135,7 @@ extension AuthenticationViewModel{
 
         } catch {
             await MainActor.run {
+                _authenticationState = .unauthenticated
                 delegate?.showError(error)
             }
             throw error
@@ -140,6 +146,91 @@ extension AuthenticationViewModel{
         try Auth.auth().signOut()
         userService.deleteUser()
         _authenticationState = .unauthenticated
+    }
+}
+
+//MARK: - Apple Sign In
+
+extension AuthenticationViewModel: ASAuthorizationControllerDelegate {
+
+    func signInWithApple() {
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.performRequests()
+    }
+
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashed = SHA256.hash(data: inputData)
+        return hashed.compactMap { String(format: "%02x", $0) }.joined()
+    }
+
+    func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+
+        while remainingLength > 0 {
+            var random: UInt8 = 0
+            let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+            if errorCode != errSecSuccess {
+                fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+            }
+
+            if random < charset.count {
+                result.append(charset[Int(random)])
+                remainingLength -= 1
+            }
+        }
+        return result
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+              let nonce = currentNonce,
+              let appleIDToken = appleIDCredential.identityToken,
+              let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+            delegate?.showError(AuthError.unknown)
+            return
+        }
+
+        let credential = OAuthProvider.credential(providerID: .apple,
+                                                  idToken: idTokenString,
+                                                  rawNonce: nonce)
+
+        Task {
+            do {
+                let result = try await Auth.auth().signIn(with: credential)
+                let firebaseUser = result.user
+                let appUser = AppUser(firebaseUser: firebaseUser, preferredCurrency: nil)
+                let existingUser = userService.loadUser()
+                if existingUser?.uid != appUser.uid {
+                    userService.saveUser(appUser)
+                    AppLogger.debug("AppUser saved to UserDefaults")
+                } else {
+                    AppLogger.debug("User already exists in UserDefaults")
+                }
+                await MainActor.run {
+                    _authenticationState = .authenticated
+                    onAuthenticationSuccess?()
+                }
+            } catch {
+                await MainActor.run {
+                    delegate?.showError(error)
+                }
+            }
+        }
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        delegate?.showError(error)
     }
 }
 
