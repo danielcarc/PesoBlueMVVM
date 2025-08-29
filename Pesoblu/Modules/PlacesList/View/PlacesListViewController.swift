@@ -21,7 +21,14 @@ final class PlacesListViewController: UIViewController  {
 
     private var placesListView: PlacesListView {
         guard let placesListView = view as? PlacesListView else {
-            fatalError("Expected view to be of type PlacesListView")
+            AppLogger.error("Expected view to be of type PlacesListView")
+            let errorVC = ErrorViewController(
+                message: "Failed to load view."
+            )
+            DispatchQueue.main.async { [weak self] in
+                self?.present(errorVC, animated: true)
+            }
+            return PlacesListView(filterCView: FilterCollectionView(), placesListCView: PlacesListCollectionView())
         }
         return placesListView
     }

@@ -97,7 +97,8 @@ extension ChangeCollectionView: UICollectionViewDataSource {
             withReuseIdentifier: ChangeCell.identifier,
             for: indexPath
         ) as? ChangeCell else {
-            fatalError("Could not dequeue ChangeCell")
+            AppLogger.error("Could not dequeue ChangeCell")
+            return UICollectionViewCell()
         }
 
         cell.set(currencyTitle: item.currencyTitle ?? "",

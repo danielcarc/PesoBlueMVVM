@@ -15,6 +15,11 @@ Delegate Pattern
 Request APIs
 Local Push Notifications
 
+## Requisitos de Inicialización
+
+- Crea un archivo `Secrets.plist` con la clave `API_KEY` o define la variable de entorno `API_KEY` (ver `.env.example`).
+- Configura Firebase y Google Sign-In añadiendo el `GoogleService-Info.plist` y los permisos necesarios.
+
 
 
 

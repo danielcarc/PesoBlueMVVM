@@ -47,9 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var persistentContainer : NSPersistentContainer = {
         let container = NSPersistentContainer(name: "PesobluModel")
-        container.loadPersistentStores {(store, error) in
-            if let error = error as? NSError{
-                fatalError("Unsolved error \(error), \(error.userInfo)")
+        container.loadPersistentStores { [weak self] (store, error) in
+            if let error = error as? NSError {
+                AppLogger.error("Unsolved error \(error), \(error.userInfo)")
+                self?.showErrorScreen(message: "Failed to load database.")
             }
         }
         return container
@@ -63,7 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             catch{
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                AppLogger.error("Unresolved error \(nserror), \(nserror.userInfo)")
+                showErrorScreen(message: "Failed to save data.")
             }
         }
     }
@@ -99,5 +101,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+private extension AppDelegate {
+    func showErrorScreen(message: String) {
+        let errorVC = ErrorViewController(message: message)
+        if window == nil {
+            window = UIWindow(frame: UIScreen.main.bounds)
+        }
+        window?.rootViewController = errorVC
+        window?.makeKeyAndVisible()
+    }
 }
 

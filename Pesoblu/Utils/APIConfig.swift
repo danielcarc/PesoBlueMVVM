@@ -13,7 +13,8 @@ struct APIConfig {
         if let envKey = ProcessInfo.processInfo.environment["API_KEY"] {
             return envKey
         }
-        fatalError("API_KEY not found. Provide it in Secrets.plist or as an environment variable.")
+        AppLogger.error("API_KEY not found. Provide it in Secrets.plist or as an environment variable.")
+        return ""
     }
 
     static let currencyBaseURL = "https://api.getgeoapi.com/v2/currency/convert"

@@ -35,7 +35,12 @@ class AppCoordinator: Coordinator{
               let firebaseApp = appDelegate.firebaseApp,
               let gidSignIn = appDelegate.gidSignIn,
               let userService = appDelegate.userService else {
-            fatalError("Dependencies not set")
+            AppLogger.error("Dependencies not set for login flow")
+            showErrorScreen(
+                message: "Unable to load required dependencies.",
+                retryHandler: { [weak self] in self?.showLogin() }
+            )
+            return
         }
         
         let loginCoordinator = LoginCoordinator(
@@ -60,7 +65,12 @@ class AppCoordinator: Coordinator{
     
     func showMainApp() {
         guard let gidSignIn = (UIApplication.shared.delegate as? AppDelegate)?.gidSignIn else {
-            fatalError("Dependencies not set")
+            AppLogger.error("Dependencies not set for main flow")
+            showErrorScreen(
+                message: "Unable to load required dependencies.",
+                retryHandler: { [weak self] in self?.showMainApp() }
+            )
+            return
         }
         let tabCoordinator = MainTabCoordinator(window: window, appCoordinator: self, homeCoordinator: HomeCoordinator(), gidSignIn: gidSignIn)
         mainTabCoordinator = tabCoordinator
@@ -79,7 +89,12 @@ extension AppCoordinator{
     func showProfile() {
         let userService = UserService()
         guard let gidSignIn = (UIApplication.shared.delegate as? AppDelegate)?.gidSignIn else {
-            fatalError("Dependencies not set")
+            AppLogger.error("Dependencies not set for profile flow")
+            showErrorScreen(
+                message: "Unable to load required dependencies.",
+                retryHandler: { [weak self] in self?.showProfile() }
+            )
+            return
         }
         let profileCoordinator = ProfileCoordinator(
             navigationController: navigationController,
@@ -103,4 +118,11 @@ extension AppCoordinator{
         showLogin()
     }
 
+}
+
+private extension AppCoordinator {
+    func showErrorScreen(message: String, retryHandler: (() -> Void)? = nil) {
+        let errorVC = ErrorViewController(message: message, retryHandler: retryHandler)
+        navigationController.setViewControllers([errorVC], animated: true)
+    }
 }
