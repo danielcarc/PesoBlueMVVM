@@ -60,15 +60,6 @@ final class LoginViewControllerTests: XCTestCase {
         loginView.onAppleSignInTap?()
         XCTAssertFalse(mockCoordinator.didLogin)
     }
-
-//    @MainActor
-//    func testAppleButtonTapInvokesAuthVM() {
-//        sut.loadViewIfNeeded()
-//        guard let loginView = sut.view as? LoginView else { return XCTFail("Expected LoginView") }
-//        loginView.onAppleSignInTap?()
-//        XCTAssertTrue(mockAuthVM.signInAppleCalled)
-//        XCTAssertFalse(mockCoordinator.didLogin)
-//    }
     
     @MainActor
     func testAppleButtonTapInvokesCoordinatorOnSuccess() {

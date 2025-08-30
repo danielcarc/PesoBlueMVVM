@@ -146,7 +146,7 @@ final class AuthenticationViewModelTests: XCTestCase {
                 self.setAuthenticationStateForTesting(.authenticating)
             }
             await MainActor.run {
-                self.setAuthenticationStateForTesting(.authenticating)
+                self.setAuthenticationStateForTesting(.authenticated)
                 self.onAuthenticationSuccess?()
             }
         }
