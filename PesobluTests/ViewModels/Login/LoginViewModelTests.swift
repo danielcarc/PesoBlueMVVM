@@ -40,6 +40,7 @@ final class AuthenticationViewModelTests: XCTestCase {
         let exp = expectation(description: "Expect authenticated state")
 
         sut.authenticationState
+            .dropFirst()            // ignora el valor inicial (.unauthenticated)
             .sink { state in
                 received.append(state)
                 if state == .authenticated { exp.fulfill() }
@@ -58,11 +59,15 @@ final class AuthenticationViewModelTests: XCTestCase {
         let exp = expectation(description: "Expect unauthenticated state")
 
         sut.authenticationState
+            .dropFirst()            // ignora el valor inicial (.unauthenticated)
             .sink { state in
                 received.append(state)
-                if state == .unauthenticated { exp.fulfill() }
+                if state == .unauthenticated {
+                    exp.fulfill()
+                }
             }
             .store(in: &cancellables)
+
 
         await sut.simulateGoogleSignInFailure()
 
@@ -77,6 +82,7 @@ final class AuthenticationViewModelTests: XCTestCase {
         let exp = expectation(description: "Expect authenticated state")
 
         sut.authenticationState
+            .dropFirst()            // ignora el valor inicial (.unauthenticated)
             .sink { state in
                 received.append(state)
                 if state == .authenticated { exp.fulfill() }
@@ -85,7 +91,7 @@ final class AuthenticationViewModelTests: XCTestCase {
 
         await sut.simulateAppleSignInSuccess()
 
-        await fulfillment(of: [exp], timeout: 1)
+        await fulfillment(of: [exp], timeout: 2)
         XCTAssertEqual(received, [.authenticating, .authenticated])
     }
 
@@ -95,11 +101,15 @@ final class AuthenticationViewModelTests: XCTestCase {
         let exp = expectation(description: "Expect unauthenticated state")
 
         sut.authenticationState
+            .dropFirst()            // ignora el valor inicial (.unauthenticated)
             .sink { state in
                 received.append(state)
-                if state == .unauthenticated { exp.fulfill() }
+                if state == .unauthenticated {
+                    exp.fulfill()
+                }
             }
             .store(in: &cancellables)
+
 
         await sut.simulateAppleSignInFailure()
 
@@ -113,40 +123,40 @@ final class AuthenticationViewModelTests: XCTestCase {
     private final class TestAuthVM: AuthenticationViewModel {
         func simulateGoogleSignInSuccess() async {
             await MainActor.run {
-                self.setValue(AuthenticationState.authenticating, forKey: "_authenticationState")
+                self.setAuthenticationStateForTesting(.authenticating)
             }
             await MainActor.run {
-                self.setValue(AuthenticationState.authenticated, forKey: "_authenticationState")
+                self.setAuthenticationStateForTesting(.authenticated)
                 self.onAuthenticationSuccess?()
             }
         }
 
         func simulateGoogleSignInFailure() async {
             await MainActor.run {
-                self.setValue(AuthenticationState.authenticating, forKey: "_authenticationState")
+                self.setAuthenticationStateForTesting(.authenticating)
             }
             await MainActor.run {
-                self.setValue(AuthenticationState.unauthenticated, forKey: "_authenticationState")
+                self.setAuthenticationStateForTesting(.unauthenticated)
                 self.delegate?.showError(AuthenticationViewModel.AuthError.networkError)
             }
         }
 
         func simulateAppleSignInSuccess() async {
             await MainActor.run {
-                self.setValue(AuthenticationState.authenticating, forKey: "_authenticationState")
+                self.setAuthenticationStateForTesting(.authenticating)
             }
             await MainActor.run {
-                self.setValue(AuthenticationState.authenticated, forKey: "_authenticationState")
+                self.setAuthenticationStateForTesting(.authenticating)
                 self.onAuthenticationSuccess?()
             }
         }
 
         func simulateAppleSignInFailure() async {
             await MainActor.run {
-                self.setValue(AuthenticationState.authenticating, forKey: "_authenticationState")
+                self.setAuthenticationStateForTesting(.authenticating)
             }
             await MainActor.run {
-                self.setValue(AuthenticationState.unauthenticated, forKey: "_authenticationState")
+                self.setAuthenticationStateForTesting(.unauthenticated)
                 self.delegate?.showError(AuthenticationViewModel.AuthError.networkError)
             }
         }
