@@ -21,6 +21,8 @@ final class AuthenticationViewModelTests: XCTestCase {
                 gcmSenderID: "1234567890"
             )
             options.clientID = "test-client"
+            options.apiKey = "AIzaSyA1234567890BCDEF1234567890ghijklm"
+            options.projectID = "test-project"
             FirebaseApp.configure(name: "test", options: options)
         }
         let app = FirebaseApp.app(name: "test")!

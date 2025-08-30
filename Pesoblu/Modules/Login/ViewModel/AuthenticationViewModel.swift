@@ -237,3 +237,14 @@ extension AuthenticationViewModel: ASAuthorizationControllerDelegate {
     }
 }
 
+// MARK: - Testing
+
+extension AuthenticationViewModel {
+    /// Allows tests to manually control the authentication state without using
+    /// Key-Value Coding. The assignment happens on the main actor to mirror the
+    /// behavior of production code.
+    @MainActor
+    func setAuthenticationStateForTesting(_ state: AuthenticationState) {
+        _authenticationState = state
+    }
+}
