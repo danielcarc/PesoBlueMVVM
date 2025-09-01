@@ -125,3 +125,10 @@
 "invalid_credentials" = "פרטי הזדהות שגויים.";
 "user_cancelled" = "המשתמש ביטל את ההתחברות.";
 "unknown_auth_error" = "אירעה שגיאה לא ידועה.";
+
+"call_place" = "התקשר למקום";
+"open_instagram_place" = "פתח את אינסטגרם של המקום";
+"error_open_instagram" = "שגיאה בפתיחת אינסטגרם";
+"invalid_instagram_url" = "כתובת אינסטגרם לא תקינה.";
+"username_not_found" = "שם המשתמש לא נמצא.";
+"cannot_open_instagram_or_safari" = "לא ניתן לפתוח אינסטגרם או ספארי.";
