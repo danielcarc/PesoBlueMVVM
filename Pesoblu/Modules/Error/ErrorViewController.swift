@@ -33,7 +33,7 @@ final class ErrorViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         let button = UIButton(type: .system)
-        button.setTitle("Retry", for: .normal)
+        button.setTitle(NSLocalizedString("retry_button", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(didTapRetry), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 

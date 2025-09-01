@@ -176,3 +176,5 @@
 "decimal_comma" = ",";
 "decimal_point" = ".";
 "default_amount_value" = "0.00";
+
+"retry_button" = "Erneut versuchen";
