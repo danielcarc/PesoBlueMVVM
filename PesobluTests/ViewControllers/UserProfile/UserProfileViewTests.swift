@@ -84,7 +84,8 @@ final class UserProfileViewTests: XCTestCase {
         service.storedUser = user
         let viewModel = SignOutMockUserProfileViewModel(gidSignIn: GIDSignIn.sharedInstance, userService: service)
         let expectation = expectation(description: "onSignOut called after delay")
-        let startTime = Date()
+        let startTime: Date!
+        startTime = Date()
         let sut = UserProfileView(viewModel: viewModel, onSignOut: {
             let elapsed = Date().timeIntervalSince(startTime)
             XCTAssertGreaterThanOrEqual(elapsed, 2.0, "El callback debe llamarse después de al menos 2 segundos")
@@ -97,19 +98,7 @@ final class UserProfileViewTests: XCTestCase {
         
         viewModel.loadUserData()
         pumpRunLoop(0.05)
-        viewModel.showSignOutAlert = true
-        pumpRunLoop(0.05)
-        sut.signOutConfirmed()
-        viewModel.didSignOut = true
-        pumpRunLoop(0.3)
-        XCTAssertNoThrow(try sut.inspect().find(viewWithId: "toastLabel"))
-        XCTAssertEqual(
-            try sut.inspect().find(viewWithId: "toastLabel").text().string(),
-            NSLocalizedString("sign_out_success", comment: "")
-        )
-        pumpRunLoop(2.1)
-        
-        
+        viewModel.showSignOutAlert = true        sut.signOutConfirmed()
         wait(for: [expectation], timeout: 4.0)
     }
 

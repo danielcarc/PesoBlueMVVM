@@ -161,12 +161,12 @@ struct UserProfileView: View {
         .onAppear {
             viewModel.loadUserData()
         }
-        .onChange(of: viewModel.didSignOut) {
-            
-            showToast = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                
-                onSignOut()
+        .onChange(of: viewModel.didSignOut) { didSignOut in
+            if didSignOut {
+                showToast = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    onSignOut()
+                }
             }
             
         }
