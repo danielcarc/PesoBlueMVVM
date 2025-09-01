@@ -132,3 +132,7 @@
 "invalid_instagram_url" = "Недействительный URL Instagram.";
 "username_not_found" = "Имя пользователя не найдено.";
 "cannot_open_instagram_or_safari" = "Невозможно открыть Instagram или Safari.";
+"maps_open_error" = "Не удалось открыть карты.";
+"call_error_title" = "Ошибка вызова";
+"call_error_message" = "Не удалось совершить звонок. Проверьте номер или устройство.";
+"favorite_save_error" = "Ошибка сохранения статуса избранного: %@";

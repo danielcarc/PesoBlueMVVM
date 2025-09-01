@@ -132,3 +132,7 @@
 "invalid_instagram_url" = "URL do Instagram inválida.";
 "username_not_found" = "Nome de usuário não encontrado.";
 "cannot_open_instagram_or_safari" = "Não é possível abrir o Instagram nem o Safari.";
+"maps_open_error" = "Não foi possível abrir o mapa.";
+"call_error_title" = "Erro de chamada";
+"call_error_message" = "Não é possível realizar a chamada. Verifique o número ou o dispositivo.";
+"favorite_save_error" = "Erro ao salvar o status de favorito: %@";

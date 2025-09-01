@@ -16,7 +16,7 @@ protocol AlertPresenterProtocol  {
 struct DefaultAlertPresenter: AlertPresenterProtocol  {
     func present(on viewController: UIViewController, title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok_action", comment: ""), style: .default))
         viewController.present(alert, animated: true)
     }
 }
@@ -163,7 +163,8 @@ extension PlaceViewController {
 
 extension PlaceViewController: PlaceViewDelegate {
     func didFailToOpenMaps() {
-        showAlert(title: "ERROR", message: "No se pudo abrir maps.")
+        showAlert(title: NSLocalizedString("error_title", comment: ""),
+                  message: NSLocalizedString("maps_open_error", comment: ""))
     }
     
     func didFailToOpenInstagram(title: String, message: String) {
@@ -171,11 +172,13 @@ extension PlaceViewController: PlaceViewDelegate {
     }
     
     func didFailToCall() {
-        showAlert(title: "Error de Llamada", message: "No se puede realizar la llamada. Verifica el número o el dispositivo.")
+        showAlert(title: NSLocalizedString("call_error_title", comment: ""),
+                  message: NSLocalizedString("call_error_message", comment: ""))
     }
-    
+
     func didFailToLoadImage(_ view: PlaceView, error: any Error) {
-        showAlert(title: "Error de Imagen", message: "Error al cargar imagen. Intente nuevamente mas tarde.")
+        showAlert(title: NSLocalizedString("image_error_title", comment: ""),
+                  message: NSLocalizedString("image_error_message", comment: ""))
     }
     
     
@@ -209,7 +212,8 @@ extension PlaceViewController {
                 }
             } catch {
                 await MainActor.run {
-                    self.showAlert(title: "Error", message: "\(error.localizedDescription)")
+                    self.showAlert(title: NSLocalizedString("error_title", comment: ""),
+                                   message: error.localizedDescription)
                 }
             }
         }
@@ -222,7 +226,8 @@ extension PlaceViewController {
                 try await self.placeViewModel.saveFavoriteStatus(isFavorite: self.isFavorite)
             } catch {
                 await MainActor.run {
-                    self.showAlert(title: "Error", message: "Error saving favorite status: \(error.localizedDescription)")
+                    self.showAlert(title: NSLocalizedString("error_title", comment: ""),
+                                   message: String(format: NSLocalizedString("favorite_save_error", comment: ""), error.localizedDescription))
                 }
             }
         }
