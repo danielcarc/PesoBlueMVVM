@@ -132,3 +132,7 @@
 "invalid_instagram_url" = "無効なInstagramのURLです。";
 "username_not_found" = "ユーザー名が見つかりません。";
 "cannot_open_instagram_or_safari" = "InstagramまたはSafariを開けません。";
+"maps_open_error" = "マップを開けませんでした。";
+"call_error_title" = "通話エラー";
+"call_error_message" = "通話を行えません。番号またはデバイスを確認してください。";
+"favorite_save_error" = "お気に入りの状態を保存中にエラーが発生しました: %@";

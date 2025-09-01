@@ -132,3 +132,7 @@
 "invalid_instagram_url" = "כתובת אינסטגרם לא תקינה.";
 "username_not_found" = "שם המשתמש לא נמצא.";
 "cannot_open_instagram_or_safari" = "לא ניתן לפתוח אינסטגרם או ספארי.";
+"maps_open_error" = "לא ניתן לפתוח את המפות.";
+"call_error_title" = "שגיאת שיחה";
+"call_error_message" = "לא ניתן לבצע את השיחה. בדוק את המספר או את המכשיר.";
+"favorite_save_error" = "שגיאה בשמירת מצב המועדף: %@";

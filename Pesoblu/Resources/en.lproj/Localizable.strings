@@ -132,3 +132,7 @@
 "invalid_instagram_url" = "Invalid Instagram URL.";
 "username_not_found" = "Username not found.";
 "cannot_open_instagram_or_safari" = "Cannot open Instagram or Safari.";
+"maps_open_error" = "Could not open maps.";
+"call_error_title" = "Call Error";
+"call_error_message" = "Cannot make the call. Check the number or device.";
+"favorite_save_error" = "Error saving favorite status: %@";
