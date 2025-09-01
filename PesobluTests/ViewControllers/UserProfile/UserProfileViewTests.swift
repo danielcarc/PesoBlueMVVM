@@ -101,7 +101,14 @@ final class UserProfileViewTests: XCTestCase {
         pumpRunLoop(0.05)
         sut.signOutConfirmed()
         viewModel.didSignOut = true
-        pumpRunLoop(2.3)
+        pumpRunLoop(0.3)
+        XCTAssertNoThrow(try sut.inspect().find(viewWithId: "toastLabel"))
+        XCTAssertEqual(
+            try sut.inspect().find(viewWithId: "toastLabel").text().string(),
+            NSLocalizedString("sign_out_success", comment: "")
+        )
+        pumpRunLoop(2.1)
+        
         
         wait(for: [expectation], timeout: 4.0)
     }

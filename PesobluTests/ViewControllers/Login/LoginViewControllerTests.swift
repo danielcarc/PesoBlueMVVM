@@ -58,6 +58,7 @@ final class LoginViewControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         guard let loginView = sut.view as? LoginView else { return XCTFail("Expected LoginView") }
         loginView.onAppleSignInTap?()
+        XCTAssertTrue(mockAuthVM.signInCalled)
         XCTAssertFalse(mockCoordinator.didLogin)
     }
     
@@ -83,8 +84,12 @@ final class LoginViewControllerTests: XCTestCase {
         func signInWithApple() {
             signInCalled = true
             subject.send(.authenticating)
-            signInWithAppleHandler?()
-            subject.send(.authenticated)
+            if let handler = signInWithAppleHandler {
+                handler()
+                subject.send(.authenticated)
+            } else {
+                subject.send(.unauthenticated)
+            }
         }
         
         var onAuthenticationSuccess: (() -> Void)?
