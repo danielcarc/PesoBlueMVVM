@@ -51,7 +51,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var quantitytextfield : UITextField = {
         var text = UITextField()
-        text.placeholder = "Ingrese la cantidad de dinero a convertir"
+        text.placeholder = NSLocalizedString("currency_converter_amount_placeholder", comment: "")
         text.textAlignment = .center
         text.textColor = .black
         text.backgroundColor = .white
@@ -99,7 +99,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var toPesoTitle: UILabel = {
         var label = UILabel()
-        label.text = "Compra"
+        label.text = NSLocalizedString("buy_label", comment: "")
         label.textColor = .systemBlue
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textAlignment = .center
@@ -110,7 +110,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var toPesoValue: UILabel = {
         var label = UILabel()
-        label.text = "0.00"
+        label.text = NSLocalizedString("default_amount_value", comment: "")
         label.textColor = .systemBlue
         label.font = .boldSystemFont(ofSize: 22)
         label.textAlignment = .center
@@ -135,7 +135,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var fromPesoTitle: UILabel = {
         var label = UILabel()
-        label.text = "En Dolares"
+        label.text = NSLocalizedString("in_dollars_label", comment: "")
         label.textColor = .systemGreen
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textAlignment = .center
@@ -146,7 +146,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var fromPesoValue: UILabel = {
         var label = UILabel()
-        label.text = "0.00"
+        label.text = NSLocalizedString("default_amount_value", comment: "")
         label.textColor = .systemGreen
         label.font = .boldSystemFont(ofSize: 22)
         label.textAlignment = .center
@@ -171,7 +171,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var toDolarTitle: UILabel = {
         var label = UILabel()
-        label.text = "Compra"
+        label.text = NSLocalizedString("buy_label", comment: "")
         label.textColor = .systemIndigo
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textAlignment = .center
@@ -182,7 +182,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var toDolarValue: UILabel = {
         var label = UILabel()
-        label.text = "0.00"
+        label.text = NSLocalizedString("default_amount_value", comment: "")
         label.textColor = .systemIndigo
         label.font = .boldSystemFont(ofSize: 22)
         label.textAlignment = .center
@@ -207,7 +207,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var fromDolarTitle: UILabel = {
         var label = UILabel()
-        label.text = "En Dolares"
+        label.text = NSLocalizedString("in_dollars_label", comment: "")
         label.textColor = .systemOrange
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textAlignment = .center
@@ -218,7 +218,7 @@ final class CurrencyConverterView: UIView  {
     
     private lazy var fromDolarValue: UILabel = {
         var label = UILabel()
-        label.text = "0.00"
+        label.text = NSLocalizedString("default_amount_value", comment: "")
         label.textColor = .systemOrange
         label.font = .boldSystemFont(ofSize: 22)
         label.textAlignment = .center
@@ -426,24 +426,27 @@ extension CurrencyConverterView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxCharacters = 10
 
+        let decimalComma = NSLocalizedString("decimal_comma", comment: "")
+        let decimalPoint = NSLocalizedString("decimal_point", comment: "")
+
         // Si el usuario escribe una coma, la reemplazamos por punto
-        if string == "," {
+        if string == decimalComma {
             if let currentText = textField.text as NSString? {
-                let updatedText = currentText.replacingCharacters(in: range, with: ".")
+                let updatedText = currentText.replacingCharacters(in: range, with: decimalPoint)
                 textField.text = updatedText
             }
             return false
         }
 
         // Validar que el string ingresado contenga solo números o un punto
-        let allowedCharacters = CharacterSet(charactersIn: "0123456789.")
+        let allowedCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: decimalPoint))
         let characterSet = CharacterSet(charactersIn: string)
         let isValidInput = allowedCharacters.isSuperset(of: characterSet)
 
         // Validar que no haya más de un punto decimal
         if let currentText = textField.text as NSString? {
             let updatedText = currentText.replacingCharacters(in: range, with: string)
-            let containsMultipleDots = updatedText.components(separatedBy: ".").count > 2
+            let containsMultipleDots = updatedText.components(separatedBy: decimalPoint).count > 2
             return updatedText.count <= maxCharacters && isValidInput && !containsMultipleDots
         }
 
@@ -457,10 +460,11 @@ extension CurrencyConverterView: UITextFieldDelegate {
 extension CurrencyConverterView {
     
     func resetControls() {
-        toPesoValue.text = "0.00"
-        fromPesoValue.text = "0.00"
-        toDolarValue.text = "0.00"
-        fromDolarValue.text = "0.00"
+        let defaultAmount = NSLocalizedString("default_amount_value", comment: "")
+        toPesoValue.text = defaultAmount
+        fromPesoValue.text = defaultAmount
+        toDolarValue.text = defaultAmount
+        fromDolarValue.text = defaultAmount
     }
     
 }
