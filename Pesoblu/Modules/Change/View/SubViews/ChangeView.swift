@@ -104,7 +104,7 @@ class ChangeView: UIView  {
 
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: "es_AR")
+        formatter.locale = Locale.current
 
         if let value = Double(valueBuy) {
             currencyValueLabel.text = formatter.string(from: NSNumber(value: value))
