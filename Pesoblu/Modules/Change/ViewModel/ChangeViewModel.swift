@@ -11,41 +11,11 @@ enum CurrencyCode: String, CaseIterable {
     case UYU, BRL, CLP, EUR, MXN, COP, GBP, JPY, ILS, PYG, PEN, RUB, CAD, BOB
 
     var title: String {
-        switch self {
-        case .UYU: return "UYU - Peso Uruguayo"
-        case .BRL: return "BRL - Real Brasil"
-        case .CLP: return "CLP - Peso Chileno"
-        case .EUR: return "EUR - Euro"
-        case .MXN: return "MXN - Peso Mexicano"
-        case .COP: return "COP - Peso Colombiano"
-        case .GBP: return "GBP - Libra Esterlina Britanica"
-        case .JPY: return "JPY - Yen Japonés"
-        case .ILS: return "ILS - Shequel Israelí"
-        case .PYG: return "PYG - Guaraní Paraguayo"
-        case .PEN: return "PEN - Sol Peruano"
-        case .RUB: return "RUB - Rublo Ruso"
-        case .CAD: return "CAD - Dólar Canadiense"
-        case .BOB: return "BOB - Boliviano"
-        }
+        NSLocalizedString("currency.\(rawValue).title", comment: "")
     }
 
     var label: String {
-        switch self {
-        case .UYU: return "Uruguay"
-        case .BRL: return "Brasil"
-        case .CLP: return "Chile"
-        case .EUR: return "Unión Europea"
-        case .MXN: return "México"
-        case .COP: return "Colombia"
-        case .GBP: return "Reino Unido"
-        case .JPY: return "Japón"
-        case .ILS: return "Israel"
-        case .PYG: return "Paraguay"
-        case .PEN: return "Perú"
-        case .RUB: return "Rusia"
-        case .CAD: return "Canadá"
-        case .BOB: return "Bolivia"
-        }
+        NSLocalizedString("currency.\(rawValue).label", comment: "")
     }
 
     func rate(from rates: Rates) -> String? {
@@ -105,8 +75,8 @@ class ChangeViewModel: ChangeViewModelProtocol{
     private func fetchCurrencies() async {
         do {
             if var mep = try await currencyService.getDolarMep() {
-                mep.currencyTitle = "USD MEP - Dólar Americano"
-                mep.currencyLabel = "Dólar Bolsa de Valores / MEP"
+                mep.currencyTitle = NSLocalizedString("currency.MEP.title", comment: "")
+                mep.currencyLabel = NSLocalizedString("currency.MEP.label", comment: "")
                 rates = try await currencyService.getChangeOfCurrencies()
                 var updated: [CurrencyItem] = [mep]
                 for code in CurrencyCode.allCases {
