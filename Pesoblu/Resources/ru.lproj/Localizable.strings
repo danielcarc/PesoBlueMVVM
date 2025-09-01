@@ -125,3 +125,10 @@
 "invalid_credentials" = "Неверные учетные данные.";
 "user_cancelled" = "Пользователь отменил вход.";
 "unknown_auth_error" = "Произошла неизвестная ошибка.";
+
+"call_place" = "Позвонить в место";
+"open_instagram_place" = "Открыть Instagram места";
+"error_open_instagram" = "Ошибка при открытии Instagram";
+"invalid_instagram_url" = "Недействительный URL Instagram.";
+"username_not_found" = "Имя пользователя не найдено.";
+"cannot_open_instagram_or_safari" = "Невозможно открыть Instagram или Safari.";

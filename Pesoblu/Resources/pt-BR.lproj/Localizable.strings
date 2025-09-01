@@ -125,3 +125,10 @@
 "invalid_credentials" = "Credenciais inválidas.";
 "user_cancelled" = "O usuário cancelou o login.";
 "unknown_auth_error" = "Ocorreu um erro desconhecido.";
+
+"call_place" = "Ligar para o lugar";
+"open_instagram_place" = "Abrir o Instagram do lugar";
+"error_open_instagram" = "Erro ao abrir o Instagram";
+"invalid_instagram_url" = "URL do Instagram inválida.";
+"username_not_found" = "Nome de usuário não encontrado.";
+"cannot_open_instagram_or_safari" = "Não é possível abrir o Instagram nem o Safari.";

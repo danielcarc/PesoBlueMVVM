@@ -125,3 +125,10 @@
 "invalid_credentials" = "Ungültige Anmeldedaten.";
 "user_cancelled" = "Der Benutzer hat die Anmeldung abgebrochen.";
 "unknown_auth_error" = "Ein unbekannter Fehler ist aufgetreten.";
+
+"call_place" = "Ort anrufen";
+"open_instagram_place" = "Instagram des Ortes öffnen";
+"error_open_instagram" = "Fehler beim Öffnen von Instagram";
+"invalid_instagram_url" = "Ungültige Instagram-URL.";
+"username_not_found" = "Benutzername nicht gefunden.";
+"cannot_open_instagram_or_safari" = "Instagram oder Safari kann nicht geöffnet werden.";

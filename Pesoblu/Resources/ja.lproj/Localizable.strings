@@ -125,3 +125,10 @@
 "invalid_credentials" = "認証情報が無効です。";
 "user_cancelled" = "ユーザーがログインをキャンセルしました。";
 "unknown_auth_error" = "不明なエラーが発生しました。";
+
+"call_place" = "場所に電話する";
+"open_instagram_place" = "場所のInstagramを開く";
+"error_open_instagram" = "Instagramを開く際のエラー";
+"invalid_instagram_url" = "無効なInstagramのURLです。";
+"username_not_found" = "ユーザー名が見つかりません。";
+"cannot_open_instagram_or_safari" = "InstagramまたはSafariを開けません。";

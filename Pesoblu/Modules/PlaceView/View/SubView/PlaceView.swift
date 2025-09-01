@@ -91,7 +91,7 @@ final class PlaceView: UIView {
         var button = UIButton()
         button.setImage(UIImage(named: "phone-outcome"), for: .normal)
         button.tintColor = .black
-        button.accessibilityLabel = "Llamar a Siamo nel Forno"
+        button.accessibilityLabel = NSLocalizedString("call_place", comment: "")
         button.addTarget(self, action: #selector(callPhone(sender:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -101,7 +101,7 @@ final class PlaceView: UIView {
         var button = UIButton()
         button.setImage(UIImage(named: "instagram"), for: .normal)
         button.tintColor = .black
-        button.accessibilityLabel = "Abrir Instagram de Siamo nel Forno"
+        button.accessibilityLabel = NSLocalizedString("open_instagram_place", comment: "")
         button.addTarget(self, action: #selector(openInstagram(sender:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -264,14 +264,14 @@ extension PlaceView {
               !instagramWebURL.isEmpty,
               let url = URL(string: instagramWebURL),
               url.host?.contains("instagram.com") == true else {
-            delegate?.didFailToOpenInstagram(title: "Error al abrir Instagram", message: "URL de Instagram inválida.")
+            delegate?.didFailToOpenInstagram(title: NSLocalizedString("error_open_instagram", comment: ""), message: NSLocalizedString("invalid_instagram_url", comment: ""))
             return
         }
 
         // Obtener el nombre de usuario del path
         let pathComponents = url.pathComponents
         guard pathComponents.count > 1 else {
-            delegate?.didFailToOpenInstagram(title: "Error", message: "No se encontró nombre de usuario.")
+            delegate?.didFailToOpenInstagram(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("username_not_found", comment: ""))
             return
         }
 
@@ -291,7 +291,7 @@ extension PlaceView {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
             } else {
-                delegate?.didFailToOpenInstagram(title: "Error", message: "No se puede abrir Instagram ni Safari.")
+                delegate?.didFailToOpenInstagram(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("cannot_open_instagram_or_safari", comment: ""))
             }
         }
     }
