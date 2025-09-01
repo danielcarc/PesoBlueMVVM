@@ -31,6 +31,10 @@
 "image_error_title" = "Erro de imagem";
 /* Message for the image loading error alert */
 "image_error_message" = "Não foi possível carregar a imagem. Tente novamente mais tarde.";
+/* Navigation title showing places in a selected city */
+"places_in_city_title" = "Lugares em %@";
+/* Error message when failing to load PlacesListView */
+"places_list_view_load_error_message" = "Falha ao carregar a visualização.";
 /* Title for the filters section */
 "filters_title" = "Filtros";
 /* Label shown above the places list */

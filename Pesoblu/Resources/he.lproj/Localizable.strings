@@ -31,6 +31,10 @@
 "image_error_title" = "שגיאת תמונה";
 /* Message for the image loading error alert */
 "image_error_message" = "לא ניתן היה לטעון את התמונה. נסה שוב מאוחר יותר.";
+/* Navigation title showing places in a selected city */
+"places_in_city_title" = "מקומות ב%@";
+/* Error message when failing to load PlacesListView */
+"places_list_view_load_error_message" = "טעינת התצוגה נכשלה.";
 /* Title for the filters section */
 "filters_title" = "מסננים";
 /* Label shown above the places list */

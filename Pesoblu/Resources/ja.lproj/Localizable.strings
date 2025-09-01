@@ -31,6 +31,10 @@
 "image_error_title" = "画像エラー";
 /* Message for the image loading error alert */
 "image_error_message" = "画像を読み込めませんでした。後でもう一度お試しください。";
+/* Navigation title showing places in a selected city */
+"places_in_city_title" = "%@の場所";
+/* Error message when failing to load PlacesListView */
+"places_list_view_load_error_message" = "ビューの読み込みに失敗しました。";
 /* Title for the filters section */
 "filters_title" = "フィルター";
 /* Label shown above the places list */
