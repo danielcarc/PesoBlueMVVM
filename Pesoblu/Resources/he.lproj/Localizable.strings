@@ -140,3 +140,9 @@
 "call_error_title" = "שגיאת שיחה";
 "call_error_message" = "לא ניתן לבצע את השיחה. בדוק את המספר או את המכשיר.";
 "favorite_save_error" = "שגיאה בשמירת מצב המועדף: %@";
+"currency_converter_amount_placeholder" = "Enter the amount to convert";
+"in_dollars_label" = "In Dollars";
+"dolar_mep_label" = "Dólar Bolsa de Valores / MEP";
+"decimal_comma" = ",";
+"decimal_point" = ".";
+"default_amount_value" = "0.00";

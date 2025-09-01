@@ -140,3 +140,9 @@
 "call_error_title" = "Error de Llamada";
 "call_error_message" = "No se puede realizar la llamada. Verifica el número o el dispositivo.";
 "favorite_save_error" = "Error guardando el estado de favorito: %@";
+"currency_converter_amount_placeholder" = "Ingrese la cantidad de dinero a convertir";
+"in_dollars_label" = "En Dólares";
+"dolar_mep_label" = "Dólar Bolsa de Valores / MEP";
+"decimal_comma" = ",";
+"decimal_point" = ".";
+"default_amount_value" = "0.00";
