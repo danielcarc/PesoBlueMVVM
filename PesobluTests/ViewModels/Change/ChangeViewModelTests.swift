@@ -72,8 +72,8 @@ final class ChangeViewModelTests: XCTestCase {
         await viewModel.getChangeOfCurrencies()
 
         XCTAssertEqual(viewModel.currencies.count, CurrencyCode.allCases.count + 1)
-        XCTAssertEqual(viewModel.currencies.first?.currencyTitle, "USD MEP - Dólar Americano")
-        XCTAssertEqual(viewModel.currencies.first?.currencyLabel, "Dólar Bolsa de Valores / MEP")
+        XCTAssertEqual(viewModel.currencies.first?.currencyTitle, NSLocalizedString("currency.MEP.title", comment: ""))
+        XCTAssertEqual(viewModel.currencies.first?.currencyLabel, NSLocalizedString("currency.MEP.label", comment: ""))
         let eurItem = viewModel.currencies.first { $0.currencyTitle == CurrencyCode.EUR.title }
         XCTAssertEqual(eurItem?.rate, "50.00")
         XCTAssertTrue(didFinishCalled)
@@ -83,8 +83,8 @@ final class ChangeViewModelTests: XCTestCase {
         viewModel.rates = mockRates ?? Rates()
         let item = viewModel.getCurrencyValue(for: .UYU, currency: 950.0)
         XCTAssertEqual(item.rate, "23.75", "Conversion should be 950 / 40")
-        XCTAssertEqual(item.currencyTitle, "UYU - Peso Uruguayo")
-        XCTAssertEqual(item.currencyLabel, "Uruguay")
+        XCTAssertEqual(item.currencyTitle, NSLocalizedString("currency.UYU.title", comment: ""))
+        XCTAssertEqual(item.currencyLabel, NSLocalizedString("currency.UYU.label", comment: ""))
     }
 }
 
