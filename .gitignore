@@ -1,5 +1,6 @@
 # Ignore sensitive configuration files
 Pesoblu/Resources/Secrets.plist
+Pesoblu/GoogleService-Info.plist
 .env
 
 # macOS files

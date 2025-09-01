@@ -18,7 +18,10 @@ Local Push Notifications
 ## Requisitos de Inicialización
 
 - Crea un archivo `Secrets.plist` con la clave `API_KEY` o define la variable de entorno `API_KEY` (ver `.env.example`).
-- Configura Firebase y Google Sign-In añadiendo el `GoogleService-Info.plist` y los permisos necesarios.
+- Copia `Pesoblu/GoogleService-Info.plist.template` a `Pesoblu/GoogleService-Info.plist` y completa tus claves de Firebase.
+  Mantén este archivo fuera del control de versiones.
+  En entornos CI, puedes almacenar el contenido del plist en una variable de entorno (por ejemplo `GOOGLE_SERVICE_INFO_PLIST`
+  codificada en base64) y decodificarla antes de compilar.
 
 
 
