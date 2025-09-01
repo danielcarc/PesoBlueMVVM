@@ -23,7 +23,10 @@ final class PlacesListViewController: UIViewController  {
         guard let placesListView = view as? PlacesListView else {
             AppLogger.error("Expected view to be of type PlacesListView")
             let errorVC = ErrorViewController(
-                message: "Failed to load view."
+                message: NSLocalizedString(
+                    "places_list_view_load_error_message",
+                    comment: "Error message when PlacesListView fails to load"
+                )
             )
             DispatchQueue.main.async { [weak self] in
                 self?.present(errorVC, animated: true)
@@ -61,7 +64,13 @@ final class PlacesListViewController: UIViewController  {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
 
-        navigationItem.title = "Lugares en \(selectedCity)"
+        navigationItem.title = String(
+            format: NSLocalizedString(
+                "places_in_city_title",
+                comment: "Navigation title for places in a specific city"
+            ),
+            selectedCity
+        )
       
         let backButton = UIBarButtonItem(image: UIImage(named: "nav-arrow-left"), style: .plain, target: self, action: #selector(didTapBack))
         backButton.tintColor = .black

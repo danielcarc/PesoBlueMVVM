@@ -31,6 +31,10 @@
 "image_error_title" = "Ошибка изображения";
 /* Message for the image loading error alert */
 "image_error_message" = "Не удалось загрузить изображение. Пожалуйста, попробуйте позже.";
+/* Navigation title showing places in a selected city */
+"places_in_city_title" = "Места в %@";
+/* Error message when failing to load PlacesListView */
+"places_list_view_load_error_message" = "Не удалось загрузить представление.";
 /* Title for the filters section */
 "filters_title" = "Фильтры";
 /* Label shown above the places list */
