@@ -16,13 +16,15 @@
 	<key>GIDClientID</key>
 	<string>588897717081-cbpf1ngd4souk090lomti20agligugar.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>instagram</string>
-	</array>
-	<key>UIApplicationSceneManifest</key>
-	<dict>
-		<key>UIApplicationSupportsMultipleScenes</key>
-		<false/>
+        <array>
+                <string>instagram</string>
+        </array>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>We use your location to provide localized currency information.</string>
+        <key>UIApplicationSceneManifest</key>
+        <dict>
+                <key>UIApplicationSupportsMultipleScenes</key>
+                <false/>
 		<key>UISceneConfigurations</key>
 		<dict>
 			<key>UIWindowSceneSessionRoleApplication</key>
