@@ -33,6 +33,7 @@ final class PlaceView: UIView {
     
     weak var delegate: PlaceViewDelegate?
     private var place: PlaceItem?
+    private var phoneNumber: String?
     
     private lazy var stackView: UIStackView = {
         var sv = UIStackView()
@@ -129,7 +130,7 @@ final class PlaceView: UIView {
         categoriesLabel.text = item.categories?.joined(separator: " · ")
         addressLabel.text = "📍 \(item.address), \(item.area)"
         descriptionLabel.text = item.placeDescription
-        phoneIconButton.accessibilityLabel = item.phone
+        phoneNumber = item.phone
         instagramIconButton.accessibilityLabel = item.instagram
 
         updateImage(url: item.imageUrl)
@@ -246,12 +247,12 @@ extension PlaceView {
         }
     }
     
-    @objc private func callPhone(sender: UIButton) {
-        guard let phoneNumber = sender.accessibilityLabel,
-              !phoneNumber.isEmpty,
+    @objc private func callPhone(sender _: UIButton) {
+        guard let number = phoneNumber,
+              !number.isEmpty,
               //esto valida que solo contiene numeros validos de un telefono
-              phoneNumber.rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789+- ").inverted) == nil,
-              let url = URL(string: "telprompt://\(phoneNumber)"),
+              number.rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789+- ").inverted) == nil,
+              let url = URL(string: "telprompt://\(number)"),
               UIApplication.shared.canOpenURL(url) else {
             delegate?.didFailToCall()
             return
