@@ -98,7 +98,8 @@ final class UserProfileViewTests: XCTestCase {
         
         viewModel.loadUserData()
         pumpRunLoop(0.05)
-        viewModel.showSignOutAlert = true        sut.signOutConfirmed()
+        viewModel.showSignOutAlert = true
+        sut.signOutConfirmed()
         wait(for: [expectation], timeout: 4.0)
     }
 
