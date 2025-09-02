@@ -1,0 +1,20 @@
+name: CI Build
+on:
+  push:
+    branches: [ main ] # Ejecuta el flujo cuando hagas push a la rama main
+  pull_request:
+    branches: [ main ] # También para pull requests a main
+jobs:
+  build:
+    runs-on: macos-latest # Usa una máquina Mac para compilar iOS
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3 # Descarga el código del repositorio
+      - name: Generate GoogleService-Info.plist
+        run: |
+          mkdir -p Pesoblu
+          echo "$GOOGLE_SERVICE_INFO_PLIST" | base64 -d > Pesoblu/GoogleService-Info.plist
+        env:
+          GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+      - name: Build iOS app
+        run: xcodebuild -scheme Pesoblu -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' build
