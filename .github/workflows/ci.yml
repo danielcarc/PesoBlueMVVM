@@ -17,4 +17,4 @@ jobs:
         env:
           GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
       - name: Build iOS app
-        run: xcodebuild -scheme Pesoblu -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' build
+        run: xcodebuild -scheme Pesoblu -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' build
