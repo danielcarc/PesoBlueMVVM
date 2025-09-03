@@ -70,6 +70,15 @@
                </BreakpointActionProxy>
             </Actions>
             <Locations>
+               <Location
+                  uuid = "6C9B97CE-9B13-4E61-B48F-7AD0363E99C2 - ba3ad5676a792f38"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "UIViewAlertForUnsatisfiableConstraints"
+                  moduleName = "UIKitCore"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -202,32 +211,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "155A7343-B654-472C-9390-A563CA787C1C"
-            shouldBeEnabled = "Yes"
+            uuid = "D6EFDA64-BEF7-449A-83AD-48DE06A9EF41"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pesoblu/Modules/Change/View/ChangeViewController.swift"
+            filePath = "Pesoblu/Modules/CurrencyConverter/ViewModel/CurrencyConverterViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "fetchConversionRates(amount:fromCurrency:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CE70932F-D3B4-4EC7-A692-DE93A4D893BF"
+            uuid = "E7A57DBB-26D0-48C2-BC4F-6D7855A4F0A0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pesoblu/Modules/Change/View/SubViews/ChangeCollectionView.swift"
+            filePath = "Pesoblu/Modules/CurrencyConverter/ViewModel/CurrencyConverterViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "fetchConversionRates(amount:fromCurrency:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9E66559B-6AB5-4843-B211-169B815F0AB5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pesoblu/Modules/CurrencyConverter/View/CurrencyConverterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "setupBindings()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

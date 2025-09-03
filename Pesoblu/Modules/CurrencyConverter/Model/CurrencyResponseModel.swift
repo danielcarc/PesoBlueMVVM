@@ -243,13 +243,3 @@ struct Uyu: Decodable, CurrencyItem{
         return rawRate ?? "0.0"
     }
 }
-
-//struct ExchangeRate: Decodable {
-//    let compra: Double?
-//    let venta: Double?
-//    let casa: String?
-//    let nombre: String?
-//    let moneda: String?
-//    let fechaActualizacion: String?
-//}
-
