@@ -44,7 +44,7 @@ struct ChangesResponse: Decodable{
 
 struct Oficial: Decodable, CurrencyItem{
     var rate: String?{
-        return String(value_sell)
+        return String(format: "%.2f", value_sell)
     }
     
     var currencyTitle: String?

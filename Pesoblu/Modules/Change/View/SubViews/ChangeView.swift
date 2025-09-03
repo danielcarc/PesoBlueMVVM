@@ -101,16 +101,8 @@ class ChangeView: UIView  {
     func set(currencyTitle: String, currencyLabel: String, valueBuy: String) {
         currencyTitleLabel.text = currencyTitle
         currencySubtitleLabel.text = currencyLabel
+        currencyValueLabel.text = "$ \(valueBuy)"
 
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "es_AR")
-        formatter.currencySymbol = "$"
-
-        if let value = Double(valueBuy) {
-            currencyValueLabel.text = formatter.string(from: NSNumber(value: value))
-        } else {
-            currencyValueLabel.text = valueBuy
-        }
     }
 }
 
