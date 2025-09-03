@@ -16,5 +16,11 @@ jobs:
           echo "$GOOGLE_SERVICE_INFO_PLIST" | base64 -d > Pesoblu/GoogleService-Info.plist
         env:
           GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+      - name: Generate Secrets.plist
+             run: |
+               mkdir -p Pesoblu/Resources
+               echo "$SECRETS_PLIST" | base64 -d > Pesoblu/Resources/Secrets.plist
+             env:
+               SECRETS_PLIST: ${{ secrets.SECRETS_PLIST }}
       - name: Build iOS app
         run: xcodebuild -scheme Pesoblu -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' build
