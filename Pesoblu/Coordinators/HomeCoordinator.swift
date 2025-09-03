@@ -23,13 +23,14 @@ final class HomeCoordinator: Coordinator {
             cityDataService: CityDataService()
         )
         let vc = HomeViewController(homeViewModel: viewModel)
-        
+
         vc.setOnSelect { [weak self] selectedPlaces, selectedCity, placeType in
             self?.showPlacesListWithCity(selectedPlaces: selectedPlaces, selectedCity: selectedCity, placeType: placeType)
         }
-        
-        vc.title = "Home"
-        vc.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home-01"), tag: 0)
+
+        let title = NSLocalizedString("home_title", comment: "")
+        vc.title = title
+        vc.tabBarItem = UITabBarItem(title: title, image: UIImage(named: "home-01"), tag: 0)
         navigationController.setViewControllers([vc], animated: false)
     }
     
