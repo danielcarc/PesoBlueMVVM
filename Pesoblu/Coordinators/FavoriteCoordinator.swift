@@ -38,11 +38,11 @@ class FavoriteCoordinator: Coordinator{
         let favoriteView = FavoritesView(viewModel: viewModel) { [weak self] place in
             self?.showPlaceDetail(place)
         }
-        
+
         let hostingVC = UIHostingController(rootView: favoriteView)
-        let favoritesTitle = NSLocalizedString("favorites_title", comment: "")
-        hostingVC.title = favoritesTitle
-        hostingVC.tabBarItem = UITabBarItem(title: favoritesTitle, image: UIImage(systemName: "heart"), tag: 2)
+        let title = NSLocalizedString("favorites_title", comment: "")
+        hostingVC.title = title
+        hostingVC.tabBarItem = UITabBarItem(title: title, image: UIImage(systemName: "heart"), tag: 2)
         navigationController.setViewControllers([hostingVC], animated: true)
     }
     

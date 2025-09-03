@@ -26,9 +26,10 @@ class ChangeCoordinator: Coordinator {
         vc.onSelectCurrency = { [weak self] selectedCurrency in
             self?.showCurrencyConverter(currencyItem: selectedCurrency)
         }
-        
-        vc.title = "Cotización"
-        vc.tabBarItem = UITabBarItem(title: "Cotización", image: UIImage(named: "exchange-01"), tag: 1)
+
+        let title = NSLocalizedString("exchange_rate_title", comment: "")
+        vc.title = title
+        vc.tabBarItem = UITabBarItem(title: title, image: UIImage(named: "exchange-01"), tag: 1)
         navigationController.setViewControllers([vc], animated: false)
     }
     

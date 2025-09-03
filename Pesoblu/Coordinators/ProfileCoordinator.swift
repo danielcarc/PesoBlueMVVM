@@ -31,8 +31,9 @@ class ProfileCoordinator: Coordinator {
         }
 
         let hostingVC = UIHostingController(rootView: profileView)
-        hostingVC.title = "Perfil"
-        hostingVC.tabBarItem = UITabBarItem(title: "Perfil", image: UIImage(named: "user-square"), tag: 3)
+        let title = NSLocalizedString("profile_title", comment: "")
+        hostingVC.title = title
+        hostingVC.tabBarItem = UITabBarItem(title: title, image: UIImage(named: "user-square"), tag: 3)
         navigationController.setViewControllers([hostingVC], animated: false)
     }
 
