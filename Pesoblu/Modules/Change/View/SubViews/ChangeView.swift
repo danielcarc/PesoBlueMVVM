@@ -103,8 +103,8 @@ class ChangeView: UIView  {
         currencySubtitleLabel.text = currencyLabel
 
         let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = Locale.current
+        formatter.locale = Locale(identifier: "es_AR")
+        formatter.currencySymbol = "$"
 
         if let value = Double(valueBuy) {
             currencyValueLabel.text = formatter.string(from: NSNumber(value: value))

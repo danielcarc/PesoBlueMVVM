@@ -1,5 +1,5 @@
 //
-//  CurrencyViewController.swift
+//  ChangeViewController.swift
 //  PesoBlueMVVM
 //
 //  Created by Daniel Francisco Carcacha on 29/09/23.
@@ -67,8 +67,6 @@ class ChangeViewController: UIViewController  {
 
 private extension ChangeViewController {
     func setup() {
-        
-        self.view.backgroundColor = UIColor(hex: "F0F8FF")
         
         changeCView.delegate = self
         view.addSubview(mainScrollView)
