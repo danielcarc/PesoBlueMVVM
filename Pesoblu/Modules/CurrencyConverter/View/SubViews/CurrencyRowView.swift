@@ -11,7 +11,7 @@ final class ConversionRowView: UIView  {
     
     private lazy var buyview: UIView = {
         var view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .secondarySystemBackground
         view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -21,7 +21,7 @@ final class ConversionRowView: UIView  {
         var label = UILabel()
         label.text = NSLocalizedString("buy_label", comment: "")
         label.font = .systemFont(ofSize: 17)
-        label.textColor = .systemGray2
+        label.textColor = .secondaryLabel
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -32,6 +32,7 @@ final class ConversionRowView: UIView  {
         var label = UILabel()
         label.text = "0.00"
         label.font = .systemFont(ofSize: 22)
+        label.textColor = .label
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -52,9 +53,9 @@ final class ConversionRowView: UIView  {
     }
 
     private func setupUI() {
-        backgroundColor = UIColor(red: 240/255, green: 248/255, blue: 255/255, alpha: 1) // Celeste claro 🇦🇷
+        backgroundColor = .systemBackground // Celeste claro 🇦🇷
         layer.cornerRadius = 10
-        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowColor = UIColor.label.cgColor
         layer.shadowOpacity = 0.1
         layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.shadowRadius = 4

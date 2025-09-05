@@ -53,8 +53,8 @@ final class CurrencyConverterView: UIView  {
         var text = UITextField()
         text.placeholder = NSLocalizedString("currency_converter_amount_placeholder", comment: "")
         text.textAlignment = .center
-        text.textColor = .black
-        text.backgroundColor = .white
+        text.textColor = .label
+        text.backgroundColor = .secondarySystemBackground
         text.layer.cornerRadius = 10
         text.keyboardType = .decimalPad
         text.font = .systemFont(ofSize: 17)
@@ -68,6 +68,7 @@ final class CurrencyConverterView: UIView  {
         var view = UIView()
         view.layer.cornerRadius = 10
         view.clipsToBounds = true
+        view.backgroundColor = .secondarySystemBackground
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -75,21 +76,21 @@ final class CurrencyConverterView: UIView  {
     private lazy var currencyLabel: UILabel = {
         var text = UILabel()
         text.font = .systemFont(ofSize: 14)
-        text.textColor = .black
+        text.textColor = .label
         text.textAlignment = .center
-        text.backgroundColor = .white
-        
+        text.backgroundColor = .clear
+
         text.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return text
     }()
     
     ///vista
     private lazy var toPesoView: UIView = {
         var view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .secondarySystemBackground
         view.layer.cornerRadius = 10
-        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowColor = UIColor.label.cgColor
         view.layer.shadowOpacity = 0.1
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowRadius = 4
@@ -122,14 +123,14 @@ final class CurrencyConverterView: UIView  {
     ///otra vista
     private lazy var fromPesoView: UIView = {
         var view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .secondarySystemBackground
         view.layer.cornerRadius = 10
-        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowColor = UIColor.label.cgColor
         view.layer.shadowOpacity = 0.1
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowRadius = 4
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return view
     }()
     
@@ -159,9 +160,9 @@ final class CurrencyConverterView: UIView  {
     ///vista
     private lazy var toDolarView: UIView = {
         var view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .secondarySystemBackground
         view.layer.cornerRadius = 10
-        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowColor = UIColor.label.cgColor
         view.layer.shadowOpacity = 0.1
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowRadius = 4
@@ -194,14 +195,14 @@ final class CurrencyConverterView: UIView  {
     ///otra vista
     private lazy var fromDolarView: UIView = {
         var view = UIView()
-        view.backgroundColor = .white
-        view.layer.shadowColor = UIColor.black.cgColor
+        view.backgroundColor = .secondarySystemBackground
+        view.layer.shadowColor = UIColor.label.cgColor
         view.layer.shadowOpacity = 0.1
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowRadius = 4
         view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return view
     }()
     
@@ -265,8 +266,8 @@ final class CurrencyConverterView: UIView  {
     private func setupGradientBackground() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
-            UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1).cgColor,
-            UIColor(red: 213/255, green: 229/255, blue: 252/255, alpha: 1).cgColor
+            UIColor.systemBackground.cgColor,
+            UIColor.secondarySystemBackground.cgColor
         ]
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.frame = bounds
@@ -275,7 +276,7 @@ final class CurrencyConverterView: UIView  {
     }
     
     func applyCardShadow(to view: UIView) {
-        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowColor = UIColor.label.cgColor
         view.layer.shadowOpacity = 0.1
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowRadius = 4
@@ -310,7 +311,7 @@ private extension CurrencyConverterView {
     
     private func addsubviews() {
         
-        self.backgroundColor = .white
+        self.backgroundColor = .systemBackground
         
         self.addSubview(quantitytextfield)
         
@@ -475,7 +476,7 @@ extension CurrencyConverterView {
     
     func setCurrency(currency: CurrencyItem) {
         currencyLabel.text = currency.currencyTitle
-        currencyLabel.textColor = .black
+        currencyLabel.textColor = .label
         currencyLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         currencyLabel.layer.cornerRadius = 10
         currencyLabel.clipsToBounds = true
