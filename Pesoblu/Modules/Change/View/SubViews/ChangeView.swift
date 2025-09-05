@@ -11,7 +11,7 @@ class ChangeView: UIView  {
 
     private lazy var viewDolar: UIView = {
         var view = UIView()
-        view.backgroundColor = .white //UIColor(hex: "F0F8FF")
+        view.backgroundColor = .secondarySystemBackground //UIColor(hex: "F0F8FF")
         view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -39,7 +39,7 @@ class ChangeView: UIView  {
     private lazy var viewCurrencyTitle: UIView = {
         var view = UIView()
         view.backgroundColor = .clear
-        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderColor = UIColor.separator.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -61,7 +61,7 @@ class ChangeView: UIView  {
     private lazy var currencyTitleLabel: UILabel = {
         var label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .black
+        label.textColor = .label
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -69,8 +69,7 @@ class ChangeView: UIView  {
     
     private lazy var currencySubtitleLabel: UILabel = {
         var label = UILabel()
-
-        label.textColor = .systemGray2
+        label.textColor = .secondaryLabel
         label.font = .systemFont(ofSize: 14)
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -79,8 +78,7 @@ class ChangeView: UIView  {
     
     private lazy var currencyValueLabel: UILabel = {
         var label = UILabel()
-
-        label.textColor = .black
+        label.textColor = .label
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
