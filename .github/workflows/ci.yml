@@ -23,4 +23,4 @@ jobs:
         env:
           SECRETS_PLIST: ${{ secrets.SECRETS_PLIST }}
       - name: Build iOS app
-        run: xcodebuild -scheme Pesoblu -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' build
+        run: xcodebuild -scheme Pesoblu -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build
