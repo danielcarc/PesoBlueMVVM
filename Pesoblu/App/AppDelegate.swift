@@ -9,10 +9,6 @@ import UIKit
 import Firebase
 import GoogleSignIn
 import CoreData
-//import FirebaseCore
-//import FirebaseAnalytics
-//import FirebaseFirestore
-//import FirebaseAuth
 
       
 
@@ -24,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var gidSignIn: GIDSignIn?
     var userService: UserService?
     
-    // Helper para saber si estamos corriendo tests
+    // Helper to detect test environment
     private var isRunningTests: Bool {
         return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }

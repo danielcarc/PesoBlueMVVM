@@ -16,7 +16,6 @@ protocol CurrencyServiceProtocol{
 
 
 class CurrencyService: CurrencyServiceProtocol {
-    //private var dolarBlue: DolarBlue?
     private var rates: Rates?
     private var currencies: [CurrencyItem] = []
     
@@ -64,7 +63,7 @@ class CurrencyService: CurrencyServiceProtocol {
         return dolarMep
     }
 
-    @MainActor  /// rehacer y agregar todas las demas monedas
+    @MainActor /// TODO: Refactor and add support for remaining currencies
     func getValueForCountry(countryCode: String) async throws -> String {
         rates = try await fetchExchangeRates()
         let dolarMep = try await getDolarMep()?.rate ?? "0.0"

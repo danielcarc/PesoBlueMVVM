@@ -13,7 +13,6 @@ protocol FilterDataServiceProtocol{
 class FilterDataService: DataManager, FilterDataServiceProtocol{
     
     private var discoverItems: [DiscoverItem] = []
-    //private var placeItems: [PlaceItem] = []
     
     func fetch() -> [DiscoverItem] {
         discoverItems.removeAll()

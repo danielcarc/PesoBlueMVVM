@@ -14,7 +14,6 @@ protocol DiscoverDataServiceProtocol {
 class DiscoverDataService: DataManager, DiscoverDataServiceProtocol{
     
     private var discoverItems: [DiscoverItem] = []
-    //private var placeItems: [PlaceItem] = []
     
     func fetch() -> [DiscoverItem] {
         discoverItems = []
