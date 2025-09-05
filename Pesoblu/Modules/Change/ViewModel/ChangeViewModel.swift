@@ -95,7 +95,7 @@ class ChangeViewModel: ChangeViewModelProtocol{
     }
 }
 
-//MARK: - Currency Methods
+    // MARK: - Currency Methods
 
 extension ChangeViewModel {
 

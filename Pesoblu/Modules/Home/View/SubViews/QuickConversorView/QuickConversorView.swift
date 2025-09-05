@@ -193,7 +193,7 @@ extension QuickConversorView{
     }
 }
 
-//MARK: - QuickConversorView Testing
+    // MARK: - QuickConversorView Testing
 
 extension QuickConversorView{
     var usdLabelTesting: UILabel {

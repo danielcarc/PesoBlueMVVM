@@ -63,7 +63,7 @@ class ChangeViewController: UIViewController  {
     }
 }
 
-//MARK: - Setup CollectionView
+    // MARK: - Setup CollectionView
 
 private extension ChangeViewController {
     func setup() {
@@ -111,7 +111,7 @@ extension ChangeViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
 }
-//MARK: - ChangeCollectionViewDelegate Methods
+    // MARK: - ChangeCollectionViewDelegate Methods
 
 extension ChangeViewController: ChangeCollectionViewDelegate {
     func didSelectCurrency(for currencyItem: CurrencyItem) {

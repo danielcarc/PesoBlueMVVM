@@ -15,8 +15,6 @@ private struct ConversionTitles {
     let fromDolar: String
 }
 
-///una vez que sea funcional subir el titilelabel arriba y el valuelabel bajarlo asi no se chocan los caracteres, y darle colores a los distintos caracteres para que no sea aburrido
-
 final class CurrencyConverterView: UIView  {
         
     var onAmountChanged: ((Double?) -> Void)?
@@ -85,7 +83,6 @@ final class CurrencyConverterView: UIView  {
         return text
     }()
     
-    ///vista
     private lazy var toPesoView: UIView = {
         var view = UIView()
         view.backgroundColor = .secondarySystemBackground
@@ -120,7 +117,6 @@ final class CurrencyConverterView: UIView  {
         return label
     }()
     
-    ///otra vista
     private lazy var fromPesoView: UIView = {
         var view = UIView()
         view.backgroundColor = .secondarySystemBackground
@@ -156,8 +152,6 @@ final class CurrencyConverterView: UIView  {
         return label
     }()
     
-    /// otras vistas
-    ///vista
     private lazy var toDolarView: UIView = {
         var view = UIView()
         view.backgroundColor = .secondarySystemBackground
@@ -192,7 +186,6 @@ final class CurrencyConverterView: UIView  {
         return label
     }()
     
-    ///otra vista
     private lazy var fromDolarView: UIView = {
         var view = UIView()
         view.backgroundColor = .secondarySystemBackground
@@ -228,17 +221,17 @@ final class CurrencyConverterView: UIView  {
         return label
     }()
     
-//MARK: Dismiss Keyboard METHODS
-    
+    // MARK: - Keyboard Handling
+
     @objc func hideKeyboardWhenTappedAround() {
-        //Agrega un gesto de reconocimiento para detectar cuando se toca la pantalla fuera del teclado
+        // Adds a tap gesture recognizer to dismiss the keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         self.addGestureRecognizer(tap)
     }
     
     @objc func dismissKeyboard() {
-        // Oculta el teclado al tocar la pantalla fuera del campo de texto
+        // Adds a tap gesture recognizer to dismiss the keyboard
         self.endEditing(true)
     }
     
@@ -263,18 +256,6 @@ final class CurrencyConverterView: UIView  {
         return nil
     }
     
-//    private func setupGradientBackground() {
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = [
-//            UIColor(red: 236/255, green: 244/255, blue: 255/255, alpha: 1).cgColor,
-//            UIColor(red: 213/255, green: 229/255, blue: 252/255, alpha: 1).cgColor
-//        ]
-//        gradientLayer.locations = [0.0, 1.0]
-//        gradientLayer.frame = bounds
-//        gradientLayer.cornerRadius = 0
-//        layer.insertSublayer(gradientLayer, at: 0)
-//    }
-    
     func applyCardShadow(to view: UIView) {
         view.layer.shadowColor = UIColor.label.cgColor
         view.layer.shadowOpacity = 0.1
@@ -287,7 +268,6 @@ final class CurrencyConverterView: UIView  {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //setupGradientBackground()
         applyCardShadow(to: quantitytextfield)
         applyCardShadow(to: currencyViewLabel)
         applyCardShadow(to: toPesoView)
@@ -298,7 +278,7 @@ final class CurrencyConverterView: UIView  {
     
 }
 
-//MARK: - Setup and Constraints Methods
+    // MARK: - Setup and Constraints
 
 private extension CurrencyConverterView {
     
@@ -371,7 +351,6 @@ private extension CurrencyConverterView {
             toPesoValue.trailingAnchor.constraint(equalTo: toPesoView.trailingAnchor, constant: -16),
             
             fromPesoView.topAnchor.constraint(equalTo: toPesoView.bottomAnchor, constant: 16),
-            //sellview.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -12),
             fromPesoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             fromPesoView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             fromPesoView.heightAnchor.constraint(equalToConstant: 91),
@@ -382,7 +361,6 @@ private extension CurrencyConverterView {
             fromPesoValue.bottomAnchor.constraint(equalTo: fromPesoView.bottomAnchor, constant: -16),
             fromPesoValue.trailingAnchor.constraint(equalTo: fromPesoView.trailingAnchor, constant: -16),
             
-            ///vista
             toDolarView.topAnchor.constraint(equalTo: fromPesoView.bottomAnchor, constant: 16),
             toDolarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             toDolarView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -395,7 +373,6 @@ private extension CurrencyConverterView {
             toDolarValue.trailingAnchor.constraint(equalTo: toDolarView.trailingAnchor, constant: -16),
             
             fromDolarView.topAnchor.constraint(equalTo: toDolarView.bottomAnchor, constant: 16),
-            //sellview.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -12),
             fromDolarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             fromDolarView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             fromDolarView.heightAnchor.constraint(equalToConstant: 91),
@@ -415,7 +392,7 @@ private extension CurrencyConverterView {
     }
 }
 
-//MARK: - TextField & PickerView Methods
+    // MARK: - TextField & PickerView
 
 extension CurrencyConverterView: UITextFieldDelegate {
     
@@ -430,7 +407,7 @@ extension CurrencyConverterView: UITextFieldDelegate {
         let decimalComma = NSLocalizedString("decimal_comma", comment: "")
         let decimalPoint = NSLocalizedString("decimal_point", comment: "")
 
-        // Si el usuario escribe una coma, la reemplazamos por punto
+        // Replace comma with decimal point
         if string == decimalComma {
             if let currentText = textField.text as NSString? {
                 let updatedText = currentText.replacingCharacters(in: range, with: decimalPoint)
@@ -439,12 +416,12 @@ extension CurrencyConverterView: UITextFieldDelegate {
             return false
         }
 
-        // Validar que el string ingresado contenga solo números o un punto
+        // Allow only digits or a decimal point
         let allowedCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: decimalPoint))
         let characterSet = CharacterSet(charactersIn: string)
         let isValidInput = allowedCharacters.isSuperset(of: characterSet)
 
-        // Validar que no haya más de un punto decimal
+        // Ensure there's only one decimal point
         if let currentText = textField.text as NSString? {
             let updatedText = currentText.replacingCharacters(in: range, with: string)
             let containsMultipleDots = updatedText.components(separatedBy: decimalPoint).count > 2
@@ -456,7 +433,7 @@ extension CurrencyConverterView: UITextFieldDelegate {
 }
 
 
-//MARK: - Reset Controls
+    // MARK: - Reset Controls
 
 extension CurrencyConverterView {
     
@@ -470,7 +447,7 @@ extension CurrencyConverterView {
     
 }
 
-//MARK: - Set Currency Methods
+    // MARK: - Set Currency
 
 extension CurrencyConverterView {
     

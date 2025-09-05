@@ -56,7 +56,6 @@ final class CitiesCollectionView: UIView {
         let totalSpacing = layout.minimumInteritemSpacing * 1 // Espacio entre dos celdas
         let availableWidth = UIScreen.main.bounds.width - totalHorizontalPadding - layout.minimumInteritemSpacing
         let itemWidth = availableWidth / 2
-        //layout.itemSize = .init(width: cellWidth, height: 130)
         layout.itemSize = CGSize(width: itemWidth, height: 130)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +70,7 @@ final class CitiesCollectionView: UIView {
     
 }
 
-//MARK: - Setup Methods and Constraints
+    // MARK: - Setup Methods and Constraints
 
 extension CitiesCollectionView {
     
@@ -94,7 +93,7 @@ extension CitiesCollectionView {
     }
 }
 
-//MARK: - UICollectionViewDataSource Methods
+    // MARK: - UICollectionViewDataSource Methods
 
 extension CitiesCollectionView: UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

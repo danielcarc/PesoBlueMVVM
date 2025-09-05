@@ -15,14 +15,16 @@ protocol CurrencyItem {
 
 struct ChangesResponse: Decodable{
     
-    //let dolarLabel: String?
     let oficial: Oficial?
     let blue: Blue?
     let blue_euro: BlueEuro?
     var last_update: String
+    /// Formats the ISO 8601 `last_update` string into
+        /// `Ultima actualizacion yyyy-MM-dd HH:mm:ss`.
     var actualizacion: String{
         
         if let index = last_update.firstIndex(of: "T") {
+            // Separate date and time portions
             let truncatedString = String(self.last_update[..<index])
             let timeString = String(self.last_update[index...])
             
@@ -37,7 +39,7 @@ struct ChangesResponse: Decodable{
             let actualizacion = "Ultima actualizacion \(truncatedString) \(prim!):\(segundoComponente):\(tres)"
             return actualizacion
         }
-       return last_update
+        return last_update
     }
     
 }

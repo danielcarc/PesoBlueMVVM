@@ -67,7 +67,7 @@ final class DiscoverBaCollectionView: UIView  {
 
 }
 
-//MARK: - UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
 
 extension DiscoverBaCollectionView: UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -83,7 +83,7 @@ extension DiscoverBaCollectionView: UICollectionViewDataSource  {
     
 }
 
-//MARK: - UICollectionViewDelegate Methods
+    // MARK: - UICollectionViewDelegate Methods
 
 extension DiscoverBaCollectionView: UICollectionViewDelegate  {
     

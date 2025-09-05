@@ -82,7 +82,7 @@ extension ChangeCollectionView: ChangeViewModelDelegate {
     }
 }
 
-//MARK: - UICollectionView DataSource
+    // MARK: - UICollectionView DataSource
 
 extension ChangeCollectionView: UICollectionViewDataSource {
     

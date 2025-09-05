@@ -197,7 +197,7 @@ final class PlaceView: UIView {
 }
 
 
-//MARK: - TapGesture Methods
+    // MARK: - TapGesture Methods
 
 extension PlaceView {
     

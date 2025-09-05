@@ -89,7 +89,7 @@ extension CurrencyConverterViewController {
     }
 }
 
-//MARK: - Local Notifications
+    // MARK: - Local Notifications
 
 extension CurrencyConverterViewController {
 
@@ -111,7 +111,7 @@ extension CurrencyConverterViewController {
     }
 }
 
-//MARK: - Button Methods
+    // MARK: - Button Methods
 extension CurrencyConverterViewController {
     
     @objc func didTapBack() {
@@ -120,7 +120,7 @@ extension CurrencyConverterViewController {
     }
 }
 
-// MARK: - Bindings
+    // MARK: - Bindings
 extension CurrencyConverterViewController  {
     func setupBindings() {
         viewModel.getConvertedValues()

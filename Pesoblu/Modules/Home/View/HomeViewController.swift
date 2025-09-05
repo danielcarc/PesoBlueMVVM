@@ -99,7 +99,7 @@ final class HomeViewController: UIViewController  {
     
 }
 
-//MARK: - Setting the View
+    //M ARK: - Setting the View
 @MainActor
 extension HomeViewController  {
     func setup() {
@@ -111,7 +111,7 @@ extension HomeViewController  {
     }
 }
 
-//MARK: - Setup SubViews and Constraints
+    // MARK: - Setup SubViews and Constraints
 @MainActor
 extension HomeViewController {
     
@@ -138,7 +138,6 @@ extension HomeViewController {
     }
     
     func addConstraints() {
-        //collectionViewHeightConstraint = citysCView.heightAnchor.constraint(equalToConstant: 200) // Altura inicial
         NSLayoutConstraint.activate([
             
             mainScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -158,8 +157,6 @@ extension HomeViewController {
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             quickConversorView.heightAnchor.constraint(equalToConstant: 151),
-            //discoverBaCView.heightAnchor.constraint(equalToConstant: 158),
-            //collectionViewHeightConstraint
         ])
     }
     
@@ -184,7 +181,7 @@ extension HomeViewController {
     }
 }
 
-//MARK: - SetUp QuickConversor
+    // MARK: - SetUp QuickConversor
 extension HomeViewController {
     func setupQuickConversor() {
         Task {
@@ -229,7 +226,7 @@ extension HomeViewController {
     }
 }
 
-//MARK: - DiscoverCollectionViewDelegate Methods
+    // MARK: - DiscoverCollectionViewDelegate Methods
 extension HomeViewController: CollectionViewSelectionDelegate {
     
     func didSelectItem(_ item: DiscoverItem) {
@@ -259,7 +256,7 @@ extension HomeViewController: CollectionViewSelectionDelegate {
     }
 }
 
-//MARK: - CitiesViewDelegate Methods
+    // MARK: - CitiesViewDelegate Methods
 extension HomeViewController: CitiesViewDelegate {
     func didSelectItem(_ city: CitiesItem) {
         let selectedCity = String(city.name)

@@ -76,7 +76,7 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
         return currencyArray
     }
 
-    //MARK: - Public - API
+    // MARK: - Public - API
 
     @MainActor
     func fetchExchangeRates() async throws {
@@ -111,7 +111,7 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
         return notificationService.checkPermission(dolar: dolar)
     }
     
-    //MARK: - Private Methods
+    // MARK: - Private Methods
 
     func updateAmount(_ amount: Double?){
         amountSubject.send(amount)
@@ -147,7 +147,7 @@ final class CurrencyConverterViewModel: CurrencyConverterViewModelProtocol{
 
 }
 
-//MARK: - Binding Methods
+    // MARK: - Binding Methods
 
 extension CurrencyConverterViewModel {
     //enviar valores para los 4 posibles valores y para el segmentedcontrol y ahi ver
@@ -166,45 +166,9 @@ extension CurrencyConverterViewModel {
             let currencyToPeso = String(format: "%.2f", (amount / currencyValue) * dolarValue)
             let currencyToDolarValue = String(format: "%.2f", amount / currencyValue)
             promise(.success((currencyFromPeso, currencyToPeso, fromDolarCurrency, currencyToDolarValue)))
-//            Task {
-//                do {
-//                    //let dolar = try await self.getDolarBlue()
-//                    let dolar = self.dolarMep
-//                    let dolarValue = dolar?.venta ?? 0.0
-//                    let currencyValue = Double(self.valueForCurrency(currencyText: self.selectedCurrency.currencyLabel ?? "0.0")) ?? 0.0
-//
-//                    let fromDolarCurrency = String(format: "%.2f", amount * currencyValue)
-//                    let currencyFromPeso = String(format: "%.2f", (amount / dolarValue) * currencyValue)
-//                    let currencyToPeso = String(format: "%.2f", (amount / currencyValue) * dolarValue)
-//                    let currencyToDolarValue = String(format: "%.2f", amount / currencyValue)
-//
-//                    promise(.success((currencyFromPeso, currencyToPeso, fromDolarCurrency, currencyToDolarValue)))
-//                } catch {
-//                    promise(.success(("", "", "", ""))) // Valor por defecto en caso de error
-//                }
-//            }
+
         }
         .eraseToAnyPublisher()
     }
     
-//    private func valueForCurrency(currencyText: String) -> String {
-//        switch currencyText {
-//        case "Brasil": return currency.BRL?.rawRate ?? "0.0"
-//        case "Chile": return currency.CLP?.rawRate ?? "0.0"
-//        case "Uruguay": return currency.UYU?.rawRate ?? "0.0"
-//        case "Unión Europea": return currency.EUR?.rawRate ?? "0.0"
-//        case "México": return currency.MXN?.rawRate ?? "0.0"
-//        case "Colombia": return currency.COP?.rawRate ?? "0.0"
-//        case "Reino Unido": return currency.GBP?.rawRate ?? "0.0"
-//        case "Japón": return currency.JPY?.rawRate ?? "0.0"
-//        case "Israel": return currency.ILS?.rawRate ?? "0.0"
-//        case "Paraguay": return currency.PYG?.rawRate ?? "0.0"
-//        case "Perú": return currency.PEN?.rawRate ?? "0.0"
-//        case "Rusia": return currency.RUB?.rawRate ?? "0.0"
-//        case "Canadá": return currency.CAD?.rawRate ?? "0.0"
-//        case "Bolivia": return currency.BOB?.rawRate ?? "0.0"
-//        case "Dólar Bolsa de Valores / MEP": return dolarMep?.rate ?? "0.0"
-//        default: return "0.0"
-//        }
-//    }
 }

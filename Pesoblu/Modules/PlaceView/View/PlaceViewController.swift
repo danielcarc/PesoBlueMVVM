@@ -102,7 +102,7 @@ final class PlaceViewController: UIViewController  {
     }
 }
 
-//MARK: - Setup Constraints
+    // MARK: - Setup Constraints
 
 extension PlaceViewController {
     
@@ -159,7 +159,7 @@ extension PlaceViewController {
     }
 }
 
-//MARK: - Error Alerts
+    // MARK: - Error Alerts
 
 extension PlaceViewController: PlaceViewDelegate {
     func didFailToOpenMaps() {
@@ -184,7 +184,7 @@ extension PlaceViewController: PlaceViewDelegate {
     
 }
 
-//MARK: - Navigation and Methods Buttons
+    // MARK: - Navigation and Methods Buttons
 
 
 extension PlaceViewController {

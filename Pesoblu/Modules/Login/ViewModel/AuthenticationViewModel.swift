@@ -88,7 +88,7 @@ class AuthenticationViewModel: NSObject, AuthenticationViewModelProtocol{
 }
 
 
-//MARK: - Google Sign In
+    // MARK: - Google Sign In
 
 extension AuthenticationViewModel{
     
@@ -151,7 +151,7 @@ extension AuthenticationViewModel{
     }
 }
 
-//MARK: - Apple Sign In
+    // MARK: - Apple Sign In
 
 extension AuthenticationViewModel: ASAuthorizationControllerDelegate {
 
@@ -237,7 +237,7 @@ extension AuthenticationViewModel: ASAuthorizationControllerDelegate {
     }
 }
 
-// MARK: - Testing
+    // MARK: - Testing
 
 extension AuthenticationViewModel {
     /// Allows tests to manually control the authentication state without using

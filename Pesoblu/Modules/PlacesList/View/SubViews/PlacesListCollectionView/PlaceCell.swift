@@ -14,7 +14,7 @@ protocol PlaceCellDelegate: AnyObject  {
 final class PlaceCell: UICollectionViewCell  {
     
     weak var delegate: PlaceCellDelegate?
-    //MARK: - Properties
+    // MARK: - Properties
 
     private lazy var placeImage: UIImageView = {
         var image = UIImageView()
@@ -62,7 +62,7 @@ final class PlaceCell: UICollectionViewCell  {
         return label
     }()
     
-    //MARK: - Set Methods
+    // MARK: - Set Methods
     /// Configures the cell with the provided data. `formattedDistance` should
     /// already contain the distance string ready for display (e.g. "1.2 km").
     func set(image: UIImage?, title: String, price: String, formattedDistance: String, type: String) {
@@ -114,7 +114,7 @@ final class PlaceCell: UICollectionViewCell  {
     }
 }
 
-//MARK: - Setup SubViews and Constraints Methods
+    // MARK: - Setup SubViews and Constraints Methods
 
 extension PlaceCell  {
  

@@ -99,7 +99,7 @@ extension PlacesListViewController  {
     }
 }
 
-//MARK: - PlacesListCollectionViewDelegate
+    // MARK: - PlacesListCollectionViewDelegate
 extension PlacesListViewController: PlacesListCollectionViewDelegate  {
     func placesListCollectionViewDidFailToLoadImage(_ collectionView: PlacesListCollectionView, error: any Error) {
         showAlert(title: NSLocalizedString("image_error_title", comment: "Image loading error title"),
@@ -124,7 +124,7 @@ extension PlacesListViewController: PlacesListCollectionViewDelegate  {
     }
 }
 
-//MARK: - FilterCollectionViewDelegate
+    // MARK: - FilterCollectionViewDelegate
 extension PlacesListViewController: FilterCollectionViewDelegate  {
     func didSelectFilter(_ filter: DiscoverItem) {
         guard let type = PlaceType(rawValue: filter.name) else { return }
@@ -135,7 +135,7 @@ extension PlacesListViewController: FilterCollectionViewDelegate  {
     }
 }
 
-//MARK: - Alert Methods
+    // MARK: - Alert Methods
 extension PlacesListViewController  {
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -145,7 +145,7 @@ extension PlacesListViewController  {
     }
 }
 
-//MARK: - Button Methods
+    // MARK: - Button Methods
 extension PlacesListViewController  {
     @objc func didTapBack() {
         navigationController?.popViewController(animated: true)

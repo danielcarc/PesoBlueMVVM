@@ -79,7 +79,7 @@ final class PlacesListCollectionView: UIView  {
 }
 
 
-//MARK: - UICollectionViewDataSource Methods
+    // MARK: - UICollectionViewDataSource Methods
 
 extension PlacesListCollectionView: UICollectionViewDataSource  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -102,7 +102,7 @@ extension PlacesListCollectionView: UICollectionViewDataSource  {
     
 }
 
-//MARK: - UICOllectionViewDelegate Methods
+    // MARK: - UICOllectionViewDelegate Methods
 
 
 extension PlacesListCollectionView: UICollectionViewDelegate  {
@@ -113,7 +113,7 @@ extension PlacesListCollectionView: UICollectionViewDelegate  {
     }
 }
 
-//MARK: - Setup and Constraints
+    // MARK: - Setup and Constraints
 
 extension PlacesListCollectionView  {
     

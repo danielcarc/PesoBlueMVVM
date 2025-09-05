@@ -71,7 +71,7 @@ final class FilterCollectionView: UIView {
     
 }
 
-//MARK: - UICollectionViewDataSource Methods
+    // MARK: - UICollectionViewDataSource Methods
 
 extension FilterCollectionView: UICollectionViewDataSource {
     
@@ -136,7 +136,7 @@ extension FilterCollectionView : UICollectionViewDelegate {
 
 
 
-//MARK: - Setup CollectionView Constraints
+    // MARK: - Setup CollectionView Constraints
 
 extension FilterCollectionView {
     

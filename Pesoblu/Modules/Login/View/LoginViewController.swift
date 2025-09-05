@@ -117,7 +117,7 @@ class LoginViewController: UIViewController, LoginViewProtocol  {
     }
 }
 
-//MARK: - Sign in Methods
+    // MARK: - Sign in Methods
 
 extension LoginViewController  {
     /// Initiates the Google sign-in process when the user taps the button.
@@ -135,7 +135,7 @@ extension LoginViewController  {
     }
     
     
-    // el sign in with apple se agrega apenas antes de publicar la app
+    // Sign in with Apple integration will be added before releasing the app
     func didTapSignUpApple() {
         Analytics.logEvent("user_logged_in", parameters: [
             "user_email": "user@example.com"
@@ -144,13 +144,6 @@ extension LoginViewController  {
         do {
             authVM.signInWithApple()
         }
-//        catch let error as AuthenticationViewModel.AuthError {
-//            AppLogger.error("AuthError: \(error.localizedDescription)")
-//            showErrorAlert(error)
-//        } catch {
-//            AppLogger.error("Unexpected error: \(error.localizedDescription)")
-//            showErrorAlert(AuthenticationViewModel.AuthError.unknown)
-//        }
     }
 }
 
