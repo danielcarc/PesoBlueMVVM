@@ -128,22 +128,12 @@ extension CurrencyConverterViewController  {
             .sink { [weak self] (currencyFromPeso, currencyToPeso, fromDolarToCurrency, currencyToDolarValue) in
                 guard let self = self else { return }
                 
-                if self.selectedCurrency.currencyLabel == NSLocalizedString("currency.MEP.label", comment: "") {
-                    self.converterView.updateValues(
-                        fromPeso: currencyToDolarValue,
-                        toPeso: fromDolarToCurrency,
-                        fromDolar: fromDolarToCurrency,
-                        toDolar: currencyToDolarValue
+                self.converterView.updateValues(
+                    fromPeso: currencyFromPeso,
+                    toPeso: currencyToPeso,
+                    fromDolar: fromDolarToCurrency,
+                    toDolar: currencyToDolarValue
                     )
-                } else {
-                    print(selectedCurrency.currencyLabel as Any)
-                    self.converterView.updateValues(
-                        fromPeso: currencyFromPeso,
-                        toPeso: currencyToPeso,
-                        fromDolar: fromDolarToCurrency,
-                        toDolar: currencyToDolarValue
-                    )
-                }
             }
             .store(in: &cancellables)
     }

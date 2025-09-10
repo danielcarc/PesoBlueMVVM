@@ -161,12 +161,22 @@ extension CurrencyConverterViewModel {
             let dolarValue = dolar?.venta ?? 0.0
             let currencyValue = Double(self.selectedCurrency.rate ?? "0.0") ?? 0.0
             
-            let fromDolarCurrency = String(format: "%.2f", amount * currencyValue)
-            let currencyFromPeso = String(format: "%.2f", (amount / dolarValue) * currencyValue)
-            let currencyToPeso = String(format: "%.2f", (amount / currencyValue) * dolarValue)
-            let currencyToDolarValue = String(format: "%.2f", amount / currencyValue)
-            promise(.success((currencyFromPeso, currencyToPeso, fromDolarCurrency, currencyToDolarValue)))
-
+            if self.selectedCurrency.currencyTitle == "USD MEP - Dólar Americano" {
+                let fromDolarCurrency = String(format: "%.2f", amount * currencyValue)
+                let currencyFromPeso = String(format: "%.2f", amount / currencyValue)  
+                let currencyToPeso = String(format: "%.2f", amount * currencyValue)
+                let currencyToDolarValue = String(format: "%.2f", amount / currencyValue)
+                promise(.success((currencyFromPeso, currencyToPeso, fromDolarCurrency, currencyToDolarValue)))
+            }
+            else{
+                let currencyInDolarValue = dolarValue / currencyValue
+                
+                let fromDolarCurrency = String(format: "%.2f", amount * currencyInDolarValue)
+                let currencyFromPeso = String(format: "%.2f", (amount / dolarValue) * currencyInDolarValue)
+                let currencyToPeso = String(format: "%.2f", (amount / currencyInDolarValue) * dolarValue)
+                let currencyToDolarValue = String(format: "%.2f", amount / currencyInDolarValue)
+                promise(.success((currencyFromPeso, currencyToPeso, fromDolarCurrency, currencyToDolarValue)))
+            }
         }
         .eraseToAnyPublisher()
     }
