@@ -1,5 +1,5 @@
 //
-//  CurrencyView.swift
+//  ChangeView.swift
 //  PesoBlueMVVM
 //
 //  Created by Daniel Francisco Carcacha on 02/10/23.

@@ -1,5 +1,5 @@
 //
-//  CurrencyCollectionViewCell.swift
+//  ChangeCollectionViewCell.swift
 //  PesoBlueMVVM
 //
 //  Created by Daniel Francisco Carcacha on 04/10/23.
